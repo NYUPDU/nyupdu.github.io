@@ -1,29 +1,88 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
+/* Base Reset & Fonts */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
-  color: #222;
+  box-sizing: border-box;
 }
 
-header {
-  background-color: #57068c;
-  color: white;
-  padding: 1rem;
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom, #1a1a1a, #3a0066);
+  color: #f0f0f0;
+  min-height: 100vh;
+}
+
+/* Glass Effect Utility */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Navigation */
+.glass-navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(87, 6, 140, 0.8);
+  backdrop-filter: blur(8px);
+  padding: 1rem 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
 }
 
 nav a {
   color: white;
-  margin: 0 1rem;
   text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-main {
-  padding: 2rem;
+nav a:hover {
+  color: #c7bfff;
 }
 
-footer {
-  background-color: #eee;
-  padding: 1rem;
+/* Hero Section */
+.hero-section {
+  background: url('https://images.unsplash.com/photo-1558981403-c5f9899b9b74?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-text {
   text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Main Content */
+.main-content {
+  padding: 2rem 0;
+}
+
+/* Footer */
+.glass-footer {
+  background: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
