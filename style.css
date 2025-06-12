@@ -166,3 +166,28 @@ nav a {
   .logo-nyu { height: 26px; }
   .nav-links { gap: 1rem; font-size: 0.9rem; }
 }
+
+/* E-Board Grid */
+.eboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 1rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.eboard-card {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.eboard-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4);
+  margin-bottom: 1rem;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
