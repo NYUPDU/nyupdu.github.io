@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #1a1a1a, #3a0066);
+  background: linear-gradient(to bottom, #0e0e1a, #2e004f);
   color: #f0f0f0;
   min-height: 100vh;
 }
@@ -30,7 +30,7 @@ body {
 .glass-navbar {
   position: sticky;
   top: 0;
-  background: rgba(87, 6, 140, 0.8);
+  background: rgba(46, 0, 79, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 1rem 0;
@@ -93,7 +93,7 @@ nav a:hover {
 
 /* Footer */
 .glass-footer {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(46, 0, 79, 0.85);
   text-align: center;
   padding: 1rem 0;
   font-size: 0.9rem;
