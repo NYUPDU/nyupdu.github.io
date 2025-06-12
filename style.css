@@ -32,6 +32,7 @@ body {
   top: 0;
   background: rgba(87, 6, 140, 0.8);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 1rem 0;
   z-index: 1000;
 }
@@ -43,6 +44,12 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  color: white;
+  font-size: 1.75rem;
 }
 
 nav a {
@@ -59,11 +66,12 @@ nav a:hover {
 
 /* Hero Section */
 .hero-section {
-  background: url('https://images.unsplash.com/photo-1558981403-c5f9899b9b74?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
+  background: url('https://live.staticflickr.com/5814/20691372925_9c2e51c71f_b.jpg') no-repeat center center/cover;
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
 }
 
 .hero-text {
@@ -71,11 +79,16 @@ nav a:hover {
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* Main Content */
 .main-content {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
 }
 
 /* Footer */
