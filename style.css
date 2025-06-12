@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -12,27 +13,64 @@ body {
   min-height: 100vh;
 }
 
-/* Glass Effect Utility */
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 16px;
-  padding: 2rem;
-  margin: 2rem auto;
-  width: 90%;
-  max-width: 800px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+/* Glow Animation */
+nav a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(199, 191, 255, 0.9);
 }
 
-/* Navigation Bar */
+.glass-card:hover {
+  box-shadow: 0 0 16px rgba(199, 191, 255, 0.25);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+/* Scroll Animation Base */
+.glass-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.glass-card.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating Button */
+#float-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  z-index: 999;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#float-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#float-button:hover {
+  box-shadow: 0 0 16px rgba(199, 191, 255, 0.4);
+  transform: scale(1.05);
+}
+
+/* Navbar */
 .glass-navbar {
   position: sticky;
   top: 0;
   background: rgba(46, 0, 79, 0.85);
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   padding: 1rem 0;
   z-index: 1000;
 }
@@ -44,7 +82,6 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
-  min-height: 64px;
 }
 
 .nav-left,
@@ -53,9 +90,8 @@ body {
   align-items: center;
 }
 
-/* Logo Sizing */
 .logo-pdu {
-  height: 78px;
+  height: 80px;
   width: auto;
   margin-right: 1rem;
 }
@@ -65,6 +101,7 @@ body {
   width: auto;
   margin-left: 1rem;
 }
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -77,26 +114,7 @@ nav a {
   transition: color 0.3s ease;
 }
 
-nav a:hover {
-  color: #c7bfff;
-}
-
-/* Responsive Behavior (optional, for mobile/tablet) */
-@media (max-width: 768px) {
-  .logo-pdu {
-    height: 32px;
-  }
-  .logo-nyu {
-    height: 26px;
-  }
-
-  .nav-links {
-    gap: 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Hero Section */
+/* Hero */
 .hero-section {
   background: url('nyc-banner.jpg') no-repeat center center/cover;
   height: 80vh;
@@ -114,13 +132,23 @@ nav a:hover {
   padding: 2rem;
   border-radius: 16px;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Main Content */
+/* Cards */
 .main-content {
   padding: 2rem 1rem;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Footer */
@@ -130,4 +158,11 @@ nav a:hover {
   padding: 1rem 0;
   font-size: 0.9rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-pdu { height: 32px; }
+  .logo-nyu { height: 26px; }
+  .nav-links { gap: 1rem; font-size: 0.9rem; }
 }
