@@ -8,26 +8,8 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
-  
-<!-- Floating Logo Button -->
-<a href="#top" id="float-button" title="Back to top">
-  <img src="PDULOGO_Trans.png" alt="Return Home">
-</a>
 
-<!-- Scroll Reveal Script -->
-<script>
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('reveal');
-    });
-  });
-
-  document.querySelectorAll('.glass-card').forEach(card => {
-    observer.observe(card);
-  });
-</script>
-  
-<body>
+<body id="top">
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
@@ -73,5 +55,23 @@
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
+
+  <!-- Floating Logo Button -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scroll Reveal Script -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('reveal');
+      });
+    });
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
 </body>
 </html>
