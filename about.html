@@ -62,5 +62,17 @@
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
+  
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('reveal');
+    });
+  });
+
+  document.querySelectorAll('.glass-card').forEach(card => {
+    observer.observe(card);
+  });
+</script>
 </body>
 </html>
