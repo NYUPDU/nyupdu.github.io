@@ -44,6 +44,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  min-height: 64px;
 }
 
 .nav-left,
@@ -52,16 +53,18 @@ body {
   align-items: center;
 }
 
+/* Logo Sizing */
 .logo-pdu {
-  height: 48px;
+  height: 40px;
   width: auto;
+  margin-right: 1rem;
 }
 
 .logo-nyu {
-  height: 36px;
+  height: 32px;
   width: auto;
+  margin-left: 1rem;
 }
-
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -76,6 +79,21 @@ nav a {
 
 nav a:hover {
   color: #c7bfff;
+}
+
+/* Responsive Behavior (optional, for mobile/tablet) */
+@media (max-width: 768px) {
+  .logo-pdu {
+    height: 32px;
+  }
+  .logo-nyu {
+    height: 26px;
+  }
+
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 /* Hero Section */
