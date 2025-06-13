@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About the PDU Executive Board</title>
+  <title>About | NYU PDU</title>
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -22,6 +22,7 @@
         <a href="about.html">About</a>
         <a href="#">Tournaments</a>
         <a href="#">Join Us</a>
+        <a href="leadership.html">Leadership</a>
         <a href="#">Contact</a>
       </nav>
       <div class="nav-right">
@@ -30,56 +31,35 @@
     </div>
   </header>
 
-  <section class="hero-section" style="height: 40vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); display: flex; justify-content: center; align-items: center;">
-    <h1 style="color: white; font-family: 'DM Serif Display', serif; font-size: 2.5rem;">Meet the Executive Board</h1>
+  <section class="hero-section" style="height: 35vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); display: flex; justify-content: center; align-items: center;">
+    <h1 style="color: white; font-family: 'DM Serif Display', serif; font-size: 2.5rem;">About the Parliamentary Debate Union</h1>
   </section>
 
   <main class="main-content">
-    <div class="eboard-grid">
-      <div class="glass-card eboard-card">
-        <img src="placeholder.jpg" alt="Shadan" class="eboard-photo" />
-        <h3>Rayan [Last Name]</h3>
-        <p><em>President</em></p>
-        <p>Leading the charge with passion and drive for parliamentary excellence.</p>
-      </div>
-      
-      <div class="glass-card eboard-card">
-        <img src="placeholder.jpg" alt="Shadan" class="eboard-photo" />
-        <h3>Allen [Last Name]</h3>
-        <p><em>President</em></p>
-        <p>Leading the charge with passion and drive for parliamentary excellence.</p>
-      </div>
-      
-      <div class="glass-card eboard-card">
-        <img src="your-photo.jpg" alt="Alaois" class="eboard-photo" />
-        <h3>Marcel Cato</h3>
-        <p><em>Director of Operations</em></p>
-        <p>Committed to making the PDU more transparent, organized, and connected.</p>
-      </div>
+    <section class="glass-card">
+      <h3 class="about-header">Who We Are</h3>
+      <p class="about-preview">
+        The <strong>Parliamentary Debate Union (PDU)</strong> at New York University is a student-run club devoted to competitive debate, intellectual growth, and team camaraderie.
+        We represent NYU on the <strong>American Parliamentary Debate Association (APDA)</strong> circuit — a collegiate league of debate teams from universities across the East Coast and beyond.
+        <br><br>
+        Each weekend, we send teams to tournaments at colleges like Yale, Princeton, and Harvard, fully funded and supported. PDU covers all travel expenses for competing members, including transportation, registration, and lodging.
+        <br><br>
+        Beyond competition, PDU offers weekly training workshops, practice debates, and mentorship. We welcome everyone — from seasoned debaters to complete beginners — and provide the tools, strategies, and community to help every member succeed.
+        <br><br>
+        Debate with us, grow with us, and find your voice at NYU.
+      </p>
+    </section>
 
-      <div class="glass-card eboard-card">
-        <img src="placeholder.jpg" alt="Amish" class="eboard-photo" />
-        <h3>Dedra [Last Name]</h3>
-        <p><em>VP Communications</em></p>
-        <p>Ensuring our message is heard across platforms and people.</p>
-      </div>
-    </div>
+    <section class="glass-card">
+      <h3 class="about-header">What is APDA?</h3>
+      <p class="about-preview">
+        Placeholder for next step. We’ll draft and finalize this section next.
+      </p>
+    </section>
   </main>
 
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
-  
-<script>
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('reveal');
-    });
-  });
-
-  document.querySelectorAll('.glass-card').forEach(card => {
-    observer.observe(card);
-  });
-</script>
 </body>
 </html>
