@@ -4,12 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Parliamentary Debate Union @ NYU</title>
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+
+  <!-- Stylesheets and Fonts -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body id="top">
+
+  <!-- Navigation Bar -->
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
@@ -20,7 +26,7 @@
         <a href="about.html">About</a>
         <a href="#">Tournaments</a>
         <a href="#">Join Us</a>
-        <a href="leadership.html">Leadership</a> <!-- Newly added -->
+        <a href="leadership.html">Leadership</a>
         <a href="#">Contact</a>
       </nav>
       <div class="nav-right">
@@ -29,6 +35,7 @@
     </div>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero-section">
     <div class="glass-card hero-text">
       <h2>Welcome to the Parliamentary Debate Union</h2>
@@ -36,35 +43,44 @@
     </div>
   </section>
 
+  <!-- Main Content -->
   <main class="main-content">
-   <section class="glass-card" id="about-preview">
-    <h3>About Us</h3>
-    <p>The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.
-       We train weekly, compete across the East Coast, and welcome all students — no experience necessary.</p>
-    <a href="about.html" class="learn-more-button">Learn More →</a>
-  </section>
 
+    <!-- About Preview -->
+    <section class="glass-card" id="about-preview">
+      <h3>About Us</h3>
+      <p>
+        The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.
+        We train weekly, compete across the East Coast, and welcome all students — no experience necessary.
+      </p>
+      <a href="about.html" class="learn-more-button">Learn More →</a>
+    </section>
+
+    <!-- Tournaments Preview -->
     <section class="glass-card">
       <h3>Upcoming Tournaments</h3>
       <p>Stay tuned for our Fall 2025 calendar — travel dates, pairings, and more.</p>
     </section>
 
+    <!-- Join Us Preview -->
     <section class="glass-card">
       <h3>Join Us</h3>
       <p>Open meetings every week! No experience necessary. Join the team that thinks on its feet and argues with precision.</p>
     </section>
+
   </main>
 
+  <!-- Footer -->
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
 
-  <!-- Floating Logo Button -->
+  <!-- Floating Button -->
   <a href="#top" id="float-button" title="Back to top">
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scroll Reveal Script -->
+  <!-- Scroll Reveal Logic -->
   <script>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -76,5 +92,6 @@
       observer.observe(card);
     });
   </script>
+
 </body>
 </html>
