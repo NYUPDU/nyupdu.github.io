@@ -192,3 +192,21 @@ nav a {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
   background-color: rgba(255,255,255,0.1); /* ← fallback background */
 }
+
+.btn-learn-more {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-learn-more:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(199, 191, 255, 0.3);
+}
