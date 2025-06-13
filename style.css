@@ -272,3 +272,19 @@ nav a {
 .eboard-card:hover .profile-popup {
   transform: translateY(0%);
 }
+
+#about-preview .learn-more-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #6a1b9a;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+#about-preview .learn-more-button:hover {
+  background-color: #4a007f;
+}
