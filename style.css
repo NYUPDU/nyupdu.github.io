@@ -1,204 +1,234 @@
 
-/* === RESET AND BASE === */
+/* ---------------- BASE RESET ---------------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
+
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #1e002f, #2a0053);
-  color: white;
-  line-height: 1.6;
-  overflow-x: hidden;
+  background: linear-gradient(to bottom, #0e0e1a, #2e004f);
+  color: #f0f0f0;
+  min-height: 100vh;
 }
-a {
-  color: #d5b3ff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-a:hover {
+
+/* ---------------- TYPOGRAPHY ---------------- */
+h1, h2, h3 {
+  font-family: 'DM Serif Display', serif;
   color: #ffffff;
 }
 
-/* === NAVBAR === */
-.glass-navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(30, 0, 47, 0.6);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  padding: 10px 0;
+h1 {
+  font-size: 2.8rem;
 }
+
+h2 {
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* ---------------- NAVIGATION ---------------- */
+.glass-navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(46, 0, 79, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 1rem 0;
+  z-index: 1000;
+}
+
 .nav-container {
   max-width: 1200px;
   margin: auto;
-  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.logo-pdu,
-.logo-nyu {
-  height: 40px;
-}
-.nav-links a {
-  margin: 0 10px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  padding: 0 2rem;
 }
 
-/* === HERO SECTION === */
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.logo-pdu {
+  height: 80px;
+}
+
+.logo-nyu {
+  height: 32px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  text-shadow: 0 0 8px rgba(199, 191, 255, 0.9);
+}
+
+/* ---------------- HERO SECTION ---------------- */
 .hero-section {
-  height: 100vh;
-  background-image: url('nyc-banner.jpg');
-  background-size: cover;
-  background-position: center;
+  height: 60vh;
+  background: linear-gradient(to bottom right, #2e004f, #4a007f);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
   text-align: center;
 }
-.hero-text {
-  padding: 2rem;
+
+/* ---------------- CONTENT LAYOUT ---------------- */
+.main-content {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 1rem;
 }
-.hero-text h2 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2.8rem;
-  color: #fff;
+
+/* ---------------- CARDS ---------------- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  transition: 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 0 16px rgba(199, 191, 255, 0.25);
+  transform: translateY(-4px);
+}
+
+/* ---------------- ABOUT SECTION ---------------- */
+.about-header {
+  font-size: 2.2rem;
   margin-bottom: 1rem;
 }
-.hero-text p {
+
+.about-body {
   font-size: 1.1rem;
-  max-width: 600px;
-  margin: auto;
+  line-height: 1.7;
+  margin-top: 2rem;
 }
 
-/* === FLOATING BUTTON === */
+/* ---------------- FLOATING BUTTON ---------------- */
 #float-button {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.1);
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  backdrop-filter: blur(5px);
-  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 999;
 }
+
 #float-button img {
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-/* === MAIN CONTENT === */
-.main-content {
-  max-width: 1000px;
-  margin: 100px auto 50px;
-  padding: 0 20px;
-}
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 30px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(12px);
-}
-.glass-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+#float-button:hover {
+  box-shadow: 0 0 16px rgba(199, 191, 255, 0.4);
+  transform: scale(1.05);
 }
 
-/* === SPECIAL BUTTON === */
-.learn-more-button {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1.2rem;
-  background: #9f70ff;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
-.learn-more-button:hover {
-  background: #b388ff;
-}
-
-/* === SCROLL REVEAL === */
-.reveal {
-  animation: fadeInUp 0.6s ease forwards;
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* === FOOTER === */
-.glass-footer {
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-/* === EBOARD GRID === */
+/* ---------------- E-BOARD / LEADERSHIP ---------------- */
 .eboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
-  margin-top: 40px;
+  padding: 2rem 0;
 }
+
 .eboard-card {
   position: relative;
-  padding: 0;
+  border-radius: 16px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .eboard-photo-section {
-  height: 240px;
+  height: 75%;
+  width: 100%;
   overflow: hidden;
 }
+
 .eboard-photo-large {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .eboard-info {
+  height: 25%;
+  background: rgba(255, 255, 255, 0.06);
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.07);
   text-align: center;
 }
+
 .eboard-info h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
 }
-.eboard-info p {
+
+.eboard-info em {
   font-size: 0.95rem;
+  color: #cdbdff;
 }
+
+/* Hover Profile Popup */
 .profile-popup {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  background: rgba(40, 0, 60, 0.9);
-  color: white;
+  width: 100%;
+  background: rgba(46, 0, 79, 0.95);
+  color: #fff;
+  padding: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.4s ease-in-out;
   font-size: 0.9rem;
+}
+
+.eboard-card:hover .profile-popup {
+  transform: translateY(0%);
+}
+
+/* ---------------- FOOTER ---------------- */
+.glass-footer {
+  background: rgba(46, 0, 79, 0.85);
   text-align: center;
   padding: 1rem;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-.eboard-card:hover .profile-popup {
-  opacity: 1;
-  transform: translateY(0);
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 768px) {
+  .logo-pdu { height: 32px; }
+  .logo-nyu { height: 26px; }
+  .nav-links { gap: 1rem; font-size: 0.9rem; }
 }
