@@ -8,20 +8,21 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
 
-  <!-- Stylesheets and Fonts -->
+  <!-- External Stylesheets -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body id="top">
 
-  <!-- Navigation Bar -->
+  <!-- Top Navigation Bar (Sticky) -->
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
         <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
       </div>
       <nav class="nav-links">
+        <!-- Navigation Items -->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="#">Tournaments</a>
@@ -35,7 +36,7 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Banner -->
   <section class="hero-section">
     <div class="glass-card hero-text">
       <h2>Welcome to the Parliamentary Debate Union</h2>
@@ -43,26 +44,24 @@
     </div>
   </section>
 
-  <!-- Main Content -->
+  <!-- Main Content Cards -->
   <main class="main-content">
 
-    <!-- About Preview -->
+    <!-- About Us Preview Card -->
     <section class="glass-card" id="about-preview">
-      <h3>About Us</h3>
-      <p>
-        The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.
-        We train weekly, compete across the East Coast, and welcome all students — no experience necessary.
-      </p>
+      <h3 class="about-heading">About Us</h3>
+      <p class="about-body">The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.
+         We train weekly, compete across the East Coast, and welcome all students — no experience necessary.</p>
       <a href="about.html" class="learn-more-button">Learn More →</a>
     </section>
 
-    <!-- Tournaments Preview -->
+    <!-- Upcoming Tournaments -->
     <section class="glass-card">
       <h3>Upcoming Tournaments</h3>
       <p>Stay tuned for our Fall 2025 calendar — travel dates, pairings, and more.</p>
     </section>
 
-    <!-- Join Us Preview -->
+    <!-- Join Us -->
     <section class="glass-card">
       <h3>Join Us</h3>
       <p>Open meetings every week! No experience necessary. Join the team that thinks on its feet and argues with precision.</p>
@@ -75,12 +74,12 @@
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
 
-  <!-- Floating Button -->
+  <!-- Floating Logo Button (Back to Top) -->
   <a href="#top" id="float-button" title="Back to top">
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scroll Reveal Logic -->
+  <!-- Scroll Animation Script -->
   <script>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -88,10 +87,10 @@
       });
     });
 
+    // Apply scroll animation to each glass card
     document.querySelectorAll('.glass-card').forEach(card => {
       observer.observe(card);
     });
   </script>
-
 </body>
 </html>
