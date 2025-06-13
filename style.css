@@ -210,3 +210,17 @@ nav a {
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(199, 191, 255, 0.3);
 }
+
+.about-header {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.about-preview {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
