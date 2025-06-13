@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Parliamentary Debate Union @ NYU</title>
+  <title>Leadership – NYU PDU</title>
 
-  <!-- Favicon -->
+  <!-- Favicon and Styles -->
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
-
-  <!-- Stylesheets and Fonts -->
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<body id="top">
+<body>
 
   <!-- Navigation Bar -->
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
-        <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        <a href="index.html">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
       </div>
       <nav class="nav-links">
         <a href="index.html">Home</a>
@@ -35,63 +35,39 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="glass-card hero-text">
-      <h2>Welcome to the Parliamentary Debate Union</h2>
-      <p>NYU’s voice in the American Parliamentary Debate Association.</p>
-    </div>
+  <!-- Hero Banner -->
+  <section class="hero-section" style="height: 40vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); display: flex; justify-content: center; align-items: center;">
+    <h1 style="color: white; font-family: 'DM Serif Display', serif; font-size: 2.75rem;">Meet the Executive Board</h1>
   </section>
 
-  <!-- Main Content -->
+  <!-- E-Board Grid -->
   <main class="main-content">
+    <div class="eboard-grid leadership-layout">
+      <!-- Cards are written individually for flexibility -->
+      <!-- Repeat structure as needed -->
 
-    <!-- About Preview -->
-    <section class="glass-card" id="about-preview">
-      <h3>About Us</h3>
-      <p>
-        The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.
-        We train weekly, compete across the East Coast, and welcome all students — no experience necessary.
-      </p>
-      <a href="about.html" class="learn-more-button">Learn More →</a>
-    </section>
+      <!-- Example Card -->
+      <div class="glass-card eboard-card">
+        <div class="eboard-photo-section">
+          <img src="placeholder.jpg" alt="Rayan" class="eboard-photo-large" />
+        </div>
+        <div class="eboard-info">
+          <h3>Rayan</h3>
+          <p><em>President</em></p>
+          <p>Leading with strategy and stability.</p>
+        </div>
+        <div class="profile-popup">“Placeholder profile text about Rayan and their leadership.”</div>
+      </div>
 
-    <!-- Tournaments Preview -->
-    <section class="glass-card">
-      <h3>Upcoming Tournaments</h3>
-      <p>Stay tuned for our Fall 2025 calendar — travel dates, pairings, and more.</p>
-    </section>
+      <!-- Repeat for other members (Allen, Marcel, etc.) -->
 
-    <!-- Join Us Preview -->
-    <section class="glass-card">
-      <h3>Join Us</h3>
-      <p>Open meetings every week! No experience necessary. Join the team that thinks on its feet and argues with precision.</p>
-    </section>
-
+    </div>
   </main>
 
   <!-- Footer -->
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
-
-  <!-- Floating Button -->
-  <a href="#top" id="float-button" title="Back to top">
-    <img src="PDULOGO_Trans.png" alt="Return Home">
-  </a>
-
-  <!-- Scroll Reveal Logic -->
-  <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('reveal');
-      });
-    });
-
-    document.querySelectorAll('.glass-card').forEach(card => {
-      observer.observe(card);
-    });
-  </script>
 
 </body>
 </html>
