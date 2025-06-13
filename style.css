@@ -1,290 +1,204 @@
-/* Base Reset & Fonts */
+
+/* === RESET AND BASE === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
-
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #0e0e1a, #2e004f);
-  color: #f0f0f0;
-  min-height: 100vh;
+  background: linear-gradient(135deg, #1e002f, #2a0053);
+  color: white;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
-
-/* Glow Animation */
-nav a:hover {
+a {
+  color: #d5b3ff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+a:hover {
   color: #ffffff;
-  text-shadow: 0 0 8px rgba(199, 191, 255, 0.9);
 }
 
-.glass-card:hover {
-  box-shadow: 0 0 16px rgba(199, 191, 255, 0.25);
-  transform: translateY(-4px);
-  transition: all 0.3s ease;
-}
-
-/* Scroll Animation Base */
-.glass-card {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-
-.glass-card.reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Floating Button */
-#float-button {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  z-index: 999;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#float-button img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-#float-button:hover {
-  box-shadow: 0 0 16px rgba(199, 191, 255, 0.4);
-  transform: scale(1.05);
-}
-
-/* Navbar */
+/* === NAVBAR === */
 .glass-navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  background: rgba(46, 0, 79, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 1rem 0;
+  width: 100%;
+  background: rgba(30, 0, 47, 0.6);
+  backdrop-filter: blur(10px);
   z-index: 1000;
+  padding: 10px 0;
 }
-
 .nav-container {
   max-width: 1200px;
   margin: auto;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
 }
-
-.nav-left,
-.nav-right {
-  display: flex;
-  align-items: center;
-}
-
-.logo-pdu {
-  height: 80px;
-  width: auto;
-  margin-right: 1rem;
-}
-
+.logo-pdu,
 .logo-nyu {
-  height: 32px;
-  width: auto;
-  margin-left: 1rem;
+  height: 40px;
 }
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
+.nav-links a {
+  margin: 0 10px;
   font-weight: 600;
-  transition: color 0.3s ease;
+  font-size: 0.95rem;
 }
 
-/* Hero */
+/* === HERO SECTION === */
 .hero-section {
-  background: url('nyc-banner.jpg') no-repeat center center/cover;
-  height: 80vh;
+  height: 100vh;
+  background-image: url('nyc-banner.jpg');
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  text-align: center;
 }
-
 .hero-text {
-  text-align: center;
+  padding: 2rem;
+}
+.hero-text h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.8rem;
   color: #fff;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 2rem;
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
 }
-
-/* Cards */
-.main-content {
-  padding: 2rem 1rem;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  border-radius: 16px;
-  padding: 2rem;
-  margin: 2rem auto;
-  width: 90%;
-  max-width: 800px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Footer */
-.glass-footer {
-  background: rgba(46, 0, 79, 0.85);
-  text-align: center;
-  padding: 1rem 0;
-  font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .logo-pdu { height: 32px; }
-  .logo-nyu { height: 26px; }
-  .nav-links { gap: 1rem; font-size: 0.9rem; }
-}
-
-/* E-Board Grid */
-.eboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  padding: 2rem 1rem;
-  max-width: 1000px;
+.hero-text p {
+  font-size: 1.1rem;
+  max-width: 600px;
   margin: auto;
 }
 
-.eboard-card {
-  text-align: center;
-  padding-bottom: 1.5rem;
-}
-
-.eboard-photo {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
+/* === FLOATING BUTTON === */
+#float-button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.4);
-  margin-bottom: 1rem;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-  background-color: rgba(255,255,255,0.1); /* ← fallback background */
+  backdrop-filter: blur(5px);
+  padding: 8px;
+}
+#float-button img {
+  width: 45px;
+  height: 45px;
 }
 
-.btn-learn-more {
+/* === MAIN CONTENT === */
+.main-content {
+  max-width: 1000px;
+  margin: 100px auto 50px;
+  padding: 0 20px;
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* === SPECIAL BUTTON === */
+.learn-more-button {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1.2rem;
+  background: #9f70ff;
   border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  color: white;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+.learn-more-button:hover {
+  background: #b388ff;
 }
 
-.btn-learn-more:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(199, 191, 255, 0.3);
+/* === SCROLL REVEAL === */
+.reveal {
+  animation: fadeInUp 0.6s ease forwards;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.about-heading {
-  font-size: 2rem;
-  font-family: 'DM Serif Display', serif;
-  margin-bottom: 1rem;
-  color: #ffffff;
+/* === FOOTER === */
+.glass-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-.about-body {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #e0e0e0;
-  margin-bottom: 1.5rem;
+/* === EBOARD GRID === */
+.eboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2rem;
+  margin-top: 40px;
 }
-
-.leadership-layout .eboard-card {
+.eboard-card {
   position: relative;
-  overflow: hidden;
   padding: 0;
-  transition: transform 0.3s ease;
+  overflow: hidden;
 }
-
 .eboard-photo-section {
-  height: 75%;
-  width: 100%;
+  height: 240px;
+  overflow: hidden;
 }
-
 .eboard-photo-large {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
 }
-
 .eboard-info {
-  height: 25%;
-  background: rgba(255, 255, 255, 0.05);
   padding: 1rem;
+  background: rgba(255, 255, 255, 0.07);
   text-align: center;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
 }
-
+.eboard-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+.eboard-info p {
+  font-size: 0.95rem;
+}
 .profile-popup {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  background: rgba(46, 0, 79, 0.9);
+  right: 0;
+  background: rgba(40, 0, 60, 0.9);
   color: white;
   font-size: 0.9rem;
+  text-align: center;
   padding: 1rem;
+  opacity: 0;
   transform: translateY(100%);
-  transition: transform 0.4s ease;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
+  transition: all 0.3s ease;
 }
-
 .eboard-card:hover .profile-popup {
-  transform: translateY(0%);
-}
-
-#about-preview .learn-more-button {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #6a1b9a;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-#about-preview .learn-more-button:hover {
-  background-color: #4a007f;
+  opacity: 1;
+  transform: translateY(0);
 }
