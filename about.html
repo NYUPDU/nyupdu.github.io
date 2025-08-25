@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body id="top">
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
@@ -31,11 +31,13 @@
     </div>
   </header>
 
-  <section class="hero-section" style="height: 35vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); display: flex; justify-content: center; align-items: center;">
-    <h1 style="color: white; font-family: 'DM Serif Display', serif; font-size: 2.5rem;">About the Parliamentary Debate Union</h1>
+  <!-- Hero -->
+  <section class="hero-section hero-compact">
+    <h1 class="page-title">About the Parliamentary Debate Union</h1>
   </section>
 
   <main class="main-content">
+    <!-- WHO WE ARE -->
     <section class="glass-card">
       <h3 class="about-header">Who We Are</h3>
       <p class="about-preview">
@@ -50,10 +52,45 @@
       </p>
     </section>
 
+    <!-- WHAT IS APDA -->
     <section class="glass-card">
       <h3 class="about-header">What is APDA?</h3>
+
       <p class="about-preview">
-        Placeholder for next step. We’ll draft and finalize this section next.
+        The <strong>American Parliamentary Debate Association (APDA)</strong> is a university debate league that emphasizes clear argumentation and rhetoric over cited evidence or speed reading. Rounds feature two-person teams on each side: the <em>Government</em> proposes a case and the <em>Opposition</em> responds. :contentReference[oaicite:0]{index=0}
+      </p>
+
+      <h4 class="subhead">Teams & Speaker Roles</h4>
+      <ul class="section-list">
+        <li><strong>Government (Gov)</strong>: <em>Prime Minister (PM)</em> and <em>Member of Government (MG)</em>.</li>
+        <li><strong>Opposition (Opp)</strong>: <em>Leader of the Opposition (LO)</em> and <em>Member of the Opposition (MO)</em>.</li>
+      </ul>
+
+      <h4 class="subhead">Speech Order & Times</h4>
+      <div class="time-row">
+        <span class="chip">PMC 7:00</span>
+        <span class="chip">LOC 8:00</span>
+        <span class="chip">MG 8:00</span>
+        <span class="chip">MO 8:00</span>
+        <span class="chip">LOR 4:00</span>
+        <span class="chip">PMR 5:00</span>
+      </div>
+      <p class="note">Speeches include a 30-second grace period at the end. :contentReference[oaicite:1]{index=1}</p>
+
+      <h4 class="subhead">Points of Information (POIs)</h4>
+      <p class="about-preview">
+        During constructive speeches, the opposing team may briefly stand to ask a question or make a challenge. POIs are allowed <em>after the first minute and before the last minute</em> of each constructive speech (“protected time”); they’re not permitted during rebuttals. Accepting a few POIs is considered good form. :contentReference[oaicite:2]{index=2}
+      </p>
+
+      <h4 class="subhead">How Rounds Are Judged</h4>
+      <ul class="section-list">
+        <li>Judges evaluate <strong>comparative persuasion</strong>: which side better supports and weighs its claims.</li>
+        <li>APDA prioritizes <strong>analysis and rhetoric</strong> rather than quoted evidence. :contentReference[oaicite:3]{index=3}</li>
+        <li>Gov presents a clear case in the PMC; Opp refutes and offers counter-analysis.</li>
+      </ul>
+
+      <p class="about-preview">
+        If you’re new, don’t worry—most tournaments offer novice-friendly coaching and resources. We’ll guide you through your first rounds.
       </p>
     </section>
   </main>
@@ -61,5 +98,18 @@
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
+
+  <!-- Back to top (optional, matches home) -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scroll reveal (matches home) -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
+    });
+    document.querySelectorAll('.glass-card').forEach(card => observer.observe(card));
+  </script>
 </body>
 </html>
