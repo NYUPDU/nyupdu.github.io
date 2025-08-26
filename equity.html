@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equity | NYU PDU</title>
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body id="top">
+  <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <!-- NYU (left on mobile) -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <!-- Desktop links center -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html" aria-current="page">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">This Week’s Meetings</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- PDU (centered on mobile) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <!-- Burger (right on mobile) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html" aria-current="page">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html">How to Join</a></li>
+            <li><a href="about.html#meetings">This Week’s Meetings</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section hero-compact">
+    <div>
+      <h1 class="page-title">Equity</h1>
+      <p class="page-subtitle">Debate ideas, not identities • Content notes & reporting</p>
+    </div>
+  </section>
+
+  <!-- Contents Drawer -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#tldr" class="active">TL;DR & Scope</a>
+      <a href="#principles">Principles</a>
+      <a href="#non-discrimination">Non-Discrimination</a>
+      <a href="#generalizations">Generalizations in Arguments</a>
+      <a href="#conduct">Sportsmanship & Conduct</a>
+      <a href="#tournament-equity">Tournament Equity</a>
+      <a href="#reporting">PDU Reporting & Support</a>
+      <a href="#content-notes">Content Notes & Opt-Outs</a>
+      <a href="#consequences">Consequences</a>
+      <a href="#commitments">Our Commitments</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <main class="main-content">
+    <!-- TL;DR & Scope -->
+    <section class="glass-card" id="tldr">
+      <h3 class="about-header">TL;DR & Scope</h3>
+      <p class="about-preview">
+        Equity is a core value of APDA—and of PDU. Debate can be fast, competitive, and emotionally charged. Our goal is a space where everyone can challenge ideas without harming people. This policy applies to meetings, scrims, tournaments, travel, socials, and all online team spaces.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="#reporting">Report a concern →</a>
+        <a class="link-chip" href="#content-notes">How to give a content note →</a>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="glass-card" id="principles">
+      <h3 class="about-header">Principles</h3>
+      <ul class="section-list">
+        <li><strong>Respect first.</strong> Debate ideas, not identities.</li>
+        <li><strong>Safety over spectacle.</strong> No case or tactic is worth making someone feel targeted or unsafe.</li>
+        <li><strong>Accountability.</strong> We correct mistakes, learn, and do better next time.</li>
+      </ul>
+    </section>
+
+    <!-- Non-Discrimination -->
+    <section class="glass-card" id="non-discrimination">
+      <h3 class="about-header">Non-Discrimination</h3>
+      <p class="about-preview">
+        Discrimination or harassment based on identity or status is prohibited. That includes slurs, coded language, demeaning stereotypes, or arguments that justify harm against a person or group.
+      </p>
+      <p class="subhead">Examples (not exhaustive):</p>
+      <ul class="section-list">
+        <li><strong>Not allowed:</strong> “X group is inherently dishonest,” “Women are less rational,” “Deportation is justified because [group] is dangerous.”</li>
+        <li><strong>Allowed (with care):</strong> Policy arguments supported by evidence that do not target identities (e.g., “This proposal increases harm to undocumented communities because…”).</li>
+      </ul>
+    </section>
+
+    <!-- Generalizations -->
+    <section class="glass-card" id="generalizations">
+      <h3 class="about-header">Generalizations in Arguments</h3>
+      <p class="about-preview">Avoid blanket claims about groups. Use precise, reasoned analysis.</p>
+      <ul class="section-list">
+        <li><strong>Not allowed:</strong> “People on welfare are lazy.”</li>
+        <li><strong>Stronger approach:</strong> “This policy may reduce work incentives because [mechanism/evidence], which affects labor supply.”</li>
+      </ul>
+    </section>
+
+    <!-- Conduct -->
+    <section class="glass-card" id="conduct">
+      <h3 class="about-header">Sportsmanship & Conduct</h3>
+      <p class="about-preview">
+        Intimidation, insults, condescension, mocking accents, misgendering, or hostile behavior toward debaters or judges is not allowed—during or after rounds, in halls, group chats, or social events.
+      </p>
+      <ul class="section-list">
+        <li><strong>Not allowed:</strong> Personal attacks (“You’re stupid”), sarcastic belittling of a speaker, repeated mispronouncing of a name after correction.</li>
+        <li><strong>Expected:</strong> Firm clash on arguments, respectful tone, correct names and pronouns.</li>
+      </ul>
+    </section>
+
+    <!-- Tournament Equity -->
+    <section class="glass-card" id="tournament-equity">
+      <h3 class="about-header">Tournament Equity</h3>
+      <p class="about-preview">
+        Each tournament announces its Equity Policy and the Equity Team at opening assembly. Follow host rules for reporting and resolution. If in doubt, ask the Equity Team or a PDU officer—immediately.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="tournaments.html">See Tournament Info Docs (TIDs) →</a>
+      </div>
+    </section>
+
+    <!-- Reporting & Support -->
+    <section class="glass-card" id="reporting">
+      <h3 class="about-header">PDU Reporting & Support</h3>
+      <p class="about-preview">
+        PDU has an Equity Officer (see <a href="leadership.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Leadership →</a>) who:
+      </p>
+      <ul class="section-list">
+        <li>Receives confidential reports,</li>
+        <li>Mediates disputes and team culture concerns,</li>
+        <li>Coordinates with tournament Equity if needed.</li>
+      </ul>
+      <p class="subhead" style="margin-top:1rem;">How to report</p>
+      <ul class="section-list">
+        <li>Speak to the Equity Officer or any board member (in person or via message).</li>
+        <li>Use the reporting channel provided in the Tournament Information Document (TID) when traveling.</li>
+        <li>Prefer an online form? (We can add a club Google Form link here.)</li>
+      </ul>
+      <p class="note"><strong>No retaliation:</strong> Retaliation for a good-faith report is itself a violation and will be addressed.</p>
+      <div class="cta-row">
+        <a class="link-chip" href="leadership.html">Contact the Equity Officer →</a>
+      </div>
+    </section>
+
+    <!-- Content Notes & Opt-Outs -->
+    <section class="glass-card" id="content-notes">
+      <h3 class="about-header">Equity in Rounds: Content Notes & Opt-Outs</h3>
+      <p class="about-preview">
+        Before the case is read, the Government must give a brief content note if topics may be sensitive (e.g., sexual violence, suicide, self-harm, child abuse, hate crimes, graphic violence). When unsure, include the note.
+      </p>
+      <ul class="section-list">
+        <li><strong>Opt-out:</strong> If any debater or the judge opts out, Gov must present an alternative case and motion. No penalty for opting out. Keep it quick, professional, and move on.</li>
+        <li><strong>During round:</strong> If a concern arises, pause and state it clearly. Judges may consult Equity per host policy.</li>
+      </ul>
+      <div class="cta-row">
+        <span class="chip">Template: “CN: [topic]. Alt case available on request.”</span>
+      </div>
+    </section>
+
+    <!-- Consequences -->
+    <section class="glass-card" id="consequences">
+      <h3 class="about-header">Consequences</h3>
+      <p class="about-preview">Violations may result in:</p>
+      <ol class="section-list">
+        <li><strong>Informal coaching</strong> or a corrective conversation.</li>
+        <li><strong>Formal warning</strong> and documentation with PDU and, if applicable, tournament Equity.</li>
+        <li><strong>Competitive remedies</strong> (e.g., loss of speaker eligibility for an event, removal from a round, or disqualification per host rules).</li>
+        <li><strong>Team remedies</strong> (e.g., suspension from practices/tournaments, loss of leadership eligibility, or membership termination). Serious cases may be referred to the host tournament, APDA authorities, or university offices.</li>
+      </ol>
+    </section>
+
+    <!-- Our Commitments -->
+    <section class="glass-card" id="commitments">
+      <h3 class="about-header">Our Commitments</h3>
+      <ul class="section-list">
+        <li>Use names and pronouns correctly.</li>
+        <li>Make reasonable accommodations (access needs, pacing, breaks).</li>
+        <li>Pair thoughtfully and support newer members.</li>
+        <li>Choose cases that challenge ideas without targeting identities.</li>
+      </ul>
+      <p class="about-preview" style="margin-top:.75rem;">Questions or concerns? Reach out to the Equity Officer or the Operations Director—earlier is better.</p>
+      <div class="cta-row">
+        <a class="link-chip" href="leadership.html">Leadership →</a>
+        <a class="link-chip" href="about.html#meetings">Meetings →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scripts -->
+  <script>
+    // Reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    // Navbar -> set --nav-height
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    // Mobile drawer
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+
+    // Desktop submenu a11y
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    // Contents drawer behavior (same pattern as About)
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
+
+    // One-time auto-open on first visit
+    if(!localStorage.getItem('pdu_equity_toc_dismissed')) {
+      openTOC();
+      localStorage.setItem('pdu_equity_toc_dismissed','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      window.addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && window.scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    // Highlight active section
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+  </script>
+</body>
+</html>
