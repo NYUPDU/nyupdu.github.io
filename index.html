@@ -11,7 +11,7 @@
 
 <body id="top">
   <!-- Navbar -->
-  <header class="glass-navbar">
+  <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-left">
         <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
@@ -97,7 +97,7 @@
     </nav>
   </aside>
 
-  <!-- HERO (unchanged for now) -->
+  <!-- HERO -->
   <section class="hero-section">
     <div class="glass-card hero-text">
       <h2>Welcome to the Parliamentary Debate Union</h2>
@@ -137,22 +137,37 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Minimal JS for drawer & a11y -->
+  <!-- Nav script -->
   <script>
     // Elements
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
     const closeBtn = document.getElementById('drawerClose');
     const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
 
-    // Open/close drawer
+    // Keep drawer/scrim perfectly flush under the sticky navbar
+    function setNavHeightVar() {
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar();
+    window.addEventListener('resize', setNavHeightVar);
+    // If fonts load later and change height
+    document.fonts && document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', setNavHeightVar);
+    // Also observe the navbar itself in case layout shifts
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(setNavHeightVar);
+      ro.observe(navbar);
+    }
+
+    // Drawer open/close/toggle
     function openDrawer() {
       drawer.classList.add('open');
       drawer.setAttribute('aria-hidden', 'false');
       burger.setAttribute('aria-expanded', 'true');
       scrim.hidden = false;
       document.body.style.overflow = 'hidden';
-      // focus first interactive element
       const first = drawer.querySelector('button, a');
       if (first) first.focus();
     }
@@ -164,8 +179,11 @@
       document.body.style.overflow = '';
       burger.focus();
     }
+    function toggleDrawer() {
+      if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+    }
 
-    burger.addEventListener('click', openDrawer);
+    burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
@@ -179,7 +197,7 @@
       });
     });
 
-    // Desktop: keep aria-expanded in sync on hover/focus
+    // Desktop submenu a11y state
     document.querySelectorAll('.has-submenu').forEach(item => {
       const link = item.querySelector('.top-link');
       item.addEventListener('mouseenter', () => link.setAttribute('aria-expanded', 'true'));
@@ -191,7 +209,7 @@
       });
     });
 
-    // Scroll reveal (unchanged)
+    // Reveal cards on scroll
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
     });
