@@ -97,12 +97,28 @@
     </nav>
   </aside>
 
+  <!-- Side TOC Drawer -->
+  <aside id="tocDrawer" class="toc-drawer" aria-label="Page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button id="tocClose" class="toc-close" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#who-we-are">Who We Are</a>
+      <a href="#apda">What is APDA?</a>
+      <a href="#meetings">Meetings & Attendance</a>
+      <a href="#tournaments">Tournaments</a>
+      <a href="#equity">Equity</a>
+    </nav>
+  </aside>
+  <button id="tocPill" class="toc-pill" aria-label="Open contents">Contents</button>
+
   <!-- Hero -->
-  <section class="hero-section hero-compact" style="height:35vh; background:linear-gradient(to bottom right,#2e004f,#4a007f); display:flex; justify-content:center; align-items:center;">
-    <h1 class="page-title" style="font-family:'DM Serif Display',serif;">About the Parliamentary Debate Union</h1>
+  <section class="hero-section hero-compact">
+    <h1 class="page-title page-title-glow">About the Parliamentary Debate Union</h1>
   </section>
 
-  <!-- Main content (kept from your latest About layout) -->
+  <!-- Main content -->
   <main class="main-content">
     <section id="who-we-are" class="glass-card">
       <h3 class="about-header">Who We Are</h3>
@@ -119,22 +135,31 @@
     <section id="apda" class="glass-card">
       <h3 class="about-header">What is APDA?</h3>
       <p class="about-preview">The American Parliamentary Debate Association (APDA) is a collegiate debate league that emphasizes clear analysis and persuasive speaking over reading evidence at high speed. Rounds feature two-person teams on each side: the <em>Government</em> proposes a case and the <em>Opposition</em> responds.</p>
+
       <h4 class="subhead">Teams & Speaker Roles</h4>
       <ul class="section-list">
         <li><strong>Government (Gov)</strong>: Prime Minister (PM) and Member of Government (MG)</li>
         <li><strong>Opposition (Opp)</strong>: Leader of the Opposition (LO) and Member of the Opposition (MO)</li>
       </ul>
+
       <h4 class="subhead">Speech Order & Times</h4>
       <div class="time-row">
-        <span class="chip">PMC 7:00</span><span class="chip">LOC 8:00</span><span class="chip">MG 8:00</span><span class="chip">MO 8:00</span><span class="chip">LOR 4:00</span><span class="chip">PMR 5:00</span>
+        <span class="chip">PMC 7:00</span>
+        <span class="chip">LOC 8:00</span>
+        <span class="chip">MG 8:00</span>
+        <span class="chip">MO 8:00</span>
+        <span class="chip">LOR 4:00</span>
+        <span class="chip">PMR 5:00</span>
       </div>
-      <p class="note">Constructive speeches allow POIs except in the first and last minute (“protected time”). Rebuttals do not take POIs.</p>
+      <p class="note">Constructive speeches allow Points of Information (POIs) except in the first and last minute (“protected time”). Rebuttals do not take POIs.</p>
+
       <h4 class="subhead">How Rounds Are Judged</h4>
       <ul class="section-list">
-        <li>Judges weigh comparative persuasion.</li>
+        <li>Judges weigh comparative persuasion: which side better supports and compares its claims.</li>
         <li>Clarity, structure, and weighing matter more than quoted evidence.</li>
-        <li>Gov presents a clear case; Opp refutes and offers counter-analysis.</li>
+        <li>Gov presents a clear case in the PMC; Opp refutes and offers counter-analysis.</li>
       </ul>
+
       <div class="cta-row">
         <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">Learn more about APDA →</a>
       </div>
@@ -143,32 +168,34 @@
     <section id="meetings" class="glass-card">
       <h3 class="about-header">Meetings & Attendance</h3>
       <p class="about-preview"><strong>Schedule:</strong> Mondays &amp; Wednesdays, 7:00–9:00 PM (twice weekly)</p>
+
       <div class="two-col">
         <div>
           <h4 class="subhead">Monday — Lesson Meeting</h4>
           <p class="about-preview"><em>Led by the Education Officer and focused on skill-building.</em><br><strong>Flow:</strong> Lecture → Engagement → Practice Rounds</p>
           <ul class="section-list">
-            <li><strong>Lecture:</strong> Focused lesson on a skill.</li>
+            <li><strong>Lecture:</strong> Focused lesson on a skill or technique.</li>
             <li><strong>Engagement:</strong> Short activities to check understanding.</li>
-            <li><strong>Practice Rounds:</strong> Simulated debates to apply the lesson.</li>
+            <li><strong>Practice Rounds:</strong> Full simulated debates to apply the lesson.</li>
           </ul>
 
           <h4 class="subhead" style="margin-top:1rem;">Wednesday — Training Meeting</h4>
           <p class="about-preview"><em>Open work time for reps, case-building, and tournament prep.</em><br><strong>Flow:</strong> Practice Round → Workshopping → Feedback</p>
           <ul class="section-list">
             <li><strong>Practice Round:</strong> Full simulated debate round.</li>
-            <li><strong>Workshopping:</strong> Refine cases with seniors and board.</li>
-            <li><strong>Feedback:</strong> Notes from Education & Leadership.</li>
+            <li><strong>Workshopping:</strong> Refine cases with senior members and the board.</li>
+            <li><strong>Feedback:</strong> Notes from Education and Leadership.</li>
           </ul>
         </div>
+
         <div>
           <h4 class="subhead">Tournament Eligibility</h4>
-          <p class="about-preview">Minimums in the 3 weeks before interest deadline:</p>
+          <p class="about-preview">Minimums in the three weeks before interest deadline:</p>
           <ul class="section-list">
             <li>1 Monday Lesson Meeting</li>
             <li>2 Wednesday Training Meetings</li>
           </ul>
-          <p class="about-preview">More than minimum improves your chances when seats are limited.</p>
+          <p class="about-preview">Exceeding the minimum improves your chances when seats are limited.</p>
 
           <h4 class="subhead">Voting Eligibility</h4>
           <p class="about-preview">Attend at least 60% of meetings in the semester.</p>
@@ -177,6 +204,7 @@
           <p class="about-preview">Check in on the tablet each meeting; the attendance sheet is visible to members. Disputes → Operations Director.</p>
         </div>
       </div>
+
       <div class="cta-row">
         <a class="link-chip" href="join.html">Join us →</a>
       </div>
@@ -192,7 +220,7 @@
 
     <section id="equity" class="glass-card">
       <h3 class="about-header">Equity</h3>
-      <p class="about-preview">Equity is core to how we train, travel, and compete. We challenge ideas without targeting identities and act quickly on concerns.</p>
+      <p class="about-preview">Equity is core to how we train, travel, and compete. We challenge ideas without targeting identities, and we act quickly on concerns.</p>
       <div class="cta-row">
         <a class="link-chip" href="equity.html">Read the full Equity policy →</a>
       </div>
@@ -208,8 +236,9 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Nav + effects JS -->
+  <!-- Nav + TOC + effects JS -->
   <script>
+    // Navbar height → flush drawer
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
     const closeBtn = document.getElementById('drawerClose');
@@ -240,6 +269,7 @@
       });
     });
 
+    // Desktop submenu a11y
     document.querySelectorAll('.has-submenu').forEach(item=>{
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
@@ -249,8 +279,38 @@
       sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    const observer=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('reveal'); }); });
-    document.querySelectorAll('.glass-card').forEach(card=>observer.observe(card));
+    // Reveal-on-scroll
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('reveal'); });
+    });
+    document.querySelectorAll('.glass-card').forEach(c => revealObserver.observe(c));
+
+    // TOC drawer + scrollspy
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocPill = document.getElementById('tocPill');
+    const tocClose = document.getElementById('tocClose');
+    const STORAGE_KEY = 'pdu_toc_dismissed';
+
+    function openTOC(){ tocDrawer.classList.add('open'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); localStorage.setItem(STORAGE_KEY, '1'); }
+
+    if(!localStorage.getItem(STORAGE_KEY)){ openTOC(); }
+    tocPill.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
+    window.addEventListener('scroll', () => { if (tocDrawer.classList.contains('open')) closeTOC(); });
+
+    document.querySelectorAll('.toc-list a').forEach(a => a.addEventListener('click', closeTOC));
+
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => spy.observe(s));
   </script>
 </body>
 </html>
