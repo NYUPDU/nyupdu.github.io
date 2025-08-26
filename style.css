@@ -1,6 +1,6 @@
 /* ================= Root + Reset ================= */
 :root{
-  /* This is updated dynamically by JS to match the real nav height exactly */
+  /* JS updates this to match real navbar height so drawer sits flush */
   --nav-height: 80px;
 }
 
@@ -63,11 +63,9 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 
 /* ---------- Dropdowns ---------- */
 .has-submenu>.top-link{ padding-right:.9rem; position:relative; }
-.has-submenu>.top-link::after{
-  content:'▾'; font-size:.8rem; margin-left:.25rem; opacity:.9;
-}
+.has-submenu>.top-link::after{ content:'▾'; font-size:.8rem; margin-left:.25rem; opacity:.9; }
 
-/* No gap above submenu; use transform for drop animation */
+/* Submenu: no gap above; use transform for drop animation */
 .submenu{
   position:absolute; top:100%; left:0;
   min-width:240px; list-style:none; padding:.5rem;
@@ -80,10 +78,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 
 /* Hover buffer to prevent flicker */
-.has-submenu::after{
-  content:""; position:absolute; left:0; right:0; top:100%;
-  height:14px;
-}
+.has-submenu::after{ content:""; position:absolute; left:0; right:0; top:100%; height:14px; }
 
 /* Show dropdown on hover/focus */
 @media (hover:hover) and (pointer:fine){
@@ -110,7 +105,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border:1px solid rgba(255,255,255,.25);
 }
 
-/* Scrim and drawer start flush under the real navbar height */
+/* Scrim & drawer sit flush under real navbar height */
 .drawer-scrim{
   position:fixed; left:0; right:0; top:var(--nav-height); bottom:0;
   background:rgba(0,0,0,.45);
@@ -136,10 +131,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 .drawer-nav{ padding:.5rem .5rem 1rem; }
 .drawer-list{ list-style:none; }
-
-/* Increased vertical spacing between items */
-.drawer-list > li { margin: .35rem 0; }
-
+.drawer-list > li{ margin:.35rem 0; }
 .drawer-list>li>a,.drawer-toggle{
   width:100%; text-align:left; padding:.75rem .85rem;
   background:transparent; color:#fff; border:1px solid transparent;
@@ -149,8 +141,6 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border-color:rgba(255,255,255,.25);
   background:rgba(255,255,255,.08);
 }
-
-/* Drawer collapsibles */
 .drawer-group{ margin-top:.25rem; }
 .drawer-toggle{ display:block; cursor:pointer; }
 .drawer-toggle::after{ content:'▸'; float:right; }
@@ -174,21 +164,112 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   background:url('nyc-banner.jpg') no-repeat center center/cover;
   height:80vh; display:flex; justify-content:center; align-items:center; padding:2rem;
 }
-.hero-text{
-  text-align:center; color:#fff; background:rgba(0,0,0,.3);
-  border:1px solid rgba(255,255,255,.2); padding:2rem; border-radius:16px;
-  backdrop-filter:blur(8px); box-shadow:0 4px 24px rgba(0,0,0,.4);
+.hero-compact{ height:35vh; background:linear-gradient(to bottom right,#2e004f,#4a007f); }
+.page-title{
+  color:#fff; font-family:'DM Serif Display',serif; font-size:3.4rem; text-align:center; letter-spacing:.3px;
+  text-shadow:0 0 10px rgba(199,191,255,.35), 0 0 24px rgba(199,191,255,.25), 0 4px 24px rgba(0,0,0,.45);
 }
+.page-title-glow{} /* hook for variants if needed */
 
-/* ================= Cards ================= */
+/* ================= Cards (generic) ================= */
 .main-content{ padding:2rem 1rem; }
 .glass-card{
-  background:rgba(255,255,255,.1);
-  backdrop-filter:blur(14px);
-  border-radius:16px; padding:2rem; margin:2rem auto;
-  width:90%; max-width:900px;
+  background:rgba(255,255,255,.1); backdrop-filter:blur(14px);
+  border-radius:16px; padding:2rem; margin:2rem auto; width:90%; max-width:900px;
   border:1px solid rgba(255,255,255,.2);
 }
+
+/* ================= About page helpers ================= */
+.about-header{ font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem; color:#fff; }
+.about-preview{ font-size:1.05rem; line-height:1.7; margin-bottom:1.5rem; }
+.subhead{ font-weight:700; margin:1rem 0 .5rem; }
+.section-list{ margin-left:1.2rem; line-height:1.7; }
+.section-list li{ margin:.25rem 0; }
+.time-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 .75rem; }
+.chip{
+  display:inline-block; padding:.35rem .6rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
+  font-size:.9rem;
+}
+.note{ font-size:.9rem; opacity:.85; }
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+.cta-row{ margin-top:1rem; }
+.link-chip{
+  display:inline-block; padding:.45rem .85rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+  color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px;
+  transition:all .25s ease;
+}
+.link-chip:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
+
+/* Offset anchors for sticky header */
+section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96px; }
+
+/* ================= Contents Drawer (About) ================= */
+.toc-drawer{
+  position:fixed; top:calc(var(--nav-height) + 10px); left:0; bottom:30px; width:280px;
+  transform:translateX(-100%); transition:transform .35s ease; z-index:1085;
+  background:rgba(255,255,255,.08); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-right:1px solid rgba(255,255,255,.2); border-top-right-radius:14px; border-bottom-right-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.toc-drawer.open{ transform:translateX(0); }
+.toc-header{ display:flex; align-items:center; justify-content:space-between; padding:.9rem 1rem; border-bottom:1px solid rgba(255,255,255,.18); }
+.toc-title{ font-family:'DM Serif Display',serif; font-size:1.25rem; letter-spacing:.3px; }
+.toc-close{ background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25); border-radius:10px; width:32px; height:32px; font-size:1.1rem; line-height:1; cursor:pointer; }
+.toc-list{ display:flex; flex-direction:column; padding:.75rem .75rem 1rem; gap:.25rem; }
+.toc-list a{ padding:.55rem .6rem; border-radius:10px; text-decoration:none; color:#fff; border:1px solid transparent; transition:all .2s ease; }
+.toc-list a:hover{ border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.08); box-shadow:0 0 10px rgba(199,191,255,.2); }
+.toc-list a.active{ border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.12); box-shadow:0 0 14px rgba(199,191,255,.28); }
+.toc-pill{
+  position:fixed; left:12px; top:calc(var(--nav-height) + 12px);
+  z-index:1080; padding:.45rem .75rem; border-radius:999px;
+  background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); cursor:pointer;
+  box-shadow:0 6px 24px rgba(0,0,0,.3);
+}
+
+/* ================= Leadership: floating glass profile cards ================= */
+.leadership-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem; max-width:1200px; margin:0 auto; padding:0 1rem;
+}
+.leader-card{
+  position:relative; height:420px;
+  border-radius:18px; overflow:hidden;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.leader-card:hover{ transform:translateY(-4px); box-shadow:0 16px 38px rgba(0,0,0,.45); }
+.leader-photo{ height:70%; width:100%; overflow:hidden; }
+.leader-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.leader-info{
+  height:30%; padding:0.9rem 1rem 1rem;
+  display:flex; flex-direction:column; justify-content:center;
+  background:linear-gradient(0deg, rgba(0,0,0,.25), rgba(0,0,0,.05));
+}
+.leader-info h3{ font-family:'DM Serif Display',serif; font-size:1.25rem; line-height:1.2; }
+.leader-info .role{ opacity:.9; margin:.15rem 0 .35rem; font-weight:700; }
+.leader-info .blurb{ font-size:.95rem; opacity:.95; }
+
+/* Bio pop-out */
+.bio-pop{
+  position:absolute; left:50%; top:56%;
+  transform:translate(-50%, -6px); width:88%;
+  background:rgba(30, 16, 52, 0.85);
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:14px; padding:1rem;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+  color:#fff; opacity:0; pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease;
+}
+.bio-pop h4{ margin-bottom:.35rem; font-family:'DM Serif Display',serif; }
+.leader-card:hover .bio-pop{ opacity:1; transform:translate(-50%, 0); pointer-events:auto; }
+
+/* Mobile/touch: open state toggled via JS */
+.bio-pop.open{ opacity:1 !important; transform:translate(-50%, 0) !important; pointer-events:auto !important; }
 
 /* ================= Footer ================= */
 .glass-footer{
@@ -197,14 +278,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border-top:1px solid rgba(255,255,255,.2);
 }
 
-/* ================= Typography helpers ================= */
-.about-header{
-  font-family:'DM Serif Display',serif;
-  font-size:2rem; margin-bottom:1rem; color:#fff;
-}
-.about-preview{ font-size:1.05rem; line-height:1.7; margin-bottom:1.5rem; }
-.subhead{ font-weight:700; margin:1rem 0 .5rem; }
-
+/* ================= Buttons (legacy) ================= */
 .btn-learn-more{
   display:inline-block; margin-top:1rem; padding:.5rem 1rem;
   background:rgba(255,255,255,.1); color:#fff;
@@ -219,4 +293,5 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   .nav-burger{ display:inline-block; }
   .logo-pdu{ height:56px; }
   .logo-nyu{ height:26px; }
+  .two-col{ grid-template-columns:1fr; }
 }
