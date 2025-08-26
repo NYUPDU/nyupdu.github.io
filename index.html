@@ -14,22 +14,24 @@
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-left">
-        <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        <a href="index.html">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
       </div>
 
       <!-- Desktop nav -->
       <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html" aria-current="page">Home</a></li>
 
           <li class="has-submenu">
             <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
             <ul class="submenu" role="menu" aria-label="About submenu">
               <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
               <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
               <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
               <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
-              <li role="none"><a role="menuitem" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
             </ul>
           </li>
 
@@ -39,7 +41,8 @@
             <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
-              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">This Week’s Meetings</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
             </ul>
           </li>
 
@@ -49,9 +52,7 @@
       </nav>
 
       <!-- Mobile hamburger -->
-      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">
-        ☰
-      </button>
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
 
       <div class="nav-right">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
@@ -75,9 +76,9 @@
           <ul class="drawer-submenu">
             <li><a href="about.html#who-we-are">Who We Are</a></li>
             <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
             <li><a href="equity.html">Equity</a></li>
             <li><a href="why-pdu.html">Why PDU</a></li>
-            <li><a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
           </ul>
         </li>
 
@@ -87,7 +88,8 @@
           <button class="drawer-toggle" aria-expanded="false">Join Us</button>
           <ul class="drawer-submenu">
             <li><a href="join.html">How to Join</a></li>
-            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="about.html#meetings">This Week’s Meetings</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
           </ul>
         </li>
 
@@ -97,37 +99,134 @@
     </nav>
   </aside>
 
-  <!-- HERO -->
-  <section class="hero-section">
-    <div class="glass-card hero-text">
-      <h2>Welcome to the Parliamentary Debate Union</h2>
-      <p>NYU’s voice in the American Parliamentary Debate Association.</p>
+  <!-- Hero -->
+  <section class="hero-section hero-home">
+    <div class="hero-content glass-card reveal">
+      <h1 class="hero-title">Welcome to PDU · Fall 2025</h1>
+      <p class="hero-sub">
+        Train twice a week. Compete most weekends. No experience needed.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="join.html">Join Us</a>
+        <a class="btn-secondary" href="about.html#apda">What is APDA?</a>
+      </div>
     </div>
   </section>
 
-  <!-- MAIN (placeholder; we’ll revise after nav) -->
+  <!-- This Week strip -->
+  <section class="week-strip">
+    <ul class="week-pills">
+      <li class="chip">Mon 7–9p · Lesson</li>
+      <li class="chip">Wed 7–9p · Training</li>
+      <li class="chip">Fri–Sat · Yale IV</li>
+      <li class="chip">Travel covered</li>
+    </ul>
+  </section>
+
   <main class="main-content">
-    <section class="glass-card">
-      <h3 class="about-header">About Us</h3>
-      <p class="about-preview">
-        The Parliamentary Debate Union is NYU’s official competitive debate team on the APDA circuit.  
-        We train weekly, compete across the East Coast, and welcome all students — no experience necessary.
-      </p>
-      <a href="about.html" class="btn-learn-more">Learn more →</a>
+    <!-- Quick-start tiles -->
+    <section class="tiles-quick">
+      <div class="tile glass-card reveal">
+        <div class="tile-emoji" aria-hidden="true">✨</div>
+        <h3>I’m new</h3>
+        <p>No experience? Perfect. We’ll teach you from day one.</p>
+        <a class="link-chip" href="join.html">How to join →</a>
+      </div>
+      <div class="tile glass-card reveal">
+        <div class="tile-emoji" aria-hidden="true">🎯</div>
+        <h3>I’m competing</h3>
+        <p>See the next events and request a partner.</p>
+        <a class="link-chip" href="tournaments.html">Upcoming tournaments →</a>
+      </div>
+      <div class="tile glass-card reveal">
+        <div class="tile-emoji" aria-hidden="true">📚</div>
+        <h3>I’m returning</h3>
+        <p>This week’s drills and workshop plan.</p>
+        <a class="link-chip" href="about.html#meetings">This week at PDU →</a>
+      </div>
     </section>
 
-    <section class="glass-card">
-      <h3>Upcoming Tournaments</h3>
-      <p>Stay tuned for our Fall 2025 calendar — travel dates, pairings, and more.</p>
+    <!-- Tournaments preview (horizontal scroll) -->
+    <section class="section-wrap reveal">
+      <h3 class="about-header">Upcoming Tournaments</h3>
+      <div class="h-scroll">
+        <article class="event-card">
+          <div class="event-head">
+            <h4>Yale IV</h4>
+            <span class="pill">Oct 4–5</span>
+          </div>
+          <p class="event-meta">New Haven, CT · 5 prelims · Break to Octos</p>
+          <p class="event-note">Travel, reg, lodging covered.</p>
+          <a class="link-chip" href="tournaments.html">Details →</a>
+        </article>
+
+        <article class="event-card">
+          <div class="event-head">
+            <h4>Princeton Pro-Ams</h4>
+            <span class="pill">Oct 18–19</span>
+          </div>
+          <p class="event-meta">Princeton, NJ · Novice friendly</p>
+          <p class="event-note">Great for first-timers.</p>
+          <a class="link-chip" href="tournaments.html">Details →</a>
+        </article>
+
+        <article class="event-card">
+          <div class="event-head">
+            <h4>Harvard Invitational</h4>
+            <span class="pill">Nov 1–2</span>
+          </div>
+          <p class="event-meta">Cambridge, MA · Large field</p>
+          <p class="event-note">High-energy weekend.</p>
+          <a class="link-chip" href="tournaments.html">Details →</a>
+        </article>
+      </div>
+      <div class="cta-row">
+        <a class="link-chip" href="tournaments.html">See all tournaments →</a>
+      </div>
     </section>
 
-    <section class="glass-card">
-      <h3>Join Us</h3>
-      <p>Open meetings every week! No experience necessary. Join the team that thinks on its feet and argues with precision.</p>
+    <!-- Why PDU (mini) -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Why PDU</h3>
+      <ul class="points">
+        <li>Fully funded travel to tournaments</li>
+        <li>Beginner-friendly training & mentorship</li>
+        <li>A supportive, competitive community</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="why-pdu.html">Read the full Why PDU →</a>
+      </div>
+    </section>
+
+    <!-- Recent highlight -->
+    <section class="glass-card highlight-card reveal">
+      <div class="highlight-media">
+        <img src="placeholder.jpg" alt="PDU at recent tournament (placeholder)">
+      </div>
+      <div class="highlight-body">
+        <h3 class="about-header">Recent Highlights</h3>
+        <p>Quarterfinals at Princeton + Top 10 Speaks. Big shoutout to our novice squads — huge strides this month.</p>
+        <a class="link-chip" href="tournaments.html">See results & recaps →</a>
+      </div>
+    </section>
+
+    <!-- Equity preview -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Equity</h3>
+      <p>We debate ideas, not identities. PDU is committed to respectful, inclusive competition — at meetings and on the circuit.</p>
+      <div class="cta-row">
+        <a class="link-chip" href="equity.html">Read our equity policy →</a>
+      </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer CTA band -->
+  <section class="cta-band">
+    <h3>Ready to try a meeting?</h3>
+    <p>Open to all NYU students — no experience needed.</p>
+    <a class="btn-primary" href="join.html">Join us this week</a>
+  </section>
+
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
@@ -137,83 +236,54 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Nav script -->
+  <!-- Scroll reveal -->
   <script>
-    // Elements
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card, .section-wrap, .tile').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Nav + drawer JS (same behavior sitewide) -->
+  <script>
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
     const closeBtn = document.getElementById('drawerClose');
     const scrim = document.getElementById('drawerScrim');
     const navbar = document.getElementById('siteNavbar');
 
-    // Keep drawer/scrim perfectly flush under the sticky navbar
-    function setNavHeightVar() {
+    function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
       document.documentElement.style.setProperty('--nav-height', h + 'px');
     }
-    setNavHeightVar();
-    window.addEventListener('resize', setNavHeightVar);
-    // If fonts load later and change height
-    document.fonts && document.fonts.addEventListener && document.fonts.addEventListener('loadingdone', setNavHeightVar);
-    // Also observe the navbar itself in case layout shifts
-    if ('ResizeObserver' in window) {
-      const ro = new ResizeObserver(setNavHeightVar);
-      ro.observe(navbar);
-    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
 
-    // Drawer open/close/toggle
-    function openDrawer() {
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden', 'false');
-      burger.setAttribute('aria-expanded', 'true');
-      scrim.hidden = false;
-      document.body.style.overflow = 'hidden';
-      const first = drawer.querySelector('button, a');
-      if (first) first.focus();
-    }
-    function closeDrawer() {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-      burger.setAttribute('aria-expanded', 'false');
-      scrim.hidden = true;
-      document.body.style.overflow = '';
-      burger.focus();
-    }
-    function toggleDrawer() {
-      if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
-    }
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
 
     burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
-    // Mobile submenu toggles
-    document.querySelectorAll('.drawer-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
         btn.nextElementSibling.classList.toggle('open');
       });
     });
 
-    // Desktop submenu a11y state
-    document.querySelectorAll('.has-submenu').forEach(item => {
-      const link = item.querySelector('.top-link');
-      item.addEventListener('mouseenter', () => link.setAttribute('aria-expanded', 'true'));
-      item.addEventListener('mouseleave', () => link.setAttribute('aria-expanded', 'false'));
-      link.addEventListener('focus', () => link.setAttribute('aria-expanded', 'true'));
-      const sm = item.querySelector('.submenu');
-      sm.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') { link.focus(); link.setAttribute('aria-expanded', 'false'); }
-      });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
-
-    // Reveal cards on scroll
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
-    });
-    document.querySelectorAll('.glass-card').forEach(card => observer.observe(card));
   </script>
 </body>
 </html>
