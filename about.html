@@ -10,179 +10,189 @@
 </head>
 
 <body id="top">
-  <header class="glass-navbar">
+  <!-- Navbar -->
+  <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-left">
         <a href="index.html">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
         </a>
       </div>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="tournaments.html">Tournaments</a>
-        <a href="join.html">Join Us</a>
-        <a href="leadership.html">Leadership</a>
-        <a href="#">Contact</a>
+
+      <!-- Desktop nav -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+              <li role="none"><a role="menuitem" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
+              <li role="none"><a role="menuitem" href="#meetings">Meetings & Attendance</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </nav>
+
+      <!-- Mobile hamburger -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+
       <div class="nav-right">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
     </div>
   </header>
 
-  <!-- Side TOC Drawer -->
-  <aside id="tocDrawer" class="toc-drawer">
-    <div class="toc-header">
-      <span class="toc-title">Contents</span>
-      <button id="tocClose" class="toc-close" aria-label="Close contents">×</button>
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
     </div>
-    <nav class="toc-list">
-      <a href="#who-we-are">Who We Are</a>
-      <a href="#apda">What is APDA?</a>
-      <a href="#meetings">Meetings & Attendance</a>
-      <a href="#tournaments">Tournaments</a>
-      <a href="#equity">Equity</a>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="#who-we-are">Who We Are</a></li>
+            <li><a href="#apda">What is APDA?</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+            <li><a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html">How to Join</a></li>
+            <li><a href="#meetings">Meetings & Attendance</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </nav>
   </aside>
-  <button id="tocPill" class="toc-pill" aria-label="Open contents">Contents</button>
 
   <!-- Hero -->
-  <section class="hero-section hero-compact">
-    <h1 class="page-title page-title-glow">About the Parliamentary Debate Union</h1>
+  <section class="hero-section hero-compact" style="height:35vh; background:linear-gradient(to bottom right,#2e004f,#4a007f); display:flex; justify-content:center; align-items:center;">
+    <h1 class="page-title" style="font-family:'DM Serif Display',serif;">About the Parliamentary Debate Union</h1>
   </section>
 
+  <!-- Main content (kept from your latest About layout) -->
   <main class="main-content">
-    <!-- WHO WE ARE -->
     <section id="who-we-are" class="glass-card">
       <h3 class="about-header">Who We Are</h3>
-      <p class="about-preview">
-        The Parliamentary Debate Union (PDU) at New York University is a student-run club devoted to competitive debate, intellectual growth, and team camaraderie. We represent NYU on the American Parliamentary Debate Association (APDA) circuit, a collegiate league of debate teams from universities across the East Coast and beyond.
-      </p>
-      <p class="about-preview">
-        Each weekend, we send teams to tournaments at colleges like Yale, Princeton, and Harvard, fully funded and supported. PDU covers all travel expenses for competing members, including transportation, registration, and lodging.
-      </p>
-      <p class="about-preview">
-        Beyond competition, PDU offers weekly training workshops, practice debates, and mentorship. We welcome everyone from seasoned debaters to complete beginners and provide the tools, strategies, and community to help every member succeed.
-      </p>
-      <p class="about-preview">
-        Debate with us, grow with us, and find your voice at NYU.
-      </p>
+      <p class="about-preview">The Parliamentary Debate Union (PDU) at New York University is a student-run club devoted to competitive debate, intellectual growth, and team camaraderie. We represent NYU on the American Parliamentary Debate Association (APDA) circuit, a collegiate league of debate teams from universities across the East Coast and beyond.</p>
+      <p class="about-preview">Each weekend, we send teams to tournaments at colleges like Yale, Princeton, and Harvard, fully funded and supported. PDU covers all travel expenses for competing members, including transportation, registration, and lodging.</p>
+      <p class="about-preview">Beyond competition, PDU offers weekly training workshops, practice debates, and mentorship. We welcome everyone from seasoned debaters to complete beginners and provide the tools, strategies, and community to help every member succeed.</p>
+      <p class="about-preview">Debate with us, grow with us, and find your voice at NYU.</p>
       <div class="cta-row">
-        <!-- Assuming the future page will be why-pdu.html -->
         <a class="link-chip" href="why-pdu.html">Why PDU →</a>
         <a class="link-chip" href="leadership.html">Meet Leadership →</a>
       </div>
     </section>
 
-    <!-- WHAT IS APDA -->
     <section id="apda" class="glass-card">
       <h3 class="about-header">What is APDA?</h3>
-
-      <p class="about-preview">
-        The American Parliamentary Debate Association (APDA) is a collegiate debate league that emphasizes clear analysis and persuasive speaking over reading evidence at high speed. Rounds feature two-person teams on each side: the <em>Government</em> proposes a case and the <em>Opposition</em> responds.
-      </p>
-
+      <p class="about-preview">The American Parliamentary Debate Association (APDA) is a collegiate debate league that emphasizes clear analysis and persuasive speaking over reading evidence at high speed. Rounds feature two-person teams on each side: the <em>Government</em> proposes a case and the <em>Opposition</em> responds.</p>
       <h4 class="subhead">Teams & Speaker Roles</h4>
       <ul class="section-list">
         <li><strong>Government (Gov)</strong>: Prime Minister (PM) and Member of Government (MG)</li>
         <li><strong>Opposition (Opp)</strong>: Leader of the Opposition (LO) and Member of the Opposition (MO)</li>
       </ul>
-
       <h4 class="subhead">Speech Order & Times</h4>
       <div class="time-row">
-        <span class="chip">PMC 7:00</span>
-        <span class="chip">LOC 8:00</span>
-        <span class="chip">MG 8:00</span>
-        <span class="chip">MO 8:00</span>
-        <span class="chip">LOR 4:00</span>
-        <span class="chip">PMR 5:00</span>
+        <span class="chip">PMC 7:00</span><span class="chip">LOC 8:00</span><span class="chip">MG 8:00</span><span class="chip">MO 8:00</span><span class="chip">LOR 4:00</span><span class="chip">PMR 5:00</span>
       </div>
-      <p class="note">Constructive speeches allow Points of Information (POIs) except in the first and last minute (“protected time”). Rebuttals do not take POIs.</p>
-
+      <p class="note">Constructive speeches allow POIs except in the first and last minute (“protected time”). Rebuttals do not take POIs.</p>
       <h4 class="subhead">How Rounds Are Judged</h4>
       <ul class="section-list">
-        <li>Judges weigh comparative persuasion: which side better supports and compares its claims.</li>
+        <li>Judges weigh comparative persuasion.</li>
         <li>Clarity, structure, and weighing matter more than quoted evidence.</li>
-        <li>Gov presents a clear case in the PMC; Opp refutes and offers counter-analysis.</li>
+        <li>Gov presents a clear case; Opp refutes and offers counter-analysis.</li>
       </ul>
-
       <div class="cta-row">
-        <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">
-          Learn more about APDA →
-        </a>
+        <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">Learn more about APDA →</a>
       </div>
     </section>
 
-    <!-- MEETINGS + ATTENDANCE -->
     <section id="meetings" class="glass-card">
       <h3 class="about-header">Meetings & Attendance</h3>
       <p class="about-preview"><strong>Schedule:</strong> Mondays &amp; Wednesdays, 7:00–9:00 PM (twice weekly)</p>
-
       <div class="two-col">
         <div>
           <h4 class="subhead">Monday — Lesson Meeting</h4>
-          <p class="about-preview"><em>Led by the Education Officer and focused on skill-building.</em><br>
-            <strong>Flow:</strong> Lecture → Engagement → Practice Rounds
-          </p>
+          <p class="about-preview"><em>Led by the Education Officer and focused on skill-building.</em><br><strong>Flow:</strong> Lecture → Engagement → Practice Rounds</p>
           <ul class="section-list">
-            <li><strong>Lecture:</strong> A focused lesson on a debate skill or technique.</li>
+            <li><strong>Lecture:</strong> Focused lesson on a skill.</li>
             <li><strong>Engagement:</strong> Short activities to check understanding.</li>
-            <li><strong>Practice Rounds:</strong> Full simulated debates to apply the lesson.</li>
+            <li><strong>Practice Rounds:</strong> Simulated debates to apply the lesson.</li>
           </ul>
 
           <h4 class="subhead" style="margin-top:1rem;">Wednesday — Training Meeting</h4>
-          <p class="about-preview"><em>Open work time for reps, case-building, and tournament prep.</em><br>
-            <strong>Flow:</strong> Practice Round → Workshopping → Feedback
-          </p>
+          <p class="about-preview"><em>Open work time for reps, case-building, and tournament prep.</em><br><strong>Flow:</strong> Practice Round → Workshopping → Feedback</p>
           <ul class="section-list">
-            <li><strong>Practice Round:</strong> A full simulated debate round.</li>
-            <li><strong>Workshopping:</strong> Members refine cases with senior members and the board.</li>
-            <li><strong>Feedback:</strong> Real-time notes from Education and Leadership on round and workshop performance.</li>
+            <li><strong>Practice Round:</strong> Full simulated debate round.</li>
+            <li><strong>Workshopping:</strong> Refine cases with seniors and board.</li>
+            <li><strong>Feedback:</strong> Notes from Education & Leadership.</li>
           </ul>
         </div>
-
         <div>
-          <h4 class="subhead">Tournament Eligibility (Global Policy)</h4>
-          <p class="about-preview">To be considered for a tournament, you must meet these minimums in the three weeks before the interest form deadline:</p>
+          <h4 class="subhead">Tournament Eligibility</h4>
+          <p class="about-preview">Minimums in the 3 weeks before interest deadline:</p>
           <ul class="section-list">
             <li>1 Monday Lesson Meeting</li>
             <li>2 Wednesday Training Meetings</li>
           </ul>
-          <p class="about-preview">Attending more than the minimum improves your chances when seats are limited.</p>
+          <p class="about-preview">More than minimum improves your chances when seats are limited.</p>
 
           <h4 class="subhead">Voting Eligibility</h4>
-          <p class="about-preview">To vote in Board elections, you must attend at least 60% of meetings in the semester.</p>
+          <p class="about-preview">Attend at least 60% of meetings in the semester.</p>
 
           <h4 class="subhead" style="margin-top:.75rem;">Tracking &amp; Accountability</h4>
-          <p class="about-preview">
-            At the start of each meeting, check in on the tablet to record your attendance. The attendance sheet is visible to members so you can track your own record and standing. Any disputes should be filed with the Operations Director.
-          </p>
+          <p class="about-preview">Check in on the tablet each meeting; the attendance sheet is visible to members. Disputes → Operations Director.</p>
         </div>
       </div>
-
       <div class="cta-row">
-        <a class="link-chip" href="join.html" title="How to join PDU">Join us →</a>
+        <a class="link-chip" href="join.html">Join us →</a>
       </div>
     </section>
 
-    <!-- TOURNAMENTS -->
     <section id="tournaments" class="glass-card">
       <h3 class="about-header">Tournaments</h3>
-      <p class="about-preview">
-        We compete at intercollegiate tournaments most weekends during the semester. Travel is funded, teams are coached, and beginners are welcome to learn on the circuit.
-      </p>
+      <p class="about-preview">We compete most weekends during the semester. Travel is funded; beginners are welcome.</p>
       <div class="cta-row">
         <a class="link-chip" href="tournaments.html">Learn more about tournaments →</a>
       </div>
     </section>
 
-    <!-- EQUITY -->
     <section id="equity" class="glass-card">
       <h3 class="about-header">Equity</h3>
-      <p class="about-preview">
-        Equity is core to how we train, travel, and compete. We challenge ideas without targeting identities, and we act quickly on concerns.
-      </p>
+      <p class="about-preview">Equity is core to how we train, travel, and compete. We challenge ideas without targeting identities and act quickly on concerns.</p>
       <div class="cta-row">
         <a class="link-chip" href="equity.html">Read the full Equity policy →</a>
       </div>
@@ -198,42 +208,49 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- TOC + Reveal + Scrollspy -->
+  <!-- Nav + effects JS -->
   <script>
-    // Reveal cards on scroll
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('reveal'); });
-    });
-    document.querySelectorAll('.glass-card').forEach(c => revealObserver.observe(c));
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
 
-    // TOC drawer
-    const drawer = document.getElementById('tocDrawer');
-    const pill = document.getElementById('tocPill');
-    const closeBtn = document.getElementById('tocClose');
-    const STORAGE_KEY = 'pdu_toc_dismissed';
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
 
-    function openTOC() { drawer.classList.add('open'); }
-    function closeTOC() { drawer.classList.remove('open'); localStorage.setItem(STORAGE_KEY, '1'); }
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
 
-    if (!localStorage.getItem(STORAGE_KEY)) { openTOC(); }
-    pill.addEventListener('click', openTOC);
-    closeBtn.addEventListener('click', closeTOC);
-    window.addEventListener('scroll', () => { if (drawer.classList.contains('open')) closeTOC(); });
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
-    // Close drawer on TOC link click
-    document.querySelectorAll('.toc-list a').forEach(a => a.addEventListener('click', closeTOC));
-
-    // Scrollspy
-    const sections = [...document.querySelectorAll('section[id]')];
-    const tocLinks = [...document.querySelectorAll('.toc-list a')];
-    const spy = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
-        }
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
       });
-    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
-    sections.forEach(s => spy.observe(s));
+    });
+
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    const observer=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('reveal'); }); });
+    document.querySelectorAll('.glass-card').forEach(card=>observer.observe(card));
   </script>
 </body>
 </html>
