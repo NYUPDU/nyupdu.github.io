@@ -25,6 +25,33 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .glass-card{ opacity:0; transform:translateY(40px); transition:all .8s ease; }
 .glass-card.reveal{ opacity:1; transform:translateY(0); }
 
+/* Buttons (chips & primary/secondary CTAs) */
+.link-chip,
+.btn-learn-more{
+  display:inline-block; padding:.45rem .85rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+  color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px;
+  transition:all .25s ease;
+}
+.link-chip:hover,
+.btn-learn-more:hover{
+  background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28);
+}
+.btn-primary{
+  display:inline-block; padding:.65rem 1.1rem; border-radius:999px;
+  background:#7c3aed; color:#fff; text-decoration:none; font-weight:800;
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 6px 22px rgba(124,58,237,.4);
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn-primary:hover{ transform:translateY(-1px); box-shadow:0 10px 28px rgba(124,58,237,.55); }
+.btn-secondary{
+  display:inline-block; padding:.65rem 1.1rem; border-radius:999px;
+  background:rgba(255,255,255,.08); color:#fff; text-decoration:none; font-weight:800;
+  border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(8px);
+}
+.btn-secondary:hover{ background:rgba(255,255,255,.14); }
+
 /* ================= Back to top ================= */
 #float-button{
   position:fixed; bottom:30px; right:30px; width:50px; height:50px; z-index:999;
@@ -173,6 +200,22 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   margin-top:.5rem; font-size:1.1rem; opacity:.9; text-align:center;
 }
 
+/* ====== Home hero overlay ====== */
+.hero-home{ position:relative; }
+.hero-content{
+  max-width:900px; width:min(92vw,900px);
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:18px; padding:2rem 2.2rem; text-align:center;
+  backdrop-filter:blur(8px);
+}
+.hero-title{
+  font-family:'DM Serif Display',serif; font-size:2.6rem; letter-spacing:.3px;
+  text-shadow:0 0 10px rgba(199,191,255,.35);
+}
+.hero-sub{ margin:.6rem auto 1.1rem; opacity:.95; max-width:48ch; }
+.hero-ctas{ display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
+
 /* ================= Cards (generic) ================= */
 .main-content{ padding:2rem 1rem; }
 .glass-card{
@@ -181,7 +224,69 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border:1px solid rgba(255,255,255,.2);
 }
 
-/* ================= About (kept as-is from your last accepted version) ================= */
+/* ====== This Week strip ====== */
+.week-strip{
+  position:relative; z-index:1;
+  margin-top:-38px; /* pulls it slightly into the hero for overlap */
+  display:flex; justify-content:center;
+}
+.week-pills{
+  list-style:none; display:flex; gap:.5rem; flex-wrap:wrap;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+  padding:.6rem .8rem; border-radius:999px; backdrop-filter:blur(10px);
+}
+
+/* ====== Quick-start tiles ====== */
+.tiles-quick{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.25rem; max-width:1100px; margin:2rem auto;
+}
+.tile{ text-align:left; }
+.tile-emoji{ font-size:1.6rem; margin-bottom:.4rem; }
+.tile h3{ font-size:1.25rem; margin-bottom:.3rem; font-weight:800; }
+.tile p{ opacity:.95; margin-bottom:.8rem; }
+
+/* ====== Horizontal scroll events ====== */
+.section-wrap{ width:90%; max-width:1100px; margin:2rem auto; }
+.h-scroll{
+  display:flex; gap:1rem; overflow-x:auto; padding-bottom:.5rem;
+  scroll-snap-type:x mandatory;
+}
+.h-scroll::-webkit-scrollbar{ height:8px; }
+.h-scroll::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:999px; }
+.event-card{
+  flex:0 0 300px; scroll-snap-align:start;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.2);
+  border-radius:14px; padding:1rem 1rem 1.1rem; backdrop-filter:blur(12px);
+}
+.event-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:.25rem; }
+.event-head h4{ font-size:1.1rem; }
+.pill{ padding:.2rem .5rem; border-radius:999px; border:1px solid rgba(255,255,255,.25); font-size:.85rem; }
+.event-meta{ opacity:.9; margin:.1rem 0 .25rem; font-size:.95rem; }
+.event-note{ opacity:.85; font-size:.92rem; margin-bottom:.6rem; }
+
+/* ====== Why PDU bullets ====== */
+.points{ margin:.25rem 0 1rem 1.2rem; }
+.points li{ margin:.25rem 0; }
+
+/* ====== Highlight card ====== */
+.highlight-card{
+  display:grid; grid-template-columns: 1.1fr 1fr; gap:1rem; align-items:center;
+}
+.highlight-media img{
+  width:100%; height:260px; object-fit:cover; border-radius:12px; border:1px solid rgba(255,255,255,.25);
+}
+
+/* ====== CTA band ====== */
+.cta-band{
+  margin: 1rem auto 0 auto; padding:2.4rem 1rem; text-align:center;
+  background:linear-gradient(135deg, rgba(124,58,237,.35), rgba(46,0,79,.7));
+  border-top:1px solid rgba(255,255,255,.15);
+}
+.cta-band h3{ font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:.25rem; }
+.cta-band p{ opacity:.95; margin-bottom:.85rem; }
+
+/* ================= About page bits kept ================= */
 .about-header{ font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem; color:#fff; }
 .about-preview{ font-size:1.05rem; line-height:1.7; margin-bottom:1.5rem; }
 .subhead{ font-weight:700; margin:1rem 0 .5rem; }
@@ -196,13 +301,6 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .note{ font-size:.9rem; opacity:.85; }
 .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
 .cta-row{ margin-top:1rem; }
-.link-chip{
-  display:inline-block; padding:.45rem .85rem; border-radius:999px;
-  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
-  color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px;
-  transition:all .25s ease;
-}
-.link-chip:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
 section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96px; }
 
 /* ================= Leadership (restored 70/30 + full overlay popup) ================= */
@@ -243,16 +341,7 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   border-top:1px solid rgba(255,255,255,.2);
 }
 
-/* ================= Responsive switch ================= */
-@media (max-width:960px){
-  .nav-links{ display:none; }
-  .nav-burger{ display:inline-block; }
-  .logo-pdu{ height:56px; }
-  .logo-nyu{ height:26px; }
-  .two-col{ grid-template-columns:1fr; }
-}
-
-/* === Contents Drawer (About) === */
+/* ================= Contents Drawer (About) — locked in ================= */
 .toc-drawer{
   position:fixed; top:calc(var(--nav-height) + 10px); left:0; bottom:30px; width:280px;
   transform:translateX(-100%); transition:transform .35s ease; z-index:1085;
@@ -270,7 +359,6 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
 .toc-list a{ display:block; padding:.55rem .6rem; border-radius:10px; text-decoration:none; color:#fff; border:1px solid transparent; transition:all .2s ease; }
 .toc-list a:hover{ border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.08); box-shadow:0 0 10px rgba(199,191,255,.2); }
 .toc-list a.active{ border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.12); box-shadow:0 0 14px rgba(199,191,255,.28); }
-
 .toc-pill{
   position:fixed; left:12px; top:calc(var(--nav-height) + 12px); z-index:1080;
   padding:.45rem .75rem; border-radius:999px; background:rgba(255,255,255,.08);
@@ -278,20 +366,20 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
   cursor:pointer; box-shadow:0 6px 24px rgba(0,0,0,.3);
 }
-
-/* Hide pill while drawer is open */
 .toc-drawer.open ~ .toc-pill{ opacity:0; pointer-events:none; }
 
-/* Make Home CTA look like a chip too */
-.link-chip,
-.btn-learn-more{
-  display:inline-block; padding:.45rem .85rem; border-radius:999px;
-  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
-  color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px;
-  transition:all .25s ease;
+/* ================= Responsive switch ================= */
+@media (max-width:1100px){
+  .tiles-quick{ grid-template-columns:1fr 1fr; }
+  .highlight-card{ grid-template-columns:1fr; }
 }
-.link-chip:hover,
-.btn-learn-more:hover{
-  background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28);
+@media (max-width:960px){
+  .nav-links{ display:none; }
+  .nav-burger{ display:inline-block; }
+  .logo-pdu{ height:56px; }
+  .logo-nyu{ height:26px; }
+  .two-col{ grid-template-columns:1fr; }
+  .tiles-quick{ grid-template-columns:1fr; }
+  .hero-title{ font-size:2.1rem; }
+  .week-strip{ margin-top:-26px; }
 }
-
