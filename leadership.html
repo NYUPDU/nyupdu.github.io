@@ -7,214 +7,215 @@
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    .leadership-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      padding: 3rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .leader-card {
-      position: relative;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .leader-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .leader-photo {
-      width: 100%;
-      height: 70%;
-      object-fit: cover;
-    }
-
-    .leader-info {
-      height: 30%;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .leader-info h3 {
-      margin-bottom: 0.25rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-
-    .leader-info p {
-      margin: 0;
-      font-size: 0.95rem;
-      opacity: 0.85;
-    }
-
-    .leader-popup {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(18, 18, 30, 0.9);
-      backdrop-filter: blur(10px);
-      color: white;
-      padding: 1.5rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: left;
-    }
-
-    .leader-card:hover .leader-popup {
-      opacity: 1;
-    }
-
-    .leader-popup p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-  </style>
 </head>
 
-<body>
-  <header class="glass-navbar">
+<body id="top">
+  <!-- Navbar -->
+  <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-left">
         <a href="index.html">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
         </a>
       </div>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="#">Tournaments</a>
-        <a href="#">Join Us</a>
-        <a href="leadership.html">Leadership</a>
-        <a href="#">Contact</a>
+
+      <!-- Desktop nav -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+              <li role="none"><a role="menuitem" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html" aria-current="page">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </nav>
+
+      <!-- Mobile hamburger -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+
       <div class="nav-right">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
     </div>
   </header>
 
-  <section class="hero-section" style="height: 35vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); display: flex; justify-content: center; align-items: center;">
-    <h1 style="color: white; font-family: 'DM Serif Display', serif; font-size: 2.5rem;">Leadership</h1>
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+            <li><a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html">How to Join</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section hero-compact" style="height:35vh; background:linear-gradient(to bottom right,#2e004f,#4a007f); display:flex; justify-content:center; align-items:center;">
+    <h1 class="page-title" style="font-family:'DM Serif Display',serif;">PDU Leadership</h1>
   </section>
 
+  <!-- Leadership grid (unchanged layout; uses your existing styles) -->
   <main class="main-content">
-    <div class="leadership-grid">
-
-      <!-- Other E-Board -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Rayan" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Rayan</h3>
-          <p>President</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+    <div class="eboard-grid">
+      <!-- Example cards; replace photos/text as needed -->
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Rayan" class="eboard-photo" />
+        <h3>Rayan</h3>
+        <p><em>President</em></p>
+        <p>Leads the team’s strategy and tournament coordination.</p>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Taylor" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Taylor</h3>
-          <p>President</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Taylor" class="eboard-photo" />
+        <h3>Taylor</h3>
+        <p><em>President</em></p>
+        <p>Co-leads programming and partnerships.</p>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Allen" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Allen</h3>
-          <p>President</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-      
-      <!-- Marcel -->
-      <div class="leader-card">
-        <img src="your-photo.jpg" alt="Marcel Cato" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Marcel Cato</h3>
-          <p>Director of Operations</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada.</p>
-        </div>
-      </div>
-      
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Pranav" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Pranav</h3>
-          <p>Finance</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Allen" class="eboard-photo" />
+        <h3>Allen</h3>
+        <p><em>President</em></p>
+        <p>Focuses on team development and outreach.</p>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Dara" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Dara</h3>
-          <p>Equity</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+      <div class="glass-card eboard-card">
+        <img src="your-photo.jpg" alt="Marcel Cato" class="eboard-photo" />
+        <h3>Marcel Cato</h3>
+        <p><em>Operations</em></p>
+        <p>Logistics, documentation, scheduling, and systems.</p>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Dedra" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Dedra</h3>
-          <p>Communications</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Pranav" class="eboard-photo" />
+        <h3>Pranav</h3>
+        <p><em>Finance</em></p>
+        <p>Budgeting, reimbursements, and funding.</p>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Amish" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Amish</h3>
-          <p>Education</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Dara" class="eboard-photo" />
+        <h3>Dara</h3>
+        <p><em>Equity</em></p>
+        <p>Culture, reporting, and member wellbeing.</p>
       </div>
 
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Dedra" class="eboard-photo" />
+        <h3>Dedra</h3>
+        <p><em>Communications</em></p>
+        <p>Announcements, branding, and external comms.</p>
+      </div>
+
+      <div class="glass-card eboard-card">
+        <img src="placeholder.jpg" alt="Amish" class="eboard-photo" />
+        <h3>Amish</h3>
+        <p><em>Education</em></p>
+        <p>Curriculum, workshops, and training.</p>
+      </div>
     </div>
   </main>
 
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Nav + effects JS -->
+  <script>
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
+
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    const observer=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('reveal'); }); });
+    document.querySelectorAll('.glass-card').forEach(card=>observer.observe(card));
+  </script>
 </body>
 </html>
