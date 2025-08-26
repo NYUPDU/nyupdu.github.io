@@ -1,6 +1,6 @@
 /* ================= Root + Reset ================= */
 :root{
-  /* Tweak this if your navbar height changes */
+  /* This is updated dynamically by JS to match the real nav height exactly */
   --nav-height: 80px;
 }
 
@@ -41,7 +41,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   background:rgba(46,0,79,.85);
   backdrop-filter:blur(8px);
   padding:.6rem 0;
-  z-index:1000;
+  z-index:1100;
 }
 .nav-container{
   max-width:1200px; margin:auto;
@@ -67,7 +67,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   content:'▾'; font-size:.8rem; margin-left:.25rem; opacity:.9;
 }
 
-/* Keep submenu within hover area: no physical gap; use transform for offset */
+/* No gap above submenu; use transform for drop animation */
 .submenu{
   position:absolute; top:100%; left:0;
   min-width:240px; list-style:none; padding:.5rem;
@@ -79,10 +79,10 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   transition:opacity 140ms ease, transform 140ms ease;
 }
 
-/* Hover buffer to prevent flicker when moving from top link to submenu */
+/* Hover buffer to prevent flicker */
 .has-submenu::after{
   content:""; position:absolute; left:0; right:0; top:100%;
-  height:14px; /* hover bridge */
+  height:14px;
 }
 
 /* Show dropdown on hover/focus */
@@ -110,14 +110,12 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border:1px solid rgba(255,255,255,.25);
 }
 
-/* Scrim sits BELOW navbar and starts under it for breathing room */
+/* Scrim and drawer start flush under the real navbar height */
 .drawer-scrim{
   position:fixed; left:0; right:0; top:var(--nav-height); bottom:0;
   background:rgba(0,0,0,.45);
   z-index:1098;
 }
-
-/* Drawer sits BELOW navbar and starts under it so the first item isn't cramped */
 .mobile-drawer{
   position:fixed; top:var(--nav-height); right:0; bottom:0; width:86vw; max-width:360px;
   background:rgba(255,255,255,.10);
@@ -138,8 +136,12 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 .drawer-nav{ padding:.5rem .5rem 1rem; }
 .drawer-list{ list-style:none; }
+
+/* Increased vertical spacing between items */
+.drawer-list > li { margin: .35rem 0; }
+
 .drawer-list>li>a,.drawer-toggle{
-  width:100%; text-align:left; padding:.7rem .75rem; margin:.15rem 0;
+  width:100%; text-align:left; padding:.75rem .85rem;
   background:transparent; color:#fff; border:1px solid transparent;
   border-radius:10px; font-weight:700; text-decoration:none;
 }
@@ -147,6 +149,8 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border-color:rgba(255,255,255,.25);
   background:rgba(255,255,255,.08);
 }
+
+/* Drawer collapsibles */
 .drawer-group{ margin-top:.25rem; }
 .drawer-toggle{ display:block; cursor:pointer; }
 .drawer-toggle::after{ content:'▸'; float:right; }
@@ -157,7 +161,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 .drawer-submenu.open{ max-height:500px; }
 .drawer-submenu a{
-  display:block; padding:.55rem .75rem; margin:.15rem 0 .15rem .25rem;
+  display:block; padding:.6rem .85rem; margin:.2rem 0 .2rem .25rem;
   border-radius:8px; font-weight:600; text-decoration:none; color:#fff;
 }
 .drawer-submenu a:hover{
