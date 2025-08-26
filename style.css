@@ -45,7 +45,7 @@ nav a:hover {
   height: 50px;
   z-index: 999;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 6px;
@@ -87,14 +87,13 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
   align-items: center;
   padding: 2rem;
 }
-/* compact internal page hero */
 .hero-compact { height: 35vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); }
 
 /* BIG, SERIF, GLOWING PAGE TITLE */
 .page-title {
   color: #fff;
   font-family: 'DM Serif Display', serif;
-  font-size: 3.2rem;
+  font-size: 3.4rem;
   text-align: center;
   letter-spacing: 0.3px;
   text-shadow:
@@ -102,18 +101,7 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
     0 0 24px rgba(199,191,255,0.25),
     0 4px 24px rgba(0,0,0,0.45);
 }
-.page-title-glow { /* helper class if you want to toggle extra glow later */ }
-
-.hero-text {
-  text-align: center;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 2rem;
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-}
+.page-title-glow {}
 
 /* Cards */
 .main-content { padding: 2rem 1rem; }
@@ -137,7 +125,7 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive */
+/* Responsive (we'll do full mobile pass later) */
 @media (max-width: 768px) {
   .logo-pdu { height: 48px; }
   .logo-nyu { height: 26px; }
@@ -171,7 +159,7 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
@@ -180,7 +168,7 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
   transition: all 0.3s ease;
 }
 .btn-learn-more:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 10px rgba(199, 191, 255, 0.3);
 }
 
@@ -208,26 +196,43 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
 }
 .note { font-size: 0.9rem; opacity: 0.85; }
 
-/* ---------- Columns helper (desktop-first as requested) ---------- */
+/* Columns helper (desktop-first per instruction) */
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 }
 
+/* CTA chip link */
+.cta-row { margin-top: 1rem; }
+.link-chip {
+  display: inline-block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: all 0.25s ease;
+}
+.link-chip:hover {
+  background: rgba(255,255,255,0.16);
+  box-shadow: 0 0 12px rgba(199,191,255,0.28);
+}
+
 /* Offset anchors for sticky header */
 section[id] .about-header,
 section[id] h3,
-section[id] h4 {
-  scroll-margin-top: 96px;
-}
+section[id] h4 { scroll-margin-top: 96px; }
 
-/* ---------- Side TOC Drawer + Pill (glassy) ---------- */
+/* Side TOC Drawer + Pill (glassy) */
 .toc-drawer {
   position: fixed;
-  top: 90px;            /* below sticky nav */
+  top: 90px;
   left: 0;
-  bottom: 30px;         /* above back-to-top button */
+  bottom: 30px;
   width: 280px;
   transform: translateX(-100%);
   transition: transform 0.35s ease;
@@ -307,17 +312,4 @@ section[id] h4 {
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
   box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-}
-
-/* ---------- Hero title upgrades (already in your file; increasing a bit) ---------- */
-.page-title {
-  color: #fff;
-  font-family: 'DM Serif Display', serif;
-  font-size: 3.4rem; /* bumped up */
-  text-align: center;
-  letter-spacing: 0.3px;
-  text-shadow:
-    0 0 10px rgba(199,191,255,0.35),
-    0 0 24px rgba(199,191,255,0.25),
-    0 4px 24px rgba(0,0,0,0.45);
 }
