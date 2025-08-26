@@ -105,7 +105,7 @@
     </div>
   </section>
 
-  <!-- MAIN (kept simple; we’ll revise content after nav) -->
+  <!-- MAIN (placeholder; we’ll revise after nav) -->
   <main class="main-content">
     <section class="glass-card">
       <h3 class="about-header">About Us</h3>
@@ -152,7 +152,9 @@
       burger.setAttribute('aria-expanded', 'true');
       scrim.hidden = false;
       document.body.style.overflow = 'hidden';
-      drawer.querySelector('button, a').focus();
+      // focus first interactive element
+      const first = drawer.querySelector('button, a');
+      if (first) first.focus();
     }
     function closeDrawer() {
       drawer.classList.remove('open');
@@ -177,20 +179,19 @@
       });
     });
 
-    // Desktop: reflect expanded state on focus/hover for a11y
+    // Desktop: keep aria-expanded in sync on hover/focus
     document.querySelectorAll('.has-submenu').forEach(item => {
       const link = item.querySelector('.top-link');
       item.addEventListener('mouseenter', () => link.setAttribute('aria-expanded', 'true'));
       item.addEventListener('mouseleave', () => link.setAttribute('aria-expanded', 'false'));
       link.addEventListener('focus', () => link.setAttribute('aria-expanded', 'true'));
-      item.querySelector('.submenu').addEventListener('keydown', (e) => {
+      const sm = item.querySelector('.submenu');
+      sm.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') { link.focus(); link.setAttribute('aria-expanded', 'false'); }
       });
     });
-  </script>
 
-  <!-- Scroll reveal (unchanged) -->
-  <script>
+    // Scroll reveal (unchanged)
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
     });
