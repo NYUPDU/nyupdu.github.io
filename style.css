@@ -251,3 +251,47 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   .logo-nyu{ height:26px; }
   .two-col{ grid-template-columns:1fr; }
 }
+
+/* === Contents Drawer (About) === */
+.toc-drawer{
+  position:fixed; top:calc(var(--nav-height) + 10px); left:0; bottom:30px; width:280px;
+  transform:translateX(-100%); transition:transform .35s ease; z-index:1085;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-right:1px solid rgba(255,255,255,.2);
+  border-top-right-radius:14px; border-bottom-right-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.toc-drawer.open{ transform:translateX(0); }
+.toc-header{ display:flex; align-items:center; justify-content:space-between; padding:.9rem 1rem; border-bottom:1px solid rgba(255,255,255,.18); }
+.toc-title{ font-family:'DM Serif Display',serif; font-size:1.25rem; letter-spacing:.3px; }
+.toc-close{ background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25); border-radius:10px; width:32px; height:32px; font-size:1.1rem; line-height:1; cursor:pointer; }
+.toc-list{ display:flex; flex-direction:column; padding:.75rem .75rem 1rem; gap:.25rem; }
+.toc-list a{ display:block; padding:.55rem .6rem; border-radius:10px; text-decoration:none; color:#fff; border:1px solid transparent; transition:all .2s ease; }
+.toc-list a:hover{ border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.08); box-shadow:0 0 10px rgba(199,191,255,.2); }
+.toc-list a.active{ border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.12); box-shadow:0 0 14px rgba(199,191,255,.28); }
+
+.toc-pill{
+  position:fixed; left:12px; top:calc(var(--nav-height) + 12px); z-index:1080;
+  padding:.45rem .75rem; border-radius:999px; background:rgba(255,255,255,.08);
+  color:#fff; border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  cursor:pointer; box-shadow:0 6px 24px rgba(0,0,0,.3);
+}
+
+/* Hide pill while drawer is open */
+.toc-drawer.open ~ .toc-pill{ opacity:0; pointer-events:none; }
+
+/* Make Home CTA look like a chip too */
+.link-chip,
+.btn-learn-more{
+  display:inline-block; padding:.45rem .85rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+  color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px;
+  transition:all .25s ease;
+}
+.link-chip:hover,
+.btn-learn-more:hover{
+  background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28);
+}
+
