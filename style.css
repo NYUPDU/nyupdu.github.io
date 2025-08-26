@@ -207,3 +207,117 @@ nav a { color: white; text-decoration: none; font-weight: 600; transition: color
   font-size: 0.9rem;
 }
 .note { font-size: 0.9rem; opacity: 0.85; }
+
+/* ---------- Columns helper (desktop-first as requested) ---------- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Offset anchors for sticky header */
+section[id] .about-header,
+section[id] h3,
+section[id] h4 {
+  scroll-margin-top: 96px;
+}
+
+/* ---------- Side TOC Drawer + Pill (glassy) ---------- */
+.toc-drawer {
+  position: fixed;
+  top: 90px;            /* below sticky nav */
+  left: 0;
+  bottom: 30px;         /* above back-to-top button */
+  width: 280px;
+  transform: translateX(-100%);
+  transition: transform 0.35s ease;
+  z-index: 1100;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255,255,255,0.2);
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+.toc-drawer.open { transform: translateX(0); }
+
+.toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+.toc-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.3px;
+}
+.toc-close {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.toc-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0.75rem 1rem;
+  gap: 0.25rem;
+}
+.toc-list a {
+  padding: 0.55rem 0.6rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.toc-list a:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 10px rgba(199,191,255,0.2);
+}
+.toc-list a.active {
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 0 14px rgba(199,191,255,0.28);
+}
+
+/* Floating "Contents" pill */
+.toc-pill {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1090;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+
+/* ---------- Hero title upgrades (already in your file; increasing a bit) ---------- */
+.page-title {
+  color: #fff;
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.4rem; /* bumped up */
+  text-align: center;
+  letter-spacing: 0.3px;
+  text-shadow:
+    0 0 10px rgba(199,191,255,0.35),
+    0 0 24px rgba(199,191,255,0.25),
+    0 4px 24px rgba(0,0,0,0.45);
+}
