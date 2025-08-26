@@ -13,13 +13,12 @@
   <!-- Navbar -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
-      <div class="nav-left">
-        <a href="index.html">
-          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
-        </a>
+      <!-- Left (NYU on desktop & mobile) -->
+      <div class="nav-right" aria-label="NYU logo (left on mobile)">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Desktop nav -->
+      <!-- Center on desktop: nav links; on mobile the PDU logo is centered absolutely -->
       <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html" aria-current="page">Home</a></li>
@@ -51,12 +50,15 @@
         </ul>
       </nav>
 
-      <!-- Mobile hamburger -->
-      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
-
-      <div class="nav-right">
-        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      <!-- PDU logo (left on desktop; centered on mobile via CSS absolute positioning) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
       </div>
+
+      <!-- Mobile hamburger (right on mobile; hidden on desktop) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
 
@@ -146,7 +148,7 @@
       </div>
     </section>
 
-    <!-- Tournaments preview (horizontal scroll) -->
+    <!-- Tournaments preview -->
     <section class="section-wrap reveal">
       <h3 class="about-header">Upcoming Tournaments</h3>
       <div class="h-scroll">
@@ -185,7 +187,7 @@
       </div>
     </section>
 
-    <!-- Why PDU (mini) -->
+    <!-- Why PDU -->
     <section class="glass-card reveal">
       <h3 class="about-header">Why PDU</h3>
       <ul class="points">
@@ -244,7 +246,7 @@
     document.querySelectorAll('.glass-card, .section-wrap, .tile').forEach(el => observer.observe(el));
   </script>
 
-  <!-- Nav + drawer JS (same behavior sitewide) -->
+  <!-- Nav + drawer JS -->
   <script>
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
