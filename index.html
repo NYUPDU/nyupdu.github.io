@@ -10,25 +10,94 @@
 </head>
 
 <body id="top">
+  <!-- Navbar -->
   <header class="glass-navbar">
     <div class="container nav-container">
       <div class="nav-left">
         <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
       </div>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="#">Tournaments</a>
-        <a href="#">Join Us</a>
-        <a href="leadership.html">Leadership</a>
-        <a href="#">Contact</a>
+
+      <!-- Desktop nav -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+              <li role="none"><a role="menuitem" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </nav>
+
+      <!-- Mobile hamburger -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">
+        ☰
+      </button>
+
       <div class="nav-right">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
     </div>
   </header>
 
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+            <li><a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html">How to Join</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- HERO (unchanged for now) -->
   <section class="hero-section">
     <div class="glass-card hero-text">
       <h2>Welcome to the Parliamentary Debate Union</h2>
@@ -36,6 +105,7 @@
     </div>
   </section>
 
+  <!-- MAIN (kept simple; we’ll revise content after nav) -->
   <main class="main-content">
     <section class="glass-card">
       <h3 class="about-header">About Us</h3>
@@ -57,26 +127,74 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
 
-  <!-- Floating Logo Button -->
+  <!-- Back to top -->
   <a href="#top" id="float-button" title="Back to top">
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scroll Reveal Script -->
+  <!-- Minimal JS for drawer & a11y -->
   <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('reveal');
+    // Elements
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+
+    // Open/close drawer
+    function openDrawer() {
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+      burger.setAttribute('aria-expanded', 'true');
+      scrim.hidden = false;
+      document.body.style.overflow = 'hidden';
+      drawer.querySelector('button, a').focus();
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
+      burger.setAttribute('aria-expanded', 'false');
+      scrim.hidden = true;
+      document.body.style.overflow = '';
+      burger.focus();
+    }
+
+    burger.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    // Mobile submenu toggles
+    document.querySelectorAll('.drawer-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        btn.nextElementSibling.classList.toggle('open');
       });
     });
 
-    document.querySelectorAll('.glass-card').forEach(card => {
-      observer.observe(card);
+    // Desktop: reflect expanded state on focus/hover for a11y
+    document.querySelectorAll('.has-submenu').forEach(item => {
+      const link = item.querySelector('.top-link');
+      item.addEventListener('mouseenter', () => link.setAttribute('aria-expanded', 'true'));
+      item.addEventListener('mouseleave', () => link.setAttribute('aria-expanded', 'false'));
+      link.addEventListener('focus', () => link.setAttribute('aria-expanded', 'true'));
+      item.querySelector('.submenu').addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { link.focus(); link.setAttribute('aria-expanded', 'false'); }
+      });
     });
+  </script>
+
+  <!-- Scroll reveal (unchanged) -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('reveal'); });
+    });
+    document.querySelectorAll('.glass-card').forEach(card => observer.observe(card));
   </script>
 </body>
 </html>
