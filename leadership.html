@@ -10,16 +10,15 @@
 </head>
 
 <body id="top">
-  <!-- Navbar -->
+  <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
-      <div class="nav-left">
-        <a href="index.html">
-          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
-        </a>
+      <!-- NYU (left on mobile) -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Desktop nav -->
+      <!-- Desktop links center -->
       <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html">Home</a></li>
@@ -29,9 +28,9 @@
             <ul class="submenu" role="menu" aria-label="About submenu">
               <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
               <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
               <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
               <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
-              <li role="none"><a role="menuitem" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
             </ul>
           </li>
 
@@ -41,7 +40,8 @@
             <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
-              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">This Week’s Meetings</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
             </ul>
           </li>
 
@@ -50,12 +50,15 @@
         </ul>
       </nav>
 
-      <!-- Mobile hamburger -->
-      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
-
-      <div class="nav-right">
-        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      <!-- PDU logo (left on desktop; centered on mobile) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
       </div>
+
+      <!-- Burger (right on mobile) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
 
@@ -75,9 +78,9 @@
           <ul class="drawer-submenu">
             <li><a href="about.html#who-we-are">Who We Are</a></li>
             <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
             <li><a href="equity.html">Equity</a></li>
             <li><a href="why-pdu.html">Why PDU</a></li>
-            <li><a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener noreferrer">APDA Guide ↗</a></li>
           </ul>
         </li>
 
@@ -87,23 +90,25 @@
           <button class="drawer-toggle" aria-expanded="false">Join Us</button>
           <ul class="drawer-submenu">
             <li><a href="join.html">How to Join</a></li>
-            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="about.html#meetings">This Week’s Meetings</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
           </ul>
         </li>
 
-        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="leadership.html" aria-current="page">Leadership</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </aside>
 
   <!-- Hero -->
-  <section class="hero-section hero-compact" style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
-    <h1 class="page-title">Leadership</h1>
-    <p class="page-subtitle">Parliamentary Debate Union Executive Board</p>
+  <section class="hero-section hero-compact">
+    <div>
+      <h1 class="page-title">Leadership</h1>
+      <p class="page-subtitle">Parliamentary Debate Union Executive Board</p>
+    </div>
   </section>
 
-  <!-- Leadership grid -->
   <main class="main-content">
     <div class="leadership-grid">
       <!-- Presidents -->
@@ -148,7 +153,7 @@
           <p>Director of Operations</p>
         </div>
         <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada.</p>
+          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus.</p>
         </div>
       </div>
 
@@ -211,15 +216,16 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Nav + interactions JS -->
+  <!-- Scripts -->
   <script>
-    // Measure navbar so drawer sits flush
-    const burger = document.getElementById('burger');
-    const drawer = document.getElementById('mobileDrawer');
-    const closeBtn = document.getElementById('drawerClose');
-    const scrim = document.getElementById('drawerScrim');
-    const navbar = document.getElementById('siteNavbar');
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.leader-card').forEach(el => observer.observe(el));
 
+    // Measure navbar
+    const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
       document.documentElement.style.setProperty('--nav-height', h + 'px');
@@ -227,15 +233,18 @@
     setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
     if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
 
+    // Mobile drawer
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
     function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
     function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
     function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
-
     burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-
     document.querySelectorAll('.drawer-toggle').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
@@ -243,26 +252,21 @@
         btn.nextElementSibling.classList.toggle('open');
       });
     });
-
+    // Desktop submenu a11y
     document.querySelectorAll('.has-submenu').forEach(item=>{
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
-      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    // Touch devices: tap card to toggle the full overlay (mirrors hover)
-    if (window.matchMedia('(hover: none)').matches) {
-      document.querySelectorAll('.leader-card').forEach(card => {
-        const popup = card.querySelector('.leader-popup');
-        card.addEventListener('click', () => {
-          const open = popup.classList.toggle('open');
-          popup.style.opacity = open ? '1' : '';
-        });
-      });
-    }
+    // Touch toggle support for leader popups (tap to open/close)
+    document.querySelectorAll('.leader-card').forEach(card=>{
+      const pop = card.querySelector('.leader-popup');
+      card.addEventListener('click', ()=> pop.classList.toggle('open'));
+    });
   </script>
 </body>
 </html>
