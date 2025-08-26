@@ -1,220 +1,218 @@
-/*Base Reset & Fonts */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+/* ================= Root + Reset ================= */
+:root{
+  /* Tweak this if your navbar height changes */
+  --nav-height: 80px;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #0e0e1a, #2e004f);
-  color: #f0f0f0;
-  min-height: 100vh;
+*{ margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(to bottom,#0e0e1a,#2e004f);
+  color:#f0f0f0;
+  min-height:100vh;
 }
 
-/* Glow Animation */
-nav a:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px rgba(199, 191, 255, 0.9);
+/* ================= Effects / Animations ================= */
+nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
+
+.glass-card:hover{
+  box-shadow:0 0 16px rgba(199,191,255,.25);
+  transform:translateY(-4px);
+  transition:all .3s ease;
 }
 
-.glass-card:hover {
-  box-shadow: 0 0 16px rgba(199, 191, 255, 0.25);
-  transform: translateY(-4px);
-  transition: all 0.3s ease;
+.glass-card{ opacity:0; transform:translateY(40px); transition:all .8s ease; }
+.glass-card.reveal{ opacity:1; transform:translateY(0); }
+
+/* ================= Back to top ================= */
+#float-button{
+  position:fixed; bottom:30px; right:30px; width:50px; height:50px; z-index:999;
+  border-radius:50%; background:rgba(255,255,255,.05);
+  backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.2);
+  padding:6px; cursor:pointer; transition:all .3s ease;
+}
+#float-button img{ width:100%; height:100%; object-fit:contain; }
+#float-button:hover{ box-shadow:0 0 16px rgba(199,191,255,.4); transform:scale(1.05); }
+
+/* ================= Navbar ================= */
+.glass-navbar{
+  position:sticky; top:0;
+  background:rgba(46,0,79,.85);
+  backdrop-filter:blur(8px);
+  padding:.6rem 0;
+  z-index:1000;
+}
+.nav-container{
+  max-width:1200px; margin:auto;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0 1.25rem;
+}
+.nav-left,.nav-right{ display:flex; align-items:center; }
+.logo-pdu{ height:64px; width:auto; margin-right:1rem; }
+.logo-nyu{ height:28px; width:auto; margin-left:1rem; }
+
+/* ================= Desktop primary nav ================= */
+.nav-links{ display:block; }
+.menu-root{ list-style:none; display:flex; gap:1.25rem; align-items:center; }
+.menu-root>li{ position:relative; }
+.menu-root a{
+  color:#fff; text-decoration:none; font-weight:600;
+  padding:.5rem .25rem; display:inline-block;
 }
 
-/* Scroll Animation Base */
-.glass-card {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-.glass-card.reveal { opacity: 1; transform: translateY(0); }
-
-/* Floating Button */
-#float-button {
-  position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; z-index: 999;
-  border-radius: 50%; background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 6px; cursor: pointer; transition: all 0.3s ease;
-}
-#float-button img { width: 100%; height: 100%; object-fit: contain; }
-#float-button:hover { box-shadow: 0 0 16px rgba(199, 191, 255, 0.4); transform: scale(1.05); }
-
-/* Navbar */
-.glass-navbar {
-  position: sticky; top: 0;
-  background: rgba(46, 0, 79, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 0.6rem 0;
-  z-index: 1000;
-}
-.nav-container {
-  max-width: 1200px; margin: auto;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 1.25rem;
-}
-.nav-left, .nav-right { display: flex; align-items: center; }
-.logo-pdu { height: 64px; width: auto; margin-right: 1rem; }
-.logo-nyu { height: 28px; width: auto; margin-left: 1rem; }
-
-/* Primary nav (desktop) */
-.nav-links { display: block; }
-.menu-root { list-style: none; display: flex; gap: 1.25rem; align-items: center; }
-.menu-root > li { position: relative; }
-.menu-root a {
-  color: #fff; text-decoration: none; font-weight: 600;
-  padding: 0.5rem 0.25rem; display: inline-block;
+/* ---------- Dropdowns ---------- */
+.has-submenu>.top-link{ padding-right:.9rem; position:relative; }
+.has-submenu>.top-link::after{
+  content:'▾'; font-size:.8rem; margin-left:.25rem; opacity:.9;
 }
 
-/* Dropdowns */
-.has-submenu > .top-link { padding-right: 0.9rem; }
-.has-submenu > .top-link::after {
-  content: '▾'; font-size: 0.8rem; margin-left: 0.25rem; opacity: 0.9;
-}
-.submenu {
-  position: absolute; top: calc(100% + 10px); left: 0;
-  min-width: 240px; list-style: none; padding: 0.5rem;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 12px; backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  opacity: 0; transform: translateY(6px); pointer-events: none;
-  transition: opacity 140ms ease, transform 140ms ease;
-}
-.submenu li a {
-  display: block; padding: 0.5rem 0.6rem; border-radius: 8px; font-weight: 600;
-}
-.submenu li a:hover {
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 0 10px rgba(199,191,255,0.22) inset;
+/* Keep submenu within hover area: no physical gap; use transform for offset */
+.submenu{
+  position:absolute; top:100%; left:0;
+  min-width:240px; list-style:none; padding:.5rem;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:12px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  opacity:0; transform:translateY(8px); pointer-events:none;
+  transition:opacity 140ms ease, transform 140ms ease;
 }
 
-/* Show dropdown on hover/focus (desktop) */
-@media (hover: hover) and (pointer: fine) {
-  .has-submenu:hover > .submenu,
-  .has-submenu:focus-within > .submenu {
-    opacity: 1; transform: translateY(0); pointer-events: auto;
+/* Hover buffer to prevent flicker when moving from top link to submenu */
+.has-submenu::after{
+  content:""; position:absolute; left:0; right:0; top:100%;
+  height:14px; /* hover bridge */
+}
+
+/* Show dropdown on hover/focus */
+@media (hover:hover) and (pointer:fine){
+  .has-submenu:hover>.submenu,
+  .has-submenu:focus-within>.submenu{
+    opacity:1; transform:translateY(0); pointer-events:auto;
   }
 }
 
-/* Burger (hidden on desktop) */
-.nav-burger {
-  display: none; margin-left: 0.5rem;
-  font-size: 1.3rem; line-height: 1;
-  padding: 0.4rem 0.6rem; border-radius: 10px;
-  color: #fff; background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.25);
+.submenu li a{
+  display:block; padding:.5rem .6rem; border-radius:8px; font-weight:600;
+}
+.submenu li a:hover{
+  background:rgba(255,255,255,.12);
+  box-shadow:0 0 10px rgba(199,191,255,.22) inset;
 }
 
-/* Mobile drawer + scrim */
-.drawer-scrim {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-  z-index: 998;
-}
-.mobile-drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; width: 86vw; max-width: 360px;
-  background: rgba(255,255,255,0.10);
-  border-left: 1px solid rgba(255,255,255,0.25);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  transform: translateX(100%); transition: transform 240ms ease;
-  z-index: 999; box-shadow: -10px 0 30px rgba(0,0,0,0.35);
-}
-.mobile-drawer.open { transform: translateX(0); }
-.drawer-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.9rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.18);
-  font-weight: 700;
-}
-.drawer-close {
-  background: transparent; color: #fff; width: 34px; height: 34px;
-  border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; font-size: 1.1rem;
-}
-.drawer-nav { padding: 0.5rem 0.5rem 1rem; }
-.drawer-list { list-style: none; }
-.drawer-list > li > a,
-.drawer-toggle {
-  width: 100%; text-align: left; padding: 0.7rem 0.75rem; margin: 0.15rem 0;
-  background: transparent; color: #fff; border: 1px solid transparent;
-  border-radius: 10px; font-weight: 700; text-decoration: none;
-}
-.drawer-list > li > a:hover,
-.drawer-toggle:hover {
-  border-color: rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.08);
+/* ================= Mobile burger / drawer ================= */
+.nav-burger{
+  display:none; margin-left:.5rem;
+  font-size:1.3rem; line-height:1;
+  padding:.4rem .6rem; border-radius:10px;
+  color:#fff; background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.25);
 }
 
-/* Drawer collapsibles */
-.drawer-group { margin-top: 0.25rem; }
-.drawer-toggle { display: block; cursor: pointer; }
-.drawer-toggle::after { content: '▸'; float: right; }
-.drawer-toggle[aria-expanded="true"]::after { content: '▾'; }
-.drawer-submenu {
-  list-style: none; margin: 0.2rem 0 0.5rem 0; padding-left: 0.25rem;
-  max-height: 0; overflow: hidden; transition: max-height 220ms ease;
-}
-.drawer-submenu.open { max-height: 500px; }
-.drawer-submenu a {
-  display: block; padding: 0.55rem 0.75rem; margin: 0.15rem 0 0.15rem 0.25rem;
-  border-radius: 8px; font-weight: 600; text-decoration: none; color: #fff;
-}
-.drawer-submenu a:hover {
-  background: rgba(255,255,255,0.10);
-  box-shadow: 0 0 10px rgba(199,191,255,0.22) inset;
+/* Scrim sits BELOW navbar and starts under it for breathing room */
+.drawer-scrim{
+  position:fixed; left:0; right:0; top:var(--nav-height); bottom:0;
+  background:rgba(0,0,0,.45);
+  z-index:1098;
 }
 
-/* Hero */
-.hero-section {
-  background: url('nyc-banner.jpg') no-repeat center center/cover;
-  height: 80vh; display: flex; justify-content: center; align-items: center; padding: 2rem;
+/* Drawer sits BELOW navbar and starts under it so the first item isn't cramped */
+.mobile-drawer{
+  position:fixed; top:var(--nav-height); right:0; bottom:0; width:86vw; max-width:360px;
+  background:rgba(255,255,255,.10);
+  border-left:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  transform:translateX(100%); transition:transform 240ms ease;
+  z-index:1099; box-shadow:-10px 0 30px rgba(0,0,0,.35);
 }
-.hero-text {
-  text-align: center; color: #fff; background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2); padding: 2rem; border-radius: 16px;
-  backdrop-filter: blur(8px); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+.mobile-drawer.open{ transform:translateX(0); }
+.drawer-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.9rem 1rem; border-bottom:1px solid rgba(255,255,255,.18);
+  font-weight:700;
+}
+.drawer-close{
+  background:transparent; color:#fff; width:34px; height:34px;
+  border:1px solid rgba(255,255,255,.25); border-radius:10px; font-size:1.1rem;
+}
+.drawer-nav{ padding:.5rem .5rem 1rem; }
+.drawer-list{ list-style:none; }
+.drawer-list>li>a,.drawer-toggle{
+  width:100%; text-align:left; padding:.7rem .75rem; margin:.15rem 0;
+  background:transparent; color:#fff; border:1px solid transparent;
+  border-radius:10px; font-weight:700; text-decoration:none;
+}
+.drawer-list>li>a:hover,.drawer-toggle:hover{
+  border-color:rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);
+}
+.drawer-group{ margin-top:.25rem; }
+.drawer-toggle{ display:block; cursor:pointer; }
+.drawer-toggle::after{ content:'▸'; float:right; }
+.drawer-toggle[aria-expanded="true"]::after{ content:'▾'; }
+.drawer-submenu{
+  list-style:none; margin:.2rem 0 .5rem 0; padding-left:.25rem;
+  max-height:0; overflow:hidden; transition:max-height 220ms ease;
+}
+.drawer-submenu.open{ max-height:500px; }
+.drawer-submenu a{
+  display:block; padding:.55rem .75rem; margin:.15rem 0 .15rem .25rem;
+  border-radius:8px; font-weight:600; text-decoration:none; color:#fff;
+}
+.drawer-submenu a:hover{
+  background:rgba(255,255,255,.10);
+  box-shadow:0 0 10px rgba(199,191,255,.22) inset;
 }
 
-/* Cards */
-.main-content { padding: 2rem 1rem; }
-.glass-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  border-radius: 16px; padding: 2rem; margin: 2rem auto;
-  width: 90%; max-width: 900px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+/* ================= Hero ================= */
+.hero-section{
+  background:url('nyc-banner.jpg') no-repeat center center/cover;
+  height:80vh; display:flex; justify-content:center; align-items:center; padding:2rem;
+}
+.hero-text{
+  text-align:center; color:#fff; background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.2); padding:2rem; border-radius:16px;
+  backdrop-filter:blur(8px); box-shadow:0 4px 24px rgba(0,0,0,.4);
 }
 
-/* Footer */
-.glass-footer {
-  background: rgba(46, 0, 79, 0.85);
-  text-align: center; padding: 1rem 0; font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+/* ================= Cards ================= */
+.main-content{ padding:2rem 1rem; }
+.glass-card{
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(14px);
+  border-radius:16px; padding:2rem; margin:2rem auto;
+  width:90%; max-width:900px;
+  border:1px solid rgba(255,255,255,.2);
 }
 
-/* Buttons */
-.btn-learn-more {
-  display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.1); color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;
-  text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+/* ================= Footer ================= */
+.glass-footer{
+  background:rgba(46,0,79,.85);
+  text-align:center; padding:1rem 0; font-size:.9rem;
+  border-top:1px solid rgba(255,255,255,.2);
 }
-.btn-learn-more:hover { background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 10px rgba(199, 191, 255, 0.3); }
 
-/* Typography helpers */
-.about-header {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2rem; margin-bottom: 1rem; color: #ffffff;
+/* ================= Typography helpers ================= */
+.about-header{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem; margin-bottom:1rem; color:#fff;
 }
-.about-preview { font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
-.subhead { font-weight: 700; margin: 1rem 0 0.5rem; }
+.about-preview{ font-size:1.05rem; line-height:1.7; margin-bottom:1.5rem; }
+.subhead{ font-weight:700; margin:1rem 0 .5rem; }
 
-/* Responsive rules: switch to drawer under 960px */
-@media (max-width: 960px) {
-  .nav-links { display: none; }
-  .nav-burger { display: inline-block; }
-  .logo-pdu { height: 56px; }
-  .logo-nyu { height: 26px; }
+.btn-learn-more{
+  display:inline-block; margin-top:1rem; padding:.5rem 1rem;
+  background:rgba(255,255,255,.1); color:#fff;
+  border:1px solid rgba(255,255,255,.2); border-radius:8px;
+  text-decoration:none; font-weight:600; transition:all .3s ease;
+}
+.btn-learn-more:hover{ background:rgba(255,255,255,.2); box-shadow:0 0 10px rgba(199,191,255,.3); }
+
+/* ================= Responsive switch ================= */
+@media (max-width:960px){
+  .nav-links{ display:none; }
+  .nav-burger{ display:inline-block; }
+  .logo-pdu{ height:56px; }
+  .logo-nyu{ height:26px; }
 }
