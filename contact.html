@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — NYU Parliamentary Debate Union</title>
+  <meta name="description" content="Contact the NYU Parliamentary Debate Union (PDU). Anonymous quick feedback, general questions, joining, tournaments/travel, media, alumni, and confidential equity reports." />
+  <link rel="canonical" href="https://nyupdu.github.io/contact.html" />
+
+  <!-- Core site styles (already in repo) -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Contact components (new) -->
+  <link rel="stylesheet" href="assets/css/components.css" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Contact — NYU Parliamentary Debate Union">
+  <meta property="og:description" content="Anonymous feedback, questions about joining and tournaments, and confidential equity reports.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nyupdu.github.io/contact.html">
+  <meta property="og:image" content="https://nyupdu.github.io/share-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Optional: WebPage JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Contact — NYU Parliamentary Debate Union",
+    "url":"https://nyupdu.github.io/contact.html",
+    "about":{"@type":"CollegeOrUniversity","name":"NYU Parliamentary Debate Union"}
+  }
+  </script>
+</head>
+<body>
+  <!-- If your site already has a global header/nav, keep it; this page is self-contained. -->
+
+  <main id="main" class="container contact-page">
+    <!-- Hero -->
+    <section class="hero glass panel-lg">
+      <h1 class="display">Contact PDU</h1>
+      <p class="subhead">Reach out at your own pace — we’ll get you to the right place.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#general-form">General message</a>
+        <a class="btn outline" href="#equity">Equity report</a>
+      </div>
+
+      <!-- Quick-help chips -->
+      <div class="chip-row">
+        <a class="chip" href="join.html">Join Us</a>
+        <a class="chip" href="calendar.html">Calendar & Meetings</a>
+        <a class="chip" href="tournaments.html">Tournaments & Travel</a>
+        <a class="chip accent" href="#equity">Equity & Conduct</a>
+        <a class="chip" href="#general-form">General Questions</a>
+        <a class="chip" href="#media">Media & Partnerships</a>
+        <a class="chip" href="#alumni">Alumni</a>
+      </div>
+    </section>
+
+    <!-- Routing cards -->
+    <section class="grid cards">
+      <!-- General -->
+      <article class="card glass">
+        <h2>General Questions</h2>
+        <p>Not sure where to start? Send a short note and we’ll route it.</p>
+        <div class="actions">
+          <a class="btn small" href="#general-form">Write a message</a>
+          <!-- Replace with role alias (recommended) -->
+          <a class="link" href="mailto:info@example.org?subject=PDU%20General%20Inquiry">Or email info@example.org</a>
+        </div>
+      </article>
+
+      <!-- Join -->
+      <article class="card glass" id="join-card">
+        <h2>Join Us</h2>
+        <p>No experience needed. Tell us a bit about you — or just drop into a meeting.</p>
+        <div class="actions">
+          <a class="btn small" href="#general-form" data-topic="Join">Send a quick note</a>
+          <a class="link" href="join.html">How to join →</a>
+        </div>
+      </article>
+
+      <!-- Tournaments -->
+      <article class="card glass" id="tournaments-card">
+        <h2>Tournaments & Travel</h2>
+        <p>Questions about TIDs, pairings, or travel? We’ve got you.</p>
+        <div class="actions">
+          <a class="btn small" href="#general-form" data-topic="Tournaments">Ask a tournaments question</a>
+          <a class="link" href="tournaments.html">Tournaments guide →</a>
+        </div>
+      </article>
+
+      <!-- Media -->
+      <article class="card glass" id="media">
+        <h2>Media & Partnerships</h2>
+        <p>Press, partnerships, and speaking requests.</p>
+        <div class="actions">
+          <!-- Replace with role alias (recommended) -->
+          <a class="btn small" href="mailto:comms@example.org?subject=PDU%20Media%20Inquiry">Email our comms team</a>
+        </div>
+      </article>
+
+      <!-- Alumni -->
+      <article class="card glass" id="alumni">
+        <h2>Alumni</h2>
+        <p>Stay connected — events, mentoring, and ways to support.</p>
+        <div class="actions">
+          <a class="btn small" href="#general-form" data-topic="Alumni">Say hello</a>
+        </div>
+      </article>
+
+      <!-- Equity -->
+      <article class="card glass accent-border" id="equity">
+        <h2>Equity & Conduct (Confidential)</h2>
+        <p>If something made you uncomfortable or unsafe, we want to know. You can report anonymously. Reports are reviewed by the VP Equity and Presidents.</p>
+        <!-- Google Form embed (anonymous mode) — replace FORM_ID below -->
+        <div class="embed-wrap">
+          <iframe title="PDU Equity Report (Confidential)" src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true" width="640" height="840" frameborder="0">Loading…</iframe>
+        </div>
+        <p class="small">Not monitored 24/7. For emergencies, use NYU resources immediately.</p>
+        <details class="small">
+          <summary>Privacy & Process</summary>
+          <p>We do not require your name or email. Submissions are accessible only to the VP Equity and Presidents for follow-up. You may choose to remain anonymous.</p>
+        </details>
+      </article>
+    </section>
+
+    <!-- Inline general/quick contact (anonymous by default) -->
+    <section class="panel glass" id="general-form">
+      <h2>Send a General Message</h2>
+      <p class="muted">Anonymous by default. Include your contact info only if you want a reply.</p>
+
+      <form class="pdu-form" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="general">
+        <!-- Anti-spam -->
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
+        <input type="hidden" name="_submit_start" value="" />
+
+        <div class="row">
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option value="General" selected>General</option>
+            <option value="Join">Join</option>
+            <option value="Tournaments">Tournaments</option>
+            <option value="Travel">Travel</option>
+            <option value="Media">Media</option>
+            <option value="Alumni">Alumni</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label for="message">Message <span aria-hidden="true">•</span></label>
+          <textarea id="message" name="message" minlength="10" maxlength="2000" required placeholder="Type your note (no login required)…"></textarea>
+        </div>
+
+        <details class="row">
+          <summary>Add contact info (optional)</summary>
+          <div class="split">
+            <div>
+              <label for="name">Name (optional)</label>
+              <input id="name" name="name" type="text" autocomplete="name" />
+            </div>
+            <div>
+              <label for="email">Email (optional)</label>
+              <input id="email" name="email" type="email" autocomplete="email" />
+            </div>
+          </div>
+        </details>
+
+        <div class="row actions">
+          <button class="btn primary" type="submit">Send anonymously</button>
+          <button class="btn outline" type="reset">Clear</button>
+        </div>
+
+        <p class="tiny muted">We don’t collect personal info unless you provide it. Third-party form services may log IP addresses; we don’t use or share them.</p>
+      </form>
+    </section>
+
+    <!-- Pre-contact FAQ -->
+    <section class="panel glass">
+      <h2>Quick Answers</h2>
+      <ul class="faq">
+        <li><strong>Experience required?</strong> No — we train from zero.</li>
+        <li><strong>Costs?</strong> Registration, travel, and lodging are covered.</li>
+        <li><strong>Meetings?</strong> Mondays (Lessons) and Wednesdays (Training) at 7 PM. </li>
+        <li><strong>Accessibility?</strong> Tell us what you need — we’ll accommodate.</li>
+        <li><strong>Calendar?</strong> See the schedule and subscribe on our Calendar page.</li>
+      </ul>
+      <p class="tiny muted">Response time: 1–2 business days during term.</p>
+    </section>
+
+    <!-- Page-level quick feedback -->
+    <section class="panel glass">
+      <h3 class="h2">Was this page helpful?</h3>
+      <form class="pdu-form micro" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="page_feedback">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
+        <input type="hidden" name="_submit_start" value="" />
+        <div class="thumbs">
+          <button type="button" class="thumb" data-value="up" aria-label="Yes">👍</button>
+          <button type="button" class="thumb" data-value="down" aria-label="No">👎</button>
+        </div>
+        <label class="sr-only" for="note">Optional note</label>
+        <textarea id="note" name="note" maxlength="240" placeholder="Add a short note (optional)"></textarea>
+        <div class="actions">
+          <button class="btn small" type="submit">Send</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Quick Feedback bubble (page-scoped for trial; can be made global later) -->
+  <button class="feedback-fab" id="feedbackFab" aria-label="Open quick feedback">
+    <!-- inline svg chat bubble -->
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v14l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+  </button>
+
+  <aside class="quick-drawer" id="quickDrawer" aria-hidden="true" role="dialog" aria-label="Quick Feedback">
+    <div class="qd-inner glass">
+      <header class="qd-head">
+        <h2 class="h3">Quick Feedback</h2>
+        <button class="icon-btn" id="qdClose" aria-label="Close quick feedback">✕</button>
+      </header>
+      <form class="pdu-form" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="quick_feedback">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
+        <input type="hidden" name="_submit_start" value="" />
+        <div class="row">
+          <label for="qd-message">Message</label>
+          <textarea id="qd-message" name="message" minlength="10" maxlength="1000" required placeholder="Type your note — no name or email needed."></textarea>
+        </div>
+        <div class="row">
+          <label for="qd-topic">Topic (optional)</label>
+          <select id="qd-topic" name="topic">
+            <option value="" selected>—</option>
+            <option>General</option>
+            <option>Join</option>
+            <option>Tournaments</option>
+            <option>Travel</option>
+            <option>Media</option>
+            <option>Alumni</option>
+          </select>
+        </div>
+        <div class="row actions">
+          <button class="btn primary" type="submit">Send</button>
+        </div>
+        <p class="tiny muted">Anonymous by default. We’ll use your note to improve.</p>
+      </form>
+    </div>
+  </aside>
+
+  <!-- Toasts (ARIA live region) -->
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts -->
+  <script defer src="assets/js/forms.js"></script>
+</body>
+</html>
