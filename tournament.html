@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tournaments | NYU PDU</title>
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Page-local styles (scoped) -->
+  <style>
+    /* Layout helpers */
+    .page-wrap { width: 95%; max-width: 1100px; margin: 0 auto; }
+    .cta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.6rem; }
+
+    /* Hero */
+    .hero-compact { height: 35vh; background: linear-gradient(to bottom right, #2e004f, #4a007f); }
+    .page-title { color:#fff; font-family:'DM Serif Display',serif; font-size:3.2rem; text-align:center; letter-spacing:.3px;
+      text-shadow:0 0 10px rgba(199,191,255,.35), 0 0 24px rgba(199,191,255,.25), 0 4px 24px rgba(0,0,0,.45); }
+    .page-subtitle { margin-top:.5rem; font-size:1.05rem; opacity:.95; text-align:center; }
+
+    /* Chips (reuse your link-chip look) */
+    .link-chip { display:inline-block; padding:.45rem .85rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px; transition:all .25s ease; }
+    .link-chip:hover { background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
+
+    /* Status pills */
+    .pill { display:inline-block; padding:.28rem .6rem; border-radius:999px; font-weight:800; letter-spacing:.2px; font-size:.85rem; border:1px solid; }
+    .pill.open       { background:rgba(80,200,120,.12);  border-color:rgba(80,200,120,.45); }
+    .pill.tentative  { background:rgba(255,200,80,.12);  border-color:rgba(255,200,80,.45); }
+    .pill.confirmed  { background:rgba(120,180,255,.12); border-color:rgba(120,180,255,.45); }
+
+    /* Featured tournament */
+    .feature-card {
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:1.25rem;
+      background:linear-gradient(135deg, rgba(255,255,255,.12), rgba(199,191,255,.10));
+      border:1px solid rgba(255,255,255,.25); border-radius:20px;
+      box-shadow:0 14px 36px rgba(0,0,0,.32), inset 0 0 24px rgba(199,191,255,.12);
+      padding:1.25rem 1.25rem;
+    }
+    .feature-left h3 { font-family:'DM Serif Display',serif; font-size:1.9rem; margin-bottom:.35rem; }
+    .muted { opacity:.9; }
+    .meta { display:flex; flex-wrap:wrap; gap:.5rem; margin:.35rem 0 .75rem; }
+
+    .feature-right {
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.22); border-radius:16px; padding:1rem;
+      display:flex; flex-direction:column; gap:.5rem; justify-content:center;
+    }
+    .feature-right h4 { font-family:'DM Serif Display',serif; margin-bottom:.25rem; }
+
+    /* Cards grid */
+    .targets-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; }
+    .target-card {
+      border:1px solid rgba(255,255,255,.25); border-radius:16px;
+      background:rgba(255,255,255,.10); backdrop-filter:blur(10px);
+      box-shadow:0 10px 26px rgba(0,0,0,.28);
+      padding:1rem;
+      display:flex; flex-direction:column; gap:.5rem;
+    }
+    .target-card h4 { font-family:'DM Serif Display',serif; margin-bottom:.15rem; }
+
+    /* Accordions */
+    .acc details{
+      border:1px solid rgba(255,255,255,.25); border-radius:12px; padding:.75rem 1rem; background:rgba(255,255,255,.08);
+      margin:.5rem 0;
+    }
+    .acc summary{ cursor:pointer; font-weight:800; }
+    .acc summary::-webkit-details-marker{ display:none; }
+    .acc summary:after{ content:'▾'; float:right; opacity:.9; }
+    .acc details[open] summary:after{ content:'▴'; }
+
+    /* Mobile tweaks */
+    @media (max-width: 960px){
+      .page-title { font-size:2.4rem; }
+      .feature-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html" aria-current="page">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings (Monthly)</a></li>
+              <li role="none"><a role="menuitem" href="join.html#months">Month Cards</a></li>
+              <li role="none"><a role="menuitem" href="join.html#partners">Partners</a></li>
+              <li role="none"><a role="menuitem" href="join.html#myths">Costs & Support</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html" aria-current="page">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="join.html#meetings">Meetings (Monthly)</a></li>
+            <li><a href="join.html#months">Month Cards</a></li>
+            <li><a href="join.html#partners">Partners</a></li>
+            <li><a href="join.html#myths">Costs & Support</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section hero-compact">
+    <div>
+      <h1 class="page-title">Tournaments</h1>
+      <p class="page-subtitle">Travel, compete, and represent NYU on the APDA circuit.</p>
+      <div class="cta-row" style="justify-content:center; margin-top:.75rem;">
+        <a class="link-chip" href="calendar.html">Open Calendar →</a>
+        <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID Folder (Drive) →</a>
+        <a class="link-chip" href="equity.html">Equity & CW Policy →</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content page-wrap">
+    <!-- Featured next tournament -->
+    <section class="glass-card reveal">
+      <div class="feature-card">
+        <div class="feature-left">
+          <div class="meta">
+            <span class="pill open">Sign-ups Open</span>
+            <span class="chip">New Haven, CT</span>
+            <span class="chip">Fri–Sat (Placeholder)</span>
+          </div>
+          <h3>Yale IV (Placeholder)</h3>
+          <p class="muted">A classic early-fall tournament with a large field and a brisk break. Great for motivated pairs and confident novices.</p>
+          <ul class="section-list" style="margin-top:.6rem;">
+            <li><strong>Interest form closes:</strong> Sep 20, 11:59 PM ET (placeholder)</li>
+            <li><strong>Travel window:</strong> Fri afternoon → Sat late night (placeholder)</li>
+            <li><strong>Funding:</strong> PDU covers travel, registration, lodging.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:.75rem;">
+            <a class="link-chip" href="#" title="Placeholder link for interest form">Interest Form →</a>
+            <a class="link-chip" href="calendar.html">Add/See on Calendar →</a>
+            <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID (Drive) →</a>
+          </div>
+        </div>
+
+        <aside class="feature-right">
+          <h4>What to expect</h4>
+          <ul class="section-list">
+            <li>5 prelim rounds, then break to elims</li>
+            <li>Meals typically provided by host</li>
+            <li>Pack formal casual; bring photo ID</li>
+            <li>Equity brief at assembly (CWs, opt-outs)</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Upcoming Targets grid -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Upcoming Targets</h3>
+      <div class="targets-grid" role="list">
+        <!-- Card 1: Sign-ups Open (shows Interest Form) -->
+        <article class="target-card" role="listitem">
+          <div class="meta">
+            <span class="pill open">Sign-ups Open</span>
+            <span class="chip">Oct 3–4 (Placeholder)</span>
+          </div>
+          <h4>Princeton Invitational</h4>
+          <p class="about-preview" style="margin:.25rem 0 .4rem;">Balanced field, good for new partnerships and experienced teams alike.</p>
+          <div class="cta-row">
+            <a class="link-chip" href="#" title="Placeholder link for interest form">Interest Form →</a>
+            <a class="link-chip" href="calendar.html">Calendar →</a>
+            <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID →</a>
+          </div>
+        </article>
+
+        <!-- Card 2: Tentative -->
+        <article class="target-card" role="listitem">
+          <div class="meta">
+            <span class="pill tentative">Tentative</span>
+            <span class="chip">Oct 24–25 (Placeholder)</span>
+          </div>
+          <h4>Harvard Intervarsity</h4>
+          <p class="about-preview" style="margin:.25rem 0 .4rem;">Large, competitive field; good for experienced pairs aiming to break.</p>
+          <div class="cta-row">
+            <a class="link-chip" href="calendar.html">Calendar →</a>
+            <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID →</a>
+          </div>
+        </article>
+
+        <!-- Card 3: Confirmed -->
+        <article class="target-card" role="listitem">
+          <div class="meta">
+            <span class="pill confirmed">Roster Confirmed</span>
+            <span class="chip">Nov 7–8 (Placeholder)</span>
+          </div>
+          <h4>Columbia Fall Open</h4>
+          <p class="about-preview" style="margin:.25rem 0 .4rem;">Close to home with strong judging pool; good learning weekend.</p>
+          <div class="cta-row">
+            <a class="link-chip" href="calendar.html">Calendar →</a>
+            <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID →</a>
+          </div>
+        </article>
+
+        <!-- Card 4: Tentative -->
+        <article class="target-card" role="listitem">
+          <div class="meta">
+            <span class="pill tentative">Tentative</span>
+            <span class="chip">Dec 5–6 (Placeholder)</span>
+          </div>
+          <h4>Northeastern Open</h4>
+          <p class="about-preview" style="margin:.25rem 0 .4rem;">Great late-semester reps; friendly tournament culture.</p>
+          <div class="cta-row">
+            <a class="link-chip" href="calendar.html">Calendar →</a>
+            <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">TID →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- How APDA tournaments work -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">How APDA Tournaments Work (60-second primer)</h3>
+      <ul class="section-list">
+        <li><strong>Schedule:</strong> Most run Fri–Sat (occasional Sun). Expect an opening assembly, 5+ prelim rounds, then elims.</li>
+        <li><strong>Break:</strong> Teams with strong prelim records “break” to elimination rounds; exact cut depends on field size.</li>
+        <li><strong>Speaks & ranks:</strong> Judges award speaker points and ranks each round; totals determine breaks and awards.</li>
+        <li><strong>Judging:</strong> Experienced judges “flow” rounds, weigh comparative strength, assign speaks, and call winners.</li>
+        <li><strong>Pairing:</strong> A tab system pairs teams each round based on records and constraints.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="beginner.html">New? Read the Beginner Guide →</a>
+      </div>
+    </section>
+
+    <!-- Eligibility & Selection -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Eligibility & Selection</h3>
+      <p class="about-preview">
+        To be considered for a tournament, meet the <strong>rolling three-week minimum</strong> before the sign-up deadline:
+      </p>
+      <ul class="section-list">
+        <li>At least <strong>1 Monday Lesson</strong> + <strong>2 Wednesday Training</strong> meetings</li>
+        <li>Selection signals: commitment, experience balance, learning opportunity, roster size & logistics</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="join.html#meetings">See meetings →</a>
+        <a class="link-chip" href="calendar.html">Check the calendar →</a>
+      </div>
+    </section>
+
+    <!-- TIDs -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Tournament Info Documents (TIDs)</h3>
+      <p class="about-preview">
+        Each tournament has a TID—a single source of truth with timelines, travel, lodging, maps, schedules, packing lists, equity reminders, and contacts.
+        We’ll publish each TID to a public Drive folder once the roster is set.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="https://drive.google.com/drive/folders/1SIot57czQp_hxY6Bx38I_SN4deVhbvDo?usp=drive_link" target="_blank" rel="noopener">Open TID Folder (Drive) →</a>
+      </div>
+    </section>
+
+    <!-- Logistics & Costs -->
+    <section class="glass-card reveal acc">
+      <h3 class="about-header">Logistics & Costs</h3>
+      <details>
+        <summary>Costs</summary>
+        <p class="about-preview" style="margin-top:.5rem;">$0 to compete. PDU covers travel, registration, and lodging.</p>
+      </details>
+      <details>
+        <summary>Travel & ID</summary>
+        <p class="about-preview" style="margin-top:.5rem;">We travel by train/bus/van depending on distance. Bring a valid photo ID. Exact meet-up times are in each TID.</p>
+      </details>
+      <details>
+        <summary>Meals</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Hosts usually provide lunch on Day 1 and breakfast/lunch on Day 2. Pack snacks and a water bottle.</p>
+      </details>
+      <details>
+        <summary>Absence letters</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Need a letter for professors? Contact the Operations Director—we’ll coordinate.</p>
+      </details>
+      <details>
+        <summary>Day-of updates</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Urgent changes appear on the Calendar and via email/Discord. Check both during travel weekends.</p>
+      </details>
+    </section>
+
+    <!-- Partners & Roles -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Partners & Roles</h3>
+      <p class="about-preview">Partners are requested or assigned <strong>in person</strong> on a per-tournament basis.</p>
+      <ul class="section-list">
+        <li>Have a preferred partner? Tell us—we’ll try to honor it based on availability.</li>
+        <li>New or flexible? We’ll pair you with someone compatible.</li>
+        <li>Not a fit? Partnerships can change between events—normal.</li>
+      </ul>
+    </section>
+
+    <!-- Equity & Safety -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Equity & Safety</h3>
+      <p class="about-preview">
+        Follow host equity policies and PDU standards: debate ideas, not identities; use Content Warnings (CWs) and honor opt-outs. Report concerns to the Equity Team or a PDU officer immediately.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="equity.html">Read PDU Equity Policy →</a>
+      </div>
+    </section>
+
+    <!-- Results placeholder -->
+    <section class="glass-card reveal">
+      <h3 class="about-header">Results & Highlights</h3>
+      <p class="about-preview">We’ll post monthly highlights here—breaks, speaker awards, and photos.</p>
+    </section>
+  </main>
+
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scripts (reuse behaviors from other pages) -->
+  <script>
+    // Reveal-on-scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    // Keep --nav-height accurate
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    // Mobile drawer behavior
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+
+    // Desktop submenu a11y
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+  </script>
+</body>
+</html>
