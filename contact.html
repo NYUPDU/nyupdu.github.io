@@ -1,255 +1,443 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — NYU Parliamentary Debate Union</title>
-  <meta name="description" content="Contact the NYU Parliamentary Debate Union (PDU). Anonymous quick feedback, general questions, joining, tournaments/travel, media, alumni, and confidential equity reports." />
-  <link rel="canonical" href="https://nyupdu.github.io/contact.html" />
+  <!-- ===== Meta / Head ===== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | NYU PDU</title>
 
-  <!-- Core site styles (already in repo) -->
+  <!-- Favicon + Fonts + Global Styles -->
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <!-- IMPORTANT: matches other pages’ CSS filename -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Contact components (new) -->
-  <link rel="stylesheet" href="assets/css/components.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Contact — NYU Parliamentary Debate Union">
-  <meta property="og:description" content="Anonymous feedback, questions about joining and tournaments, and confidential equity reports.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://nyupdu.github.io/contact.html">
-  <meta property="og:image" content="https://nyupdu.github.io/share-card.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+  <!-- ===== Page-local styles (scoped to Contact only) =====
+       Keep this minimal; everything else relies on global classes for cohesion. -->
+  <style>
+    .page-wrap { width: 95%; max-width: 1100px; margin: 0 auto; }
 
-  <!-- Optional: WebPage JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebPage",
-    "name":"Contact — NYU Parliamentary Debate Union",
-    "url":"https://nyupdu.github.io/contact.html",
-    "about":{"@type":"CollegeOrUniversity","name":"NYU Parliamentary Debate Union"}
-  }
-  </script>
+    /* Hero uses global .hero-compact and .page-title for consistency */
+
+    /* Layout for the main contact content */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 1rem;
+    }
+    @media (max-width: 960px){
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Direct contacts grid */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+    }
+    @media (max-width: 720px){
+      .contacts-grid { grid-template-columns: 1fr; }
+    }
+    .contact-card {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
+      padding: .9rem 1rem;
+      backdrop-filter: blur(10px);
+    }
+    .contact-role { font-weight: 800; letter-spacing: .2px; }
+    .contact-name { opacity: .95; margin: .2rem 0 .35rem; }
+    .contact-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    /* Form styling (glass inputs) */
+    .form-note { opacity: .92; margin-top: .2rem; font-size: .96rem; }
+    .form-row { display: grid; gap: .6rem; margin-top: .6rem; }
+    .form-split { display: grid; gap: .6rem; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 600px){ .form-split { grid-template-columns: 1fr; } }
+
+    .input, .textarea, .select {
+      width: 100%;
+      padding: .75rem .85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      outline: none;
+      font: inherit;
+      backdrop-filter: blur(8px);
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .input::placeholder, .textarea::placeholder { color: rgba(255,255,255,.75); }
+    .input:focus, .textarea:focus, .select:focus {
+      border-color: rgba(199,191,255,.55);
+      box-shadow: 0 0 12px rgba(199,191,255,.28);
+      background: rgba(255,255,255,.10);
+    }
+    .textarea { min-height: 160px; resize: vertical; }
+    .helper { font-size: .9rem; opacity: .85; margin-top: .25rem; }
+
+    /* Success / error banners */
+    .banner {
+      display: none;
+      margin-top: .75rem;
+      padding: .75rem .9rem;
+      border-radius: 12px;
+      border: 1px solid;
+    }
+    .banner.show { display: block; }
+    .banner.success {
+      background: rgba(80, 200, 120, .12);
+      border-color: rgba(80, 200, 120, .45);
+    }
+    .banner.error {
+      background: rgba(255, 120, 120, .12);
+      border-color: rgba(255, 120, 120, .45);
+    }
+
+    /* Small chips row spacing reuse */
+    .cta-row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+  </style>
 </head>
-<body>
-  <!-- If your site already has a global header/nav, keep it; this page is self-contained. -->
 
-  <main id="main" class="container contact-page">
-    <!-- Hero -->
-    <section class="hero glass panel-lg">
-      <h1 class="display">Contact PDU</h1>
-      <p class="subhead">Reach out at your own pace — we’ll get you to the right place.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="#general-form">General message</a>
-        <a class="btn outline" href="#equity">Equity report</a>
+<body id="top">
+  <!-- ===== Navbar (matches site structure for cohesion) ===== -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <!-- NYU (left on mobile) -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Quick-help chips -->
-      <div class="chip-row">
-        <a class="chip" href="join.html">Join Us</a>
-        <a class="chip" href="calendar.html">Calendar & Meetings</a>
-        <a class="chip" href="tournaments.html">Tournaments & Travel</a>
-        <a class="chip accent" href="#equity">Equity & Conduct</a>
-        <a class="chip" href="#general-form">General Questions</a>
-        <a class="chip" href="#media">Media & Partnerships</a>
-        <a class="chip" href="#alumni">Alumni</a>
+      <!-- Desktop links center -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings (Monthly)</a></li>
+              <li role="none"><a role="menuitem" href="join.html#months">Month Cards</a></li>
+              <li role="none"><a role="menuitem" href="join.html#partners">Partners</a></li>
+              <li role="none"><a role="menuitem" href="join.html#myths">Costs & Support</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <!-- Mark Contact as the current page -->
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- PDU logo (left on desktop; centered on mobile) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
       </div>
-    </section>
 
-    <!-- Routing cards -->
-    <section class="grid cards">
-      <!-- General -->
-      <article class="card glass">
-        <h2>General Questions</h2>
-        <p>Not sure where to start? Send a short note and we’ll route it.</p>
-        <div class="actions">
-          <a class="btn small" href="#general-form">Write a message</a>
-          <!-- Replace with role alias (recommended) -->
-          <a class="link" href="mailto:info@example.org?subject=PDU%20General%20Inquiry">Or email info@example.org</a>
-        </div>
-      </article>
+      <!-- Mobile hamburger (right on mobile; hidden on desktop) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
 
-      <!-- Join -->
-      <article class="card glass" id="join-card">
-        <h2>Join Us</h2>
-        <p>No experience needed. Tell us a bit about you — or just drop into a meeting.</p>
-        <div class="actions">
-          <a class="btn small" href="#general-form" data-topic="Join">Send a quick note</a>
-          <a class="link" href="join.html">How to join →</a>
-        </div>
-      </article>
+  <!-- Mobile drawer (same structure as other pages) -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
 
-      <!-- Tournaments -->
-      <article class="card glass" id="tournaments-card">
-        <h2>Tournaments & Travel</h2>
-        <p>Questions about TIDs, pairings, or travel? We’ve got you.</p>
-        <div class="actions">
-          <a class="btn small" href="#general-form" data-topic="Tournaments">Ask a tournaments question</a>
-          <a class="link" href="tournaments.html">Tournaments guide →</a>
-        </div>
-      </article>
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
 
-      <!-- Media -->
-      <article class="card glass" id="media">
-        <h2>Media & Partnerships</h2>
-        <p>Press, partnerships, and speaking requests.</p>
-        <div class="actions">
-          <!-- Replace with role alias (recommended) -->
-          <a class="btn small" href="mailto:comms@example.org?subject=PDU%20Media%20Inquiry">Email our comms team</a>
-        </div>
-      </article>
+        <li><a href="tournaments.html">Tournaments</a></li>
 
-      <!-- Alumni -->
-      <article class="card glass" id="alumni">
-        <h2>Alumni</h2>
-        <p>Stay connected — events, mentoring, and ways to support.</p>
-        <div class="actions">
-          <a class="btn small" href="#general-form" data-topic="Alumni">Say hello</a>
-        </div>
-      </article>
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="join.html#meetings">Meetings (Monthly)</a></li>
+            <li><a href="join.html#months">Month Cards</a></li>
+            <li><a href="join.html#partners">Partners</a></li>
+            <li><a href="join.html#myths">Costs & Support</a></li>
+          </ul>
+        </li>
 
-      <!-- Equity -->
-      <article class="card glass accent-border" id="equity">
-        <h2>Equity & Conduct (Confidential)</h2>
-        <p>If something made you uncomfortable or unsafe, we want to know. You can report anonymously. Reports are reviewed by the VP Equity and Presidents.</p>
-        <!-- Google Form embed (anonymous mode) — replace FORM_ID below -->
-        <div class="embed-wrap">
-          <iframe title="PDU Equity Report (Confidential)" src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true" width="640" height="840" frameborder="0">Loading…</iframe>
-        </div>
-        <p class="small">Not monitored 24/7. For emergencies, use NYU resources immediately.</p>
-        <details class="small">
-          <summary>Privacy & Process</summary>
-          <p>We do not require your name or email. Submissions are accessible only to the VP Equity and Presidents for follow-up. You may choose to remain anonymous.</p>
-        </details>
-      </article>
-    </section>
-
-    <!-- Inline general/quick contact (anonymous by default) -->
-    <section class="panel glass" id="general-form">
-      <h2>Send a General Message</h2>
-      <p class="muted">Anonymous by default. Include your contact info only if you want a reply.</p>
-
-      <form class="pdu-form" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="general">
-        <!-- Anti-spam -->
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
-        <input type="hidden" name="_submit_start" value="" />
-
-        <div class="row">
-          <label for="topic">Topic</label>
-          <select id="topic" name="topic">
-            <option value="General" selected>General</option>
-            <option value="Join">Join</option>
-            <option value="Tournaments">Tournaments</option>
-            <option value="Travel">Travel</option>
-            <option value="Media">Media</option>
-            <option value="Alumni">Alumni</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div class="row">
-          <label for="message">Message <span aria-hidden="true">•</span></label>
-          <textarea id="message" name="message" minlength="10" maxlength="2000" required placeholder="Type your note (no login required)…"></textarea>
-        </div>
-
-        <details class="row">
-          <summary>Add contact info (optional)</summary>
-          <div class="split">
-            <div>
-              <label for="name">Name (optional)</label>
-              <input id="name" name="name" type="text" autocomplete="name" />
-            </div>
-            <div>
-              <label for="email">Email (optional)</label>
-              <input id="email" name="email" type="email" autocomplete="email" />
-            </div>
-          </div>
-        </details>
-
-        <div class="row actions">
-          <button class="btn primary" type="submit">Send anonymously</button>
-          <button class="btn outline" type="reset">Clear</button>
-        </div>
-
-        <p class="tiny muted">We don’t collect personal info unless you provide it. Third-party form services may log IP addresses; we don’t use or share them.</p>
-      </form>
-    </section>
-
-    <!-- Pre-contact FAQ -->
-    <section class="panel glass">
-      <h2>Quick Answers</h2>
-      <ul class="faq">
-        <li><strong>Experience required?</strong> No — we train from zero.</li>
-        <li><strong>Costs?</strong> Registration, travel, and lodging are covered.</li>
-        <li><strong>Meetings?</strong> Mondays (Lessons) and Wednesdays (Training) at 7 PM. </li>
-        <li><strong>Accessibility?</strong> Tell us what you need — we’ll accommodate.</li>
-        <li><strong>Calendar?</strong> See the schedule and subscribe on our Calendar page.</li>
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
       </ul>
-      <p class="tiny muted">Response time: 1–2 business days during term.</p>
+    </nav>
+  </aside>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero-section hero-compact">
+    <div class="page-wrap">
+      <h1 class="page-title">Contact PDU</h1>
+      <p class="page-subtitle">Reach a person directly—or leave anonymous feedback in seconds.</p>
+    </div>
+  </section>
+
+  <main class="page-wrap">
+    <!-- ===== Quick Contacts (direct people) ===== -->
+    <section class="glass-card reveal" aria-labelledby="quick-contacts">
+      <h3 id="quick-contacts" class="about-header">Direct Contacts</h3>
+      <p class="about-preview">Message an officer directly for the fastest help. (Replace with real names, emails, and Discord handles.)</p>
+
+      <div class="contacts-grid" style="margin-top:.75rem;">
+        <article class="contact-card">
+          <div class="contact-role">President</div>
+          <div class="contact-name">First Last</div>
+          <div class="contact-row">
+            <a class="link-chip" href="mailto:president@example.edu">Email →</a>
+            <a class="link-chip" href="#" title="Discord handle placeholder">@president-handle</a>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <div class="contact-role">Operations</div>
+          <div class="contact-name">First Last</div>
+          <div class="contact-row">
+            <a class="link-chip" href="mailto:operations@example.edu">Email →</a>
+            <a class="link-chip" href="#" title="Discord handle placeholder">@ops-handle</a>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <div class="contact-role">Communications</div>
+          <div class="contact-name">First Last</div>
+          <div class="contact-row">
+            <a class="link-chip" href="mailto:communications@example.edu">Email →</a>
+            <a class="link-chip" href="#" title="Discord handle placeholder">@comms-handle</a>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <div class="contact-role">Equity</div>
+          <div class="contact-name">First Last</div>
+          <div class="contact-row">
+            <a class="link-chip" href="mailto:equity@example.edu">Email →</a>
+            <a class="link-chip" href="#" title="Discord handle placeholder">@equity-handle</a>
+          </div>
+          <p class="helper">For time-sensitive concerns at an event, speak to any officer in person when safe.</p>
+        </article>
+      </div>
+
+      <!-- Optional generic inbox (remove if you don't use one) -->
+      <div class="cta-row" style="margin-top:.75rem;">
+        <a class="btn-secondary" href="mailto:pdu@example.edu">General club inbox</a>
+      </div>
     </section>
 
-    <!-- Page-level quick feedback -->
-    <section class="panel glass">
-      <h3 class="h2">Was this page helpful?</h3>
-      <form class="pdu-form micro" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="page_feedback">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
-        <input type="hidden" name="_submit_start" value="" />
-        <div class="thumbs">
-          <button type="button" class="thumb" data-value="up" aria-label="Yes">👍</button>
-          <button type="button" class="thumb" data-value="down" aria-label="No">👎</button>
+    <!-- ===== Anonymous Feedback (static form) ===== -->
+    <section class="glass-card reveal" aria-labelledby="anon-feedback">
+      <h3 id="anon-feedback" class="about-header">Anonymous Feedback</h3>
+      <p class="about-preview">
+        No sign-in, no name required. Use this for quick suggestions, website bugs, or non-urgent concerns.
+      </p>
+
+      <!-- Success & error banners -->
+      <div id="formSuccess" class="banner success" role="status" aria-live="polite">
+        Thank you — your feedback was sent. We appreciate it.
+      </div>
+      <div id="formError" class="banner error" role="alert" aria-live="assertive">
+        Sorry, something went wrong. Please try again later.
+      </div>
+
+      <!--
+        NOTE:
+        1) Replace action with your real Formspree endpoint.
+        2) This JS intercepts submission to keep users on-site and show a success state.
+        3) If you prefer Google Forms, you can embed an <iframe> below (see commented block).
+      -->
+      <form id="feedbackForm" class="form-row" action="https://formspree.io/f/your-id" method="POST" novalidate>
+        <!-- Anti-bot honeypot (hidden from users) -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none;">
+
+        <div class="form-split">
+          <label>
+            <span class="helper">Topic (optional)</span>
+            <select class="select" name="topic">
+              <option value="">— Choose a topic —</option>
+              <option>General feedback</option>
+              <option>Website bug</option>
+              <option>Practice/meetings</option>
+              <option>Tournament logistics</option>
+              <option>Equity (non-urgent)</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="helper">Reply email (optional)</span>
+            <input class="input" type="email" name="email" placeholder="Add if you'd like a response" />
+          </label>
         </div>
-        <label class="sr-only" for="note">Optional note</label>
-        <textarea id="note" name="note" maxlength="240" placeholder="Add a short note (optional)"></textarea>
-        <div class="actions">
-          <button class="btn small" type="submit">Send</button>
+
+        <label>
+          <span class="helper">Your message</span>
+          <textarea class="textarea" name="message" required placeholder="Share your idea, issue, or suggestion"></textarea>
+        </label>
+
+        <div class="helper">
+          Please avoid sensitive personal data here; for urgent equity/safety concerns, contact Equity or an officer directly.
+        </div>
+
+        <div class="cta-row">
+          <button class="btn-primary" type="submit">Send feedback</button>
+          <a class="link-chip" href="#" id="clearForm">Clear</a>
         </div>
       </form>
+
+      <!-- Optional: swap in Google Forms instead of Formspree -->
+      <!--
+      <div style="margin-top:1rem;">
+        <iframe src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+                width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0">
+          Loading…
+        </iframe>
+      </div>
+      -->
     </section>
   </main>
 
-  <!-- Quick Feedback bubble (page-scoped for trial; can be made global later) -->
-  <button class="feedback-fab" id="feedbackFab" aria-label="Open quick feedback">
-    <!-- inline svg chat bubble -->
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v14l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
-  </button>
+  <!-- Footer CTA band (omit, we follow other inner pages that skip the CTA band) -->
 
-  <aside class="quick-drawer" id="quickDrawer" aria-hidden="true" role="dialog" aria-label="Quick Feedback">
-    <div class="qd-inner glass">
-      <header class="qd-head">
-        <h2 class="h3">Quick Feedback</h2>
-        <button class="icon-btn" id="qdClose" aria-label="Close quick feedback">✕</button>
-      </header>
-      <form class="pdu-form" data-endpoint="https://formspree.io/f/YOUR_GENERAL_ENDPOINT" data-form-name="quick_feedback">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
-        <input type="hidden" name="_submit_start" value="" />
-        <div class="row">
-          <label for="qd-message">Message</label>
-          <textarea id="qd-message" name="message" minlength="10" maxlength="1000" required placeholder="Type your note — no name or email needed."></textarea>
-        </div>
-        <div class="row">
-          <label for="qd-topic">Topic (optional)</label>
-          <select id="qd-topic" name="topic">
-            <option value="" selected>—</option>
-            <option>General</option>
-            <option>Join</option>
-            <option>Tournaments</option>
-            <option>Travel</option>
-            <option>Media</option>
-            <option>Alumni</option>
-          </select>
-        </div>
-        <div class="row actions">
-          <button class="btn primary" type="submit">Send</button>
-        </div>
-        <p class="tiny muted">Anonymous by default. We’ll use your note to improve.</p>
-      </form>
-    </div>
-  </aside>
+  <!-- ===== Footer ===== -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
 
-  <!-- Toasts (ARIA live region) -->
-  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
 
-  <!-- Scripts -->
-  <script defer src="assets/js/forms.js"></script>
+  <!-- ===== Scripts ===== -->
+
+  <!-- 1) Scroll reveal (same pattern as other pages) -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- 2) Nav + drawer JS (copied pattern for consistent behavior) -->
+  <script>
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
+
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      burger.setAttribute('aria-expanded','true');
+      scrim.hidden=false;
+      document.body.style.overflow='hidden';
+      const first = drawer.querySelector('button,a'); if(first) first.focus();
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      burger.setAttribute('aria-expanded','false');
+      scrim.hidden=true;
+      document.body.style.overflow='';
+      burger.focus();
+    }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    // Desktop submenu accessibility
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link = item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm = item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+  </script>
+
+  <!-- 3) Contact form JS: static-friendly anonymous submission (Formspree) -->
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const success = document.getElementById('formSuccess');
+    const error = document.getElementById('formError');
+    const clearBtn = document.getElementById('clearForm');
+
+    clearBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      form.reset();
+      success.classList.remove('show');
+      error.classList.remove('show');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      success.classList.remove('show');
+      error.classList.remove('show');
+
+      const data = new FormData(form);
+      // Formspree JSON endpoint accepts standard form data
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        });
+        if (res.ok) {
+          form.reset();
+          success.classList.add('show');
+        } else {
+          error.classList.add('show');
+        }
+      } catch (err) {
+        error.classList.add('show');
+      }
+    });
+  </script>
 </body>
 </html>
