@@ -70,10 +70,48 @@
     .acc summary:after{ content:'▾'; float:right; opacity:.9; }
     .acc details[open] summary:after{ content:'▴'; }
 
+    /* Contents drawer (like About/Equity) */
+    .toc-fab{
+      position:fixed; right:18px; bottom:90px; z-index:1201;
+      padding:.55rem .9rem; border-radius:999px; font-weight:800; letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.12); color:#fff; cursor:pointer;
+      backdrop-filter:blur(10px); box-shadow:0 10px 24px rgba(0,0,0,.35);
+    }
+    .toc-scrim{
+      position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.45); display:none;
+    }
+    .toc-drawer{
+      position:fixed; top:var(--nav-height,80px); right:0; bottom:0; width:320px; z-index:1202;
+      transform:translateX(100%); transition:transform 240ms ease;
+      background:rgba(255,255,255,.10); border-left:1px solid rgba(255,255,255,.25); backdrop-filter:blur(14px);
+      box-shadow:-12px 0 30px rgba(0,0,0,.35);
+    }
+    .toc-drawer.open{ transform:translateX(0); }
+    .toc-scrim.open{ display:block; }
+    .toc-head{
+      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+      padding:.9rem 1rem; border-bottom:1px solid rgba(255,255,255,.2); font-weight:800;
+    }
+    .toc-close{
+      background:transparent; color:#fff; width:34px; height:34px; border:1px solid rgba(255,255,255,.25);
+      border-radius:10px; font-size:1.1rem; cursor:pointer;
+    }
+    .toc-list{ list-style:none; padding: .6rem .6rem 1rem; }
+    .toc-list a{
+      display:block; padding:.55rem .7rem; margin:.25rem 0; border-radius:10px; text-decoration:none; color:#fff; font-weight:700;
+      border:1px solid transparent;
+    }
+    .toc-list a:hover{ background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.25); }
+
+    /* Anchor offset so nav doesn’t cover headings */
+    section[id]{ scroll-margin-top: 96px; }
+
     /* Mobile tweaks */
     @media (max-width: 960px){
       .page-title { font-size:2.4rem; }
       .feature-card { grid-template-columns: 1fr; }
+      .toc-fab{ bottom: 90px; right: 16px; }
+      /* keep float-to-top at bottom-right; toc-fab sits just above it */
     }
   </style>
 </head>
@@ -189,7 +227,7 @@
 
   <main class="main-content page-wrap">
     <!-- Featured next tournament -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="featured">
       <div class="feature-card">
         <div class="feature-left">
           <div class="meta">
@@ -224,7 +262,7 @@
     </section>
 
     <!-- Upcoming Targets grid -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="upcoming">
       <h3 class="about-header">Upcoming Targets</h3>
       <div class="targets-grid" role="list">
         <!-- Card 1: Sign-ups Open (shows Interest Form) -->
@@ -287,7 +325,7 @@
     </section>
 
     <!-- How APDA tournaments work -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="primer">
       <h3 class="about-header">How APDA Tournaments Work (60-second primer)</h3>
       <ul class="section-list">
         <li><strong>Schedule:</strong> Most run Fri–Sat (occasional Sun). Expect an opening assembly, 5+ prelim rounds, then elims.</li>
@@ -298,11 +336,12 @@
       </ul>
       <div class="cta-row">
         <a class="link-chip" href="beginner.html">New? Read the Beginner Guide →</a>
+        <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide →</a>
       </div>
     </section>
 
     <!-- Eligibility & Selection -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="eligibility">
       <h3 class="about-header">Eligibility & Selection</h3>
       <p class="about-preview">
         To be considered for a tournament, meet the <strong>rolling three-week minimum</strong> before the sign-up deadline:
@@ -318,7 +357,7 @@
     </section>
 
     <!-- TIDs -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="tids">
       <h3 class="about-header">Tournament Info Documents (TIDs)</h3>
       <p class="about-preview">
         Each tournament has a TID—a single source of truth with timelines, travel, lodging, maps, schedules, packing lists, equity reminders, and contacts.
@@ -330,7 +369,7 @@
     </section>
 
     <!-- Logistics & Costs -->
-    <section class="glass-card reveal acc">
+    <section class="glass-card reveal acc" id="logistics">
       <h3 class="about-header">Logistics & Costs</h3>
       <details>
         <summary>Costs</summary>
@@ -355,7 +394,7 @@
     </section>
 
     <!-- Partners & Roles -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="partners">
       <h3 class="about-header">Partners & Roles</h3>
       <p class="about-preview">Partners are requested or assigned <strong>in person</strong> on a per-tournament basis.</p>
       <ul class="section-list">
@@ -366,7 +405,7 @@
     </section>
 
     <!-- Equity & Safety -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="equity">
       <h3 class="about-header">Equity & Safety</h3>
       <p class="about-preview">
         Follow host equity policies and PDU standards: debate ideas, not identities; use Content Warnings (CWs) and honor opt-outs. Report concerns to the Equity Team or a PDU officer immediately.
@@ -377,7 +416,7 @@
     </section>
 
     <!-- Results placeholder -->
-    <section class="glass-card reveal">
+    <section class="glass-card reveal" id="results">
       <h3 class="about-header">Results & Highlights</h3>
       <p class="about-preview">We’ll post monthly highlights here—breaks, speaker awards, and photos.</p>
     </section>
@@ -392,7 +431,30 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scripts (reuse behaviors from other pages) -->
+  <!-- Contents FAB + Drawer -->
+  <button class="toc-fab" id="tocBtn" aria-haspopup="true" aria-expanded="false" aria-controls="tocDrawer">Contents ▤</button>
+  <div class="toc-scrim" id="tocScrim" hidden></div>
+  <aside class="toc-drawer" id="tocDrawer" aria-hidden="true" aria-label="On-page contents">
+    <div class="toc-head">
+      <span>On this page</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav aria-label="Contents">
+      <ul class="toc-list">
+        <li><a href="#featured">Featured Tournament</a></li>
+        <li><a href="#upcoming">Upcoming Targets</a></li>
+        <li><a href="#primer">How APDA Works</a></li>
+        <li><a href="#eligibility">Eligibility & Selection</a></li>
+        <li><a href="#tids">TIDs</a></li>
+        <li><a href="#logistics">Logistics & Costs</a></li>
+        <li><a href="#partners">Partners & Roles</a></li>
+        <li><a href="#equity">Equity & Safety</a></li>
+        <li><a href="#results">Results & Highlights</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Scripts (reuse behaviors from other pages + contents drawer) -->
   <script>
     // Reveal-on-scroll
     const observer = new IntersectionObserver(entries => {
@@ -429,6 +491,37 @@
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    // ------- Contents drawer -------
+    const tocBtn   = document.getElementById('tocBtn');
+    const tocDrawer= document.getElementById('tocDrawer');
+    const tocClose = document.getElementById('tocClose');
+    const tocScrim = document.getElementById('tocScrim');
+
+    function openToc(){
+      tocDrawer.classList.add('open');
+      tocDrawer.setAttribute('aria-hidden','false');
+      tocBtn.setAttribute('aria-expanded','true');
+      tocScrim.hidden = false;
+      tocScrim.classList.add('open');
+    }
+    function closeToc(){
+      tocDrawer.classList.remove('open');
+      tocDrawer.setAttribute('aria-hidden','true');
+      tocBtn.setAttribute('aria-expanded','false');
+      tocScrim.classList.remove('open');
+      tocScrim.hidden = true;
+      tocBtn.focus();
+    }
+    tocBtn.addEventListener('click', ()=> tocDrawer.classList.contains('open') ? closeToc() : openToc());
+    tocClose.addEventListener('click', closeToc);
+    tocScrim.addEventListener('click', closeToc);
+    window.addEventListener('keydown', e => { if(e.key === 'Escape' && tocDrawer.classList.contains('open')) closeToc(); });
+
+    // Smooth-close contents when a TOC link is clicked
+    document.querySelectorAll('.toc-list a').forEach(a=>{
+      a.addEventListener('click',()=> setTimeout(closeToc, 120));
     });
   </script>
 </body>
