@@ -8,9 +8,99 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (mobile sticky bar + tile grid helpers) -->
+  <!-- Page-local styles: all prefixed with .join- to avoid collisions -->
   <style>
-    /* Sticky CTA bar (mobile only) */
+    /* ---------- Hero tweaks + parallax ---------- */
+    .join-parallax { will-change: background-position; }
+    .join-countdown {
+      display:inline-block; margin-top:.6rem; padding:.35rem .7rem; border-radius:999px;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10);
+      font-weight:700; letter-spacing:.2px;
+      box-shadow:0 0 12px rgba(199,191,255,.18) inset;
+    }
+
+    /* ---------- Lens toggle ---------- */
+    .join-lens {
+      display:flex; gap:.5rem; justify-content:center; align-items:center; margin:1rem auto 0;
+    }
+    .join-lens .toggle {
+      padding:.45rem .85rem; border-radius:999px; cursor:pointer; user-select:none;
+      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10); font-weight:700;
+      transition:all .2s ease; text-decoration:none; color:#fff;
+    }
+    .join-lens .toggle.active { box-shadow:0 0 12px rgba(199,191,255,.35); background:rgba(255,255,255,.16); }
+
+    /* Highlight targets in Meetings when a lens is active */
+    .join-highlight { outline:2px solid rgba(199,191,255,.45); box-shadow:0 0 22px rgba(199,191,255,.25); border-radius:12px; }
+
+    /* ---------- Wizard ---------- */
+    .join-wizard .step-grid{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.75rem; margin-top:.5rem;
+    }
+    .join-wizard .opt{
+      padding:.9rem 1rem; border-radius:12px; text-align:center; cursor:pointer;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
+      transition:transform .15s ease, box-shadow .2s ease;
+    }
+    .join-wizard .opt:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.25); }
+    .join-wizard .opt[aria-pressed="true"]{ box-shadow:0 0 12px rgba(199,191,255,.35) inset; background:rgba(255,255,255,.16); }
+    .join-wizard .plan{
+      margin-top:1rem; padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10);
+    }
+    .join-wizard .plan .badge{ display:inline-block; margin:.15rem .25rem 0 0; padding:.28rem .6rem; border-radius:999px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); font-weight:700; }
+    .join-wizard .reset { margin-top:.6rem; }
+
+    /* ---------- “Design your month” slider ---------- */
+    .join-slider .row{ display:flex; gap:.8rem; align-items:center; flex-wrap:wrap; }
+    .join-slider input[type="range"]{ width:240px; }
+    .join-slider .out{ font-weight:700; }
+    .join-slider .hint{ opacity:.9; margin-top:.45rem; }
+
+    /* ---------- Month cards (horizontal scroll) ---------- */
+    .join-months{
+      display:flex; gap:1rem; overflow:auto; padding:.25rem .25rem .5rem; scroll-snap-type:x mandatory;
+    }
+    .join-month{
+      min-width:260px; scroll-snap-align:start;
+      border:1px solid rgba(255,255,255,.25); border-radius:16px; padding:1rem;
+      background:rgba(255,255,255,.10); backdrop-filter:blur(10px);
+      box-shadow:0 10px 26px rgba(0,0,0,.28);
+    }
+    .join-month h4{ font-family:'DM Serif Display',serif; margin-bottom:.5rem; }
+    .join-month ul{ margin-left:1.1rem; line-height:1.7; }
+
+    /* ---------- Flip card for Partners ---------- */
+    .join-flip{
+      perspective:1000px;
+    }
+    .join-flip-inner{
+      position:relative; width:100%; min-height:180px; transform-style:preserve-3d; transition:transform .5s ease;
+    }
+    .join-flip.flipped .join-flip-inner{ transform:rotateY(180deg); }
+    .join-face{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:1rem;
+      backface-visibility:hidden; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.10);
+    }
+    .join-face.back{ transform:rotateY(180deg); }
+
+    /* ---------- Myth busters ---------- */
+    .join-myths details{
+      border:1px solid rgba(255,255,255,.25); border-radius:12px; padding:.75rem 1rem; background:rgba(255,255,255,.08);
+      margin:.5rem 0;
+    }
+    .join-myths summary{ cursor:pointer; font-weight:800; }
+    .join-myths summary::-webkit-details-marker{ display:none; }
+    .join-myths summary:after{ content:'▾'; float:right; opacity:.9; }
+    .join-myths details[open] summary:after{ content:'▴'; }
+
+    /* ---------- Quick tiles (stagger) ---------- */
+    .join-tiles{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; width:90%; max-width:1100px; margin:2rem auto;
+    }
+    .join-tiles .glass-card{ transition-delay:.06s; }
+
+    /* ---------- Mobile sticky CTA bar ---------- */
     @media (max-width: 960px){
       .join-sticky {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 1102;
@@ -23,12 +113,12 @@
       .join-sticky a { text-decoration: none; }
     }
 
-    /* Tile grid for quick-start cards */
-    .tiles-quick {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem; width: 90%; max-width: 1100px; margin: 2rem auto;
+    /* Buttons (page-local) */
+    .btn-primary,.btn-secondary{
+      display:inline-block; padding:.55rem 1rem; border-radius:999px; font-weight:800; letter-spacing:.2px; color:#fff; text-decoration:none;
+      border:1px solid rgba(255,255,255,.30); background:rgba(255,255,255,.12); transition:all .2s ease;
     }
-    .tile-emoji { font-size: 1.4rem; margin-bottom: .35rem; opacity: .9; }
+    .btn-primary:hover,.btn-secondary:hover{ background:rgba(255,255,255,.18); box-shadow:0 0 12px rgba(199,191,255,.28); }
   </style>
 </head>
 
@@ -63,8 +153,10 @@
             <a href="join.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="#wizard">Join Wizard</a></li>
               <li role="none"><a role="menuitem" href="#meetings">Meetings (Monthly)</a></li>
               <li role="none"><a role="menuitem" href="#partners">Partners & Assignments</a></li>
+              <li role="none"><a role="menuitem" href="#months">Month Cards</a></li>
               <li role="none"><a role="menuitem" href="#myths">Costs & Support</a></li>
               <li role="none"><a role="menuitem" href="#calendar">Calendar</a></li>
             </ul>
@@ -115,8 +207,10 @@
           <button class="drawer-toggle" aria-expanded="true">Join Us</button>
           <ul class="drawer-submenu open">
             <li><a href="#mailing">Mailing List</a></li>
+            <li><a href="#wizard">Join Wizard</a></li>
             <li><a href="#meetings">Meetings (Monthly)</a></li>
             <li><a href="#partners">Partners & Assignments</a></li>
+            <li><a href="#months">Month Cards</a></li>
             <li><a href="#myths">Costs & Support</a></li>
             <li><a href="#calendar">Calendar</a></li>
           </ul>
@@ -128,50 +222,78 @@
     </nav>
   </aside>
 
-  <!-- Hero -->
-  <section class="hero-section hero-compact">
+  <!-- Hero (with parallax + countdown + lens toggle) -->
+  <section class="hero-section hero-compact join-parallax" id="joinHero">
     <div>
       <h1 class="page-title">Join the Parliamentary Debate Union</h1>
       <p class="page-subtitle">Open to all NYU students — drop in Mondays or Wednesdays, 7–9 PM. Move at your own pace.</p>
+      <div class="join-countdown" id="nextCountdown" aria-live="polite">Calculating next meeting…</div>
+      <div class="join-lens" aria-label="View emphasis">
+        <button class="toggle" id="lensBegin">Beginner lens</button>
+        <button class="toggle" id="lensExp">Experienced lens</button>
+      </div>
     </div>
   </section>
 
   <main class="main-content">
-    <!-- 1) Mailing List (primary action) -->
+    <!-- Mailing List (primary action) -->
     <section class="glass-card reveal" id="mailing">
       <h3 class="about-header">Step One: Join the Mailing List</h3>
       <p class="about-preview">
-        This is our main way to share monthly schedules, travel sign-ups, and updates. Joining the list is the fastest way to plug in.
+        This is our main way to share <strong>monthly</strong> schedules, travel notes, and updates. Joining the list is the fastest way to plug in.
       </p>
       <div class="cta-row">
         <a class="link-chip" href="mailing-list.html">Join the mailing list →</a>
       </div>
-      <p class="note" style="margin-top:.5rem;">Link is a placeholder—we’ll wire it to your actual list sign-up.</p>
+      <p class="note" style="margin-top:.5rem;">(Placeholder link—hook this up to your real list when ready.)</p>
     </section>
 
-    <!-- Quick Start tiles -->
-    <section class="tiles-quick reveal" aria-label="Quick start">
-      <div class="tile glass-card">
-        <div class="tile-emoji" aria-hidden="true">👋</div>
-        <h3>New to debate?</h3>
-        <p>Start with <strong>Monday Lesson</strong> meetings. Learn fundamentals, then try a practice round when you’re ready.</p>
-        <a class="link-chip" href="#meetings">See meetings →</a>
+    <!-- Join Wizard -->
+    <section class="glass-card reveal join-wizard" id="wizard">
+      <h3 class="about-header">Join Wizard (3 quick picks)</h3>
+
+      <p class="subhead">1) Your experience</p>
+      <div class="step-grid" role="group" aria-label="Experience level">
+        <button class="opt" data-k="exp" data-v="none" aria-pressed="false">None</button>
+        <button class="opt" data-k="exp" data-v="some" aria-pressed="false">Some</button>
+        <button class="opt" data-k="exp" data-v="lots" aria-pressed="false">Lots</button>
       </div>
-      <div class="tile glass-card">
-        <div class="tile-emoji" aria-hidden="true">🎯</div>
-        <h3>Experienced?</h3>
-        <p>Jump into <strong>Wednesday Training</strong> for scrims, case workshopping, and tournament prep.</p>
-        <a class="link-chip" href="#meetings">See meetings →</a>
+
+      <p class="subhead" style="margin-top:.8rem;">2) What sounds fun</p>
+      <div class="step-grid" role="group" aria-label="Interest">
+        <button class="opt" data-k="goal" data-v="learn" aria-pressed="false">Learn</button>
+        <button class="opt" data-k="goal" data-v="practice" aria-pressed="false">Practice</button>
+        <button class="opt" data-k="goal" data-v="compete" aria-pressed="false">Compete soon</button>
       </div>
-      <div class="tile glass-card">
-        <div class="tile-emoji" aria-hidden="true">🗓️</div>
-        <h3>Plan your month</h3>
-        <p>We post a monthly overview instead of weekly changes. Check the calendar and show up when you can.</p>
-        <a class="link-chip" href="#calendar">View calendar →</a>
+
+      <p class="subhead" style="margin-top:.8rem;">3) When you’re free</p>
+      <div class="step-grid" role="group" aria-label="Availability">
+        <button class="opt" data-k="avail" data-v="mon" aria-pressed="false">Mondays</button>
+        <button class="opt" data-k="avail" data-v="wed" aria-pressed="false">Wednesdays</button>
+        <button class="opt" data-k="avail" data-v="both" aria-pressed="false">Both</button>
+      </div>
+
+      <div class="plan" id="wizardPlan" hidden>
+        <div class="subhead">Your plan</div>
+        <p class="about-preview" id="wizardText"></p>
+        <div id="wizardChips" class="cta-row"></div>
+        <div class="cta-row"><button class="link-chip reset" id="wizardReset">Reset</button></div>
       </div>
     </section>
 
-    <!-- 2) Meetings (Monthly cadence) -->
+    <!-- Design your month (optional slider) -->
+    <section class="glass-card reveal join-slider" id="slider">
+      <h3 class="about-header">Design your month</h3>
+      <div class="row">
+        <label for="sessions"><strong>Sessions per month:</strong></label>
+        <input type="range" id="sessions" min="0" max="8" step="1" value="4" />
+        <span class="out" id="sessionsOut">4</span>
+      </div>
+      <p class="about-preview" id="sliderText" style="margin-top:.5rem;"></p>
+      <p class="note hint">Tip: Aim for a balance—<em>Lesson on Monday</em> to build skills, <em>Training on Wednesday</em> to test them.</p>
+    </section>
+
+    <!-- Meetings (Monthly) with lens highlight targets -->
     <section class="glass-card reveal" id="meetings">
       <h3 class="about-header">Meetings (Monthly View)</h3>
       <div class="time-row">
@@ -182,84 +304,154 @@
       </div>
 
       <div class="two-col" style="margin-top:.75rem;">
-        <div>
+        <div class="beginner-focus" id="beginnerFocus">
           <p class="subhead">Monday — Lesson Meeting</p>
           <ul class="section-list">
             <li><strong>Lecture:</strong> Focused skill-building.</li>
             <li><strong>Engagement:</strong> Short activities to check understanding.</li>
             <li><strong>Practice Rounds:</strong> Try when you’re ready—no pressure.</li>
           </ul>
+        </div>
 
-          <p class="subhead" style="margin-top:1rem;">Wednesday — Training Meeting</p>
+        <div class="experienced-focus" id="experiencedFocus">
+          <p class="subhead">Wednesday — Training Meeting</p>
           <ul class="section-list">
             <li><strong>Practice Round:</strong> Full scrim(s) with feedback.</li>
             <li><strong>Workshopping:</strong> Case-building with senior members and the board.</li>
             <li><strong>Feedback:</strong> Real-time notes from Education & Leadership.</li>
           </ul>
         </div>
+      </div>
 
-        <div>
-          <p class="subhead">Attendance (for tournaments & voting)</p>
+      <div style="margin-top:.75rem;">
+        <p class="subhead">Attendance (for tournaments & voting)</p>
+        <ul class="section-list">
+          <li><strong>Tournament eligibility (rolling 3 weeks):</strong></li>
           <ul class="section-list">
-            <li><strong>Tournament eligibility (rolling 3 weeks):</strong></li>
-            <ul class="section-list">
-              <li>At least <strong>1</strong> Monday Lesson Meeting</li>
-              <li>At least <strong>2</strong> Wednesday Training Meetings</li>
-            </ul>
-            <li style="margin-top:.5rem;"><strong>Voting:</strong> Attend at least <strong>60%</strong> of meetings in the semester.</li>
-            <li style="margin-top:.5rem;"><strong>Check-in:</strong> Tap in at the tablet when you arrive.</li>
+            <li>At least <strong>1</strong> Monday Lesson Meeting</li>
+            <li>At least <strong>2</strong> Wednesday Training Meetings</li>
           </ul>
+          <li style="margin-top:.5rem;"><strong>Voting:</strong> Attend at least <strong>60%</strong> of meetings in the semester.</li>
+          <li style="margin-top:.5rem;"><strong>Check-in:</strong> Tap in at the tablet when you arrive.</li>
+        </ul>
 
-          <div class="cta-row">
-            <a class="link-chip" href="#calendar">See monthly calendar →</a>
-            <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
-          </div>
-          <p class="note" style="margin-top:.5rem;">We use CWs and opt-outs when needed. Read our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></p>
+        <div class="cta-row">
+          <a class="link-chip" href="#months">See monthly highlights →</a>
+          <a class="link-chip" href="equity.html">Equity policy (CWs & opt-outs) →</a>
         </div>
       </div>
     </section>
 
-    <!-- 3) Partners & Assignments -->
+    <!-- Month Cards (Sep–Dec) -->
+    <section class="glass-card reveal" id="months">
+      <h3 class="about-header">Month at a Glance</h3>
+      <div class="join-months" aria-label="Upcoming months">
+        <div class="join-month">
+          <h4>September</h4>
+          <ul>
+            <li>Kickoff lessons begin</li>
+            <li>First scrim night</li>
+            <li>Travel: Yale (placeholder)</li>
+          </ul>
+          <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
+        </div>
+        <div class="join-month">
+          <h4>October</h4>
+          <ul>
+            <li>Casebuilding workshop</li>
+            <li>Travel: Princeton (placeholder)</li>
+            <li>Novice spotlight night</li>
+          </ul>
+          <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
+        </div>
+        <div class="join-month">
+          <h4>November</h4>
+          <ul>
+            <li>Mid-semester scrim series</li>
+            <li>Travel: Harvard (placeholder)</li>
+            <li>Judge training basics</li>
+          </ul>
+          <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
+        </div>
+        <div class="join-month">
+          <h4>December</h4>
+          <ul>
+            <li>Final workshop & debrief</li>
+            <li>Travel: Finals weekend (placeholder)</li>
+            <li>Winter social</li>
+          </ul>
+          <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:.5rem;">These are placeholders—update the bullets monthly (no weekly upkeep needed).</p>
+    </section>
+
+    <!-- Partners & Assignments (flip card) -->
     <section class="glass-card reveal" id="partners">
       <h3 class="about-header">Partners & Assignments</h3>
-      <p class="about-preview">
-        There’s no formal permanent matching process. <strong>Partners are requested or assigned in person on a per-tournament basis.</strong>
-      </p>
-      <ul class="section-list">
-        <li><strong>Have a preferred partner?</strong> Tell us at meetings—we’ll try to honor it based on availability and roster size.</li>
-        <li><strong>Flexible or new?</strong> We’ll pair you with someone compatible (schedule, goals, experience).</li>
-        <li><strong>Not a fit?</strong> Partnerships can change between events—it’s normal.</li>
-      </ul>
-      <div class="cta-row">
-        <a class="link-chip" href="tournaments.html">How tournaments work →</a>
+
+      <div class="join-flip" id="partnerFlip">
+        <div class="join-flip-inner">
+          <div class="join-face front">
+            <div>
+              <p class="about-preview"><strong>How do partners work?</strong><br>Tap/click to flip.</p>
+              <div class="cta-row"><button class="link-chip" type="button" id="flipBtn">Flip card →</button></div>
+            </div>
+          </div>
+          <div class="join-face back">
+            <div>
+              <ul class="section-list" style="text-align:left;">
+                <li><strong>Per-tournament basis:</strong> Partners are requested or assigned in person.</li>
+                <li><strong>Have a preference?</strong> Tell us at meetings; we’ll try to honor based on availability.</li>
+                <li><strong>New or flexible?</strong> We’ll pair you by schedule, goals, and experience.</li>
+                <li><strong>Not a fit?</strong> Partnerships can change between events.</li>
+              </ul>
+              <div class="cta-row"><a class="link-chip" href="tournaments.html">Learn about tournaments →</a></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 4) Costs & Support (Myth Busters) -->
-    <section class="glass-card reveal" id="myths">
+    <!-- Costs & Support (Myth Busters) -->
+    <section class="glass-card reveal join-myths" id="myths">
       <h3 class="about-header">Costs & Support (Myth Busters)</h3>
-      <ul class="section-list">
-        <li><strong>Cost?</strong> <span class="chip">$0</span> to compete. <strong>PDU covers travel, registration, and lodging.</strong></li>
-        <li><strong>Travel?</strong> <span class="chip">Club-backed trips</span> across the East Coast throughout the semester.</li>
-        <li><strong>Experience?</strong> None required. Drop in and learn—fast.</li>
-        <li><strong>Time?</strong> About 4 hours/week for meetings; travel is optional. Join when you can.</li>
-        <li><strong>Gear?</strong> Bring a laptop or notebook if you like—nothing special required.</li>
-        <li><strong>Accessibility?</strong> Tell us your access needs (pace, seating, breaks)—we’ll work with you.</li>
-        <li><strong>Culture?</strong> We debate ideas, not identities. See our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></li>
-      </ul>
+
+      <details>
+        <summary>Cost?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">$0 to compete. PDU covers travel, registration, and lodging.</p>
+      </details>
+      <details>
+        <summary>Travel?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Club-backed trips across the East Coast throughout the semester.</p>
+      </details>
+      <details>
+        <summary>Experience?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">None required. Start Monday lessons; try Wednesday scrims when ready.</p>
+      </details>
+      <details>
+        <summary>Time?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Meetings are Mon/Wed 7–9 PM. Join when you can—move at your own pace. Travel is optional.</p>
+      </details>
+      <details>
+        <summary>Gear?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Bring a laptop or notebook if you like—nothing special required.</p>
+      </details>
+      <details>
+        <summary>Accessibility & culture?</summary>
+        <p class="about-preview" style="margin-top:.5rem;">Tell us your access needs (pace, seating, breaks)—we’ll work with you. We debate ideas, not identities. Read our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></p>
+      </details>
     </section>
 
-    <!-- 5) Calendar (monthly) -->
+    <!-- Calendar (monthly) -->
     <section class="glass-card reveal" id="calendar">
       <h3 class="about-header">Calendar (Monthly)</h3>
-      <p class="about-preview">
-        We publish a monthly overview for meetings, travel weekends, and workshops. Check it to plan your month, then drop in when you can.
-      </p>
+      <p class="about-preview">We publish a monthly overview for meetings, travel weekends, and workshops.</p>
       <div class="cta-row">
         <a class="link-chip" href="calendar.html">Open the calendar →</a>
         <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
       </div>
-      <p class="note">Links are placeholders for now—we’ll wire them to your real calendar setup.</p>
+      <p class="note">Links are placeholders—wire them to your real calendar when ready.</p>
     </section>
   </main>
 
@@ -278,15 +470,15 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scripts -->
+  <!-- Scripts (page-local) -->
   <script>
     // Reveal
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.glass-card, .tiles-quick').forEach(el => observer.observe(el));
+    document.querySelectorAll('.glass-card, .join-tiles').forEach(el => observer.observe(el));
 
-    // Measure navbar (for drawer offset)
+    // Navbar height var for drawer offset
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
@@ -307,7 +499,6 @@
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-
     document.querySelectorAll('.drawer-toggle').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
@@ -315,7 +506,6 @@
         btn.nextElementSibling.classList.toggle('open');
       });
     });
-
     // Desktop submenu a11y
     document.querySelectorAll('.has-submenu').forEach(item=>{
       const link=item.querySelector('.top-link');
@@ -325,6 +515,134 @@
       const sm=item.querySelector('.submenu');
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
+
+    // Parallax hero
+    const hero = document.getElementById('joinHero');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.25;
+      hero.style.backgroundPosition = `center calc(50% + ${-y}px)`;
+    }, { passive: true });
+
+    // Countdown to next Mon/Wed 7:00 PM
+    const cdEl = document.getElementById('nextCountdown');
+    function nextMeetingDate(now=new Date()){
+      const day = now.getDay(); // 0=Sun...6=Sat
+      const isAfter19 = now.getHours() > 19 || (now.getHours()===19 && now.getMinutes()>=0);
+      const toDow = (target)=> ( (target - day + 7) % 7 ) || (isAfter19 && target===day ? 7 : 0);
+      // candidates: Mon(1), Wed(3)
+      let d1 = new Date(now); d1.setDate(now.getDate() + toDow(1)); d1.setHours(19,0,0,0);
+      if(!isAfter19 || day!==1){} else { d1.setDate(d1.getDate()+7); } // if Mon after 7pm, push a week
+      let d2 = new Date(now); d2.setDate(now.getDate() + toDow(3)); d2.setHours(19,0,0,0);
+      if(!isAfter19 || day!==3){} else { d2.setDate(d2.getDate()+7); }
+      return (d1 < d2) ? d1 : d2;
+    }
+    function tick(){
+      const now = new Date();
+      const target = nextMeetingDate(now);
+      const ms = target - now;
+      if(ms <= 0){ cdEl.textContent = 'Meeting happening now'; return; }
+      const s = Math.floor(ms/1000);
+      const d = Math.floor(s/86400);
+      const h = Math.floor((s%86400)/3600);
+      const m = Math.floor((s%3600)/60);
+      const ss = s%60;
+      const weekday = target.toLocaleDateString(undefined, { weekday:'long' });
+      cdEl.textContent = `Next meeting: ${weekday} 7:00 PM in ${d}d ${h}h ${m}m ${ss}s`;
+    }
+    tick(); setInterval(tick, 1000);
+
+    // Lens toggle (Beginner / Experienced)
+    const lensBegin = document.getElementById('lensBegin');
+    const lensExp   = document.getElementById('lensExp');
+    const beginBox  = document.getElementById('beginnerFocus');
+    const expBox    = document.getElementById('experiencedFocus');
+    function updateLens(){
+      beginBox.classList.toggle('join-highlight', lensBegin.classList.contains('active'));
+      expBox.classList.toggle('join-highlight', lensExp.classList.contains('active'));
+    }
+    lensBegin.addEventListener('click', ()=>{ lensBegin.classList.toggle('active'); updateLens(); });
+    lensExp.addEventListener('click',   ()=>{ lensExp.classList.toggle('active');   updateLens(); });
+
+    // Join Wizard logic
+    const wizardState = JSON.parse(localStorage.getItem('pdu_join_wizard') || '{}');
+    const opts = document.querySelectorAll('.join-wizard .opt');
+    const plan = document.getElementById('wizardPlan');
+    const planText = document.getElementById('wizardText');
+    const planChips = document.getElementById('wizardChips');
+    const resetBtn = document.getElementById('wizardReset');
+
+    function renderWizard(){
+      // reflect pressed
+      opts.forEach(b=>{
+        const k=b.dataset.k, v=b.dataset.v;
+        b.setAttribute('aria-pressed', wizardState[k]===v ? 'true':'false');
+      });
+      const {exp,goal,avail} = wizardState;
+      if(!exp || !goal || !avail){ plan.hidden = true; localStorage.setItem('pdu_join_wizard', JSON.stringify(wizardState)); return; }
+
+      // build recommendation
+      const lines = [];
+      if(avail==='mon') lines.push('Start on <strong>Monday Lesson</strong> meetings.');
+      if(avail==='wed') lines.push('Drop into <strong>Wednesday Training</strong> scrims.');
+      if(avail==='both') lines.push('Mix <strong>Monday lessons</strong> with <strong>Wednesday scrims</strong>.');
+
+      if(exp==='none' && goal==='learn') lines.push('Focus on fundamentals first, then try a scrim when you’re ready.');
+      if(exp!=='none' && goal==='practice') lines.push('Prioritize scrims and case workshopping.');
+      if(goal==='compete') lines.push('Talk to the board about your next travel weekend.');
+
+      planText.innerHTML = lines.join(' ');
+
+      // chips
+      planChips.innerHTML = '';
+      const chips = [];
+      if(avail!=='wed') chips.push(['See Monday details →', '#meetings']);
+      if(avail!=='mon') chips.push(['See Wednesday details →', '#meetings']);
+      chips.push(['Join mailing list →', '#mailing'], ['View calendar →', '#calendar']);
+      chips.forEach(([t, href])=>{
+        const a=document.createElement('a'); a.className='link-chip'; a.href=href; a.textContent=t; planChips.appendChild(a);
+      });
+
+      plan.hidden = false;
+      localStorage.setItem('pdu_join_wizard', JSON.stringify(wizardState));
+    }
+    opts.forEach(b=>{
+      b.addEventListener('click', ()=>{
+        wizardState[b.dataset.k] = b.dataset.v;
+        renderWizard();
+      });
+    });
+    resetBtn.addEventListener('click', ()=>{
+      ['exp','goal','avail'].forEach(k=>delete wizardState[k]);
+      renderWizard();
+    });
+    renderWizard();
+
+    // Slider logic (sessions per month)
+    const sessions = document.getElementById('sessions');
+    const sessionsOut = document.getElementById('sessionsOut');
+    const sliderText = document.getElementById('sliderText');
+    function planForSessions(n){
+      if(n<=1) return 'Try a single session this month—no pressure.';
+      if(n<=3) return 'Aim for 1–3 sessions: mostly Monday lessons, maybe one scrim.';
+      if(n<=5) return 'Aim for 4–5 sessions: split between lessons and scrims.';
+      if(n<=7) return 'Aim for 6–7 sessions: consistent lessons + scrims—tournament-ready.';
+      return '8+ sessions: full send—lessons, scrims, and travel preparation.';
+    }
+    function updateSlider(){
+      const n = parseInt(sessions.value||'0',10);
+      sessionsOut.textContent = n;
+      sliderText.textContent = planForSessions(n);
+      localStorage.setItem('pdu_join_sessions', String(n));
+    }
+    const savedS = localStorage.getItem('pdu_join_sessions');
+    if(savedS){ sessions.value = savedS; }
+    updateSlider();
+    sessions.addEventListener('input', updateSlider);
+
+    // Flip card
+    const flipWrap = document.getElementById('partnerFlip');
+    const flipBtn  = document.getElementById('flipBtn');
+    flipBtn.addEventListener('click', ()=> flipWrap.classList.toggle('flipped'));
   </script>
 </body>
 </html>
