@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beginner’s Guide | NYU PDU</title>
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Page-local styles (scoped) -->
+  <style>
+    /* ---------- Hero tweaks ---------- */
+    .beg-hero .page-title{ font-size:3.0rem; }
+    .beg-subchips{
+      display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin-top:.6rem;
+    }
+
+    /* ---------- Crash course checklists ---------- */
+    .beg-checklist{ display:grid; gap:.6rem; margin-top:.6rem; }
+    .beg-check{
+      display:flex; gap:.6rem; align-items:flex-start; padding:.5rem .7rem; border-radius:10px;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+    }
+    .beg-check input{ margin-top:.2rem; }
+
+    /* ---------- Timeline ---------- */
+    .beg-timeline{
+      overflow-x:auto; display:flex; gap:.75rem; padding-bottom:.5rem; scroll-snap-type:x mandatory;
+    }
+    .beg-node{
+      flex:0 0 160px; scroll-snap-align:start; padding:.75rem; border-radius:12px; cursor:pointer;
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22); backdrop-filter:blur(10px);
+      text-align:center; transition:transform .15s ease, box-shadow .2s ease;
+    }
+    .beg-node:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.3); }
+    .beg-node .time{ font-weight:800; letter-spacing:.2px; }
+    .beg-node .label{ font-family:'DM Serif Display',serif; margin-top:.25rem; font-size:1.1rem; }
+    .beg-panel{
+      margin-top:1rem; padding:1rem; border-radius:12px;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+    }
+    .beg-panel h4{ font-family:'DM Serif Display',serif; margin-bottom:.25rem; }
+    .beg-panel .sub{ opacity:.9; margin-bottom:.4rem; }
+    .beg-panel ul{ margin-left:1.1rem; line-height:1.7; }
+    .beg-panel .mini-cta{ margin-top:.6rem; }
+
+    /* ---------- Roles flip cards ---------- */
+    .beg-roles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+    .beg-role{
+      perspective:1000px;
+    }
+    .beg-card{
+      position:relative; transform-style:preserve-3d; transition:transform .5s ease;
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22); border-radius:14px; padding:1rem; min-height:220px;
+    }
+    .beg-card:hover{ transform:rotateY(180deg); }
+    .beg-face{
+      position:absolute; inset:0; padding:1rem; backface-visibility:hidden;
+      display:flex; flex-direction:column;
+    }
+    .beg-back{ transform:rotateY(180deg); }
+    .beg-face h4{ font-family:'DM Serif Display',serif; margin-bottom:.35rem; }
+    .beg-face ul{ margin-left:1.1rem; line-height:1.7; }
+    .copy-btn{
+      align-self:flex-start; margin-top:auto;
+      padding:.35rem .6rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; text-decoration:none; font-weight:700;
+    }
+    .copy-btn:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
+
+    /* ---------- Speech Timer widget ---------- */
+    .beg-timer{
+      display:grid; grid-template-columns:1fr; gap:.8rem; align-items:center; justify-items:center; text-align:center;
+    }
+    .timer-dial{
+      width:180px; height:180px; border-radius:50%;
+      display:grid; place-items:center;
+      background:
+        conic-gradient(rgba(124,58,237,.9) 0deg, rgba(124,58,237,.9) var(--angle,0deg), rgba(255,255,255,.12) var(--angle,0deg) 360deg);
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:inset 0 0 24px rgba(199,191,255,.18), 0 12px 36px rgba(0,0,0,.35);
+    }
+    .timer-core{
+      width:138px; height:138px; border-radius:50%;
+      display:grid; place-items:center; backdrop-filter:blur(10px);
+      background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.25);
+      font-weight:800; letter-spacing:.5px;
+      text-shadow:0 0 12px rgba(199,191,255,.25);
+    }
+    .timer-controls{ display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; }
+    .timer-controls button, .timer-presets button{
+      padding:.45rem .8rem; border-radius:999px; background:rgba(255,255,255,.10);
+      color:#fff; border:1px solid rgba(255,255,255,.25); font-weight:800; cursor:pointer;
+    }
+    .timer-presets{ display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; }
+    .poi-bar{
+      width:100%; max-width:520px; height:12px; border-radius:999px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
+    }
+    .poi-window{
+      height:100%; background:linear-gradient(90deg, transparent 0, rgba(199,191,255,.35) 20%, rgba(199,191,255,.35) 80%, transparent 100%);
+      /* precise window width/offset set in JS via left/width % */
+      position:relative;
+    }
+    .timer-dial.glow60{ box-shadow:0 0 18px rgba(255,255,255,.25), 0 0 36px rgba(124,58,237,.45), inset 0 0 24px rgba(199,191,255,.28); }
+    .timer-dial.glow30{ box-shadow:0 0 22px rgba(255,255,255,.3), 0 0 44px rgba(124,58,237,.6), inset 0 0 28px rgba(199,191,255,.34); }
+
+    /* ---------- Flow grid ---------- */
+    .beg-flow-wrap{ overflow-x:auto; }
+    .beg-flow{ border-collapse:separate; border-spacing:0; min-width:640px; width:100%; }
+    .beg-flow th, .beg-flow td{
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); padding:.5rem .6rem;
+    }
+    .beg-flow th{ position:sticky; top:0; backdrop-filter:blur(6px); }
+    .beg-flow td[contenteditable="true"]{ outline:none; }
+    .beg-flow-actions{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+
+    /* ---------- Case lab ---------- */
+    .beg-form{ display:grid; gap:.6rem; }
+    .beg-form label{ font-weight:800; }
+    .beg-form input, .beg-form textarea{
+      width:100%; padding:.55rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff;
+    }
+    .beg-form textarea{ min-height:88px; }
+    .beg-form-actions{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+
+    /* ---------- Drills ---------- */
+    .beg-drills{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+    .beg-drill{ padding:1rem; border-radius:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); }
+    .beg-drill .prompt{ opacity:.95; margin:.4rem 0 .6rem; }
+    .beg-drill textarea{ width:100%; min-height:110px; padding:.6rem; border-radius:10px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; }
+    .beg-drill .actions{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.5rem; }
+
+    /* ---------- Glossary ---------- */
+    .beg-glossary-search{
+      width:100%; padding:.6rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff; margin-bottom:.6rem;
+    }
+    .beg-glossary-list{ display:grid; gap:.4rem; }
+    .beg-term{ padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08); }
+    .beg-term b{ font-weight:900; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 960px){
+      .beg-hero .page-title{ font-size:2.2rem; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section hero-compact beg-hero">
+    <div>
+      <h1 class="page-title">Beginner’s Guide to APDA</h1>
+      <p class="page-subtitle">From “brand new” to “first scrim ready” — tools, tips, and a friendly crash course.</p>
+      <div class="beg-subchips">
+        <a class="link-chip" href="#crash-15">15-min path</a>
+        <a class="link-chip" href="#crash-30">30-min path</a>
+        <a class="link-chip" href="#crash-60">60-min path</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents Drawer -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#apda-basics" class="active">APDA in 60 seconds</a>
+      <a href="#crash">Crash course paths</a>
+      <a href="#timeline">Round timeline</a>
+      <a href="#roles">Roles (flip cards)</a>
+      <a href="#timer">Speech timer</a>
+      <a href="#flow">Flowing basics</a>
+      <a href="#case-lab">Case-building mini-lab</a>
+      <a href="#theory">Tight & Spec (theory)</a>
+      <a href="#poi">POIs & Weighing</a>
+      <a href="#tournament">Tournament day</a>
+      <a href="#partnering">Partnering 101</a>
+      <a href="#drills">Quick drills</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#next">Next steps</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <main class="main-content">
+    <!-- APDA basics -->
+    <section class="glass-card" id="apda-basics">
+      <h3 class="about-header">APDA in 60 seconds</h3>
+      <p class="about-preview">
+        <strong>APDA</strong> is a 2-on-2 parliamentary format: Government (PM, MG) vs Opposition (LO, MO). Speech times: <strong>7</strong> (PMC) – <strong>8</strong> (LOC) – <strong>8</strong> (MG) – <strong>8</strong> (MO) – <strong>4</strong> (LOR) – <strong>5</strong> (PMR), with <strong>30s grace</strong>.
+        Two tournament styles: <em>Case debate</em> (Gov brings a case; Opp prepares in-round) and <em>Motions debate</em> (preset motions; 15 min prep). Points of Information (POIs) are allowed after the first minute and before the last minute of constructive speeches. Judges value accessible, warranted analysis over card-dumping; <em>specific knowledge</em> (“spec”) is out, and <em>tight calls</em> check unbeatable cases.
+      </p>
+    </section>
+
+    <!-- Crash course paths -->
+    <section class="glass-card" id="crash">
+      <h3 class="about-header">Crash course paths</h3>
+
+      <div class="two-col">
+        <div id="crash-15">
+          <p class="subhead">15-minute path</p>
+          <div class="beg-checklist">
+            <label class="beg-check"><input type="checkbox" data-key="beg15-1"> Read <a href="#timeline" class="link-chip" style="padding:.2rem .6rem;">round timeline</a></label>
+            <label class="beg-check"><input type="checkbox" data-key="beg15-2"> Flip through the <a href="#roles" class="link-chip" style="padding:.2rem .6rem;">roles cards</a></label>
+            <label class="beg-check"><input type="checkbox" data-key="beg15-3"> Start a <a href="#timer" class="link-chip" style="padding:.2rem .6rem;">7:00 timer</a> once</label>
+          </div>
+        </div>
+
+        <div id="crash-30">
+          <p class="subhead">30-minute path</p>
+          <div class="beg-checklist">
+            <label class="beg-check"><input type="checkbox" data-key="beg30-1"> Do the entire 15-min path</label>
+            <label class="beg-check"><input type="checkbox" data-key="beg30-2"> Skim <a href="#flow" class="link-chip" style="padding:.2rem .6rem;">flow basics</a> and type one row</label>
+            <label class="beg-check"><input type="checkbox" data-key="beg30-3"> Read <a href="#poi" class="link-chip" style="padding:.2rem .6rem;">POI & weighing tips</a></label>
+          </div>
+        </div>
+      </div>
+
+      <div id="crash-60" style="margin-top:1rem;">
+        <p class="subhead">60-minute path</p>
+        <div class="beg-checklist">
+          <label class="beg-check"><input type="checkbox" data-key="beg60-1"> Do the entire 30-min path</label>
+          <label class="beg-check"><input type="checkbox" data-key="beg60-2"> Build a case in the <a href="#case-lab" class="link-chip" style="padding:.2rem .6rem;">case mini-lab</a></label>
+          <label class="beg-check"><input type="checkbox" data-key="beg60-3"> Try one <a href="#drills" class="link-chip" style="padding:.2rem .6rem;">quick drill</a></label>
+          <label class="beg-check"><input type="checkbox" data-key="beg60-4"> Read <a href="#theory" class="link-chip" style="padding:.2rem .6rem;">Tight & Spec</a></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="glass-card" id="timeline">
+      <h3 class="about-header">Round timeline (click a speech)</h3>
+      <div class="beg-timeline" aria-label="APDA timeline" id="timelineNodes">
+        <!-- Nodes injected by JS -->
+      </div>
+      <div class="beg-panel" id="timelinePanel" aria-live="polite">
+        <h4>Pick a speech above</h4>
+        <p class="sub">You’ll see goals, common pitfalls, a pro tip, and a one-tap timer.</p>
+      </div>
+    </section>
+
+    <!-- Roles cards -->
+    <section class="glass-card" id="roles">
+      <h3 class="about-header">Roles (flip cards)</h3>
+      <div class="beg-roles">
+        <!-- PM -->
+        <div class="beg-role">
+          <div class="beg-card">
+            <div class="beg-face">
+              <h4>Prime Minister (PM)</h4>
+              <ul>
+                <li>State the case (THBT…), define terms.</li>
+                <li>Mechanism: who does what, how.</li>
+                <li>2–4 reasons + weighing.</li>
+              </ul>
+              <p class="note">Goal: clarity, accessibility, and fair ground.</p>
+            </div>
+            <div class="beg-face beg-back">
+              <h4>PM outline (quick)</h4>
+              <ul>
+                <li>Intro (15–30s), resolution, context.</li>
+                <li>Defs / Actors / Mechanism.</li>
+                <li>Benefits (2–4) + Weighing.</li>
+              </ul>
+              <button class="copy-btn" data-copy="PM OUTLINE
+Intro (15–30s): THBT...
+Definitions & Actors
+Mechanism (who/what/how)
+Benefits 1–3 (magnitude/probability/timeframe)
+Weighing: why our world is better">Copy outline</button>
+            </div>
+          </div>
+        </div>
+        <!-- LO -->
+        <div class="beg-role">
+          <div class="beg-card">
+            <div class="beg-face">
+              <h4>Leader of Opposition (LO)</h4>
+              <ul>
+                <li>Frame: what matters & why.</li>
+                <li>Clash: take the best ground.</li>
+                <li>Start weighing your world vs Gov.</li>
+              </ul>
+              <p class="note">Don’t respond to everything — respond to what wins.</p>
+            </div>
+            <div class="beg-face beg-back">
+              <h4>LO outline (quick)</h4>
+              <ul>
+                <li>Framework & stance.</li>
+                <li>Topline responses to case.</li>
+                <li>Counter-model <em>(if helpful)</em>.</li>
+                <li>Weighing: why Opp world dominates.</li>
+              </ul>
+              <button class="copy-btn" data-copy="LO OUTLINE
+Framework & stance
+Toplines to case (grouped)
+Optional counter-model
+Weighing: mag/prob/timeframe/reversibility
+Roadmap to MG">Copy outline</button>
+            </div>
+          </div>
+        </div>
+        <!-- MG -->
+        <div class="beg-role">
+          <div class="beg-card">
+            <div class="beg-face">
+              <h4>Member of Government (MG)</h4>
+              <ul>
+                <li>Defend the center of the case.</li>
+                <li>Rebuild with warrants, not tags.</li>
+                <li>Set PMR up: collapse & weigh.</li>
+              </ul>
+              <p class="note">Answer their best argument well; drop the rest.</p>
+            </div>
+            <div class="beg-face beg-back">
+              <h4>MG outline (quick)</h4>
+              <ul>
+                <li>Grouping → answers with warrants.</li>
+                <li>Re-explain mechanism benefits.</li>
+                <li>Weighing story for PMR.</li>
+              </ul>
+              <button class="copy-btn" data-copy="MG OUTLINE
+Group & answer Opp with warrants
+Re-center mechanism & benefits
+Weighing narrative for PMR
+Signpost what PMR will do">Copy outline</button>
+            </div>
+          </div>
+        </div>
+        <!-- MO -->
+        <div class="beg-role">
+          <div class="beg-card">
+            <div class="beg-face">
+              <h4>Member of Opposition (MO)</h4>
+              <ul>
+                <li>Drive home the best Opp arguments.</li>
+                <li>New offense where allowed.</li>
+                <li>Set up LOR weighing & voters.</li>
+              </ul>
+              <p class="note">Keep it clean and laddered for LOR.</p>
+            </div>
+            <div class="beg-face beg-back">
+              <h4>MO outline (quick)</h4>
+              <ul>
+                <li>Extend key Opp positions.</li>
+                <li>Turn/mitigate Gov benefits.</li>
+                <li>Weigh: why Opp world wins.</li>
+              </ul>
+              <button class="copy-btn" data-copy="MO OUTLINE
+Extend Opp’s best offense
+Mitigate/turn Gov’s benefits
+Weigh clearly to LOR voters
+Roadmap LOR: 2–3 clean voters">Copy outline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:.6rem;">Tip: flip cards on tap/hover. Use the “Copy outline” buttons to grab a starter template.</p>
+    </section>
+
+    <!-- Timer -->
+    <section class="glass-card" id="timer">
+      <h3 class="about-header">Speech timer</h3>
+      <div class="beg-timer">
+        <div class="timer-dial" id="dial">
+          <div class="timer-core" id="timeReadout">07:00</div>
+        </div>
+        <div class="timer-presets" aria-label="Timer presets">
+          <button data-min="7">7:00</button>
+          <button data-min="8">8:00</button>
+          <button data-min="4">4:00</button>
+          <button data-min="5">5:00</button>
+        </div>
+        <div class="timer-controls" aria-label="Timer controls">
+          <button id="startTimer">Start</button>
+          <button id="pauseTimer">Pause</button>
+          <button id="resetTimer">Reset</button>
+          <label class="chip" style="cursor:pointer;">
+            <input type="checkbox" id="poiToggle" style="margin-right:.4rem;"> Show POI window
+          </label>
+        </div>
+        <div class="poi-bar" aria-hidden="true">
+          <div class="poi-window" id="poiWindow" style="width:0%; left:0%"></div>
+        </div>
+        <p class="note">POIs are allowed after the first minute and before the last 30 seconds of constructive speeches.</p>
+      </div>
+    </section>
+
+    <!-- Flow -->
+    <section class="glass-card" id="flow">
+      <h3 class="about-header">Flowing basics (type here)</h3>
+      <div class="beg-flow-wrap">
+        <table class="beg-flow" id="flowTable" aria-label="Flow sheet">
+          <thead>
+            <tr><th style="width:36px;">#</th><th>Government</th><th>Opposition</th><th>Rebuttal notes</th></tr>
+          </thead>
+          <tbody id="flowBody">
+            <!-- rows injected -->
+          </tbody>
+        </table>
+      </div>
+      <div class="beg-flow-actions">
+        <button class="copy-btn" id="addRow">Add row</button>
+        <button class="copy-btn" id="copyFlow">Copy all</button>
+        <button class="copy-btn" id="exportFlow">Export .txt</button>
+      </div>
+      <p class="note">Legend: claim → warrant → impact. Use arrows (→, ↑, ↓) to show responses & links.</p>
+    </section>
+
+    <!-- Case lab -->
+    <section class="glass-card" id="case-lab">
+      <h3 class="about-header">Case-building mini-lab</h3>
+      <p class="about-preview">Scaffold a Gov case. Aim for 2–4 reasons. Keep the spoken version under 7:30.</p>
+      <div class="beg-form">
+        <label>Resolution (“This House…”)
+          <input id="caseRes" placeholder="This House believes that...">
+        </label>
+        <label>Key definitions
+          <textarea id="caseDefs" placeholder="Define terms that matter; avoid squirrely defs."></textarea>
+        </label>
+        <label>Actors & mechanism (who does what, how)
+          <textarea id="caseMech" placeholder="Specify the actor(s), process, and enforcement if relevant."></textarea>
+        </label>
+        <label>Benefits (2–4) & weighing
+          <textarea id="caseBenefits" placeholder="List benefits with warrants; note mag/prob/timeframe/reversibility."></textarea>
+        </label>
+        <label>Harms avoided / comparative world
+          <textarea id="caseHarms" placeholder="What harms does this policy reduce vs status quo?"></textarea>
+        </label>
+        <label>Opp world & not-tight note
+          <textarea id="caseNotTight" placeholder="Why is this debatable? Sketch an Opp world or tight-block reasons."></textarea>
+        </label>
+      </div>
+      <div class="beg-form-actions">
+        <button class="copy-btn" id="caseSave">Save (local)</button>
+        <button class="copy-btn" id="caseLoad">Load</button>
+        <button class="copy-btn" id="caseExport">Export .txt</button>
+        <button class="copy-btn" id="caseOutline">Generate speaking outline</button>
+      </div>
+      <p class="note">Local saves use your browser’s storage (per device). Export to keep a portable copy.</p>
+    </section>
+
+    <!-- Theory essentials -->
+    <section class="glass-card" id="theory">
+      <h3 class="about-header">Tight & Spec (theory essentials)</h3>
+      <ul class="section-list">
+        <li><strong>Tight call:</strong> checks unbeatable cases. Opp sets a burden for Gov to show the case is debatable; this becomes the round.</li>
+        <li><strong>Specific knowledge (“spec”):</strong> non-common-knowledge facts not provided in POCs shouldn’t be introduced; judges drop those claims.</li>
+        <li><strong>Norm:</strong> keep theory minimal unless necessary; clarity & fairness first.</li>
+      </ul>
+    </section>
+
+    <!-- POIs & Weighing -->
+    <section class="glass-card" id="poi">
+      <h3 class="about-header">POIs & Weighing</h3>
+      <div class="two-col">
+        <div>
+          <p class="subhead">POIs (Points of Information)</p>
+          <ul class="section-list">
+            <li>Offer after 1:00 and before :30 of constructives.</li>
+            <li>Stand briefly, be concise, be polite.</li>
+            <li>As speaker: take a couple, control the time.</li>
+          </ul>
+          <p class="subhead" style="margin-top:.6rem;">Examples</p>
+          <ul class="section-list">
+            <li><em>To Gov:</em> “If uptake is low, what’s your fallback to achieve the benefit?”</li>
+            <li><em>To Opp:</em> “Under status quo, what solves the harm better than our mechanism?”</li>
+          </ul>
+        </div>
+        <div>
+          <p class="subhead">Weighing (how judges decide)</p>
+          <ul class="section-list">
+            <li><strong>Magnitude:</strong> how big is the impact?</li>
+            <li><strong>Probability:</strong> how likely is it?</li>
+            <li><strong>Timeframe:</strong> how soon / how long?</li>
+            <li><strong>Reversibility:</strong> can harm be undone?</li>
+          </ul>
+          <p class="note">Sentence stem: “Even if they achieve X, our impact wins on magnitude because…”.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tournament day -->
+    <section class="glass-card" id="tournament">
+      <h3 class="about-header">Tournament day (what to expect)</h3>
+      <ul class="section-list">
+        <li>Friday–Saturday prelims, then elimination rounds.</li>
+        <li>Novices compete in the same pool — great learning from strong debaters.</li>
+        <li>Judges are often competitors; you’ll get a ballot/RFD after round.</li>
+        <li>EOF/Equity exists at each event; use it as needed.</li>
+      </ul>
+      <div class="cta-row"><a class="link-chip" href="tournaments.html">Tournaments →</a></div>
+    </section>
+
+    <!-- Partnering -->
+    <section class="glass-card" id="partnering">
+      <h3 class="about-header">Partnering 101</h3>
+      <ul class="section-list">
+        <li>Try every speech early; find your groove.</li>
+        <li>Trust each other; communicate calmly in-round.</li>
+        <li>Share casing; both partners should feel valued.</li>
+        <li>Re-pairing between events is normal.</li>
+      </ul>
+    </section>
+
+    <!-- Drills -->
+    <section class="glass-card" id="drills">
+      <h3 class="about-header">Quick drills</h3>
+      <div class="beg-drills">
+        <!-- Rebuttal -->
+        <div class="beg-drill">
+          <h4 class="subhead">90-second rebuttal</h4>
+          <div class="prompt" id="rebPrompt">Click “New prompt”.</div>
+          <div class="actions">
+            <button class="copy-btn" id="rebNew">New prompt</button>
+            <button class="copy-btn" id="rebStart">Start 90s</button>
+            <button class="copy-btn" id="rebCopy">Copy text</button>
+          </div>
+          <textarea id="rebText" placeholder="Write your response…"></textarea>
+        </div>
+        <!-- Weighing -->
+        <div class="beg-drill">
+          <h4 class="subhead">Weighing sprint</h4>
+          <div class="prompt" id="wghPrompt">Click “New weighing”.</div>
+          <div class="actions">
+            <button class="copy-btn" id="wghNew">New weighing</button>
+            <button class="copy-btn" id="wghCopy">Copy text</button>
+          </div>
+          <textarea id="wghText" placeholder="Write two sentences that weigh clearly…"></textarea>
+        </div>
+        <!-- POI burst -->
+        <div class="beg-drill">
+          <h4 class="subhead">POI burst (60s)</h4>
+          <div class="prompt" id="poiPrompt">Click “New prompt”.</div>
+          <div class="actions">
+            <button class="copy-btn" id="poiNew">New prompt</button>
+            <button class="copy-btn" id="poiStart">Start 60s</button>
+            <button class="copy-btn" id="poiCopy">Copy text</button>
+          </div>
+          <textarea id="poiText" placeholder="Draft 2 concise POIs…"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glossary -->
+    <section class="glass-card" id="glossary">
+      <h3 class="about-header">Glossary</h3>
+      <input class="beg-glossary-search" id="glossSearch" placeholder="Filter terms… (e.g., tight, turn, tab)">
+      <div class="beg-glossary-list" id="glossList">
+        <!-- terms injected -->
+      </div>
+    </section>
+
+    <!-- Next steps -->
+    <section class="glass-card" id="next">
+      <h3 class="about-header">Next steps</h3>
+      <div class="cta-row">
+        <a class="link-chip" href="mailing-list.html">Join Mailing List →</a>
+        <a class="link-chip" href="calendar.html">See Calendar →</a>
+        <a class="link-chip" href="about.html#meetings">Show up Monday or Wednesday →</a>
+        <a class="link-chip" href="equity.html">Read Equity policy →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scripts -->
+  <script>
+    /* ====== Scroll reveal ====== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    /* ====== Navbar sizing var ====== */
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    /* ====== Mobile drawer ====== */
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first = drawer.querySelector('button,a'); first && first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    /* ====== Contents drawer (first-visit auto open) ====== */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
+
+    if(!localStorage.getItem('pdu_toc_dismissed_beg')) {
+      openTOC();
+      localStorage.setItem('pdu_toc_dismissed_beg','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    /* ====== TOC active highlight ====== */
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ====== Crash course checklist persistence ====== */
+    document.querySelectorAll('.beg-check input[type="checkbox"]').forEach(cb=>{
+      const key = 'pdu_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', ()=> localStorage.setItem(key, cb.checked ? '1' : '0'));
+    });
+
+    /* ====== Timeline data & UI ====== */
+    const timeline = [
+      {id:'pmc', label:'PMC', time:'7:00', minutes:7, type:'constructive',
+       goals:['State THBT; define key terms','Lay out mechanism (actors, process, enforcement)','Give 2–4 reasons + weighing'],
+       pitfalls:['Squirrely defs or unfair ground','Too much background, thin warrants','No comparative weighing'],
+       tip:'Be precise about who acts and how — it wins rounds.'},
+      {id:'loc', label:'LOC', time:'8:00', minutes:8, type:'constructive',
+       goals:['Set framework and stance','Group & answer core Gov claims','Start your weighing story'],
+       pitfalls:['Answering tags, not warrants','Conceding mechanism implicitly','Scattering instead of focusing'],
+       tip:'Pick the best ground and win it thoroughly.'},
+      {id:'mg', label:'MG', time:'8:00', minutes:8, type:'constructive',
+       goals:['Rebuild the center with warrants','Answer their best lines well','Collapse; set PMR roadmap'],
+       pitfalls:['Trying to hit everything','New material without signaling','Light weighing'],
+       tip:'Defend the heart; let the edges go.'},
+      {id:'mo', label:'MO', time:'8:00', minutes:8, type:'constructive',
+       goals:['Extend Opp offense cleanly','Mitigate/turn key Gov benefits','Set LOR voters with weighing'],
+       pitfalls:['Re-tagging without warrants','Messy signposting','No explicit voters'],
+       tip:'Ladder your analysis toward 2–3 voters.'},
+      {id:'lor', label:'LOR', time:'4:00', minutes:4, type:'rebuttal',
+       goals:['Pick the winning path','Weigh your path vs Gov','Voters: 2–3 crystal clear'],
+       pitfalls:['New lines (disallowed)','Laundry list of micro points','No explicit weighing'],
+       tip:'Short on time? Weigh, then weigh again.'},
+      {id:'pmr', label:'PMR', time:'5:00', minutes:5, type:'rebuttal',
+       goals:['Re-center mechanism & benefits','Answer LOR on the core','Final weighing & ballot story'],
+       pitfalls:['Chasing side issues','No response to top Opp point','No ballot instruction'],
+       tip:'Tell the judge exactly why Gov world is better.'},
+    ];
+    const nodesWrap = document.getElementById('timelineNodes');
+    const panel = document.getElementById('timelinePanel');
+
+    function nodeHTML(n){
+      return `<div class="beg-node" data-id="${n.id}">
+        <div class="time">${n.time}</div>
+        <div class="label">${n.label}</div>
+        <div class="note" style="opacity:.85; font-size:.9rem;">${n.type}</div>
+      </div>`;
+    }
+    nodesWrap.innerHTML = timeline.map(nodeHTML).join('');
+    nodesWrap.addEventListener('click', e=>{
+      const card = e.target.closest('.beg-node'); if(!card) return;
+      const n = timeline.find(x=>x.id===card.dataset.id); if(!n) return;
+      panel.innerHTML = `
+        <h4>${n.label} — ${n.time}</h4>
+        <p class="sub">${n.type[0].toUpperCase()+n.type.slice(1)}</p>
+        <p class="subhead">Goals</p>
+        <ul>${n.goals.map(g=>`<li>${g}</li>`).join('')}</ul>
+        <p class="subhead" style="margin-top:.4rem;">Common pitfalls</p>
+        <ul>${n.pitfalls.map(g=>`<li>${g}</li>`).join('')}</ul>
+        <div class="mini-cta">
+          <a class="link-chip" href="#timer" id="startFromTimeline" data-min="${n.minutes}">Start ${n.time} timer →</a>
+          <span class="note" style="margin-left:.4rem;">Tip: ${n.tip}</span>
+        </div>`;
+      const startLink = document.getElementById('startFromTimeline');
+      startLink?.addEventListener('click', (ev)=>{
+        // let default anchor scroll happen, also prime timer
+        const mins = +startLink.dataset.min || 7;
+        setTimeout(()=> { setPreset(mins); startTimer(); }, 0);
+      });
+    });
+
+    /* ====== Timer logic ====== */
+    const dial = document.getElementById('dial');
+    const readout = document.getElementById('timeReadout');
+    const presets = document.querySelectorAll('.timer-presets button');
+    const poiToggle = document.getElementById('poiToggle');
+    const poiWindow = document.getElementById('poiWindow');
+    let totalSec = 7*60, remain = totalSec, ticking = null;
+
+    function fmt(s){ const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0'); return `${String(m).padStart(2,'0')}:${ss}`; }
+    function updateDial(){
+      const pct = 1 - (remain/totalSec);
+      const angle = Math.max(0, Math.min(360, pct*360));
+      dial.style.setProperty('--angle', angle+'deg');
+      readout.textContent = fmt(remain);
+      dial.classList.toggle('glow60', remain<=60 && remain>30);
+      dial.classList.toggle('glow30', remain<=30);
+    }
+    function setPreset(min){
+      totalSec = Math.max(1, Math.round(min*60)); remain = totalSec; stopTimer(); updateDial(); updatePOI();
+      localStorage.setItem('pdu_timer_preset', String(min));
+    }
+    function startTimer(){
+      if(ticking) return;
+      ticking = setInterval(()=>{
+        remain = Math.max(0, remain-1);
+        updateDial();
+        if(remain===0) stopTimer();
+      }, 1000);
+    }
+    function stopTimer(){ clearInterval(ticking); ticking=null; }
+    function resetTimer(){ remain = totalSec; updateDial(); }
+    presets.forEach(b=> b.addEventListener('click', ()=> setPreset(+b.dataset.min)));
+    document.getElementById('startTimer').addEventListener('click', startTimer);
+    document.getElementById('pauseTimer').addEventListener('click', stopTimer);
+    document.getElementById('resetTimer').addEventListener('click', resetTimer);
+
+    // POI window bar: from 60s to (total-30s) for constructives; hide for rebuttals
+    function updatePOI(){
+      const show = poiToggle.checked;
+      const constructive = (totalSec===7*60 || totalSec===8*60);
+      if(!show || !constructive){ poiWindow.style.width='0%'; return; }
+      const start = 60, end = totalSec-30;
+      const leftPct = (start/totalSec)*100, widthPct = ((end-start)/totalSec)*100;
+      poiWindow.style.left = leftPct+'%'; poiWindow.style.width = Math.max(0,widthPct)+'%';
+    }
+    poiToggle.addEventListener('change', updatePOI);
+
+    // Load last preset
+    const savedPreset = +localStorage.getItem('pdu_timer_preset') || 7;
+    setPreset(savedPreset);
+
+    /* ====== Roles copy buttons ====== */
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        try { await navigator.clipboard.writeText(btn.dataset.copy); btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy outline',1000);}
+        catch { alert('Copy failed.'); }
+      });
+    });
+
+    /* ====== Flow table ====== */
+    const flowBody = document.getElementById('flowBody');
+    function addFlowRow(i){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="text-align:center;">${i}</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>`;
+      flowBody.appendChild(tr);
+    }
+    for(let i=1;i<=8;i++) addFlowRow(i);
+    document.getElementById('addRow').addEventListener('click', ()=> addFlowRow(flowBody.children.length+1));
+    function gatherFlow(){
+      const rows=[...flowBody.querySelectorAll('tr')].map((tr,idx)=>{
+        const tds = tr.querySelectorAll('td');
+        return `${idx+1}\t${tds[1].innerText}\t${tds[2].innerText}\t${tds[3].innerText}`;
+      });
+      return `# PDU Flow\n# Cols: #\tGov\tOpp\tRebuttal\n` + rows.join('\n');
+    }
+    document.getElementById('copyFlow').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(gatherFlow()); alert('Flow copied.'); } catch{ alert('Copy failed.'); }
+    });
+    document.getElementById('exportFlow').addEventListener('click', ()=>{
+      const blob = new Blob([gatherFlow()], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'pdu_flow.txt' });
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+
+    /* ====== Case lab ====== */
+    const fields = ['caseRes','caseDefs','caseMech','caseBenefits','caseHarms','caseNotTight'];
+    const getVal = id => document.getElementById(id).value.trim();
+    const setVal = (id,v) => document.getElementById(id).value = v || '';
+    document.getElementById('caseSave').addEventListener('click', ()=>{
+      const obj = {}; fields.forEach(f=> obj[f]=getVal(f));
+      localStorage.setItem('pdu_case_lab', JSON.stringify(obj));
+      alert('Saved locally.');
+    });
+    document.getElementById('caseLoad').addEventListener('click', ()=>{
+      const raw = localStorage.getItem('pdu_case_lab'); if(!raw) return alert('No local save found.');
+      try{ const obj=JSON.parse(raw); fields.forEach(f=> setVal(f,obj[f]||'')); } catch{}
+    });
+    document.getElementById('caseExport').addEventListener('click', ()=>{
+      const txt = `PDU Case
+Resolution: ${getVal('caseRes')}
+Definitions:
+${getVal('caseDefs')}
+
+Actors & Mechanism:
+${getVal('caseMech')}
+
+Benefits & Weighing:
+${getVal('caseBenefits')}
+
+Harms avoided / Comparative:
+${getVal('caseHarms')}
+
+Not-tight / Opp world:
+${getVal('caseNotTight')}
+`;
+      const blob = new Blob([txt], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'pdu_case.txt' });
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+    document.getElementById('caseOutline').addEventListener('click', async ()=>{
+      const outline = `PM SPEAKING OUTLINE
+Intro (15–30s): ${getVal('caseRes') || 'THBT …'}
+Definitions / Actors:
+${getVal('caseDefs')}
+
+Mechanism:
+${getVal('caseMech')}
+
+Benefits (2–4) & Weighing:
+${getVal('caseBenefits')}
+
+Comparative / Harms avoided:
+${getVal('caseHarms')}
+
+Not-tight / Opp world:
+${getVal('caseNotTight')}
+`;
+      try{ await navigator.clipboard.writeText(outline); alert('Outline copied to clipboard.'); } catch{ alert('Copy failed.'); }
+    });
+
+    /* ====== Drills ====== */
+    const rebPrompts = [
+      'Claim: Cash bail deters crime. Respond.',
+      'Claim: Universal basic income disincentivizes work. Respond.',
+      'Claim: Mandatory voting undermines freedom. Respond.',
+      'Claim: Sin taxes don’t change behavior. Respond.',
+      'Claim: Banning legacy admissions harms diversity. Respond.'
+    ];
+    const wghAxes = ['Magnitude', 'Probability', 'Timeframe', 'Reversibility'];
+    const poiPrompts = [
+      'Gov claims: national service builds civic trust.',
+      'Gov claims: citywide congestion pricing improves equity.',
+      'Gov claims: social media platforms should verify all users.',
+      'Gov claims: universities should divest from fossil fuels.',
+      'Gov claims: decriminalizing all drugs reduces harm.'
+    ];
+    const byId = id => document.getElementById(id);
+
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    byId('rebNew').addEventListener('click', ()=> byId('rebPrompt').textContent = pick(rebPrompts));
+    byId('wghNew').addEventListener('click', ()=> byId('wghPrompt').textContent = `Weigh on: ${pick(wghAxes)} — versus their best impact.`);
+    byId('poiNew').addEventListener('click', ()=> byId('poiPrompt').textContent = pick(poiPrompts));
+
+    byId('rebCopy').addEventListener('click', async ()=> {
+      try{ await navigator.clipboard.writeText(byId('rebText').value); alert('Copied.'); } catch { alert('Copy failed.'); }
+    });
+    byId('wghCopy').addEventListener('click', async ()=> {
+      try{ await navigator.clipboard.writeText(byId('wghText').value); alert('Copied.'); } catch { alert('Copy failed.'); }
+    });
+    byId('poiCopy').addEventListener('click', async ()=> {
+      try{ await navigator.clipboard.writeText(byId('poiText').value); alert('Copied.'); } catch { alert('Copy failed.'); }
+    });
+
+    let drillTick=null, drillRemain=0;
+    function startDrill(seconds, labelEl){
+      clearInterval(drillTick); drillRemain=seconds;
+      labelEl.textContent = labelEl.textContent.replace(/\(\d+s\)$/,'').trim() + ` (${seconds}s)`;
+      drillTick = setInterval(()=>{
+        drillRemain--; labelEl.textContent = labelEl.textContent.replace(/\(\d+s\)$/,'').trim() + ` (${drillRemain}s)`;
+        if(drillRemain<=0){ clearInterval(drillTick); drillTick=null; }
+      },1000);
+    }
+    byId('rebStart').addEventListener('click', ()=> startDrill(90, byId('rebPrompt')));
+    byId('poiStart').addEventListener('click', ()=> startDrill(60, byId('poiPrompt')));
+
+    /* ====== Glossary ====== */
+    const terms = [
+      ['Tab','Tournament tabulation (pairings, results, judges).'],
+      ['Break','Advance to elimination rounds.'],
+      ['Speaks','Speaker points for delivery, logic, structure, etc.'],
+      ['Flow','Your notes tracing arguments through the round.'],
+      ['POI','Point of Information; brief question/point during constructives.'],
+      ['Weighing','Comparing worlds/impacts by magnitude, probability, timeframe, reversibility.'],
+      ['Tight','An unbeatable Gov case; Opp can call it tight.'],
+      ['Spec','Specific knowledge outside common knowledge/POC; dropped from evaluation.'],
+      ['Framework','What matters and why; the lens for the round.'],
+      ['Turn','Make their argument support your side.'],
+      ['Extension','Carry an argument forward with deeper warrants.'],
+      ['Collapse','Focus on the few arguments that win the round.'],
+      ['RFD','Reason for Decision; judge’s explanation.']
+    ];
+    const glossList = byId('glossList');
+    function renderGlossary(filter=''){
+      const f = filter.trim().toLowerCase();
+      glossList.innerHTML = terms
+        .filter(([t,d]) => t.toLowerCase().includes(f) || d.toLowerCase().includes(f))
+        .map(([t,d]) => `<div class="beg-term"><b>${t}:</b> ${d}</div>`).join('');
+    }
+    renderGlossary();
+    byId('glossSearch').addEventListener('input', e=> renderGlossary(e.target.value));
+  </script>
+</body>
+</html>
+```0
