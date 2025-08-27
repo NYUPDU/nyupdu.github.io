@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join Us | NYU PDU</title>
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Page-local styles (mobile sticky bar + tiny layout helpers) -->
+  <style>
+    /* Sticky CTA bar (mobile only) */
+    @media (max-width: 960px){
+      .join-sticky {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 1102;
+        display: flex; gap: .5rem; justify-content: center; align-items: center;
+        padding: .6rem .8rem;
+        background: rgba(46,0,79,.85);
+        border-top: 1px solid rgba(255,255,255,.2);
+        backdrop-filter: blur(10px);
+      }
+      .join-sticky a { text-decoration: none; }
+    }
+
+    /* Simple two-col helper for “Tracks” section */
+    .tracks-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+    }
+    .tracks-grid .glass-card { margin: 0; }
+    @media(max-width: 960px){ .tracks-grid { grid-template-columns: 1fr; } }
+
+    /* Light list spacing in FAQ preview */
+    .faq-list li { margin: .4rem 0; }
+  </style>
+</head>
+
+<body id="top">
+  <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <!-- NYU (left on mobile) -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <!-- Desktop links center -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="#meetings">This Week’s Meetings</a></li>
+              <li role="none"><a role="menuitem" href="#tracks">Onboarding Tracks</a></li>
+              <li role="none"><a role="menuitem" href="#partners">Partners & Assignments</a></li>
+              <li role="none"><a role="menuitem" href="#myths">Costs & Support</a></li>
+              <li role="none"><a role="menuitem" href="#calendar">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- PDU logo (centered on mobile) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <!-- Burger (right on mobile) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="true">Join Us</button>
+          <ul class="drawer-submenu open">
+            <li><a href="#meetings">This Week’s Meetings</a></li>
+            <li><a href="#tracks">Onboarding Tracks</a></li>
+            <li><a href="#partners">Partners & Assignments</a></li>
+            <li><a href="#myths">Costs & Support</a></li>
+            <li><a href="#calendar">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hero -->
+  <section class="hero-section hero-compact">
+    <div>
+      <h1 class="page-title">Join the Parliamentary Debate Union</h1>
+      <p class="page-subtitle">Open to all NYU students — drop in any Monday or Wednesday, 7–9 PM</p>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <!-- Quick Start tiles -->
+    <section class="tiles-quick reveal" style="width:90%; max-width:1100px; margin:2rem auto;">
+      <div class="tile glass-card">
+        <div class="tile-emoji" aria-hidden="true">✨</div>
+        <h3>I’m new to debate</h3>
+        <p>No experience? Perfect. We’ll teach you from day one.</p>
+        <a class="link-chip" href="#tracks">Beginner track overview →</a>
+      </div>
+      <div class="tile glass-card">
+        <div class="tile-emoji" aria-hidden="true">🎯</div>
+        <h3>I’ve debated before</h3>
+        <p>Skip basics, get feedback fast, and compete soon.</p>
+        <a class="link-chip" href="#tracks">Fast-track placement →</a>
+      </div>
+      <div class="tile glass-card">
+        <div class="tile-emoji" aria-hidden="true">👋</div>
+        <h3>Just curious?</h3>
+        <p>Drop in to a lesson or a practice round—no RSVP needed.</p>
+        <a class="link-chip" href="#meetings">This week’s agenda →</a>
+      </div>
+    </section>
+
+    <!-- Meetings & Attendance -->
+    <section class="glass-card reveal" id="meetings">
+      <h3 class="about-header">This Week’s Meetings</h3>
+      <div class="time-row">
+        <span class="chip">Mondays & Wednesdays</span>
+        <span class="chip">7:00–9:00 PM</span>
+        <span class="chip">Drop-in welcome</span>
+      </div>
+
+      <div class="two-col" style="margin-top:.75rem;">
+        <div>
+          <p class="subhead">Monday — Lesson Meeting</p>
+          <ul class="section-list">
+            <li><strong>Lecture:</strong> Focused lesson on a debate skill or technique.</li>
+            <li><strong>Engagement:</strong> Short activities to check understanding.</li>
+            <li><strong>Practice Rounds:</strong> Full simulated debates to apply the lesson.</li>
+          </ul>
+
+          <p class="subhead" style="margin-top:1rem;">Wednesday — Training Meeting</p>
+          <ul class="section-list">
+            <li><strong>Practice Round:</strong> A full simulated debate round.</li>
+            <li><strong>Workshopping:</strong> Case-building with senior members and the board.</li>
+            <li><strong>Feedback:</strong> Real-time notes from Education and Leadership.</li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="subhead">Attendance (for tournaments & voting)</p>
+          <ul class="section-list">
+            <li><strong>Tournament eligibility (rolling 3 weeks):</strong></li>
+            <ul class="section-list">
+              <li>At least <strong>1</strong> Monday Lesson Meeting</li>
+              <li>At least <strong>2</strong> Wednesday Training Meetings</li>
+            </ul>
+            <li style="margin-top:.5rem;"><strong>Voting:</strong> Attend at least <strong>60%</strong> of meetings in the semester.</li>
+            <li style="margin-top:.5rem;"><strong>Check-in:</strong> Tap in at the tablet when you arrive.</li>
+          </ul>
+
+          <div class="cta-row">
+            <a class="link-chip" href="#calendar">See club calendar →</a>
+            <a class="link-chip" href="calendar.ics">Add to my calendar (.ics) →</a>
+          </div>
+          <p class="note" style="margin-top:.5rem;">We use CWs and opt-outs when needed. Read our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How Joining Works (no forms) -->
+    <section class="glass-card reveal" id="how-to">
+      <h3 class="about-header">How Joining Works</h3>
+      <ol class="section-list">
+        <li><strong>Drop in any Monday or Wednesday, 7–9 PM.</strong> No RSVP or fees.</li>
+        <li><strong>Say hi at check-in.</strong> We’ll point you to the right room and track.</li>
+        <li><strong>Pick a track.</strong> Beginner or Fast-track—switch anytime.</li>
+        <li><strong>Compete when ready.</strong> We travel most weekends during the semester.</li>
+      </ol>
+    </section>
+
+    <!-- Onboarding Tracks -->
+    <section class="reveal" id="tracks" style="width:90%; max-width:1100px; margin:2rem auto;">
+      <h3 class="about-header" style="width:90%; max-width:900px; margin:0 auto 1rem auto;">Onboarding Tracks</h3>
+      <div class="tracks-grid">
+        <div class="glass-card">
+          <h4 class="about-header" style="font-size:1.4rem;">Beginner Track</h4>
+          <ul class="section-list">
+            <li>Week 1: Speech structure, flowing, role basics</li>
+            <li>Week 2: Case-building + first scrim</li>
+            <li>Weeks 3–4: Tournament simulation + partner practice</li>
+          </ul>
+          <p class="note">Goal: round-ready in your first month.</p>
+        </div>
+        <div class="glass-card">
+          <h4 class="about-header" style="font-size:1.4rem;">Fast-Track (Experienced)</h4>
+          <ul class="section-list">
+            <li>Calibration round with judge feedback</li>
+            <li>Casebook review + role specialization</li>
+            <li>Early tournament placement (as appropriate)</li>
+          </ul>
+          <p class="note">Goal: get you on the circuit quickly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partners & Assignments -->
+    <section class="glass-card reveal" id="partners">
+      <h3 class="about-header">Partners & Assignments</h3>
+      <p class="about-preview">
+        There’s no formal permanent matching process. <strong>Partners are requested or assigned in person on a per-tournament basis.</strong>
+      </p>
+      <ul class="section-list">
+        <li><strong>Have someone in mind?</strong> Let us know at meetings—we’ll try to accommodate.</li>
+        <li><strong>New or flexible?</strong> We’ll pair you with a compatible teammate based on schedule, goals, and experience.</li>
+        <li><strong>Change your mind?</strong> Partnerships can shift between events—it’s normal.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="tournaments.html">How tournaments work →</a>
+      </div>
+    </section>
+
+    <!-- Costs & Support (Myth Busters) -->
+    <section class="glass-card reveal" id="myths">
+      <h3 class="about-header">Costs & Support (Myth Busters)</h3>
+      <ul class="section-list">
+        <li><strong>Cost?</strong> <span class="chip">$0</span> to compete. <strong>PDU covers travel, registration, and lodging.</strong></li>
+        <li><strong>Travel?</strong> <span class="chip">Club-backed trips</span> across the East Coast throughout the semester.</li>
+        <li><strong>Experience?</strong> None required. Drop in and start learning—fast.</li>
+        <li><strong>Time?</strong> About 4 hours/week for meetings; travel is optional.</li>
+        <li><strong>Gear?</strong> Bring a laptop or notebook if you like—nothing special required.</li>
+        <li><strong>Accessibility?</strong> Tell us your access needs (pace, seating, breaks)—we’ll work with you.</li>
+        <li><strong>Culture?</strong> We debate ideas, not identities. See our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></li>
+      </ul>
+    </section>
+
+    <!-- Calendar placeholder -->
+    <section class="glass-card reveal" id="calendar">
+      <h3 class="about-header">Calendar & Updates</h3>
+      <p class="about-preview">
+        We’ll publish our live club calendar here so you can see meetings, travel weekends, and special workshops at a glance.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="calendar.html">Open the calendar →</a>
+        <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
+      </div>
+      <p class="note">These links are placeholders for now—we’ll wire them up when your calendar is ready.</p>
+    </section>
+
+    <!-- FAQ teaser -->
+    <section class="glass-card reveal" id="faq">
+      <h3 class="about-header">FAQ (quick)</h3>
+      <ul class="faq-list section-list">
+        <li><strong>Do I need to sign up?</strong> No—just drop in any Mon/Wed 7–9 PM.</li>
+        <li><strong>Can I join mid-semester?</strong> Yes. Start whenever.</li>
+        <li><strong>When can I compete?</strong> As soon as you’re round-ready; we’ll help you get there.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="contact.html">More questions? Contact us →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- Mobile sticky CTA bar -->
+  <div class="join-sticky" aria-label="Quick actions (mobile only)">
+    <a class="btn-primary" href="#meetings">This Week’s Meetings</a>
+    <a class="btn-secondary" href="#calendar">See Calendar</a>
+  </div>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- Scripts -->
+  <script>
+    // Reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card, .tiles-quick').forEach(el => observer.observe(el));
+
+    // Measure navbar (for drawer offset)
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    // Mobile drawer
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+
+    // Desktop submenu a11y
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+  </script>
+</body>
+</html>
