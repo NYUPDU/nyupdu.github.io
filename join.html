@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (mobile sticky bar + tiny layout helpers) -->
+  <!-- Page-local styles (mobile sticky bar + tile grid helpers) -->
   <style>
     /* Sticky CTA bar (mobile only) */
     @media (max-width: 960px){
@@ -23,15 +23,12 @@
       .join-sticky a { text-decoration: none; }
     }
 
-    /* Simple two-col helper for “Tracks” section */
-    .tracks-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+    /* Tile grid for quick-start cards */
+    .tiles-quick {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem; width: 90%; max-width: 1100px; margin: 2rem auto;
     }
-    .tracks-grid .glass-card { margin: 0; }
-    @media(max-width: 960px){ .tracks-grid { grid-template-columns: 1fr; } }
-
-    /* Light list spacing in FAQ preview */
-    .faq-list li { margin: .4rem 0; }
+    .tile-emoji { font-size: 1.4rem; margin-bottom: .35rem; opacity: .9; }
   </style>
 </head>
 
@@ -65,8 +62,8 @@
           <li class="has-submenu">
             <a href="join.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
-              <li role="none"><a role="menuitem" href="#meetings">This Week’s Meetings</a></li>
-              <li role="none"><a role="menuitem" href="#tracks">Onboarding Tracks</a></li>
+              <li role="none"><a role="menuitem" href="#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="#meetings">Meetings (Monthly)</a></li>
               <li role="none"><a role="menuitem" href="#partners">Partners & Assignments</a></li>
               <li role="none"><a role="menuitem" href="#myths">Costs & Support</a></li>
               <li role="none"><a role="menuitem" href="#calendar">Calendar</a></li>
@@ -117,8 +114,8 @@
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="true">Join Us</button>
           <ul class="drawer-submenu open">
-            <li><a href="#meetings">This Week’s Meetings</a></li>
-            <li><a href="#tracks">Onboarding Tracks</a></li>
+            <li><a href="#mailing">Mailing List</a></li>
+            <li><a href="#meetings">Meetings (Monthly)</a></li>
             <li><a href="#partners">Partners & Assignments</a></li>
             <li><a href="#myths">Costs & Support</a></li>
             <li><a href="#calendar">Calendar</a></li>
@@ -135,56 +132,69 @@
   <section class="hero-section hero-compact">
     <div>
       <h1 class="page-title">Join the Parliamentary Debate Union</h1>
-      <p class="page-subtitle">Open to all NYU students — drop in any Monday or Wednesday, 7–9 PM</p>
+      <p class="page-subtitle">Open to all NYU students — drop in Mondays or Wednesdays, 7–9 PM. Move at your own pace.</p>
     </div>
   </section>
 
   <main class="main-content">
+    <!-- 1) Mailing List (primary action) -->
+    <section class="glass-card reveal" id="mailing">
+      <h3 class="about-header">Step One: Join the Mailing List</h3>
+      <p class="about-preview">
+        This is our main way to share monthly schedules, travel sign-ups, and updates. Joining the list is the fastest way to plug in.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip" href="mailing-list.html">Join the mailing list →</a>
+      </div>
+      <p class="note" style="margin-top:.5rem;">Link is a placeholder—we’ll wire it to your actual list sign-up.</p>
+    </section>
+
     <!-- Quick Start tiles -->
-    <section class="tiles-quick reveal" style="width:90%; max-width:1100px; margin:2rem auto;">
+    <section class="tiles-quick reveal" aria-label="Quick start">
       <div class="tile glass-card">
-        <div class="tile-emoji" aria-hidden="true">✨</div>
-        <h3>I’m new to debate</h3>
-        <p>No experience? Perfect. We’ll teach you from day one.</p>
-        <a class="link-chip" href="#tracks">Beginner track overview →</a>
+        <div class="tile-emoji" aria-hidden="true">👋</div>
+        <h3>New to debate?</h3>
+        <p>Start with <strong>Monday Lesson</strong> meetings. Learn fundamentals, then try a practice round when you’re ready.</p>
+        <a class="link-chip" href="#meetings">See meetings →</a>
       </div>
       <div class="tile glass-card">
         <div class="tile-emoji" aria-hidden="true">🎯</div>
-        <h3>I’ve debated before</h3>
-        <p>Skip basics, get feedback fast, and compete soon.</p>
-        <a class="link-chip" href="#tracks">Fast-track placement →</a>
+        <h3>Experienced?</h3>
+        <p>Jump into <strong>Wednesday Training</strong> for scrims, case workshopping, and tournament prep.</p>
+        <a class="link-chip" href="#meetings">See meetings →</a>
       </div>
       <div class="tile glass-card">
-        <div class="tile-emoji" aria-hidden="true">👋</div>
-        <h3>Just curious?</h3>
-        <p>Drop in to a lesson or a practice round—no RSVP needed.</p>
-        <a class="link-chip" href="#meetings">This week’s agenda →</a>
+        <div class="tile-emoji" aria-hidden="true">🗓️</div>
+        <h3>Plan your month</h3>
+        <p>We post a monthly overview instead of weekly changes. Check the calendar and show up when you can.</p>
+        <a class="link-chip" href="#calendar">View calendar →</a>
       </div>
     </section>
 
-    <!-- Meetings & Attendance -->
+    <!-- 2) Meetings (Monthly cadence) -->
     <section class="glass-card reveal" id="meetings">
-      <h3 class="about-header">This Week’s Meetings</h3>
+      <h3 class="about-header">Meetings (Monthly View)</h3>
       <div class="time-row">
         <span class="chip">Mondays & Wednesdays</span>
         <span class="chip">7:00–9:00 PM</span>
         <span class="chip">Drop-in welcome</span>
+        <span class="chip">Move at your own pace</span>
       </div>
 
       <div class="two-col" style="margin-top:.75rem;">
         <div>
           <p class="subhead">Monday — Lesson Meeting</p>
           <ul class="section-list">
-            <li><strong>Lecture:</strong> Focused lesson on a debate skill or technique.</li>
+            <li><strong>Lecture:</strong> Focused skill-building.</li>
             <li><strong>Engagement:</strong> Short activities to check understanding.</li>
-            <li><strong>Practice Rounds:</strong> Full simulated debates to apply the lesson.</li>
+            <li><strong>Practice Rounds:</strong> Try when you’re ready—no pressure.</li>
           </ul>
 
           <p class="subhead" style="margin-top:1rem;">Wednesday — Training Meeting</p>
           <ul class="section-list">
-            <li><strong>Practice Round:</strong> A full simulated debate round.</li>
+            <li><strong>Practice Round:</strong> Full scrim(s) with feedback.</li>
             <li><strong>Workshopping:</strong> Case-building with senior members and the board.</li>
-            <li><strong>Feedback:</strong> Real-time notes from Education and Leadership.</li>
+            <li><strong>Feedback:</strong> Real-time notes from Education & Leadership.</li>
           </ul>
         </div>
 
@@ -201,104 +211,55 @@
           </ul>
 
           <div class="cta-row">
-            <a class="link-chip" href="#calendar">See club calendar →</a>
-            <a class="link-chip" href="calendar.ics">Add to my calendar (.ics) →</a>
+            <a class="link-chip" href="#calendar">See monthly calendar →</a>
+            <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
           </div>
           <p class="note" style="margin-top:.5rem;">We use CWs and opt-outs when needed. Read our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></p>
         </div>
       </div>
     </section>
 
-    <!-- How Joining Works (no forms) -->
-    <section class="glass-card reveal" id="how-to">
-      <h3 class="about-header">How Joining Works</h3>
-      <ol class="section-list">
-        <li><strong>Drop in any Monday or Wednesday, 7–9 PM.</strong> No RSVP or fees.</li>
-        <li><strong>Say hi at check-in.</strong> We’ll point you to the right room and track.</li>
-        <li><strong>Pick a track.</strong> Beginner or Fast-track—switch anytime.</li>
-        <li><strong>Compete when ready.</strong> We travel most weekends during the semester.</li>
-      </ol>
-    </section>
-
-    <!-- Onboarding Tracks -->
-    <section class="reveal" id="tracks" style="width:90%; max-width:1100px; margin:2rem auto;">
-      <h3 class="about-header" style="width:90%; max-width:900px; margin:0 auto 1rem auto;">Onboarding Tracks</h3>
-      <div class="tracks-grid">
-        <div class="glass-card">
-          <h4 class="about-header" style="font-size:1.4rem;">Beginner Track</h4>
-          <ul class="section-list">
-            <li>Week 1: Speech structure, flowing, role basics</li>
-            <li>Week 2: Case-building + first scrim</li>
-            <li>Weeks 3–4: Tournament simulation + partner practice</li>
-          </ul>
-          <p class="note">Goal: round-ready in your first month.</p>
-        </div>
-        <div class="glass-card">
-          <h4 class="about-header" style="font-size:1.4rem;">Fast-Track (Experienced)</h4>
-          <ul class="section-list">
-            <li>Calibration round with judge feedback</li>
-            <li>Casebook review + role specialization</li>
-            <li>Early tournament placement (as appropriate)</li>
-          </ul>
-          <p class="note">Goal: get you on the circuit quickly.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Partners & Assignments -->
+    <!-- 3) Partners & Assignments -->
     <section class="glass-card reveal" id="partners">
       <h3 class="about-header">Partners & Assignments</h3>
       <p class="about-preview">
         There’s no formal permanent matching process. <strong>Partners are requested or assigned in person on a per-tournament basis.</strong>
       </p>
       <ul class="section-list">
-        <li><strong>Have someone in mind?</strong> Let us know at meetings—we’ll try to accommodate.</li>
-        <li><strong>New or flexible?</strong> We’ll pair you with a compatible teammate based on schedule, goals, and experience.</li>
-        <li><strong>Change your mind?</strong> Partnerships can shift between events—it’s normal.</li>
+        <li><strong>Have a preferred partner?</strong> Tell us at meetings—we’ll try to honor it based on availability and roster size.</li>
+        <li><strong>Flexible or new?</strong> We’ll pair you with someone compatible (schedule, goals, experience).</li>
+        <li><strong>Not a fit?</strong> Partnerships can change between events—it’s normal.</li>
       </ul>
       <div class="cta-row">
         <a class="link-chip" href="tournaments.html">How tournaments work →</a>
       </div>
     </section>
 
-    <!-- Costs & Support (Myth Busters) -->
+    <!-- 4) Costs & Support (Myth Busters) -->
     <section class="glass-card reveal" id="myths">
       <h3 class="about-header">Costs & Support (Myth Busters)</h3>
       <ul class="section-list">
         <li><strong>Cost?</strong> <span class="chip">$0</span> to compete. <strong>PDU covers travel, registration, and lodging.</strong></li>
         <li><strong>Travel?</strong> <span class="chip">Club-backed trips</span> across the East Coast throughout the semester.</li>
-        <li><strong>Experience?</strong> None required. Drop in and start learning—fast.</li>
-        <li><strong>Time?</strong> About 4 hours/week for meetings; travel is optional.</li>
+        <li><strong>Experience?</strong> None required. Drop in and learn—fast.</li>
+        <li><strong>Time?</strong> About 4 hours/week for meetings; travel is optional. Join when you can.</li>
         <li><strong>Gear?</strong> Bring a laptop or notebook if you like—nothing special required.</li>
         <li><strong>Accessibility?</strong> Tell us your access needs (pace, seating, breaks)—we’ll work with you.</li>
         <li><strong>Culture?</strong> We debate ideas, not identities. See our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></li>
       </ul>
     </section>
 
-    <!-- Calendar placeholder -->
+    <!-- 5) Calendar (monthly) -->
     <section class="glass-card reveal" id="calendar">
-      <h3 class="about-header">Calendar & Updates</h3>
+      <h3 class="about-header">Calendar (Monthly)</h3>
       <p class="about-preview">
-        We’ll publish our live club calendar here so you can see meetings, travel weekends, and special workshops at a glance.
+        We publish a monthly overview for meetings, travel weekends, and workshops. Check it to plan your month, then drop in when you can.
       </p>
       <div class="cta-row">
         <a class="link-chip" href="calendar.html">Open the calendar →</a>
         <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
       </div>
-      <p class="note">These links are placeholders for now—we’ll wire them up when your calendar is ready.</p>
-    </section>
-
-    <!-- FAQ teaser -->
-    <section class="glass-card reveal" id="faq">
-      <h3 class="about-header">FAQ (quick)</h3>
-      <ul class="faq-list section-list">
-        <li><strong>Do I need to sign up?</strong> No—just drop in any Mon/Wed 7–9 PM.</li>
-        <li><strong>Can I join mid-semester?</strong> Yes. Start whenever.</li>
-        <li><strong>When can I compete?</strong> As soon as you’re round-ready; we’ll help you get there.</li>
-      </ul>
-      <div class="cta-row">
-        <a class="link-chip" href="contact.html">More questions? Contact us →</a>
-      </div>
+      <p class="note">Links are placeholders for now—we’ll wire them to your real calendar setup.</p>
     </section>
   </main>
 
@@ -308,7 +269,7 @@
 
   <!-- Mobile sticky CTA bar -->
   <div class="join-sticky" aria-label="Quick actions (mobile only)">
-    <a class="btn-primary" href="#meetings">This Week’s Meetings</a>
+    <a class="btn-primary" href="#mailing">Join Mailing List</a>
     <a class="btn-secondary" href="#calendar">See Calendar</a>
   </div>
 
