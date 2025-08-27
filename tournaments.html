@@ -8,9 +8,8 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (scoped) -->
+  <!-- Page-local styles (no TOC styles here—uses the same global classes as About) -->
   <style>
-    /* Layout helpers */
     .page-wrap { width: 95%; max-width: 1100px; margin: 0 auto; }
     .cta-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.6rem; }
 
@@ -20,7 +19,7 @@
       text-shadow:0 0 10px rgba(199,191,255,.35), 0 0 24px rgba(199,191,255,.25), 0 4px 24px rgba(0,0,0,.45); }
     .page-subtitle { margin-top:.5rem; font-size:1.05rem; opacity:.95; text-align:center; }
 
-    /* Chips (reuse your link-chip look) */
+    /* Chips */
     .link-chip { display:inline-block; padding:.45rem .85rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
       background:rgba(255,255,255,.10); color:#fff; text-decoration:none; font-weight:700; letter-spacing:.2px; transition:all .25s ease; }
     .link-chip:hover { background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
@@ -70,48 +69,12 @@
     .acc summary:after{ content:'▾'; float:right; opacity:.9; }
     .acc details[open] summary:after{ content:'▴'; }
 
-    /* Contents drawer (like About/Equity) */
-    .toc-fab{
-      position:fixed; right:18px; bottom:90px; z-index:1201;
-      padding:.55rem .9rem; border-radius:999px; font-weight:800; letter-spacing:.2px;
-      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.12); color:#fff; cursor:pointer;
-      backdrop-filter:blur(10px); box-shadow:0 10px 24px rgba(0,0,0,.35);
-    }
-    .toc-scrim{
-      position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.45); display:none;
-    }
-    .toc-drawer{
-      position:fixed; top:var(--nav-height,80px); right:0; bottom:0; width:320px; z-index:1202;
-      transform:translateX(100%); transition:transform 240ms ease;
-      background:rgba(255,255,255,.10); border-left:1px solid rgba(255,255,255,.25); backdrop-filter:blur(14px);
-      box-shadow:-12px 0 30px rgba(0,0,0,.35);
-    }
-    .toc-drawer.open{ transform:translateX(0); }
-    .toc-scrim.open{ display:block; }
-    .toc-head{
-      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
-      padding:.9rem 1rem; border-bottom:1px solid rgba(255,255,255,.2); font-weight:800;
-    }
-    .toc-close{
-      background:transparent; color:#fff; width:34px; height:34px; border:1px solid rgba(255,255,255,.25);
-      border-radius:10px; font-size:1.1rem; cursor:pointer;
-    }
-    .toc-list{ list-style:none; padding: .6rem .6rem 1rem; }
-    .toc-list a{
-      display:block; padding:.55rem .7rem; margin:.25rem 0; border-radius:10px; text-decoration:none; color:#fff; font-weight:700;
-      border:1px solid transparent;
-    }
-    .toc-list a:hover{ background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.25); }
-
     /* Anchor offset so nav doesn’t cover headings */
     section[id]{ scroll-margin-top: 96px; }
 
-    /* Mobile tweaks */
     @media (max-width: 960px){
       .page-title { font-size:2.4rem; }
       .feature-card { grid-template-columns: 1fr; }
-      .toc-fab{ bottom: 90px; right: 16px; }
-      /* keep float-to-top at bottom-right; toc-fab sits just above it */
     }
   </style>
 </head>
@@ -224,6 +187,26 @@
       </div>
     </div>
   </section>
+
+  <!-- Contents Drawer (IDENTICAL pattern to About) -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#featured" class="active">Featured Tournament</a>
+      <a href="#upcoming">Upcoming Targets</a>
+      <a href="#primer">How APDA Works</a>
+      <a href="#eligibility">Eligibility & Selection</a>
+      <a href="#tids">TIDs</a>
+      <a href="#logistics">Logistics & Costs</a>
+      <a href="#partners">Partners & Roles</a>
+      <a href="#equity">Equity & Safety</a>
+      <a href="#results">Results & Highlights</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
 
   <main class="main-content page-wrap">
     <!-- Featured next tournament -->
@@ -431,30 +414,7 @@
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Contents FAB + Drawer -->
-  <button class="toc-fab" id="tocBtn" aria-haspopup="true" aria-expanded="false" aria-controls="tocDrawer">Contents ▤</button>
-  <div class="toc-scrim" id="tocScrim" hidden></div>
-  <aside class="toc-drawer" id="tocDrawer" aria-hidden="true" aria-label="On-page contents">
-    <div class="toc-head">
-      <span>On this page</span>
-      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
-    </div>
-    <nav aria-label="Contents">
-      <ul class="toc-list">
-        <li><a href="#featured">Featured Tournament</a></li>
-        <li><a href="#upcoming">Upcoming Targets</a></li>
-        <li><a href="#primer">How APDA Works</a></li>
-        <li><a href="#eligibility">Eligibility & Selection</a></li>
-        <li><a href="#tids">TIDs</a></li>
-        <li><a href="#logistics">Logistics & Costs</a></li>
-        <li><a href="#partners">Partners & Roles</a></li>
-        <li><a href="#equity">Equity & Safety</a></li>
-        <li><a href="#results">Results & Highlights</a></li>
-      </ul>
-    </nav>
-  </aside>
-
-  <!-- Scripts (reuse behaviors from other pages + contents drawer) -->
+  <!-- Scripts (reuse global behaviors) -->
   <script>
     // Reveal-on-scroll
     const observer = new IntersectionObserver(entries => {
@@ -482,6 +442,7 @@
     burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
     // Desktop submenu a11y
     document.querySelectorAll('.has-submenu').forEach(item=>{
@@ -493,36 +454,35 @@
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    // ------- Contents drawer -------
-    const tocBtn   = document.getElementById('tocBtn');
-    const tocDrawer= document.getElementById('tocDrawer');
-    const tocClose = document.getElementById('tocClose');
-    const tocScrim = document.getElementById('tocScrim');
+    // ----- Contents drawer (IDENTICAL logic to About) -----
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen   = document.getElementById('tocOpen');
+    const tocClose  = document.getElementById('tocClose');
 
-    function openToc(){
-      tocDrawer.classList.add('open');
-      tocDrawer.setAttribute('aria-hidden','false');
-      tocBtn.setAttribute('aria-expanded','true');
-      tocScrim.hidden = false;
-      tocScrim.classList.add('open');
-    }
-    function closeToc(){
-      tocDrawer.classList.remove('open');
-      tocDrawer.setAttribute('aria-hidden','true');
-      tocBtn.setAttribute('aria-expanded','false');
-      tocScrim.classList.remove('open');
-      tocScrim.hidden = true;
-      tocBtn.focus();
-    }
-    tocBtn.addEventListener('click', ()=> tocDrawer.classList.contains('open') ? closeToc() : openToc());
-    tocClose.addEventListener('click', closeToc);
-    tocScrim.addEventListener('click', closeToc);
-    window.addEventListener('keydown', e => { if(e.key === 'Escape' && tocDrawer.classList.contains('open')) closeToc(); });
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
 
-    // Smooth-close contents when a TOC link is clicked
-    document.querySelectorAll('.toc-list a').forEach(a=>{
-      a.addEventListener('click',()=> setTimeout(closeToc, 120));
-    });
+    // One-time auto-open on first visit (same key used sitewide)
+    if(!localStorage.getItem('pdu_toc_dismissed')) {
+      openTOC();
+      localStorage.setItem('pdu_toc_dismissed','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      window.addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && window.scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    // Highlight active TOC link on scroll
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
   </script>
 </body>
 </html>
