@@ -8,46 +8,61 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (scoped with .join-* so we don't affect other pages) -->
+  <!-- Page-local styles (scoped with .join-* where relevant) -->
   <style>
-    /* Countdown pill (fixed under navbar, right side) */
-    .join-countdown {
-      position: fixed;
-      top: calc(var(--nav-height, 80px) + 8px);
-      right: 12px;
-      z-index: 1101;
-      display: inline-block;
-      padding: .35rem .7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.10);
-      font-weight: 700;
-      letter-spacing: .2px;
-      box-shadow: 0 0 12px rgba(199,191,255,.18) inset, 0 8px 24px rgba(0,0,0,.25);
-      backdrop-filter: blur(10px);
+    /* ===== Countdown pill (desktop: top-right under navbar) ===== */
+    .join-countdown{
+      position:fixed;
+      top:calc(var(--nav-height,80px) + 8px);
+      right:12px;
+      z-index:1101;
+      display:inline-block;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.10);
+      font-weight:700; letter-spacing:.2px;
+      box-shadow:0 0 12px rgba(199,191,255,.18) inset, 0 8px 24px rgba(0,0,0,.25);
+      backdrop-filter:blur(10px);
     }
 
-    /* Quick tiles grid (if we add any later) */
-    .join-tiles{
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem; width: 90%; max-width: 1100px; margin: 2rem auto;
+    /* ===== Big Beginners CTA card ===== */
+    .beginner-cta{
+      border:1px solid rgba(199,191,255,.35);
+      background:linear-gradient(135deg, rgba(255,255,255,.12), rgba(199,191,255,.10));
+      box-shadow:0 14px 36px rgba(0,0,0,.32), inset 0 0 24px rgba(199,191,255,.12);
+    }
+    .beginner-cta h3{
+      font-family:'DM Serif Display', serif;
+      font-size:2rem;
+      text-shadow:0 0 12px rgba(199,191,255,.35);
+      margin-bottom:.5rem;
+    }
+    .beginner-cta .cta-row .link-chip{
+      font-size:1.05rem; padding:.6rem 1rem;
+    }
+    .beginner-cta .cta-row .link-chip.primary{
+      border-color:rgba(255,255,255,.38);
+      background:rgba(255,255,255,.16);
+      box-shadow:0 0 12px rgba(199,191,255,.28);
+      font-weight:800;
     }
 
-    /* Month cards as a grid (no horizontal scroll) */
+    /* ===== Month cards as a grid ===== */
     .join-month-grid{
-      display: grid; gap: 1rem;
+      display:grid; gap:1rem;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      margin-top: .75rem;
+      margin-top:.75rem;
     }
     .join-month-card{
-      border: 1px solid rgba(255,255,255,.25); border-radius: 16px; padding: 1rem;
-      background: rgba(255,255,255,.10); backdrop-filter: blur(10px);
-      box-shadow: 0 10px 26px rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.25); border-radius:16px; padding:1rem;
+      background:rgba(255,255,255,.10); backdrop-filter:blur(10px);
+      box-shadow:0 10px 26px rgba(0,0,0,.28);
     }
-    .join-month-card h4{ font-family: 'DM Serif Display', serif; margin-bottom: .5rem; }
-    .join-month-card ul{ margin-left: 1.1rem; line-height: 1.7; }
+    .join-month-card h4{ font-family:'DM Serif Display', serif; margin-bottom:.5rem; }
+    .join-month-card ul{ margin-left:1.1rem; line-height:1.7; }
 
-    /* Myth busters (expand/collapse) */
+    /* ===== Myth busters ===== */
     .join-myths details{
       border:1px solid rgba(255,255,255,.25); border-radius:12px; padding:.75rem 1rem; background:rgba(255,255,255,.08);
       margin:.5rem 0;
@@ -57,25 +72,37 @@
     .join-myths summary:after{ content:'▾'; float:right; opacity:.9; }
     .join-myths details[open] summary:after{ content:'▴'; }
 
-    /* Mobile sticky CTA bar (unchanged) */
+    /* ===== Mobile-specific adjustments ===== */
     @media (max-width: 960px){
-      .join-sticky {
-        position: fixed; left: 0; right: 0; bottom: 0; z-index: 1102;
-        display: flex; gap: .5rem; justify-content: center; align-items: center;
-        padding: .6rem .8rem;
-        background: rgba(46,0,79,.85);
-        border-top: 1px solid rgba(255,255,255,.2);
-        backdrop-filter: blur(10px);
+      /* Hero title smaller on mobile */
+      #joinHero .page-title{ font-size:2.2rem; }
+      #joinHero .page-subtitle{ font-size:1rem; }
+
+      /* Countdown moves to bottom-left, just above sticky footer */
+      .join-countdown{
+        top:auto; right:auto;
+        left:12px;
+        bottom:calc(var(--sticky-h, 64px) + 12px);
       }
-      .join-sticky a { text-decoration: none; }
+
+      /* Float-to-top button rises above the countdown & footer */
+      #float-button{
+        bottom:calc(var(--sticky-h, 64px) + 72px) !important;
+      }
     }
 
-    /* Local button styles (match site chips/buttons) */
-    .btn-primary,.btn-secondary{
-      display:inline-block; padding:.55rem 1rem; border-radius:999px; font-weight:800; letter-spacing:.2px; color:#fff; text-decoration:none;
-      border:1px solid rgba(255,255,255,.30); background:rgba(255,255,255,.12); transition:all .2s ease;
+    /* Mobile sticky CTA bar (existing pattern) */
+    @media (max-width: 960px){
+      .join-sticky{
+        position:fixed; left:0; right:0; bottom:0; z-index:1102;
+        display:flex; gap:.5rem; justify-content:center; align-items:center;
+        padding:.6rem .8rem;
+        background:rgba(46,0,79,.85);
+        border-top:1px solid rgba(255,255,255,.2);
+        backdrop-filter:blur(10px);
+      }
+      .join-sticky a{ text-decoration:none; }
     }
-    .btn-primary:hover,.btn-secondary:hover{ background:rgba(255,255,255,.18); box-shadow:0 0 12px rgba(199,191,255,.28); }
   </style>
 </head>
 
@@ -83,16 +110,13 @@
   <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
-      <!-- NYU (left on mobile) -->
       <div class="nav-right" aria-label="NYU logo">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Desktop links center -->
       <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html">Home</a></li>
-
           <li class="has-submenu">
             <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
             <ul class="submenu" role="menu" aria-label="About submenu">
@@ -103,34 +127,30 @@
               <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
             </ul>
           </li>
-
           <li><a href="tournaments.html">Tournaments</a></li>
-
           <li class="has-submenu">
             <a href="join.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="#mailing">Mailing List</a></li>
-              <li role="none"><a role="menuitem" href="#meetings">Meetings (Monthly)</a></li>
-              <li role="none"><a role="menuitem" href="#partners">Partners & Assignments</a></li>
-              <li role="none"><a role="menuitem" href="#months">Month Cards</a></li>
-              <li role="none"><a role="menuitem" href="#myths">Costs & Support</a></li>
+              <li role="none"><a role="menuitem" href="#beginner-cta">Beginners</a></li>
               <li role="none"><a role="menuitem" href="#calendar">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="#meetings">Meetings (Monthly)</a></li>
+              <li role="none"><a role="menuitem" href="#months">Month Cards</a></li>
+              <li role="none"><a role="menuitem" href="#partners">Partners</a></li>
+              <li role="none"><a role="menuitem" href="#myths">Costs & Support</a></li>
             </ul>
           </li>
-
           <li><a href="leadership.html">Leadership</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
 
-      <!-- PDU logo (centered on mobile) -->
       <div class="nav-left">
         <a href="index.html" aria-label="Home">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
         </a>
       </div>
 
-      <!-- Burger (right on mobile) -->
       <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
@@ -145,7 +165,6 @@
     <nav class="drawer-nav" aria-label="Mobile">
       <ul class="drawer-list">
         <li><a href="index.html">Home</a></li>
-
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">About</button>
           <ul class="drawer-submenu">
@@ -156,21 +175,19 @@
             <li><a href="why-pdu.html">Why PDU</a></li>
           </ul>
         </li>
-
         <li><a href="tournaments.html">Tournaments</a></li>
-
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="true">Join Us</button>
           <ul class="drawer-submenu open">
             <li><a href="#mailing">Mailing List</a></li>
-            <li><a href="#meetings">Meetings (Monthly)</a></li>
-            <li><a href="#partners">Partners & Assignments</a></li>
-            <li><a href="#months">Month Cards</a></li>
-            <li><a href="#myths">Costs & Support</a></li>
+            <li><a href="#beginner-cta">Beginners</a></li>
             <li><a href="#calendar">Calendar</a></li>
+            <li><a href="#meetings">Meetings (Monthly)</a></li>
+            <li><a href="#months">Month Cards</a></li>
+            <li><a href="#partners">Partners</a></li>
+            <li><a href="#myths">Costs & Support</a></li>
           </ul>
         </li>
-
         <li><a href="leadership.html">Leadership</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -185,11 +202,11 @@
     </div>
   </section>
 
-  <!-- New York time countdown pill -->
+  <!-- Countdown (NY time) -->
   <div class="join-countdown" id="nextCountdown" aria-live="polite">Calculating next meeting…</div>
 
   <main class="main-content">
-    <!-- Mailing List (primary action) -->
+    <!-- Step 1: Mailing List -->
     <section class="glass-card reveal" id="mailing">
       <h3 class="about-header">Step One: Join the Mailing List</h3>
       <p class="about-preview">
@@ -197,9 +214,31 @@
       </p>
       <div class="cta-row">
         <a class="link-chip" href="mailing-list.html">Join the mailing list →</a>
-        <a class="link-chip" href="beginner.html">Beginners start here →</a>
       </div>
-      <p class="note" style="margin-top:.5rem;">Links are placeholders—wire them to your real list and beginner page when ready.</p>
+      <p class="note" style="margin-top:.5rem;">(Placeholder link—wire it to your actual list when ready.)</p>
+    </section>
+
+    <!-- Big Beginners CTA -->
+    <section class="glass-card beginner-cta reveal" id="beginner-cta">
+      <h3>New to Debate? New to APDA?</h3>
+      <p class="about-preview" style="margin-bottom:1rem;">
+        Start here for a friendly primer on formats, roles, timing, and how to get comfortable fast.
+      </p>
+      <div class="cta-row">
+        <a class="link-chip primary" href="beginner.html">Beginner Guide →</a>
+        <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">Learn more about APDA →</a>
+      </div>
+    </section>
+
+    <!-- Step 2: Calendar (moved up) -->
+    <section class="glass-card reveal" id="calendar">
+      <h3 class="about-header">Step Two: Check the Calendar</h3>
+      <p class="about-preview">We publish a monthly overview for meetings, travel weekends, and workshops.</p>
+      <div class="cta-row">
+        <a class="link-chip" href="calendar.html">Open the calendar →</a>
+        <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
+      </div>
+      <p class="note">Links are placeholders—wire them to your real calendar when ready.</p>
     </section>
 
     <!-- Meetings (Monthly) -->
@@ -338,17 +377,6 @@
         <p class="about-preview" style="margin-top:.5rem;">Tell us your access needs (pace, seating, breaks)—we’ll work with you. We debate ideas, not identities. Read our <a href="equity.html" class="link-chip" style="padding:.2rem .6rem; border-radius:999px;">Equity policy →</a></p>
       </details>
     </section>
-
-    <!-- Calendar (monthly) -->
-    <section class="glass-card reveal" id="calendar">
-      <h3 class="about-header">Calendar (Monthly)</h3>
-      <p class="about-preview">We publish a monthly overview for meetings, travel weekends, and workshops.</p>
-      <div class="cta-row">
-        <a class="link-chip" href="calendar.html">Open the calendar →</a>
-        <a class="link-chip" href="calendar.ics">Subscribe (.ics) →</a>
-      </div>
-      <p class="note">Links are placeholders—wire them to your real calendar when ready.</p>
-    </section>
   </main>
 
   <footer class="glass-footer">
@@ -368,13 +396,13 @@
 
   <!-- Scripts (page-local only) -->
   <script>
-    // Reveal-on-scroll for glass cards
+    // Reveal cards
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
     document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
 
-    // Keep --nav-height accurate for fixed countdown placement
+    // Keep --nav-height accurate for countdown placement (desktop)
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
@@ -383,7 +411,17 @@
     setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
     if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
 
-    // Mobile drawer
+    // Measure sticky footer height for mobile offsets
+    const sticky = document.querySelector('.join-sticky');
+    function setStickyHeightVar(){
+      if(!sticky) return;
+      const h = sticky.getBoundingClientRect().height || 64;
+      document.documentElement.style.setProperty('--sticky-h', h + 'px');
+    }
+    setStickyHeightVar(); window.addEventListener('resize', setStickyHeightVar);
+    if('ResizeObserver' in window && sticky){ new ResizeObserver(setStickyHeightVar).observe(sticky); }
+
+    // Mobile drawer (existing behavior)
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
     const closeBtn = document.getElementById('drawerClose');
@@ -415,7 +453,6 @@
     });
 
     // ---------- New York Time countdown ----------
-    // Helper: get current date-time parts in a target time zone
     function getNowPartsInTZ(timeZone){
       const dtf = new Intl.DateTimeFormat('en-US', {
         timeZone, year:'numeric', month:'2-digit', day:'2-digit',
@@ -427,68 +464,46 @@
       for (const p of parts) map[p.type] = p.value;
       const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
       return {
-        year: +map.year, month: +map.month, day: +map.day,
-        hour: +map.hour, minute: +map.minute, second: +map.second,
+        year:+map.year, month:+map.month, day:+map.day,
+        hour:+map.hour, minute:+map.minute, second:+map.second,
         weekday
       };
     }
-    // Convert a "NY local" datetime to a real Date (UTC) robustly
     function zonedNYToDate(y,m,d,h,mi,s){
-      const tz = 'America/New_York';
-      // Create a UTC date with the same wall-clock components
-      const wall = new Date(Date.UTC(y, m-1, d, h, mi, s || 0));
-      // Find what time that UTC instant shows as in NY
-      const inv = new Date(wall.toLocaleString('en-US', { timeZone: tz }));
-      // Adjust by the delta to land at the intended NY wall time
-      const diff = inv.getTime() - wall.getTime();
-      return new Date(wall.getTime() - diff);
+      const tz='America/New_York';
+      const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
+      const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
+      const diff=inv.getTime()-wall.getTime();
+      return new Date(wall.getTime()-diff);
     }
-    // Find next Mon(1)/Wed(3) 19:00 in NY time
     function nextNYMeeting(){
-      const tz = 'America/New_York';
-      const now = new Date();
-      const p = getNowPartsInTZ(tz);
-      const today = new Date(); // placeholder; we'll construct target explicitly
-
-      // helper to get next day-of-week >= today, handling "after 7pm" cases
-      function nextDow(targetDow){
-        // days until target in NY perspective
-        let delta = (targetDow - p.weekday + 7) % 7;
-        // If it's the target day but after 19:00 NY, push one week
-        if (delta === 0 && (p.hour > 19 || (p.hour === 19 && (p.minute>0 || p.second>0)))) {
-          delta = 7;
-        }
-        // Build candidate date components in NY
-        const base = new Date(Date.UTC(p.year, p.month-1, p.day));
-        base.setUTCDate(base.getUTCDate() + delta);
-        const y = base.getUTCFullYear();
-        const m = base.getUTCMonth() + 1;
-        const d = base.getUTCDate();
-        return zonedNYToDate(y, m, d, 19, 0, 0);
+      const tz='America/New_York';
+      const p=getNowPartsInTZ(tz);
+      function nextDow(target){
+        let delta=(target - p.weekday + 7) % 7;
+        if (delta===0 && (p.hour>19 || (p.hour===19 && (p.minute>0 || p.second>0)))) delta=7;
+        const base=new Date(Date.UTC(p.year, p.month-1, p.day));
+        base.setUTCDate(base.getUTCDate()+delta);
+        return zonedNYToDate(base.getUTCFullYear(), base.getUTCMonth()+1, base.getUTCDate(), 19, 0, 0);
       }
-
-      const mon = nextDow(1);
-      const wed = nextDow(3);
+      const mon=nextDow(1), wed=nextDow(3);
       return (mon < wed) ? mon : wed;
     }
-
-    const cdEl = document.getElementById('nextCountdown');
+    const cdEl=document.getElementById('nextCountdown');
     function tick(){
-      const target = nextNYMeeting();
-      const now = new Date();
-      const ms = target - now;
-      if (ms <= 0){ cdEl.textContent = 'Meeting happening now'; return; }
-      const s = Math.floor(ms/1000);
-      const d = Math.floor(s/86400);
-      const h = Math.floor((s%86400)/3600);
-      const m = Math.floor((s%3600)/60);
-      const ss = s%60;
-
-      // Show NY weekday label
-      const weekday = target.toLocaleDateString('en-US', { timeZone:'America/New_York', weekday:'long' });
-      cdEl.textContent = `Next meeting: ${weekday} 7:00 PM ET in ${d}d ${h}h ${m}m ${ss}s`;
+      const target=nextNYMeeting();
+      const now=new Date();
+      const ms=target - now;
+      if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
+      const s=Math.floor(ms/1000);
+      const d=Math.floor(s/86400);
+      const h=Math.floor((s%86400)/3600);
+      const m=Math.floor((s%3600)/60);
+      const ss=s%60;
+      const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
+      cdEl.textContent=`Next meeting: ${weekday} 7:00 PM ET in ${d}d ${h}h ${m}m ${ss}s`;
     }
-    tick(); setInterval(tick, 1000);
+    tick(); setInterval(tick,1000);
   </script>
 </body>
 </html>
