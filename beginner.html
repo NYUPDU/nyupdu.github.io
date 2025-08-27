@@ -4,124 +4,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Beginner’s Guide | NYU PDU</title>
-  <meta name="description" content="New to PDU? This is the novice guide—learn the format, speak with confidence, avoid rookie mistakes." />
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (scoped) -->
+  <!-- Page-local styles (scoped to this page) -->
   <style>
-    /* ---------- Layout helpers ---------- */
+    /* ---------- HERO ---------- */
     .beg-hero .page-title{ font-size:3rem; }
-    .beg-hero .page-subtitle{ max-width:56ch; margin-inline:auto; }
-    .container.narrow{ max-width:950px; margin-inline:auto; }
-    .section{ margin:1.25rem 0; }
-    .lead{ opacity:.95; }
+    .beg-hero .page-subtitle{ max-width:60ch; margin-inline:auto; }
 
-    /* ---------- Contents (sticky pill nav) ---------- */
-    /* UPDATED: compact contents strip for mobile-first navigation */
-    .contents-strip{
-      position:sticky; top:calc(var(--nav-height,64px) + 6px); z-index:7;
-      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
-      backdrop-filter:blur(10px); border-radius:12px; padding:.4rem;
-      display:flex; gap:.4rem; overflow-x:auto;
-      scroll-snap-type:x proximity;
+    /* UPDATED: Primary CTA banner to Practice Tools */
+    .cta-banner{
+      margin-top:.9rem; display:flex; justify-content:center;
     }
-    .contents-strip a{
-      flex:0 0 auto; scroll-snap-align:start;
-      padding:.35rem .7rem; border-radius:999px; text-decoration:none; color:#fff;
-      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08); font-weight:700;
-      white-space:nowrap;
+    .cta-banner a{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.7rem 1rem; border-radius:14px;
+      background:rgba(124,58,237,.22);
+      border:1px solid rgba(255,255,255,.28);
+      font-weight:800; text-decoration:none; color:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.25), inset 0 0 24px rgba(199,191,255,.18);
     }
-    .contents-strip a.active{ box-shadow:0 0 0 2px rgba(199,191,255,.35) inset; }
+    .cta-banner a:hover{ background:rgba(124,58,237,.3); }
 
-    /* ---------- Cards ---------- */
-    .glass-card{ padding:1rem; }
-    .spotlight{
-      border:1px solid rgba(255,255,255,.25);
-      background:linear-gradient(180deg, rgba(199,191,255,.08), rgba(255,255,255,.06));
-      border-radius:14px; padding:1rem; display:grid; gap:.5rem;
-    }
-    .cta-band{
-      margin:1rem 0; padding:1rem; border-radius:14px;
-      border:1px dashed rgba(255,255,255,.25);
-      background:rgba(255,255,255,.06); text-align:center;
-    }
-    .cta-band a{ font-weight:900; }
+    /* ---------- CONTENT DENSITY & CARDS ---------- */
+    .glass-card{ /* existing site style, left as-is */ }
+    .section-intro{ margin:.1rem 0 .6rem; opacity:.95; }
 
-    /* ---------- Two-up, responsive ---------- */
-    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
-    @media (min-width: 900px){ .two-col{ grid-template-columns:1fr 1fr; } }
-
-    /* ---------- Accordions (roles, gov vs opp) ---------- */
-    /* UPDATED: details/summary with one-open behavior in JS */
-    details.beg-acc{
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.10);
-      border-radius:14px; padding:.6rem .8rem; margin-bottom:.6rem;
+    /* UPDATED: Iconic bullet rows (for APDA brief) */
+    .icon-row{
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.6rem;
     }
-    details.beg-acc[open]{ background:rgba(255,255,255,.12); }
-    .beg-acc summary{
-      list-style:none; display:flex; align-items:center; justify-content:space-between; cursor:pointer;
+    .icon-bullet{
+      display:flex; gap:.6rem; align-items:flex-start; padding:.6rem .7rem;
+      border:1px solid rgba(255,255,255,.22); border-radius:12px;
+      background:rgba(255,255,255,.08);
+    }
+    .icon-bullet .ico{ font-weight:900; width:1.5rem; text-align:center; opacity:.9; }
+
+    /* ---------- SIMPLE CARDS & ACCORDIONS ---------- */
+    .two-cards{ display:grid; grid-template-columns:1fr; gap:.8rem; }
+    @media (min-width: 860px){ .two-cards{ grid-template-columns:1fr 1fr; } }
+    .simple-card{
+      padding:.9rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.08);
+    }
+    .simple-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .4rem; }
+    .do-dont{ display:grid; gap:.25rem; }
+    .do-dont .label{ font-weight:800; opacity:.95; margin-top:.25rem; }
+
+    /* UPDATED: details/summary accordions for Roles */
+    details.role-acc{
+      border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.10); border-radius:14px;
+      padding:.6rem .8rem; margin-bottom:.6rem;
+    }
+    .role-acc summary{
+      list-style:none; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
       font-family:'DM Serif Display',serif; font-size:1.1rem;
     }
-    .beg-acc summary::-webkit-details-marker{ display:none; }
-    .acc-body{ margin-top:.5rem; display:grid; gap:.45rem; }
-    .badge{
-      padding:.15rem .45rem; border-radius:999px; font-size:.8rem;
-      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.22);
-      margin-left:.5rem;
-    }
-    .btn{
-      padding:.45rem .8rem; border-radius:999px; background:rgba(255,255,255,.10);
-      color:#fff; border:1px solid rgba(255,255,255,.25); font-weight:800; cursor:pointer;
-    }
-    .btn.inline{ display:inline-block; }
+    .role-acc summary::-webkit-details-marker{ display:none; }
+    .role-body{ margin-top:.5rem; display:grid; gap:.4rem; }
+    .outline{ background:rgba(255,255,255,.06); border:1px dashed rgba(255,255,255,.25); border-radius:10px; padding:.5rem .6rem; white-space:pre-wrap; }
 
-    /* ---------- Mini quizzes ---------- */
-    /* UPDATED: tiny, accessible interactions */
-    .quiz{ display:grid; gap:.5rem; margin-top:.4rem; }
-    .quiz .choices{ display:flex; flex-wrap:wrap; gap:.4rem; }
-    .quiz button.choice{
-      padding:.35rem .6rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.08); color:#fff; cursor:pointer;
+    /* UPDATED: Spotlight blocks (Rebuttals & HOW TO WIN) */
+    .spotlight{
+      border:1px solid rgba(255,255,255,.28);
+      background:linear-gradient(180deg, rgba(199,191,255,.12), rgba(255,255,255,.06));
+      border-radius:14px; padding:1rem; display:grid; gap:.5rem;
+      box-shadow:0 8px 30px rgba(0,0,0,.25), inset 0 0 18px rgba(199,191,255,.18);
     }
-    .quiz .feedback{ min-height:1.2em; font-weight:700; }
-    .order-rail{ display:flex; gap:.4rem; flex-wrap:wrap; }
-    .order-chip{
-      padding:.35rem .6rem; border-radius:999px; border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.08); cursor:pointer;
+    .spotlight h4{ font-family:'DM Serif Display',serif; margin:0 0 .3rem; }
+    .howto-win .rule{ font-weight:800; }
+
+    /* UPDATED: Micro-interactions */
+    .micro{ display:grid; gap:.35rem; margin-top:.4rem; }
+    .quiz-row{ display:flex; flex-wrap:wrap; gap:.4rem; }
+    .quiz-btn{
+      padding:.4rem .7rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.08); color:#fff; cursor:pointer; font-weight:700;
     }
-    .order-answer{ display:flex; gap:.35rem; flex-wrap:wrap; min-height:2rem; }
+    .quiz-btn[aria-pressed="true"]{ outline:2px solid rgba(199,191,255,.8); }
+    .feedback{ font-size:.95rem; opacity:.95; }
 
-    /* ---------- Lists ---------- */
-    .section-list{ margin-left:1.1rem; line-height:1.7; }
-    .micro{ font-size:.95rem; opacity:.9; }
-    .kbd{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95em; }
-
-    /* ---------- Glossary ---------- */
-    .glossary{ display:grid; gap:.4rem; }
-    .term{ padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08); }
-    .term b{ font-weight:900; }
-
-    /* ---------- Back to top bottom-left ---------- */
-    /* UPDATED: move away from bottom-right to avoid future overlaps */
-    #float-button{
-      position:fixed; left:14px; bottom:18px; width:56px; height:56px; border-radius:50%;
-      display:grid; place-items:center; border:1px solid rgba(255,255,255,.28);
-      background:rgba(255,255,255,.10); z-index:8;
+    /* UPDATED: CTA band (mid & end) */
+    .cta-band{
+      margin:.4rem 0; padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.25);
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.12));
+      text-align:center;
     }
-    #float-button img{ width:32px; height:32px; }
+    .cta-band a{ font-weight:900; text-decoration:none; color:#fff; border-bottom:1px dashed rgba(255,255,255,.6); }
 
-    /* ---------- Responsive tweaks ---------- */
+    /* UPDATED: Equity band links */
+    .link-grid{ display:flex; flex-wrap:wrap; gap:.5rem; }
+
+    /* ---------- TOC drawer (uses site’s existing styles) ---------- */
+    .toc-list a.active{ font-weight:800; }
+
+    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 960px){
-      .beg-hero .page-title{ font-size:2.2rem; }
+      .beg-hero .page-title{ font-size:2.25rem; }
     }
   </style>
 </head>
 
 <body id="top">
-  <!-- Navbar (sitewide) -->
+  <!-- Navbar (kept identical to site global) -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-right" aria-label="NYU logo">
@@ -169,7 +158,7 @@
     </div>
   </header>
 
-  <!-- Mobile drawer (sitewide) -->
+  <!-- Mobile drawer (kept as in site) -->
   <div id="drawerScrim" class="drawer-scrim" hidden></div>
   <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
     <div class="drawer-header">
@@ -179,6 +168,7 @@
     <nav class="drawer-nav" aria-label="Mobile">
       <ul class="drawer-list">
         <li><a href="index.html">Home</a></li>
+
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">About</button>
           <ul class="drawer-submenu">
@@ -189,7 +179,9 @@
             <li><a href="why-pdu.html">Why PDU</a></li>
           </ul>
         </li>
+
         <li><a href="tournaments.html">Tournaments</a></li>
+
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">Join Us</button>
           <ul class="drawer-submenu">
@@ -198,6 +190,7 @@
             <li><a href="calendar.html">Calendar</a></li>
           </ul>
         </li>
+
         <li><a href="leadership.html">Leadership</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -208,390 +201,377 @@
   <section class="hero-section hero-compact beg-hero">
     <div>
       <h1 class="page-title">Beginner’s Guide to APDA</h1>
-      <p class="page-subtitle">New to PDU? This is the novice guide—learn the format, speak with confidence, avoid rookie mistakes.</p>
-      <div class="cta-band">
-        <!-- UPDATED: Big CTA to the separate tools page -->
-        <a class="link-chip" href="practicetools.html">Open Practice Tools →</a>
+      <!-- UPDATED: Subline phrasing -->
+      <p class="page-subtitle">Start here: the PDU novice guide — learn the format, speak with confidence, avoid rookie mistakes.</p>
+      <!-- UPDATED: Big banner CTA to Practice Tools page -->
+      <div class="cta-banner">
+        <a href="practicetools.html" aria-label="Open Practice Tools">Open Practice Tools →</a>
       </div>
     </div>
   </section>
 
-  <!-- UPDATED: On this page (sticky) -->
-  <nav class="container narrow contents-strip" id="contentsStrip" aria-label="On this page">
-    <a href="#apda-brief" class="active">APDA in 60s</a>
-    <a href="#gov-opp">Gov vs Opp</a>
-    <a href="#argue">How to argue</a>
-    <a href="#roles">Roles</a>
-    <a href="#rebuttals">Rebuttals & POOs</a>
-    <a href="#how-win">HOW TO WIN</a>
-    <a href="#flowing">Flowing & Clash</a>
-    <a href="#partnering">Partnering 101</a>
-    <a href="#build-case">Build a Case</a>
-    <a href="#pois">POIs</a>
-    <a href="#equity">Equity & Support</a>
-    <a href="#glossary">Glossary</a>
-  </nav>
+  <!-- UPDATED: Contents Drawer preserved (sitewide pattern) -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#apda-brief" class="active">APDA in ~60s</a>
+      <a href="#gov-opp">Gov vs Opp</a>
+      <a href="#argue">How to argue</a>
+      <a href="#roles">Roles</a>
+      <a href="#rebuttals">Rebuttals & POOs</a>
+      <a href="#win">HOW TO WIN</a>
+      <a href="#flowing">Flowing & Clash</a>
+      <a href="#partnering">Partnering 101</a>
+      <a href="#case">Building a Case</a>
+      <a href="#pois">POIs (short)</a>
+      <a href="#equity">Equity & Support</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#next">Next steps</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
 
-  <main class="main-content container narrow">
-    <!-- 1) APDA brief -->
-    <section class="glass-card section" id="apda-brief">
-      <h3 class="about-header">APDA in about 60 seconds</h3>
-      <ul class="section-list">
-        <li>2v2: Government (PM, MG) vs Opposition (LO, MO).</li>
-        <li>Speech order & times (grace baked in): <strong>7:30 · 8:30 · 8:30 · 8:30 · 4:30 · 5:30</strong>.</li>
-        <li><strong>Case rounds</strong>: Gov writes & presents the case; <strong>Opp gets 15 minutes</strong> to prep <em>after hearing</em> it.</li>
-        <li><strong>Motions rounds</strong>: no one knows beforehand; <strong>both teams get 15 minutes</strong> to prep from motion reveal.</li>
-        <li><strong>POCs</strong> (points of clarification) happen right after the case statement to clarify defs/mechanism.</li>
-        <li>Judges reward: <strong>clear claims</strong>, <strong>strong warrants</strong>, and <strong>explicit weighing</strong>.</li>
-      </ul>
+  <main class="main-content">
+    <!-- ===================== APDA BRIEF ===================== -->
+    <section class="glass-card" id="apda-brief">
+      <h3 class="about-header">APDA in ~60 seconds</h3>
+      <p class="section-intro">The essentials—without the walls of text.</p>
 
-      <!-- Micro: order quiz -->
-      <div class="quiz" aria-label="Speech order quiz">
-        <div class="micro"><strong>Quick check:</strong> tap the speeches in the correct order.</div>
-        <div class="order-rail" id="orderChoices" role="list">
-          <!-- UPDATED: tap-to-order micro quiz -->
-          <button class="order-chip" data-k="PMC">PMC</button>
-          <button class="order-chip" data-k="LOC">LOC</button>
-          <button class="order-chip" data-k="MG">MG</button>
-          <button class="order-chip" data-k="MO">MO</button>
-          <button class="order-chip" data-k="LOR">LOR</button>
-          <button class="order-chip" data-k="PMR">PMR</button>
-        </div>
-        <div class="order-answer" id="orderAnswer" aria-live="polite"></div>
-        <div class="feedback" id="orderFeedback"></div>
-        <div>
-          <button class="btn inline" id="orderReset">Reset</button>
-        </div>
-        <div class="micro">Official info: <a href="https://apda.online/" target="_blank" rel="noopener">APDA Home</a> · <a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide</a></div>
+      <!-- UPDATED: Visual lightness via icon bullets -->
+      <div class="icon-row">
+        <div class="icon-bullet"><span class="ico">2v2</span><div><b>Teams:</b> Government (PM, MG) vs Opposition (LO, MO)</div></div>
+        <div class="icon-bullet"><span class="ico">⏱</span><div><b>Speeches:</b> 7:30 · 8:30 · 8:30 · 8:30 · 4:30 · 5:30 (grace included)</div></div>
+        <div class="icon-bullet"><span class="ico">📜</span><div><b>Case rounds:</b> <u>Gov writes & presents</u> the case; <u>Opp gets 15 minutes</u> to prep <u>after hearing</u> it</div></div>
+        <div class="icon-bullet"><span class="ico">🎯</span><div><b>Motions rounds:</b> no one knows beforehand; <u>both teams get 15 minutes</u> to prep from motion reveal</div></div>
+        <div class="icon-bullet"><span class="ico">❓</span><div><b>POCs:</b> Points of clarification right after the case statement (clarify defs/mechanism)</div></div>
+        <div class="icon-bullet"><span class="ico">⚖️</span><div><b>Judging:</b> clear <u>claims</u>, strong <u>warrants</u>, explicit <u>weighing</u> win rounds</div></div>
       </div>
+
+      <!-- UPDATED: Micro quiz (tap-to-order) -->
+      <div class="micro" aria-live="polite">
+        <div class="label">Quick check: tap speeches in order</div>
+        <div class="quiz-row" id="orderQuiz">
+          <!-- Buttons will be injected by JS -->
+        </div>
+        <div class="feedback" id="orderFeedback"></div>
+      </div>
+
+      <p class="note" style="margin-top:.6rem;">
+        Official info (policies like code of conduct, speaker scale): 
+        <a href="https://apda.online/" target="_blank" rel="noopener">APDA Home</a> · 
+        <a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide</a>
+      </p>
     </section>
 
-    <!-- CTA band -->
-    <section class="cta-band">
-      <a class="link-chip" href="practicetools.html">Ready to practice? Open the Tools →</a>
-    </section>
-
-    <!-- 2) Gov vs Opp -->
-    <section class="glass-card section" id="gov-opp">
+    <!-- ===================== GOV VS OPP ===================== -->
+    <section class="glass-card" id="gov-opp">
       <h3 class="about-header">Gov vs Opp — what competing from each side means</h3>
-      <details class="beg-acc" open>
-        <summary><span>Government (PM · MG)</span><span class="badge">You write the case</span></summary>
-        <div class="acc-body">
-          <ul class="section-list">
-            <li><strong>Your job:</strong> propose a clear, fair case; define terms; explain mechanism; give 2–4 warranted reasons + weighing.</li>
-            <li><strong>Do:</strong> be accessible; compare worlds; keep it debatable.</li>
-            <li><strong>Avoid:</strong> squirrely defs; unwinnable/truistic/tight cases.</li>
-            <li class="micro"><strong>Prep reality:</strong> in motions, you also take 15 minutes after the motion.</li>
-          </ul>
+      <div class="two-cards">
+        <div class="simple-card">
+          <h4>Government (Gov)</h4>
+          <p class="section-intro"><b>Your job:</b> propose a fair, winnable case; define terms; explain mechanism; give 2–4 warranted reasons + weighing.</p>
+          <div class="do-dont">
+            <div class="label">Do</div>
+            <ul class="section-list">
+              <li>Be clear & accessible; stake comparative outcomes.</li>
+              <li>Explain <u>mechanism</u> (who acts, incentives, feasibility).</li>
+              <li>Keep it debatable (avoid tight/spec/truisms).</li>
+            </ul>
+            <div class="label">Avoid</div>
+            <ul class="section-list">
+              <li>Squirrely definitions or unwinnable setups.</li>
+              <li>Thin warrants (taglines without reasons).</li>
+            </ul>
+            <p class="note">Motions rounds: Gov also preps 15 minutes after motion reveal.</p>
+          </div>
         </div>
-      </details>
-
-      <details class="beg-acc">
-        <summary><span>Opposition (LO · MO)</span><span class="badge">You prep 15 after hearing the case</span></summary>
-        <div class="acc-body">
-          <ul class="section-list">
-            <li><strong>Your job:</strong> take the best ground; answer with warrants; start weighing early.</li>
-            <li><strong>Do:</strong> group answers; expose mechanism gaps; flag tight/spec if needed.</li>
-            <li><strong>Avoid:</strong> chasing every tag; conceding the center.</li>
-            <li class="micro"><strong>POCs:</strong> ask immediately after the case statement to clarify defs/mechanism.</li>
-          </ul>
+        <div class="simple-card">
+          <h4>Opposition (Opp)</h4>
+          <p class="section-intro"><b>Your job:</b> take the best ground; warrant your responses; weigh early.</p>
+          <div class="do-dont">
+            <div class="label">Do</div>
+            <ul class="section-list">
+              <li>Group & answer with warrants; find mechanism gaps.</li>
+              <li>Flag tight/spec if needed—keep it minimal and clear.</li>
+              <li>Start the weighing story early.</li>
+            </ul>
+            <div class="label">Avoid</div>
+            <ul class="section-list">
+              <li>Chasing every tag while conceding the center.</li>
+            </ul>
+            <p class="note">Case rounds: Opp gets <b>15 minutes</b> to prep <b>after the case</b>; ask <b>POCs</b> right after the case statement.</p>
+          </div>
         </div>
-      </details>
+      </div>
 
       <!-- Micro-check -->
-      <div class="quiz">
-        <div class="micro"><strong>Quick check:</strong> who gets 15 minutes in a case round?</div>
-        <div class="choices">
-          <button class="choice" data-q="case15" data-a="gov">Gov</button>
-          <button class="choice" data-q="case15" data-a="opp">Opp</button>
-          <button class="choice" data-q="case15" data-a="both">Both teams</button>
+      <div class="micro" aria-live="polite">
+        <div class="label">Quick check</div>
+        <div class="quiz-row">
+          <button class="quiz-btn" data-q="case15" data-a="opp">Who gets 15 minutes in a case round? (tap)</button>
+          <button class="quiz-btn" data-q="poc" data-a="after">When do POCs happen? (tap)</button>
         </div>
-        <div class="feedback" id="fb-case15"></div>
-      </div>
-      <div class="quiz">
-        <div class="micro"><strong>Quick check:</strong> when do POCs happen?</div>
-        <div class="choices">
-          <button class="choice" data-q="pocs" data-a="before">Before the case statement</button>
-          <button class="choice" data-q="pocs" data-a="after">Right after the case statement</button>
-          <button class="choice" data-q="pocs" data-a="never">POCs aren’t a thing</button>
-        </div>
-        <div class="feedback" id="fb-pocs"></div>
+        <div class="feedback" id="govOppFeedback"></div>
       </div>
     </section>
 
-    <!-- 3) How to argue -->
-    <section class="glass-card section" id="argue">
-      <h3 class="about-header">How to argue: Claim → Warrants → Impacts</h3>
-      <p class="lead">Warranting is the #1 novice hurdle. A claim without warrants doesn’t land.</p>
+    <!-- ===================== HOW TO ARGUE ===================== -->
+    <section class="glass-card" id="argue">
+      <h3 class="about-header">How to argue — Claim → Warrants → Impacts</h3>
+      <p class="section-intro">
+        Every winning point has three parts: the <b>Claim</b> you assert, the <b>Warrants</b> (reasons/mechanism) that make it true, and the <b>Impact</b> (why it matters).
+        Then compare: scope/magnitude, probability, timeframe, reversibility—this is <b>weighing</b>.
+      </p>
+
       <ul class="section-list">
-        <li><strong>Claim</strong> — what you assert.</li>
-        <li><strong>Warrants</strong> — the reasons/mechanism making the claim true (incentives, feasibility, causal link).</li>
-        <li><strong>Impacts</strong> — why it matters (who is affected and how).</li>
+        <li><b>Claim:</b> what you assert.</li>
+        <li><b>Warrants:</b> why it’s true (incentives, feasibility, cause→effect, actors).</li>
+        <li><b>Impacts:</b> so what? who is affected and how?</li>
       </ul>
-      <p class="micro">Level up with <em>magnitude</em>, <em>probability</em>, <em>timeframe</em>, <em>reversibility</em> — then <strong>weigh</strong> vs their best impact.</p>
-      <div class="quiz">
-        <div class="micro"><strong>What’s missing?</strong></div>
-        <div class="lead">“Ban X → fewer harms.”</div>
-        <div class="choices">
-          <button class="choice" data-q="missing" data-a="claim">Claim</button>
-          <button class="choice" data-q="missing" data-a="warrant">Warrant</button>
-          <button class="choice" data-q="missing" data-a="impact">Impact</button>
+      <p class="note">Stems: “Our mechanism makes X because Y, which means Z.” · “Even if they achieve X, ours wins on magnitude/probability/timeframe because Y.”</p>
+
+      <!-- Micro-interaction: What’s missing? -->
+      <div class="micro" aria-live="polite">
+        <div class="label">What’s missing?</div>
+        <div class="quiz-row">
+          <button class="quiz-btn" data-q="missing" data-a="warrant">“Ban X will improve outcomes.” (Claim + Impact hinted) — what’s missing?</button>
         </div>
-        <div class="feedback" id="fb-missing"></div>
+        <div class="feedback" id="argueFeedback"></div>
       </div>
-      <p class="micro"><strong>Stems:</strong> “Our mechanism makes <em>X</em> happen because <em>Y</em>, which means <em>Z</em>.” · “Even if they achieve <em>X</em>, ours wins on <em>mag/prob/time</em> because <em>Y</em>.”</p>
     </section>
 
-    <!-- 4) Roles -->
-    <section class="glass-card section" id="roles">
-      <h3 class="about-header">Roles (one open at a time)</h3>
+    <!-- ===================== ROLES ===================== -->
+    <section class="glass-card" id="roles">
+      <h3 class="about-header">Roles (open one at a time)</h3>
 
-      <details class="beg-acc">
-        <summary>Prime Minister (PM) <span class="badge">7:30</span></summary>
-        <div class="acc-body">
+      <!-- PM -->
+      <details class="role-acc" aria-labelledby="role-pm">
+        <summary id="role-pm">Prime Minister (PM) — 7:30</summary>
+        <div class="role-body">
           <ul class="section-list">
-            <li>Define terms; set a fair, clear case.</li>
-            <li>Explain mechanism (who/what/how).</li>
-            <li>Give 2–4 warranted reasons; begin weighing.</li>
+            <li>Define terms; set fair ground.</li>
+            <li>Mechanism: who does what, how it works.</li>
+            <li>2–4 <u>warranted</u> reasons + initial weighing.</li>
           </ul>
+          <div class="outline" data-outline="pm">Intro (THBT…) · Definitions/Actors · Mechanism · 2–4 reasons (warranted) · Weighing</div>
         </div>
       </details>
 
-      <details class="beg-acc">
-        <summary>Leader of Opposition (LO) <span class="badge">8:30</span></summary>
-        <div class="acc-body">
+      <!-- LO -->
+      <details class="role-acc" aria-labelledby="role-lo">
+        <summary id="role-lo">Leader of Opposition (LO) — 8:30</summary>
+        <div class="role-body">
           <ul class="section-list">
-            <li>Frame the round and stance.</li>
-            <li>Group & answer with warrants.</li>
-            <li>Start your weighing story.</li>
+            <li>Frame what matters; take best ground.</li>
+            <li>Group & answer with <u>warrants</u>.</li>
+            <li>Begin weighing vs Gov.</li>
           </ul>
+          <div class="outline" data-outline="lo">Framework · Topline groups · Key responses (with warrants) · Optional counter-model · Weighing</div>
         </div>
       </details>
 
-      <details class="beg-acc">
-        <summary>Member of Government (MG) <span class="badge">8:30</span></summary>
-        <div class="acc-body">
+      <!-- MG -->
+      <details class="role-acc" aria-labelledby="role-mg">
+        <summary id="role-mg">Member of Government (MG) — 8:30</summary>
+        <div class="role-body">
           <ul class="section-list">
-            <li>Defend the center with warrants.</li>
-            <li>Answer their best lines well.</li>
-            <li>Collapse; set PMR’s weighing.</li>
+            <li>Defend the center; rebuild with <u>warrants</u>.</li>
+            <li>Answer their best lines thoroughly.</li>
+            <li>Collapse; set PMR roadmap.</li>
           </ul>
+          <div class="outline" data-outline="mg">Group & answer Opp (warranted) · Re-center mechanism/benefits · Weighing narrative for PMR</div>
         </div>
       </details>
 
-      <details class="beg-acc">
-        <summary>Member of Opposition (MO) <span class="badge">8:30</span></summary>
-        <div class="acc-body">
+      <!-- MO -->
+      <details class="role-acc" aria-labelledby="role-mo">
+        <summary id="role-mo">Member of Opposition (MO) — 8:30</summary>
+        <div class="role-body">
           <ul class="section-list">
-            <li>Extend Opp’s best offense.</li>
+            <li>Extend Opp’s best offense; ladder voters.</li>
             <li>Turn/mitigate Gov benefits.</li>
-            <li>Set LOR voters with weighing.</li>
+            <li>Set LOR voters with clear weighing.</li>
           </ul>
+          <div class="outline" data-outline="mo">Extend offense · Turn/mitigate · Weigh to LOR voters · Roadmap LOR</div>
         </div>
       </details>
 
-      <!-- Single consolidated copy action -->
-      <button class="btn" id="copyOutlines">Copy all role outlines</button>
-
-      <!-- Tiny role check -->
-      <div class="quiz">
-        <div class="micro"><strong>Quick check:</strong> where is new offense allowed?</div>
-        <div class="choices">
-          <button class="choice" data-q="newoff" data-a="mo">MO</button>
-          <button class="choice" data-q="newoff" data-a="lor">LOR</button>
-          <button class="choice" data-q="newoff" data-a="pmr">PMR</button>
-        </div>
-        <div class="feedback" id="fb-newoff"></div>
-      </div>
+      <!-- Single, consolidated copy action -->
+      <button class="quiz-btn" id="copyAllOutlines" aria-label="Copy all role outlines">Copy all role outlines</button>
+      <div class="feedback" id="rolesFeedback"></div>
     </section>
 
-    <!-- 5) Rebuttals & POOs -->
-    <section class="glass-card section" id="rebuttals">
-      <h3 class="about-header">Rebuttals & Points of Order (POOs)</h3>
+    <!-- ===================== REBUTTALS & POOs ===================== -->
+    <section class="glass-card" id="rebuttals">
       <div class="spotlight">
+        <h3 class="about-header">Rebuttals & Points of Order (POOs)</h3>
+        <p class="section-intro"><b>Rebuttals (LOR/PMR)</b> = collapse + weigh + ballot story. <u>No new arguments.</u></p>
+        <div class="two-cards">
+          <div class="simple-card">
+            <h4>How to raise a POO</h4>
+            <ol class="section-list">
+              <li>Stand briefly: “Point of order.”</li>
+              <li>One line: “New argument in rebuttal on [issue].”</li>
+              <li>Judge rules: “Well taken / Not well taken”; speech resumes.</li>
+            </ol>
+            <p class="note">Etiquette: brief, neutral, respectful.</p>
+            <button class="quiz-btn" id="copyPoo">Copy POO phrasing</button>
+          </div>
+          <div class="simple-card">
+            <h4>POO scenarios (tap)</h4>
+            <div class="micro" aria-live="polite">
+              <div class="quiz-row">
+                <button class="quiz-btn" data-q="poo1" data-a="valid">MO introduces brand-new impact in last 30s → Valid POO?</button>
+                <button class="quiz-btn" data-q="poo2" data-a="invalid">PMR cleans up an existing warrant (no new claim) → Valid POO?</button>
+              </div>
+              <div class="feedback" id="pooFeedback"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HOW TO WIN ===================== -->
+    <section class="glass-card howto-win" id="win">
+      <div class="spotlight">
+        <h3 class="about-header">HOW TO WIN</h3>
         <ul class="section-list">
-          <li><strong>LOR / PMR:</strong> collapse to the winning path, weigh explicitly, and give a ballot story.</li>
-          <li><strong>No new arguments</strong> in rebuttals (respond/extend; don’t introduce fresh offense).</li>
-          <li><strong>POO:</strong> stand briefly, say “Point of order,” state the issue in one line (“New argument in rebuttal on [issue]”). Judge rules “well taken / not well taken.” Be brief, neutral, respectful.</li>
+          <li class="rule"><b>Pull through your best arguments.</b> Collapse hard.</li>
+          <li class="rule"><b>Always warrant.</b> Explain the mechanism; no naked claims.</li>
+          <li class="rule"><b>Always weigh.</b> Why your world matters more (magnitude/probability/timeframe/reversibility).</li>
+          <li class="rule"><b>Ballot story.</b> “Judge, vote Gov/Opp because…” in one sentence.</li>
         </ul>
-        <!-- Scenarios -->
-        <div class="quiz">
-          <div class="micro"><strong>Valid POO?</strong> “PMR introduces a fresh impact on a new line.”</div>
-          <div class="choices">
-            <button class="choice" data-q="poo1" data-a="yes">Yes</button>
-            <button class="choice" data-q="poo1" data-a="no">No</button>
+        <div class="micro" aria-live="polite">
+          <div class="label">Which weighing is stronger?</div>
+          <div class="quiz-row">
+            <button class="quiz-btn" data-q="weigh" data-a="b">A) “Ours is good.” · B) “Even if they get X, our Y affects more people sooner.”</button>
           </div>
-          <div class="feedback" id="fb-poo1"></div>
-        </div>
-        <div class="quiz">
-          <div class="micro"><strong>Valid POO?</strong> “LOR misquotes MG but doesn’t add a new claim.”</div>
-          <div class="choices">
-            <button class="choice" data-q="poo2" data-a="yes">Yes</button>
-            <button class="choice" data-q="poo2" data-a="no">No</button>
-          </div>
-          <div class="feedback" id="fb-poo2"></div>
-        </div>
-        <div>
-          <button class="btn inline" id="copyPOO">Copy sample POO line</button>
-          <span class="micro" id="pooLine">Point of order: new argument in rebuttal on [issue].</span>
+          <div class="feedback" id="winFeedback"></div>
         </div>
       </div>
     </section>
 
-    <!-- 6) HOW TO WIN -->
-    <section class="glass-card section" id="how-win">
-      <h3 class="about-header">HOW TO WIN</h3>
+    <!-- ===================== FLOWING & CLASH ===================== -->
+    <section class="glass-card" id="flowing">
+      <h3 class="about-header">Flowing & Clash (and spotting drops)</h3>
+      <p class="section-intro">Flow = notes tracing Claim → 1–2 Warrants → Impact. Mark where arguments <b>clash</b>. Call out <b>drops</b> in rebuttals.</p>
       <ul class="section-list">
-        <li><strong>Pull through your best arguments</strong> — collapse hard; don’t chase every tag.</li>
-        <li><strong>Always warrant</strong> (mechanism) and <strong>always weigh</strong> (why yours matters more).</li>
-        <li>Force them to <strong>disprove</strong> or <strong>out-weigh</strong> you — make that hard.</li>
-        <li><strong>Ballot story:</strong> “Judge, vote Gov/Opp because…” (1–2 sentences).</li>
+        <li>Abbreviate; number live arguments (G1/O1…) for clean tracking.</li>
+        <li>Star warrants/impacts you’ll pull through; in rebuttals, flow only what you collapse to.</li>
+        <li>Say drops out loud: “They <u>dropped</u> G2; extend and weigh.”</li>
       </ul>
-      <div class="quiz">
-        <div class="micro">Which weighing line is stronger?</div>
-        <div class="choices">
-          <button class="choice" data-q="weigh" data-a="A">“Our benefit helps many people.”</button>
-          <button class="choice" data-q="weigh" data-a="B">“Even if they achieve X, ours wins on magnitude and timeframe because it prevents larger harms sooner.”</button>
+      <div class="micro" aria-live="polite">
+        <div class="label">Tiny flow exercise</div>
+        <div class="quiz-row">
+          <button class="quiz-btn" data-q="drop" data-a="g2">Spot the drop (G1 answered, G2 not). Tap the dropped line.</button>
         </div>
-        <div class="feedback" id="fb-weigh"></div>
+        <div class="feedback" id="flowFeedback"></div>
       </div>
     </section>
 
-    <!-- 7) Flowing & Clash -->
-    <section class="glass-card section" id="flowing">
-      <h3 class="about-header">Flowing & Clash</h3>
-      <ul class="section-list">
-        <li>Flow the essentials: <strong>Claim → 1–2 Warrants → Impact</strong> per line; abbreviate; number live arguments (G1/O1…).</li>
-        <li><strong>Clash:</strong> mark where arguments meet.</li>
-        <li><strong>Drops:</strong> say it aloud in rebuttals (“They <em>dropped</em> X; extend and weigh.”).</li>
-        <li>Partner not speaking keeps the <strong>master flow</strong> and stars warrants/impacts to pull through.</li>
-      </ul>
-      <div class="quiz">
-        <div class="micro"><strong>Where’s the drop?</strong> G1 → O1 (answers magnitude) → MG (answers timeframe) → MO (…)</div>
-        <div class="choices">
-          <button class="choice" data-q="drop" data-a="mag">Magnitude</button>
-          <button class="choice" data-q="drop" data-a="time">Timeframe</button>
-        </div>
-        <div class="feedback" id="fb-drop"></div>
-      </div>
-      <p class="micro">Want live practice? Use the Flow Sheet on <a href="practicetools.html">Practice Tools →</a></p>
-    </section>
-
-    <!-- 8) Partnering 101 -->
-    <section class="glass-card section" id="partnering">
+    <!-- ===================== PARTNERING 101 ===================== -->
+    <section class="glass-card" id="partnering">
       <h3 class="about-header">Partnering 101 (resource management)</h3>
-      <div class="two-col">
-        <div>
-          <p class="lead"><strong>Before round (2-minute pact)</strong></p>
+      <div class="two-cards">
+        <div class="simple-card">
+          <h4>The 2-minute pact</h4>
           <ul class="section-list">
-            <li>Assign: <strong>master flow keeper</strong>, <strong>timekeeper</strong>, <strong>POO watcher</strong>, <strong>case notes</strong>.</li>
-            <li>Agree to pass at most <strong>two notes</strong> to the speaker: missing warrant; weighing line.</li>
-            <li>Pick simple signals (finish point · move on · time cues).</li>
-          </ul>
-          <p class="lead"><strong>15-minute prep</strong></p>
-          <ul class="section-list">
-            <li><strong>Case round:</strong> Gov already prepped; <strong>Opp gets 15</strong> after hearing the case.</li>
-            <li><strong>Motions:</strong> <strong>both teams</strong> get 15 after motion reveal.</li>
-            <li><strong>POCs:</strong> ask right after the case statement to clarify defs/mechanism.</li>
+            <li>Assign: <b>master flow keeper</b>, <b>timekeeper</b>, <b>POO watcher</b>, <b>case notes</b>.</li>
+            <li>Agree: max <b>2 passed notes</b> to speaker (missing warrant; weighing line).</li>
+            <li>Set simple signals (speed, finish, move on).</li>
           </ul>
         </div>
-        <div>
-          <p class="lead"><strong>During speeches</strong></p>
+        <div class="simple-card">
+          <h4>During speeches</h4>
           <ul class="section-list">
-            <li>Speaker talks; partner <strong>flows</strong> and stars warrants/impacts to pull through.</li>
-            <li>Track protected/grace; flag <strong>clash</strong> and <strong>drops</strong>.</li>
-            <li>In rebuttals: flow only what you’re <strong>collapsing</strong> to (and their answers to it).</li>
-          </ul>
-          <p class="lead"><strong>How much to flow?</strong></p>
-          <ul class="section-list">
-            <li>Don’t write everything — capture the <strong>warranted, weighable</strong> lines.</li>
-            <li>Use arrows (→) and short actor names; keep it readable.</li>
+            <li>Speaker talks; partner <b>flows</b> and stars warrants/impacts.</li>
+            <li>Track protected/grace time; mark clash & drops.</li>
+            <li>When roles switch, swap focus but keep one <b>master flow</b>.</li>
           </ul>
         </div>
       </div>
-      <p class="micro">Practice a partner pact on <a href="practicetools.html">Practice Tools →</a></p>
+      <p class="note">15-minute prep: <b>Case rounds</b> → Opp only (after hearing case). <b>Motions</b> → both teams (after motion). <b>POCs</b> follow the case statement.</p>
     </section>
 
-    <!-- 9) Build a Case -->
-    <section class="glass-card section" id="build-case">
+    <!-- ===================== BUILDING A CASE ===================== -->
+    <section class="glass-card" id="case">
       <h3 class="about-header">Building a Case (fair, simple, winnable)</h3>
       <ul class="section-list">
-        <li><strong>Resolution</strong> (“THBT…”), <strong>key definitions</strong>, <strong>actors & mechanism</strong>.</li>
-        <li><strong>2–4 warranted reasons</strong> + <strong>impacts</strong>; compare worlds explicitly.</li>
-        <li><strong>Keep it debatable</strong> (avoid tight/spec); be clear and accessible.</li>
+        <li><b>Resolution:</b> “THBT …” (clear, accessible).</li>
+        <li><b>Definitions:</b> key terms only; keep ground fair.</li>
+        <li><b>Actors & Mechanism:</b> who acts, why it works (incentives, feasibility).</li>
+        <li><b>Reasons (2–4):</b> each with <u>warrants</u> → <u>impact</u>; then <u>weigh</u>.</li>
+        <li><b>Comparative world:</b> how your world is better.</li>
+        <li><b>Guardrails:</b> avoid tight/spec/truisms; keep it debatable.</li>
       </ul>
-      <p class="micro">Want a scaffold? Use the Case Builder on <a href="practicetools.html">Practice Tools →</a></p>
+      <div class="cta-band">Want scaffolding? Use the <a href="practicetools.html">Case Builder on Practice Tools →</a></div>
     </section>
 
-    <!-- 10) POIs (tiny) -->
-    <section class="glass-card section" id="pois">
-      <h3 class="about-header">POIs (tiny note)</h3>
-      <p class="lead">Allowed after 1:00 and before the last 1:00 of constructives. Optional in many rounds — keep them concise and polite. Rebuttals don’t take POIs.</p>
-      <div class="quiz">
-        <div class="micro"><strong>Do rebuttals take POIs?</strong></div>
-        <div class="choices">
-          <button class="choice" data-q="poi" data-a="yes">Yes</button>
-          <button class="choice" data-q="poi" data-a="no">No</button>
+    <!-- ===================== POIs (SHORT) ===================== -->
+    <section class="glass-card" id="pois">
+      <h3 class="about-header">POIs (short)</h3>
+      <ul class="section-list">
+        <li>Allowed after 1:00 and before the last 1:00 of constructives. Optional in many rounds.</li>
+        <li>Keep them brief and polite; rebuttals do not take POIs.</li>
+      </ul>
+      <div class="micro" aria-live="polite">
+        <div class="quiz-row">
+          <button class="quiz-btn" data-q="poiq" data-a="no">Do rebuttals take POIs? (tap)</button>
         </div>
-        <div class="feedback" id="fb-poi"></div>
+        <div class="feedback" id="poiFeedback"></div>
       </div>
     </section>
 
-    <!-- 11) Equity & Support -->
-    <section class="glass-card section" id="equity">
+    <!-- ===================== EQUITY & SUPPORT ===================== -->
+    <section class="glass-card" id="equity">
       <h3 class="about-header">Equity & Support</h3>
-      <p class="lead">PDU is equity-first. If you need support or have concerns, here’s where to start:</p>
-      <div class="two-col">
-        <ul class="section-list">
-          <li><a href="equity.html">Equity policy →</a></li>
-          <li><a href="leadership.html">Leadership (officers) →</a></li>
-          <li><a href="contact.html">Contact the team →</a></li>
-        </ul>
-        <ul class="section-list">
-          <li class="micro">For official league policies (e.g., code of conduct, speaker scale): <a href="https://apda.online/" target="_blank" rel="noopener">APDA Home</a> · <a href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide</a></li>
-        </ul>
+      <p class="section-intro">PDU is equity-first. If you need support or have concerns, start here.</p>
+      <div class="link-grid">
+        <a class="link-chip" href="equity.html">Equity (policy) →</a>
+        <a class="link-chip" href="leadership.html">Leadership (officers) →</a>
+        <a class="link-chip" href="contact.html">Contact (reach us) →</a>
       </div>
     </section>
 
-    <!-- 12) Glossary (brief) -->
-    <section class="glass-card section" id="glossary">
+    <!-- ===================== GLOSSARY (BRIEF) ===================== -->
+    <section class="glass-card" id="glossary">
       <h3 class="about-header">Glossary (brief)</h3>
-      <div class="glossary">
-        <div class="term"><b>Flow:</b> notes tracing arguments across speeches.</div>
-        <div class="term"><b>POO:</b> “Point of Order”; flags new-in-rebuttal / time issues; judge rules.</div>
-        <div class="term"><b>Weighing:</b> compare worlds by magnitude, probability, timeframe, reversibility.</div>
-        <div class="term"><b>Framework:</b> what matters and why (the lens for the round).</div>
-        <div class="term"><b>Turn:</b> make their argument support your side.</div>
-        <div class="term"><b>Extension:</b> carry an argument forward with deeper warrants.</div>
-        <div class="term"><b>Collapse:</b> focus on the few arguments that win.</div>
-        <div class="term"><b>Tight:</b> unbeatable Gov case; Opp can call it tight.</div>
-        <div class="term"><b>Spec:</b> specific knowledge not in POCs/common knowledge; not evaluated.</div>
-        <div class="term"><b>RFD:</b> Reason for Decision; judge’s explanation.</div>
-        <div class="term"><b>Clash:</b> where arguments directly meet.</div>
-        <div class="term"><b>Drop:</b> a line left unanswered; say it aloud and weigh it.</div>
+      <p class="section-intro">For a fuller jargon list, see <a href="resources.html">resources.html</a>.</p>
+      <div class="icon-row">
+        <div class="icon-bullet"><span class="ico">✎</span><div><b>Flow</b> — notes tracking claims, warrants, impacts</div></div>
+        <div class="icon-bullet"><span class="ico">⚑</span><div><b>POO</b> — “Point of order”; flags new-in-rebuttal/time issues</div></div>
+        <div class="icon-bullet"><span class="ico">⚖️</span><div><b>Weighing</b> — comparing worlds by magnitude, probability, timeframe, reversibility</div></div>
+        <div class="icon-bullet"><span class="ico">🧭</span><div><b>Framework</b> — what matters and why</div></div>
+        <div class="icon-bullet"><span class="ico">↩︎</span><div><b>Turn</b> — make their argument support your side</div></div>
+        <div class="icon-bullet"><span class="ico">⟲</span><div><b>Extension</b> — carry an argument forward with deeper warrants</div></div>
+        <div class="icon-bullet"><span class="ico">⇣</span><div><b>Collapse</b> — focus on the few arguments that win</div></div>
+        <div class="icon-bullet"><span class="ico">🧱</span><div><b>Tight</b> — unbeatable Gov case; theory calls check this</div></div>
+        <div class="icon-bullet"><span class="ico">🔍</span><div><b>Spec</b> — specific knowledge outside common knowledge/POC</div></div>
+        <div class="icon-bullet"><span class="ico">🗳</span><div><b>RFD</b> — judge’s reason for decision</div></div>
+        <div class="icon-bullet"><span class="ico">⚔️</span><div><b>Clash</b> — where arguments meet</div></div>
+        <div class="icon-bullet"><span class="ico">⬇︎</span><div><b>Drop</b> — unanswered argument</div></div>
       </div>
-      <p class="micro">Want more terms? See <a href="resources.html">resources.html</a> (full jargon index).</p>
     </section>
 
-    <!-- 13) CTA + Next steps -->
-    <section class="cta-band">
-      <a class="link-chip" href="practicetools.html">Open Practice Tools →</a>
-    </section>
-    <section class="glass-card section">
+    <!-- ===================== NEXT STEPS ===================== -->
+    <section class="glass-card" id="next">
       <h3 class="about-header">Next steps</h3>
-      <div class="two-col">
-        <ul class="section-list">
-          <li><a href="join.html#mailing">Join the mailing list →</a></li>
-          <li><a href="calendar.html">See the calendar →</a></li>
-          <li><a href="about.html#meetings">Meetings & Attendance →</a></li>
-          <li><a href="tournaments.html">Tournaments →</a></li>
-        </ul>
-        <ul class="section-list">
-          <li><a href="equity.html">Equity policy →</a></li>
-          <li><a href="leadership.html">Leadership →</a></li>
-          <li><a href="contact.html">Contact →</a></li>
-          <li class="micro"><a href="https://apda.online/" target="_blank" rel="noopener">Official APDA info →</a></li>
-        </ul>
+      <div class="cta-band">
+        <a href="practicetools.html">Open Practice Tools →</a>
+      </div>
+      <div class="cta-row" style="margin-top:.6rem;">
+        <a class="link-chip" href="join.html#mailing">Join Mailing List →</a>
+        <a class="link-chip" href="calendar.html">See Calendar →</a>
+        <a class="link-chip" href="about.html#meetings">Meetings & Attendance →</a>
+        <a class="link-chip" href="tournaments.html">Tournaments →</a>
+        <a class="link-chip" href="equity.html">Equity policy →</a>
+        <a class="link-chip" href="leadership.html">Leadership →</a>
+        <a class="link-chip" href="contact.html">Contact →</a>
+        <a class="link-chip" href="https://apda.online/" target="_blank" rel="noopener">APDA Home →</a>
+        <a class="link-chip" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide →</a>
       </div>
     </section>
   </main>
@@ -600,14 +580,20 @@
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
   </footer>
 
-  <!-- Back to top (bottom-left) -->
+  <!-- Back to top (kept as global default, bottom-right) -->
   <a href="#top" id="float-button" title="Back to top">
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
 
-  <!-- Scripts (scoped to this page) -->
+  <!-- Scripts -->
   <script>
-    /* ====== Navbar sizing var (sitewide) ====== */
+    /* ====== Scroll reveal (kept lightweight) ====== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    /* ====== Navbar sizing var (sitewide pattern) ====== */
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
@@ -644,110 +630,129 @@
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    /* ====== Contents strip: active highlight ====== */
-    const contentsStrip = document.getElementById('contentsStrip');
-    const tocLinks = [...contentsStrip.querySelectorAll('a')];
-    const sections = tocLinks.map(a=> document.querySelector(a.getAttribute('href'))).filter(Boolean);
-    function updateTOCActive(){
-      const y = scrollY + 140; // offset under navbar/strip
-      let current = sections[0]?.id;
-      for(const s of sections){ if(s.offsetTop <= y) current = s.id; }
-      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-    }
-    addEventListener('scroll', updateTOCActive, { passive:true });
-    updateTOCActive();
+    /* ====== Contents drawer (kept, opens first visit only) ====== */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
 
-    /* ====== One-open behavior for accordions ====== */
-    document.querySelectorAll('details.beg-acc').forEach(d=>{
-      d.addEventListener('toggle', () => {
-        if(d.open){
-          document.querySelectorAll('details.beg-acc').forEach(o=> { if(o!==d) o.open=false; });
+    if(!localStorage.getItem('pdu_toc_beg_v3')) {
+      openTOC();
+      localStorage.setItem('pdu_toc_beg_v3','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    /* ====== TOC active highlight ====== */
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ====== Accordions: allow only one open at a time (roles) ====== */
+    document.querySelectorAll('details.role-acc').forEach((det)=>{
+      det.addEventListener('toggle', ()=>{
+        if(det.open){
+          document.querySelectorAll('details.role-acc').forEach(d=>{ if(d!==det) d.open=false; });
         }
       });
     });
 
-    /* ====== APDA brief: order quiz ====== */
-    const correctSeq = ['PMC','LOC','MG','MO','LOR','PMR'];
-    const orderChoices = document.getElementById('orderChoices');
-    const orderAnswer = document.getElementById('orderAnswer');
-    const orderFb = document.getElementById('orderFeedback');
+    /* ====== Micro interactions (very lightweight) ====== */
+
+    // APDA Brief: Tap-to-order quiz
+    const orderQuizWrap = document.getElementById('orderQuiz');
+    const orderFeedback = document.getElementById('orderFeedback');
+    const orderSeq = ['PMC','LOC','MG','MO','LOR','PMR']; // correct
+    const pool = ['LOC','PMR','MG','MO','LOR','PMC']; // shuffled pool to display
     let picked = [];
-    function renderAnswer(){
-      orderAnswer.innerHTML = picked.map(k=>`<span class="order-chip" data-k="${k}">${k}</span>`).join('');
-      if(picked.length===6){
-        const ok = picked.every((k,i)=>k===correctSeq[i]);
-        orderFb.textContent = ok ? 'Correct — that’s the round order.' : 'Not quite. Reset and try again.';
-      } else {
-        orderFb.textContent = '';
-      }
+    function renderOrderQuiz(){
+      orderQuizWrap.innerHTML = pool.map(x=> `<button class="quiz-btn" data-val="${x}">${x}</button>`).join('');
+      picked = [];
+      orderFeedback.textContent = '';
+      orderQuizWrap.querySelectorAll('button').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const val = b.dataset.val;
+          if(picked.includes(val)) return;
+          picked.push(val);
+          b.setAttribute('aria-pressed','true');
+          if(picked.length===orderSeq.length){
+            const ok = picked.every((v,i)=> v===orderSeq[i]);
+            orderFeedback.textContent = ok ? 'Nice! That’s the correct speaking order.' : 'Close—try again.';
+            if(!ok){ setTimeout(renderOrderQuiz, 800); }
+          }
+        });
+      });
     }
-    orderChoices.addEventListener('click', e=>{
-      const b = e.target.closest('button.order-chip'); if(!b) return;
-      const k = b.dataset.k;
-      if(picked.includes(k)) return;
-      picked.push(k); renderAnswer();
-    });
-    document.getElementById('orderReset').addEventListener('click', ()=>{ picked=[]; renderAnswer(); });
-    renderAnswer();
+    renderOrderQuiz();
 
-    /* ====== Micro checks (Gov/Opp, POCs, etc.) ====== */
-    const fbs = {
-      'case15': document.getElementById('fb-case15'),
-      'pocs': document.getElementById('fb-pocs'),
-      'missing': document.getElementById('fb-missing'),
-      'newoff': document.getElementById('fb-newoff'),
-      'poo1': document.getElementById('fb-poo1'),
-      'poo2': document.getElementById('fb-poo2'),
-      'weigh': document.getElementById('fb-weigh'),
-      'drop': document.getElementById('fb-drop'),
-      'poi': document.getElementById('fb-poi'),
-    };
-    function answer(q,a){
-      let msg='';
-      if(q==='case15') msg = (a==='opp') ? 'Correct — in a case round, Opp gets 15 minutes after hearing the case.' : 'Nope — Opp gets 15 minutes (Gov already prepped).';
-      if(q==='pocs') msg = (a==='after') ? 'Right — immediately after the case statement.' : 'Not quite — POCs are right after the case statement.';
-      if(q==='missing') msg = (a==='warrant') ? 'Correct — you need the “why” (mechanism) to make the claim land.' : 'No — the warrant (reason/mechanism) is missing.';
-      if(q==='newoff') msg = (a==='mo') ? 'Yes — MO can introduce new offense; rebuttals cannot.' : 'No — LOR/PMR are rebuttals (no new offense).';
-      if(q==='poo1') msg = (a==='yes') ? 'Yes — fresh offense in PMR is grounds for a POO.' : 'No — that’s valid grounds for a POO.';
-      if(q==='poo2') msg = (a==='no') ? 'Right — misquoting isn’t “new in rebuttal” by itself.' : 'No — that’s not new by itself.';
-      if(q==='weigh') msg = (a==='B') ? 'B is stronger — explicit comparison on magnitude/timeframe with a because.' : 'A is weak — no explicit comparison or because.';
-      if(q==='drop') msg = (a==='time') ? 'Correct — MO didn’t answer timeframe; call the drop and weigh it.' : 'No — timeframe was dropped, not magnitude.';
-      if(q==='poi') msg = (a==='no') ? 'Right — rebuttals don’t take POIs.' : 'No — POIs are for constructives only.';
-      fbs[q].textContent = msg;
-    }
-    document.querySelectorAll('.quiz .choice').forEach(btn=>{
-      btn.addEventListener('click', ()=> answer(btn.dataset.q, btn.dataset.a));
+    // Gov vs Opp quick checks
+    const govOppFeedback = document.getElementById('govOppFeedback');
+    document.querySelectorAll('#gov-opp .quiz-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const q = btn.dataset.q, a = btn.dataset.a;
+        if(q==='case15'){ govOppFeedback.textContent = (a==='opp') ? 'Correct: Opp preps 15 minutes after hearing the case.' : 'Opp gets the 15 in a case round.'; }
+        if(q==='poc'){ govOppFeedback.textContent = (a==='after') ? 'Right: POCs come immediately after the case statement.' : 'POCs are right after the case statement.'; }
+      });
     });
 
-    /* ====== Copy actions (only two on this page) ====== */
-    document.getElementById('copyOutlines').addEventListener('click', async ()=>{
-      const outlines = `ROLE OUTLINES
-PM (7:30)
-- Define terms; fair, clear case
-- Mechanism (who/what/how)
-- 2–4 warranted reasons; begin weighing
-
-LO (8:30)
-- Frame stance
-- Group & answer with warrants
-- Start weighing story
-
-MG (8:30)
-- Defend center with warrants
-- Answer best Opp lines
-- Collapse; set PMR weighing
-
-MO (8:30)
-- Extend Opp offense
-- Turn/mitigate Gov benefits
-- Set LOR voters with weighing
-`;
-      try{ await navigator.clipboard.writeText(outlines); alert('Role outlines copied.'); } catch { alert('Copy failed.'); }
+    // How to argue: what’s missing?
+    const argueFeedback = document.getElementById('argueFeedback');
+    document.querySelectorAll('#argue .quiz-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        argueFeedback.textContent = 'Warranting. Give the reason/mechanism that makes the claim true.';
+      });
     });
 
-    document.getElementById('copyPOO').addEventListener('click', async ()=>{
-      try{ await navigator.clipboard.writeText(document.getElementById('pooLine').textContent.trim()); alert('POO line copied.'); } catch { alert('Copy failed.'); }
+    // Roles: Copy all outlines (single consolidated action)
+    const rolesFeedback = document.getElementById('rolesFeedback');
+    document.getElementById('copyAllOutlines').addEventListener('click', async ()=>{
+      const blocks = [...document.querySelectorAll('.outline')].map(d=>`• ${d.dataset.outline.toUpperCase()}:\n${d.textContent.trim()}`).join('\n\n');
+      try{ await navigator.clipboard.writeText(blocks); rolesFeedback.textContent='Outlines copied.'; } catch{ rolesFeedback.textContent='Copy failed.'; }
     });
+
+    // POOs: copy phrasing + scenarios
+    const pooFeedback = document.getElementById('pooFeedback');
+    document.getElementById('copyPoo').addEventListener('click', async ()=>{
+      const line = 'Point of order: new argument in rebuttal on [issue].';
+      try{ await navigator.clipboard.writeText(line); pooFeedback.textContent='POO phrasing copied.'; } catch{ pooFeedback.textContent='Copy failed.'; }
+    });
+    document.querySelectorAll('#rebuttals .quiz-btn[data-q^="poo"]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const valid = btn.dataset.a==='valid';
+        const id = btn.dataset.q;
+        if(id==='poo1'){ pooFeedback.textContent = valid ? 'Valid: brand-new material in rebuttal is POOable.' : 'This one is valid.'; }
+        if(id==='poo2'){ pooFeedback.textContent = valid ? 'Not quite—cleanup is typically fine.' : 'Correct: cleaning an existing line isn’t new material.'; }
+      });
+    });
+
+    // HOW TO WIN: A/B weighing
+    const winFeedback = document.getElementById('winFeedback');
+    document.querySelectorAll('#win .quiz-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> winFeedback.textContent = 'B wins: it’s explicit weighing (comparative + axis).');
+    });
+
+    // Flowing: spot the drop
+    const flowFeedback = document.getElementById('flowFeedback');
+    document.querySelectorAll('#flowing .quiz-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> flowFeedback.textContent = 'They dropped G2—extend it and weigh it to a voter.');
+    });
+
+    // POIs quick question
+    const poiFeedback = document.getElementById('poiFeedback');
+    document.querySelectorAll('#pois .quiz-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> poiFeedback.textContent = 'Correct: rebuttals do not take POIs.');
+    });
+
   </script>
 </body>
 </html>
