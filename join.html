@@ -8,8 +8,70 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Page-local styles (scoped with .join-* where relevant) -->
+  <!-- Page-local styles (scoped to join page only) -->
   <style>
+    /* ===== Friendly full-screen intro (Join page only) ===== */
+    .join-intro{
+      position:fixed; inset:0; z-index:2000;
+      display:grid; place-items:center;
+      background:
+        radial-gradient(1200px 800px at 70% 20%, rgba(124,58,237,.20), transparent 70%),
+        radial-gradient(900px 700px at 20% 80%, rgba(199,191,255,.15), transparent 70%),
+        rgba(20,14,35,.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      opacity:0; pointer-events:none;
+    }
+    .join-intro.show{ opacity:1; pointer-events:auto; animation:introFadeIn .35s ease forwards; }
+
+    .intro-panel{
+      width:min(720px, 92vw);
+      padding:2.2rem 2.4rem;
+      border-radius:20px;
+      background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(199,191,255,.10));
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow:
+        0 18px 48px rgba(0,0,0,.45),
+        inset 0 0 28px rgba(199,191,255,.15);
+      text-align:center;
+      transform: translateY(12px);
+      opacity:0;
+      animation:introPanelUp .5s ease .12s forwards;
+    }
+    .intro-kicker{
+      font-weight:700; letter-spacing:.3px; opacity:.9; margin-bottom:.35rem;
+      text-shadow:0 0 8px rgba(199,191,255,.25);
+    }
+    .intro-title{
+      font-family:'DM Serif Display',serif; font-size:2.6rem; line-height:1.08;
+      text-shadow:0 0 12px rgba(199,191,255,.35), 0 0 28px rgba(199,191,255,.22);
+    }
+    .intro-sub{ margin:.6rem auto 1.1rem; opacity:.95; max-width:48ch; }
+    .intro-actions{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.6rem; }
+
+    .intro-skip{
+      margin-top:.6rem;
+      background:transparent; color:#fff; font-weight:800;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:999px; padding:.55rem .9rem; cursor:pointer;
+      backdrop-filter:blur(6px);
+    }
+    .intro-skip:hover{ background:rgba(255,255,255,.12); box-shadow:0 0 12px rgba(199,191,255,.28); }
+
+    .join-intro.fading{ animation:introFadeOut .35s ease forwards; }
+    .join-intro.fading .intro-panel{ animation:introPanelOut .35s ease forwards; }
+
+    @keyframes introFadeIn{ from{opacity:0} to{opacity:1} }
+    @keyframes introPanelUp{ from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:translateY(0)} }
+    @keyframes introFadeOut{ from{opacity:1} to{opacity:0} }
+    @keyframes introPanelOut{ from{opacity:1; transform:translateY(0)} to{opacity:0; transform:translateY(-10px)} }
+
+    @media (prefers-reduced-motion: reduce){
+      .join-intro.show{ animation:none; opacity:1; }
+      .intro-panel{ animation:none; opacity:1; transform:none; }
+      .join-intro.fading, .join-intro.fading .intro-panel{ animation:none; }
+    }
+
     /* ===== Countdown pill (desktop: top-right under navbar) ===== */
     .join-countdown{
       position:fixed;
@@ -38,17 +100,13 @@
       text-shadow:0 0 12px rgba(199,191,255,.35);
       margin-bottom:.5rem;
     }
-    .beginner-cta .cta-row .link-chip{
-      font-size:1.05rem; padding:.6rem 1rem;
-    }
+    .beginner-cta .cta-row .link-chip{ font-size:1.05rem; padding:.6rem 1rem; }
     .beginner-cta .cta-row .link-chip.primary{
-      border-color:rgba(255,255,255,.38);
-      background:rgba(255,255,255,.16);
-      box-shadow:0 0 12px rgba(199,191,255,.28);
-      font-weight:800;
+      border-color:rgba(255,255,255,.38); background:rgba(255,255,255,.16);
+      box-shadow:0 0 12px rgba(199,191,255,.28); font-weight:800;
     }
 
-    /* ===== Month cards as a grid ===== */
+    /* ===== Month cards grid ===== */
     .join-month-grid{
       display:grid; gap:1rem;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -72,23 +130,22 @@
     .join-myths summary:after{ content:'▾'; float:right; opacity:.9; }
     .join-myths details[open] summary:after{ content:'▴'; }
 
-    /* ===== Mobile-specific adjustments ===== */
+    /* ===== Mobile adjustments ===== */
     @media (max-width: 960px){
-      /* Hero title smaller on mobile */
       #joinHero .page-title{ font-size:2.2rem; }
       #joinHero .page-subtitle{ font-size:1rem; }
 
-      /* Countdown moves to bottom-left, just above sticky footer */
+      /* Countdown moves to bottom-left, above sticky footer */
       .join-countdown{
-        top:auto; right:auto;
-        left:12px;
+        top:auto; right:auto; left:12px;
         bottom:calc(var(--sticky-h, 64px) + 12px);
       }
+      /* Float-to-top rises above countdown & footer */
+      #float-button{ bottom:calc(var(--sticky-h, 64px) + 72px) !important; }
 
-      /* Float-to-top button rises above the countdown & footer */
-      #float-button{
-        bottom:calc(var(--sticky-h, 64px) + 72px) !important;
-      }
+      /* Intro panel typography on small screens */
+      .intro-title{ font-size:2.1rem; }
+      .intro-sub{ font-size:1rem; }
     }
 
     /* Mobile sticky CTA bar (existing pattern) */
@@ -194,6 +251,18 @@
     </nav>
   </aside>
 
+  <!-- Friendly one-time intro overlay -->
+  <div id="joinIntro" class="join-intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introSub" hidden>
+    <div class="intro-panel">
+      <div class="intro-kicker">Hey, you made it.</div>
+      <h2 id="introTitle" class="intro-title">Welcome to PDU</h2>
+      <p id="introSub" class="intro-sub">We’re happy you’re here. Let’s get you started.</p>
+      <div class="intro-actions">
+        <button type="button" class="intro-skip" id="introSkip" aria-label="Skip intro">Skip</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Hero -->
   <section class="hero-section hero-compact" id="joinHero">
     <div>
@@ -230,11 +299,10 @@
       </div>
     </section>
 
-    <!-- Step 2: Calendar (moved up) -->
+    <!-- Step 2: Calendar -->
     <section class="glass-card reveal" id="calendar">
       <h3 class="about-header">Step Two: Check the Calendar</h3>
       <p class="about-preview">All dates and info for meetings, tournament weekends, and workshops are publicly available.</p>
-      <!-- In the Calendar section of join.html -->
       <div class="cta-row">
         <a class="link-chip" href="calendar.html">Open the calendar and subscribe →</a>
       </div>
@@ -288,7 +356,7 @@
       </div>
     </section>
 
-    <!-- Month Cards (Sep–Dec) in a grid -->
+    <!-- Month Cards (Sep–Dec) -->
     <section class="glass-card reveal" id="months">
       <h3 class="about-header">Month at a Glance</h3>
       <div class="join-month-grid" aria-label="Upcoming months">
@@ -332,7 +400,7 @@
       <p class="note" style="margin-top:.5rem;">These are placeholders—update the bullets monthly (no weekly upkeep needed).</p>
     </section>
 
-    <!-- Partners & Assignments (simple, static) -->
+    <!-- Partners & Assignments -->
     <section class="glass-card reveal" id="partners">
       <h3 class="about-header">Partners & Assignments</h3>
       <p class="about-preview">
@@ -402,7 +470,7 @@
     }, { threshold: 0.06 });
     document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
 
-    // Keep --nav-height accurate for countdown placement (desktop)
+    // Keep --nav-height accurate (for countdown)
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
       const h = navbar.getBoundingClientRect().height;
@@ -411,7 +479,7 @@
     setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
     if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
 
-    // Measure sticky footer height for mobile offsets
+    // Measure sticky footer height (mobile offsets)
     const sticky = document.querySelector('.join-sticky');
     function setStickyHeightVar(){
       if(!sticky) return;
@@ -421,7 +489,7 @@
     setStickyHeightVar(); window.addEventListener('resize', setStickyHeightVar);
     if('ResizeObserver' in window && sticky){ new ResizeObserver(setStickyHeightVar).observe(sticky); }
 
-    // Mobile drawer (existing behavior)
+    // Mobile drawer
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
     const closeBtn = document.getElementById('drawerClose');
@@ -433,7 +501,6 @@
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-
     document.querySelectorAll('.drawer-toggle').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
@@ -504,6 +571,49 @@
       cdEl.textContent=`Next meeting: ${weekday} 7:00 PM ET in ${d}d ${h}h ${m}m ${ss}s`;
     }
     tick(); setInterval(tick,1000);
+
+    // ---------- One-time friendly intro ----------
+    (function(){
+      const INTRO_KEY = 'pdu_join_intro_seen'; // change value for a new semester if desired
+      const intro = document.getElementById('joinIntro');
+      const skip  = document.getElementById('introSkip');
+      const heroTitle = document.querySelector('#joinHero .page-title');
+
+      function openIntro(){
+        intro.hidden = false;
+        intro.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        // focus skip for a11y
+        setTimeout(()=> skip?.focus(), 50);
+      }
+      function closeIntro(){
+        intro.classList.add('fading');
+        setTimeout(()=>{
+          intro.hidden = true;
+          intro.classList.remove('show','fading');
+          document.body.style.overflow = '';
+          try{ heroTitle && heroTitle.focus(); }catch{}
+        }, 260);
+      }
+
+      if(!localStorage.getItem(INTRO_KEY)){
+        openIntro();
+        localStorage.setItem(INTRO_KEY, '1');
+        // auto-dismiss after ~2.2s
+        const t = setTimeout(closeIntro, 2200);
+
+        // Skip interactions
+        function dismiss(){
+          clearTimeout(t); closeIntro();
+        }
+        skip?.addEventListener('click', dismiss);
+        intro.addEventListener('click', e=>{
+          // allow clicking the dim background to skip; ignore clicks inside the panel
+          if(e.target === intro) dismiss();
+        });
+        window.addEventListener('keydown', e=>{ if(e.key === 'Escape') dismiss(); });
+      }
+    })();
   </script>
 </body>
 </html>
