@@ -19,7 +19,7 @@
       </div>
 
       <!-- Desktop links center -->
-      <nav class="nav-links" aria-label="Primary">
+            <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html">Home</a></li>
 
@@ -27,21 +27,30 @@
             <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
             <ul class="submenu" role="menu" aria-label="About submenu">
               <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
-              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
               <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
-              <li role="none"><a role="menuitem" href="equity.html" aria-current="page">Equity</a></li>
+              <li role="none"><a role="menuitem" href="equity.html" aria-current="page">Equity Policy</a></li>
               <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
             </ul>
           </li>
 
-          <li><a href="tournaments.html">Tournaments</a></li>
+          <li class="has-submenu">
+            <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false">Tournaments</a>
+            <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+              <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
 
           <li class="has-submenu">
             <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
-              <li role="none"><a role="menuitem" href="join.html">How to Join</a></li>
-              <li role="none"><a role="menuitem" href="about.html#meetings">This Week’s Meetings</a></li>
-              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
+              <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
             </ul>
           </li>
 
@@ -69,7 +78,7 @@
       <span>Menu</span>
       <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
     </div>
-    <nav class="drawer-nav" aria-label="Mobile">
+        <nav class="drawer-nav" aria-label="Mobile">
       <ul class="drawer-list">
         <li><a href="index.html">Home</a></li>
 
@@ -77,21 +86,30 @@
           <button class="drawer-toggle" aria-expanded="false">About</button>
           <ul class="drawer-submenu">
             <li><a href="about.html#who-we-are">Who We Are</a></li>
-            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
             <li><a href="about.html#meetings">Meetings & Attendance</a></li>
-            <li><a href="equity.html" aria-current="page">Equity</a></li>
+            <li><a href="equity.html">Equity Policy</a></li>
             <li><a href="why-pdu.html">Why PDU</a></li>
           </ul>
         </li>
 
-        <li><a href="tournaments.html">Tournaments</a></li>
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
+          <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
 
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">Join Us</button>
           <ul class="drawer-submenu">
-            <li><a href="join.html">How to Join</a></li>
-            <li><a href="about.html#meetings">This Week’s Meetings</a></li>
-            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#meetings">Meetings</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="practicetools.html">Practice Tools</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
           </ul>
         </li>
 
@@ -124,6 +142,7 @@
       <a href="#tournament-equity">Tournament Equity</a>
       <a href="#reporting">PDU Reporting & Support</a>
       <a href="#content-warnings">Content Warnings & Opt-Outs</a>
+      <a href="#judging">Judging</a>
       <a href="#consequences">Consequences</a>
       <a href="#commitments">Our Commitments</a>
     </nav>
@@ -237,6 +256,23 @@
       </div>
     </section>
 
+    <!-- Judging -->
+    <section class="glass-card" id="judging">
+      <h3 class="about-header">Judging</h3>
+      <p class="about-preview">
+        Judges safeguard equity in every round. Ballots must reflect the arguments made—not a speaker’s identity, style, or reputation.
+      </p>
+      <ul class="section-list">
+        <li>Evaluate only comparative analysis presented in round.</li>
+        <li>Intervene on equity breaches: pause the round and clarify concerns.</li>
+        <li>Contact the tournament’s Equity team or PDU leadership if violations occur.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="link-chip" href="judging.html">Judging Guide →</a>
+        <a class="link-chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">APDA Code of Conduct →</a>
+      </div>
+    </section>
+
     <!-- Consequences -->
     <section class="glass-card" id="consequences">
       <h3 class="about-header">Consequences</h3>
@@ -267,7 +303,8 @@
   </main>
 
   <footer class="glass-footer">
-    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved. Site design by <a href="https://www.linkedin.com/in/marcelcato/" target="_blank" rel="noopener">Marcel Cato</a>.</p>
+    <p class="disclaimer">NYU PDU is a student-run club, approved by but not affiliated with New York University in an institutional capacity.</p>
   </footer>
 
   <!-- Back to top -->
