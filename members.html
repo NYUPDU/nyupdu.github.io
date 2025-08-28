@@ -81,10 +81,6 @@
     @media (max-width: 900px){ .announce, .announce.wide { grid-column: span 12; } }
     .announce .target-card{ box-shadow: 0 12px 30px rgba(87,6,140,.20); padding:20px; }
 
-    /* Inline lists for meetings (kept in case we add a small list above/below the embed) */
-    .inline-list{ display:flex; flex-wrap:wrap; gap:.5rem .8rem; margin:.3rem 0 .1rem; }
-    .inline-list .chip{ margin:0; }
-
     /* Bullet list comfort + no clipping (fix for “Upcoming Months”) */
     .dash-card ul{ padding-left: 1.15rem; margin:.45rem 0 .25rem; line-height: 1.55; overflow: visible; }
     .dash-card li{ margin-bottom: .22rem; }
@@ -222,7 +218,7 @@
       <!-- ===== THIS MONTH AT PDU — SEPTEMBER (Calendar EMBED) ===== -->
       <section class="section" id="month">
         <div class="dash-grid">
-          <!-- Calendar embed card -->
+          <!-- A) Calendar embed card -->
           <div class="dash-card accent-success span-7">
             <h3 class="about-header">This Month at PDU — <span>September 2025</span></h3>
             <p class="muted">Room locations and last-minute changes live on the calendar.</p>
@@ -243,47 +239,63 @@
             <p class="tiny muted" style="margin-top:.35rem;">Specific room locations found on each calendar event. Subscribe now.</p>
           </div>
 
-          <!-- September tournaments overview (extra spacing applied) -->
+          <!-- B) September tournaments overview (sample tournaments from tournaments.html) -->
           <div class="dash-card accent-warn span-5">
             <h4>September Tournaments — Overview</h4>
             <p class="about-preview" style="margin-bottom:.7rem;">
               Expect 2–3 weekend tournaments. Sign-ups open ~10–12 days prior; pairs posted the week-of; travel covered.
             </p>
             <div class="targets-grid">
+              <!-- Sample 1: Princeton Invitational -->
               <article class="target-card">
                 <span class="pill open">Sign-ups Open</span>
-                <div class="chip-row"><span class="chip">Sep 12–13</span><span class="chip">Northeast</span></div>
-                <h4>Tournament A</h4>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">Novice-friendly; early call times possible.</p>
+                <div class="chip-row">
+                  <span class="chip">Sep 12–13</span>
+                  <span class="chip">Northeast</span>
+                </div>
+                <h4>Princeton Invitational</h4>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">
+                  Balanced field; good for new partnerships and experienced teams alike.
+                </p>
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
                 </div>
               </article>
 
+              <!-- Sample 2: Harvard Intervarsity -->
               <article class="target-card">
                 <span class="pill tentative">Tentative</span>
-                <div class="chip-row"><span class="chip">Sep 19–20</span><span class="chip">Northeast</span></div>
-                <h4>Tournament B</h4>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">Travel covered. Bring school ID and water.</p>
+                <div class="chip-row">
+                  <span class="chip">Sep 19–20</span>
+                  <span class="chip">Northeast</span>
+                </div>
+                <h4>Harvard Intervarsity</h4>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">
+                  Competitive field; strong option for experienced pairs aiming to break.
+                </p>
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
                 </div>
               </article>
-            </div>
-          </div>
 
-          <!-- Quick Actions (unchanged, but kept inside the same section for flow) -->
-          <div class="dash-card accent-neutral span-12">
-            <h4>Quick Actions</h4>
-            <div class="cta-row" style="flex-wrap:wrap;">
-              <a class="link-chip" href="tournaments.html">See tournaments →</a>
-              <a class="link-chip" href="beginner.html">Beginner’s guide →</a>
-              <a class="link-chip" href="advanced.html">Advanced guide →</a>
-              <a class="link-chip" href="practicetools.html">Practice tools →</a>
-              <a class="link-chip" href="resources.html">Resources library →</a>
-              <a class="link-chip" href="contact.html">Gentle feedback →</a>
+              <!-- Sample 3: Columbia Fall Open -->
+              <article class="target-card">
+                <span class="pill confirmed">Roster Confirmed</span>
+                <div class="chip-row">
+                  <span class="chip">Sep 26–27</span>
+                  <span class="chip">NYC</span>
+                </div>
+                <h4>Columbia Fall Open</h4>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">
+                  Close to home with strong judging pool; excellent learning weekend.
+                </p>
+                <div class="cta-row">
+                  <a class="link-chip" href="tournaments.html">Details →</a>
+                  <a class="link-chip" href="calendar.html">Calendar →</a>
+                </div>
+              </article>
             </div>
           </div>
         </div>
@@ -424,10 +436,10 @@
           <div class="dash-card accent-neutral span-12">
             <h3 class="about-header">Quick Links</h3>
             <div class="cta-row" style="margin-top:.4rem; flex-wrap:wrap;">
-              <a class="link-chip" href="faq.html">FAQ →</a>                    <!-- to be created -->
+              <a class="link-chip" href="faq.html">FAQ →</a>
               <a class="link-chip" href="leadership.html">Leadership (connect with your E-board) →</a>
-              <a class="link-chip" href="roster.html">Debaters (Roster) →</a>   <!-- to be created -->
-              <a class="link-chip" href="contact.html">Gentle feedback / concern →</a>
+              <a class="link-chip" href="equity.html">Equity Policy →</a>
+              <a class="link-chip" href="contact.html">Feedback →</a>
               <a class="link-chip" href="calendar.html#subscribe">Subscribe to the calendar →</a>
             </div>
           </div>
