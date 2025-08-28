@@ -333,6 +333,12 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   border-top:1px solid rgba(255,255,255,.2);
 }
 
+.glass-footer .disclaimer{
+  font-size:.75rem;
+  opacity:.8;
+  margin-top:.3rem;
+}
+
 /* ================= Contents Drawer (About) — locked in ================= */
 .toc-drawer{
   position:fixed; top:calc(var(--nav-height) + 10px); left:0; bottom:30px; width:280px;
