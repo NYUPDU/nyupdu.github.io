@@ -164,7 +164,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 .drawer-nav{ padding:.5rem .5rem 1rem; }
 .drawer-list{ list-style:none; }
-.drawer-list > li{ margin:.35rem 0; }
+.drawer-list > li{ margin:.65rem 0; }
 .drawer-list>li>a,.drawer-toggle{
   width:100%; text-align:left; padding:.75rem .85rem;
   background:transparent; color:#fff; border:1px solid transparent;
@@ -429,3 +429,7 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   .hero-title{ font-size:2.1rem; }
   .week-strip{ margin-top:-26px; }
 }
+
+/* Highlight Join Us link */
+.join-link{ color:#ffd700; text-shadow:0 0 8px rgba(255,215,0,.8); }
+.drawer-list .join-link{ color:#ffd700; text-shadow:0 0 8px rgba(255,215,0,.8); }
