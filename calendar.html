@@ -6,8 +6,17 @@
   <title>Calendar | NYU PDU</title>
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Calendar of upcoming NYU Parliamentary Debate Union practices, tournaments and events." />
+    <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, calendar" />
+    <meta name="author" content="NYU Parliamentary Debate Union" />
+    <link rel="canonical" href="https://nyupdu.github.io/calendar.html" />
+    <meta property="og:title" content="Calendar | NYU PDU" />
+    <meta property="og:description" content="Calendar of upcoming NYU Parliamentary Debate Union practices, tournaments and events." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nyupdu.github.io/calendar.html" />
+    <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
+    <style>
     /* Page-local polish */
     .cal-wrapper { width: 95%; max-width: 1100px; margin: 0 auto; }
     .cal-embed { border:0; width:100%; height: 72vh; min-height: 560px; border-radius: 16px; }
@@ -42,6 +51,7 @@
           <li class="has-submenu">
             <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false">Tournaments</a>
             <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+              <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
               <li role="none"><a role="menuitem" href="calendar.html" aria-current="page">Calendar</a></li>
             </ul>
           </li>
@@ -51,11 +61,10 @@
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
               <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
-              <li role="none"><a role="menuitem" href="join.html#calendar">Calendar</a></li>
               <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
               <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
               <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
-              <li role="none"><a role="menuitem" href="resources.html">Resource Library</a></li>
+              <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
             </ul>
           </li>
 
@@ -97,6 +106,7 @@
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
           <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
             <li><a href="tournaments.html">Upcoming</a></li>
             <li><a href="calendar.html">Calendar</a></li>
           </ul>
@@ -107,11 +117,10 @@
           <ul class="drawer-submenu">
             <li><a href="join.html#mailing">Mailing List</a></li>
             <li><a href="join.html#meetings">Meetings</a></li>
-            <li><a href="join.html#calendar">Calendar</a></li>
             <li><a href="beginner.html">Beginners Guide</a></li>
             <li><a href="practicetools.html">Practice Tools</a></li>
             <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="resources.html">Resource Library</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
           </ul>
         </li>
 
@@ -178,6 +187,23 @@
     burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
 
     // Reveal effect for cards
     const observer = new IntersectionObserver(entries => {
