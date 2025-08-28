@@ -139,21 +139,41 @@
       .judge-hero .page-title{ font-size:2.4rem; }
     }
 
-    /* ---------- Selects inside chips ---------- */
+    /* ---------- Selects inside chips (base) ---------- */
     .chip select{
       max-width:100%; color:#fff; background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.28); border-radius:8px; padding:.2rem .4rem;
     }
 
     /* ====== CHANGES: Ballot Builder chip sizing & spacing ====== */
-    /* Compact variant to prevent clipping */
+    /* Desktop/tablet: compact chip controls */
     .chip.compact{ padding:.42rem .72rem; font-weight:700; }
     .chip.compact select{ font-size:.95rem; padding:.18rem .36rem; }
-    .chip.compact{ width:100%; justify-content:space-between; }
+    .chip.compact{ width:100%; justify-content:space-between; align-items:center; }
 
     /* Extra space between controls and RFD output */
     .kit-rfd .mini-controls{ margin-bottom:.7rem; } /* CHANGE: added margin */
-    #rfOut{ margin-top:.1rem; } /* slight separation from controls */
+    #rfOut{ margin-top:.1rem; }
+
+    /* ====== NEW: Mobile fallback to plain stacked fields ======
+       On small screens, convert those chip+select combos into simple
+       label+select fields to eliminate any chance of clipping. */
+    @media (max-width: 520px){
+      .chip.compact.mobileField{
+        /* strip chip chrome */
+        padding:0; border:none; background:transparent; border-radius:0;
+        display:block; /* stack label + control */
+      }
+      .chip.compact.mobileField > .field-label{
+        display:block; font-weight:800; margin-bottom:.35rem; font-size:.95rem;
+      }
+      .chip.compact.mobileField > select{
+        display:block; width:100%;
+        padding:.44rem .6rem; border-radius:10px;
+        border:1px solid rgba(255,255,255,.28);
+        background:rgba(255,255,255,.08); color:#fff;
+      }
+    }
   </style>
 </head>
 
@@ -501,18 +521,18 @@
           <h4>Ballot Builder (RFD)</h4>
           <p class="muted">Fill and copy/download a clean RFD scaffold.</p>
 
-          <!-- CHANGE: compact chips to prevent clipping -->
+          <!-- CHANGE: desktop = compact chips; mobile = plain stacked fields via .mobileField -->
           <div class="two-col" style="gap:.5rem;">
-            <label class="chip compact" style="align-items:center;">
-              <span>Winner</span>
-              <select id="rfWinner" style="margin-left:.6rem; flex:1 1 auto; min-width:0;">
+            <label class="chip compact mobileField">
+              <span class="field-label">Winner</span>
+              <select id="rfWinner">
                 <option value="Government">Government</option>
                 <option value="Opposition">Opposition</option>
               </select>
             </label>
-            <label class="chip compact" style="align-items:center;">
-              <span>Round focus</span>
-              <select id="rfFocus" style="margin-left:.6rem; flex:1 1 auto; min-width:0;">
+            <label class="chip compact mobileField">
+              <span class="field-label">Round focus</span>
+              <select id="rfFocus">
                 <option value="mechanism & weighing">mechanism & weighing</option>
                 <option value="comparative impacts">comparative impacts</option>
                 <option value="case viability vs status quo">case viability vs status quo</option>
@@ -531,7 +551,6 @@
             <button class="ghost" id="rfSave">Download (.txt)</button>
           </div>
 
-          <!-- CHANGE: extra breathing room above the output -->
           <textarea id="rfOut" class="clean" placeholder="Your RFD will appear here…" readonly></textarea>
         </div>
 
@@ -609,7 +628,7 @@
 
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
-      const h = navbar.getBoundingClientRect().height; /* CHANGE: clean call */
+      const h = navbar.getBoundingClientRect().height;
       document.documentElement.style.setProperty('--nav-height', h + 'px');
     }
     setNavHeightVar(); addEventListener('resize', setNavHeightVar);
