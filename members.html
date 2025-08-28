@@ -61,6 +61,8 @@
     .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
     .dot.green{ background:#34d399; } .dot.purple{ background:#a78bfa; }
     .dot.orange{ background:#fb923c; } .dot.cyan{ background:#22d3ee; }
+    .blink{ animation: blink 1s steps(2, start) infinite; }
+    @keyframes blink{ 0%,50%{opacity:1;} 50%,100%{opacity:0;} }
 
     /* Tournaments overview: stronger separation for each entry */
     .targets-grid { gap: 16px; }
@@ -214,10 +216,8 @@
     <div class="dash-container dash-grid">
       <div class="dash-card accent-info span-12">
         <div class="stat-row">
-          <span class="stat-chip"><i class="dot green"></i> Meetings this week: <strong>2</strong></span>
+          <span class="stat-chip"><i class="dot purple blink"></i> <span id="memberCountdown">Calculating next meeting…</span></span>
           <span class="stat-chip"><i class="dot purple"></i> Next tournament: <strong>Sep 12</strong></span>
-          <span class="stat-chip"><i class="dot orange"></i> Open actions: <strong>3</strong></span>
-          <span class="stat-chip"><i class="dot cyan"></i> Calendar: <a class="inline-link" href="calendar.html#subscribe">Subscribe</a></span>
         </div>
       </div>
     </div>
@@ -454,6 +454,63 @@
   </a>
 
   <!-- ===== Scripts ===== -->
+  <script>
+    function getNowPartsInTZ(timeZone){
+      const dtf = new Intl.DateTimeFormat('en-US', {
+        timeZone, year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false,
+        weekday:'short'
+      });
+      const parts = dtf.formatToParts(new Date());
+      const map = {};
+      for (const p of parts) map[p.type] = p.value;
+      const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
+      return {
+        year:+map.year, month:+map.month, day:+map.day,
+        hour:+map.hour, minute:+map.minute, second:+map.second,
+        weekday
+      };
+    }
+    function zonedNYToDate(y,m,d,h,mi,s){
+      const tz='America/New_York';
+      if(Intl.DateTimeFormat().resolvedOptions().timeZone===tz){
+        return new Date(y, m-1, d, h, mi, s||0);
+      }
+      const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
+      const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
+      const diff=inv.getTime()-wall.getTime();
+      return new Date(wall.getTime()-diff);
+    }
+    function nextNYMeeting(){
+      const tz='America/New_York';
+      const p=getNowPartsInTZ(tz);
+      function nextDow(target){
+        let delta=(target - p.weekday + 7) % 7;
+        if (delta===0 && (p.hour>19 || (p.hour===19 && (p.minute>0 || p.second>0)))) delta=7;
+        const base=new Date(Date.UTC(p.year, p.month-1, p.day));
+        base.setUTCDate(base.getUTCDate()+delta);
+        return zonedNYToDate(base.getUTCFullYear(), base.getUTCMonth()+1, base.getUTCDate(), 19, 0, 0);
+      }
+      const mon=nextDow(1), wed=nextDow(3);
+      return (mon < wed) ? mon : wed;
+    }
+    const cdEl=document.getElementById('memberCountdown');
+    function tick(){
+      const target=nextNYMeeting();
+      const now=new Date();
+      const ms=target - now;
+      if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
+      const s=Math.floor(ms/1000);
+      const d=Math.floor(s/86400);
+      const h=Math.floor((s%86400)/3600);
+      const m=Math.floor((s%3600)/60);
+      const ss=s%60;
+      const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
+      const dateStr=target.toLocaleString('en-US',{timeZone:'America/New_York', month:'short', day:'numeric'});
+      cdEl.textContent=`Next meeting: ${weekday} ${dateStr} · 7:00 PM ET — in ${d}d ${h}h ${m}m ${ss}s`;
+    }
+    tick(); setInterval(tick,1000);
+  </script>
   <script>
     /* Subtle reveal on scroll (matches rest of site) */
     const observer = new IntersectionObserver(entries => {
