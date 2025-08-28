@@ -58,30 +58,7 @@
     }
     .page-subtitle{ opacity:.9; margin:0; font-size:1.05rem; }
 
-    /* ===== PRESERVED GLOWING BAR (unchanged) ===== */
-    .hero-divider{
-      width:100vw; height:16px;
-      position:relative; left:50%; transform:translateX(-50%);
-      background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(124,58,237,.35), rgba(255,255,255,.25));
-      border-top:1px solid rgba(255,255,255,.25);
-      border-bottom:1px solid rgba(255,255,255,.15);
-      box-shadow: 0 0 18px rgba(199,191,255,.45), 0 0 34px rgba(124,58,237,.35);
-      overflow:hidden;
-      animation: pulseGlow 4.5s ease-in-out infinite alternate;
-    }
-    .hero-divider::before{
-      content:"";
-      position:absolute; inset:0;
-      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 35%, transparent 70%);
-      transform:translateX(-100%);
-      animation: sheen 5.8s linear infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes pulseGlow{
-      0% { box-shadow: 0 0 16px rgba(255,255,255,.35), 0 0 28px rgba(124,58,237,.28); }
-      100% { box-shadow: 0 0 22px rgba(199,191,255,.6), 0 0 42px rgba(124,58,237,.5); }
-    }
-    @keyframes sheen{ 0% { transform:translateX(-100%); } 100% { transform:translateX(100%); } }
+    /* Glowing bar styles moved to global stylesheet */
 
     /* ===== Main wrapper ===== */
     .container{ max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
