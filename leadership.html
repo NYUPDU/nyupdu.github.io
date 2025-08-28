@@ -57,11 +57,11 @@
       margin: 0 auto;
     }
 
-    /* WRAPPER so each card + external contact chip stay together */
+    /* Wrapper so each card + external contact chip stay together as one grid item */
     .leader-item{
       display:flex;
       flex-direction:column;
-      gap:.6rem;               /* tight spacing between card and chip */
+      gap:.6rem;
       align-items:stretch;
     }
 
@@ -75,10 +75,9 @@
     /* ===== Card look ===== */
     .leader-card{
       position:relative;
-      height: 560px;           /* FIX: concrete height keeps rows stable */
-      display:grid;
-      /* CHANGE: 70/30 split (was 80/20) */
-      grid-template-rows: 7fr 3fr;
+      /* CHANGE: switch to column layout with a strict media aspect ratio block + a taller info band */
+      display:flex;
+      flex-direction:column;
       background: rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.2);
       border-radius: 20px;
@@ -92,49 +91,38 @@
       transform: translateY(24px);
     }
     .leader-card.reveal{ opacity:1; transform: translateY(0); }
-
     .leader-card:hover{
       transform: translateY(-6px);
       box-shadow: 0 14px 40px rgba(0,0,0,.36);
     }
 
-    /* ===== Uniform image crop across different source aspect ratios =====
-       We enforce a consistent visual by:
-       - letting the media area control the height (row 1)
-       - object-fit: cover to crop without distortion
-       - object-position biased slightly upward for headshots
-       If you want a strict portrait ratio instead, see the commented OPTIONAL block below. */
-    .leader-photo{
-      grid-row: 1 / 2;
-      width:100%;
-      height:100%;
-      object-fit: cover;          /* keeps people proportional */
-      object-position: 50% 22%;   /* headshots tend to sit a bit higher */
-      display:block;
+    /* ===== STRICT headshot crop (no stretching) ===== */
+    .leader-media{
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;        /* CHANGE: enforce 4:5 portrait */
+      overflow: hidden;
       border-bottom:1px solid rgba(255,255,255,.18);
     }
-
-    /* OPTIONAL (uncomment to enforce a strict portrait aspect ratio for the photo area)
-    .leader-card{ height:auto; }
     .leader-photo{
-      height:auto;
-      aspect-ratio: 4 / 5;        // strict portrait crop
-      width:100%;
-      display:block;
+      position:absolute; inset:0;
+      width:100%; height:100%;
       object-fit: cover;
-      object-position: 50% 22%;
+      object-position: 50% 22%;   /* bias slightly up for faces */
+      display:block;
     }
-    .leader-info{ min-height: 180px; } // ensures space for name/title when card height becomes auto
-    */
 
-    /* Info band (30% of card height) */
+    /* ===== Taller info band (expanded beyond prior 30%) ===== */
     .leader-info{
-      grid-row: 2 / 3;
-      padding: 0.75rem 1rem;      /* a touch more breathing room now that it's taller */
+      padding: 1rem 1.1rem 1.1rem;
       display:flex; flex-direction:column;
       align-items:center; text-align:center; justify-content:center;
-      background: transparent;
+      min-height: 240px;          /* CHANGE: expanded info space */
     }
+    @media (max-width: 960px){
+      .leader-info{ min-height: 210px; }  /* reasonable on small screens */
+    }
+
     .leader-name{
       font-family:'DM Serif Display', serif;
       font-size:1.9rem;           /* larger name retained */
@@ -144,7 +132,7 @@
     .leader-sep{
       width: 72%;
       height: 2px;
-      margin: .5rem auto .55rem;  /* visible bar between name and title */
+      margin: .55rem auto .6rem;  /* keep divider visible & roomy */
       background: linear-gradient(90deg, rgba(255,255,255,.4), rgba(124,58,237,.6), rgba(255,255,255,.4));
       box-shadow: 0 0 10px rgba(199,191,255,.4);
       border-radius: 999px;
@@ -163,6 +151,7 @@
       border:1px solid rgba(255,255,255,.35);
       font-weight:800; font-size:.85rem;
       box-shadow:0 6px 18px rgba(0,0,0,.35);
+      z-index:2;
     }
 
     /* EXTERNAL action row (outside the card) */
@@ -188,7 +177,7 @@
       color:#fff; background: rgba(18,18,30,.88);
       backdrop-filter: blur(10px);
       opacity:0; pointer-events:none; transition: opacity .25s ease;
-      z-index: 5;
+      z-index: 3;
     }
     .leader-popup-inner{
       max-width: 620px;
@@ -223,15 +212,28 @@
     .leader-item:nth-of-type(6) .leader-card{ transition-delay:.40s; }
     .leader-item:nth-of-type(7) .leader-card{ transition-delay:.47s; }
 
-    /* Below-grid sections */
+    /* ===== Below-grid sections (visibility hardening) =====
+       If global CSS dims or makes these transparent, explicitly restore contrast. */
     .below-cards{
+      position: relative; z-index: 0;
       max-width: 1100px;
-      margin: 1.5rem auto 2.25rem; /* CHANGE: extra top margin to clearly separate from grid */
+      margin: 1.75rem auto 2.5rem;
       padding: 0 1.25rem 2rem;
       display: grid;
       gap: 1.25rem;
     }
-    .below-cards .glass-card{ max-width: 100%; }
+    .below-cards .glass-card{
+      background: rgba(255,255,255,.10);   /* visible glass */
+      border:1px solid rgba(255,255,255,.2);
+      color:#fff;                          /* ensure text is not transparent */
+      padding: 1rem 1.1rem;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    }
+    .below-cards .about-header{ color:#fff; }
+    .below-cards .about-preview{ color:#fff; opacity:.92; }
+    .below-cards .cta-row .link-chip{ display:inline-flex; }
 
     /* Responsive */
     @media (max-width: 960px){
@@ -244,8 +246,6 @@
         max-width: none;
         justify-self: stretch;
       }
-      .leader-card{ height: 520px; }     /* slightly shorter on mobile */
-      .leader-name{ font-size:1.6rem; }
     }
   </style>
 </head>
@@ -373,7 +373,10 @@
       <!-- Presidents -->
       <div class="leader-item">
         <article class="leader-card" data-name="Rayan Sheikh">
-          <img src="placeholder.jpg" alt="Rayan Sheikh" class="leader-photo" />
+          <!-- CHANGE: strict media block -->
+          <div class="leader-media">
+            <img src="placeholder.jpg" alt="Rayan Sheikh" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Rayan Sheikh</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -393,7 +396,9 @@
 
       <div class="leader-item">
         <article class="leader-card" data-name="Allen Liu">
-          <img src="placeholder.jpg" alt="Allen Liu" class="leader-photo" />
+          <div class="leader-media">
+            <img src="placeholder.jpg" alt="Allen Liu" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Allen Liu</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -414,7 +419,9 @@
       <!-- Operations -->
       <div class="leader-item">
         <article class="leader-card" data-name="Marcel Cato">
-          <img src="your-photo.jpg" alt="Marcel Cato" class="leader-photo" />
+          <div class="leader-media">
+            <img src="your-photo.jpg" alt="Marcel Cato" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Marcel Cato</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -435,7 +442,9 @@
       <!-- Finance -->
       <div class="leader-item">
         <article class="leader-card" data-name="Pranav Gupta">
-          <img src="pranav.jpg" alt="Pranav Gupta" class="leader-photo" />
+          <div class="leader-media">
+            <img src="pranav.jpg" alt="Pranav Gupta" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Pranav Gupta</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -457,7 +466,9 @@
       <div class="leader-item">
         <article class="leader-card" data-name="Dara Adebanjo">
           <span class="badge-equity">★ Equity</span>
-          <img src="placeholder.jpg" alt="Dara Adebanjo" class="leader-photo" />
+          <div class="leader-media">
+            <img src="placeholder.jpg" alt="Dara Adebanjo" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Dara Adebanjo</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -482,7 +493,9 @@
       <!-- Communications -->
       <div class="leader-item">
         <article class="leader-card" data-name="Dedra Annakie">
-          <img src="placeholder.jpg" alt="Dedra Annakie" class="leader-photo" />
+          <div class="leader-media">
+            <img src="placeholder.jpg" alt="Dedra Annakie" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Dedra Annakie</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -503,7 +516,9 @@
       <!-- Education (7th) -->
       <div class="leader-item">
         <article class="leader-card" data-name="Amish Gupta">
-          <img src="amish.jpg" alt="Amish Gupta" class="leader-photo" />
+          <div class="leader-media">
+            <img src="amish.jpg" alt="Amish Gupta" class="leader-photo" />
+          </div>
           <div class="leader-info">
             <h3 class="leader-name">Amish Gupta</h3>
             <div class="leader-sep" aria-hidden="true"></div>
@@ -536,7 +551,7 @@
         </div>
       </section>
 
-      <!-- About the Executive Board (requested explainer) -->
+      <!-- About the Executive Board -->
       <section class="glass-card">
         <h3 class="about-header">About the Executive Board</h3>
         <p class="about-preview">
@@ -544,7 +559,7 @@
         </p>
       </section>
 
-      <!-- Next Steps (with exact four chips) -->
+      <!-- Next Steps -->
       <section class="glass-card">
         <h3 class="about-header">Next Steps</h3>
         <div class="cta-row" style="display:flex; flex-wrap:wrap; gap:.5rem;">
