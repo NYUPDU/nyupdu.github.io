@@ -105,6 +105,7 @@
           <li class="has-submenu">
             <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false" aria-current="page">Tournaments</a>
             <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+              <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
               <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
             </ul>
           </li>
@@ -114,11 +115,10 @@
             <ul class="submenu" role="menu" aria-label="Join Us submenu">
               <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
               <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
-              <li role="none"><a role="menuitem" href="join.html#calendar">Calendar</a></li>
               <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
               <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
               <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
-              <li role="none"><a role="menuitem" href="resources.html">Resource Library</a></li>
+              <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
             </ul>
           </li>
 
@@ -162,6 +162,7 @@
         <li class="drawer-group">
           <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
           <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
             <li><a href="tournaments.html">Upcoming</a></li>
             <li><a href="calendar.html">Calendar</a></li>
           </ul>
@@ -172,11 +173,10 @@
           <ul class="drawer-submenu">
             <li><a href="join.html#mailing">Mailing List</a></li>
             <li><a href="join.html#meetings">Meetings</a></li>
-            <li><a href="join.html#calendar">Calendar</a></li>
             <li><a href="beginner.html">Beginners Guide</a></li>
             <li><a href="practicetools.html">Practice Tools</a></li>
             <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="resources.html">Resource Library</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
           </ul>
         </li>
 
@@ -525,6 +525,15 @@
     burger.addEventListener('click', toggleDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
     // Desktop submenu a11y
