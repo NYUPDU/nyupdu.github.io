@@ -19,8 +19,10 @@
 
   <!-- ====================== PAGE-LOCAL CSS ====================== -->
   <style>
-    /* ---------- GLOBAL SAFETY (float button + no horizontal wiggle) ---------- */
-    html, body { overflow-x: hidden; }
+    :root{ color-scheme: dark; } /* NEW: tell browsers we’re in dark mode for native controls */
+    html, body { overflow-x: hidden; } /* avoid side-scroll on some mobile browsers */
+
+    /* ---------- GLOBAL Back-to-top ---------- */
     #float-button{
       position:fixed;
       right:clamp(12px, env(safe-area-inset-right) + 12px, 24px);
@@ -47,12 +49,8 @@
     /* ---------- SECTIONS & CARDS ---------- */
     .section-intro{ margin:.2rem 0 .75rem; opacity:.95; }
     .glass-card{ animation:fadeUp .35s ease both; }
-    @keyframes fadeUp{
-      from{ opacity:0; transform:translateY(6px); }
-      to{ opacity:1; transform:translateY(0); }
-    }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
 
-    .tool-grid{ display:grid; gap:1rem; }
     .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
     @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
 
@@ -109,14 +107,15 @@
     .timer-dial.glow60{ box-shadow:0 0 18px rgba(255,255,255,.25), 0 0 36px rgba(124,58,237,.45), inset 0 0 24px rgba(199,191,255,.28); }
     .timer-dial.glow30{ box-shadow:0 0 22px rgba(255,255,255,.3), 0 0 44px rgba(124,58,237,.6), inset 0 0 28px rgba(199,191,255,.34); }
 
-    /* ---------- FLOATING MINI-TIMER (NEW) ---------- */
-    /* UPDATED(1): appears when main timer is running; draggable area kept simple (click to pause/resume) */
+    /* ---------- FLOATING MINI-TIMER (MOVED & FIXED) ---------- */
+    /* Now appended near the end of <body>, not inside a transformed card, so it's truly viewport-fixed. */
     .floating-timer{
-      position:fixed; left:clamp(12px, env(safe-area-inset-left) + 12px, 24px);
-      bottom:clamp(72px, env(safe-area-inset-bottom) + 72px, 88px); /* keep clear of back-to-top */
+      position:fixed;
+      right:clamp(12px, env(safe-area-inset-right) + 12px, 24px); /* align with back-to-top */
+      bottom:clamp(84px, env(safe-area-inset-bottom) + 84px, 96px); /* sit above back-to-top */
       z-index:9998; display:none;
       padding:.45rem .7rem; border-radius:12px;
-      background:rgba(17,16,28,.7); backdrop-filter:blur(8px);
+      background:rgba(17,16,28,.78); backdrop-filter:blur(8px);
       border:1px solid rgba(255,255,255,.28); box-shadow:0 8px 24px rgba(0,0,0,.35);
       align-items:center; gap:.5rem;
       animation:popIn .18s ease both;
@@ -132,21 +131,20 @@
     @keyframes popIn{ from{ transform:scale(.92); opacity:0; } to{ transform:scale(1); opacity:1; } }
     @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(.85); opacity:.6; } }
 
-    /* ---------- PREP PLANNER ---------- */
-    .planner-row{ display:grid; gap:.6rem; }
-    .planner-selects{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+    /* ---------- FORM SELECTS (FIX WHITE BACKGROUNDS) ---------- */
     .select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
-      padding:.5rem 2.1rem .5rem .9rem; /* UPDATED(2): extra right padding for arrow */
+      padding:.5rem 2.1rem .5rem .9rem; /* space for chevron */
       border-radius:10px; border:1px solid rgba(255,255,255,.25);
-      background:
-        rgba(255,255,255,.08)
-        /* UPDATED(2): add chevron */
-        , url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right .6rem center / 1rem auto;
-      color:#fff; font-weight:700;
+      background-color:rgba(20,18,36,.9) !important; /* solid dark to avoid white UA bg */
+      color:#fff !important; font-weight:700;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right .6rem center; background-size:1rem auto;
       transition:box-shadow .2s ease, transform .08s ease;
     }
     .select:focus{ outline:none; box-shadow:0 0 0 2px rgba(199,191,255,.35); }
+    /* Some mobile browsers paint options white; we can at least set text to dark-background-friendly */
+    select option{ color:#fff; background:#120f21; }
 
     /* ---------- FLOW SHEET ---------- */
     .flow-wrap{ overflow:auto; }
@@ -156,7 +154,6 @@
     }
     .flow-table th{ position:sticky; top:0; backdrop-filter:blur(6px); z-index:1; }
     .flow-table td[contenteditable="true"]{ outline:none; white-space:pre-wrap; }
-
     .flow-toolbar{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 0; }
 
     /* ---------- CASE BUILDER ---------- */
@@ -167,7 +164,7 @@
       background:rgba(255,255,255,.08); color:#fff; transition:border-color .18s ease, box-shadow .18s ease;
     }
     .textarea{ min-height:96px; }
-    .warn-field{ border-color:#f6c453 !important; box-shadow:0 0 0 2px rgba(246,196,83,.25); } /* UPDATED(4): field highlight */
+    .warn-field{ border-color:#f6c453 !important; box-shadow:0 0 0 2px rgba(246,196,83,.25); }
 
     .lint{ border-left:4px solid transparent; padding-left:.5rem; }
     .lint.warn{ border-left-color:#f6c453; }
@@ -184,13 +181,11 @@
     .drill .actions{ display:flex; gap:.45rem; flex-wrap:wrap; }
 
     /* ---------- WEIGHING COACH ---------- */
-    .tool-card.examples p, .tool-card.examples li{ overflow-wrap:anywhere; } /* UPDATED(6): prevent spill */
-    .tool-card.picker{ padding:1.15rem; } /* UPDATED(6): more padding on pick-axes card */
+    .tool-card.examples p, .tool-card.examples li{ overflow-wrap:anywhere; }
+    .tool-card.picker{ padding:1.15rem; }
 
-    /* ---------- PARTNER PACT ---------- */
-    @media (max-width: 640px){
-      .tool-row{ gap:.7rem; } /* UPDATED(7): more breathing space between chips/controls on mobile */
-    }
+    /* ---------- PARTNER PACT spacing on mobile ---------- */
+    @media (max-width: 640px){ .tool-row{ gap:.7rem; } }
 
     /* ---------- CTA BANDS ---------- */
     .cta-band{
@@ -200,14 +195,10 @@
       text-align:center;
     }
 
-    /* ---------- TOC drawer active state & desktop-stickiness ---------- */
+    /* ---------- TOC active highlight ---------- */
     .toc-list a.active{ font-weight:800; }
-    @media (min-width: 1024px){
-      /* UPDATED(animations/nav): keep TOC visible on desktop */
-      .toc-drawer{ transform:none !important; opacity:1 !important; }
-    }
 
-    /* ---------- RESPONSIVE TYPOGRAPHY ---------- */
+    /* ---------- RESPONSIVE TYPE ---------- */
     @media (max-width: 960px){
       .tools-hero .page-title{ font-size:2.4rem; }
     }
@@ -339,7 +330,6 @@
     <!-- ========= TIMER SUITE ========= -->
     <section class="glass-card" id="timers">
       <h3 class="about-header">Timer Suite</h3>
-      <!-- UPDATED(2): remove stray ** and keep clean text -->
       <p class="section-intro">APDA presets with grace baked in: <b>7:30</b> · <b>8:30</b> · <b>4:30</b> · <b>5:30</b>. Optional beeps and POI window.</p>
 
       <div class="timer-wrap">
@@ -371,14 +361,6 @@
         </div>
 
         <p class="muted">Shortcuts: <b>Space</b> start/pause, <b>R</b> reset (disabled when typing).</p>
-      </div>
-
-      <!-- UPDATED(1): Floating mini-timer (hidden until running) -->
-      <div class="floating-timer" id="floatingTimer" aria-live="polite">
-        <span class="dot" aria-hidden="true"></span>
-        <span class="time" id="floatReadout">07:30</span>
-        <button id="floatToggle" title="Pause/Resume">Pause</button>
-        <button id="floatReset" title="Reset">Reset</button>
       </div>
     </section>
 
@@ -475,7 +457,6 @@ Reason #2 — warrants → impact"></textarea>
           <textarea id="cbComp" class="textarea" placeholder="Explain why your world is strictly better than the status quo."></textarea>
         </label>
 
-        <!-- UPDATED(4): Expanded Lint with bullet list + field highlights -->
         <div id="cbLint" class="lint muted">
           <span class="title">Lint:</span> (waiting for input)
           <ul id="cbLintList"></ul>
@@ -497,7 +478,6 @@ Reason #2 — warrants → impact"></textarea>
       <p class="section-intro">Fast reps. Timers live here so you don’t need to scroll back.</p>
 
       <div class="drill-grid">
-        <!-- Rebuttal sprint -->
         <div class="drill">
           <h4>90s Rebuttal Sprint</h4>
           <div class="prompt" id="rebPrompt">Click “New prompt”.</div>
@@ -509,7 +489,6 @@ Reason #2 — warrants → impact"></textarea>
           <textarea id="rebText" placeholder="Write your rebuttal…"></textarea>
         </div>
 
-        <!-- Weighing sprint -->
         <div class="drill">
           <h4>Weighing Sprint</h4>
           <div class="prompt" id="wghPrompt">Click “New weighing”.</div>
@@ -520,7 +499,6 @@ Reason #2 — warrants → impact"></textarea>
           <textarea id="wghText" placeholder="Write two sentences that weigh clearly…"></textarea>
         </div>
 
-        <!-- POI burst (Optional practice) -->
         <div class="drill">
           <h4>POI Burst (60s)</h4>
           <div class="prompt" id="poiPrompt">Click “New prompt”.</div>
@@ -656,7 +634,6 @@ Reason #2 — warrants → impact"></textarea>
         <button class="btn" id="exportZip"><span class="btn-icon">⬇</span>Download .zip</button>
         <span class="muted">Includes: <i>pdu_flow.txt</i>, <i>pdu_flow.csv</i>, <i>pdu_pocs.txt</i>, <i>pdu_case.txt</i>, <i>pdu_outline.txt</i> (if present).</span>
       </div>
-      <!-- UPDATED(9): style CTA link like a chip instead of default blue -->
       <div class="cta-band" style="margin-top:.8rem;">
         <a class="link-chip" href="beginner.html">Need the learning guide? Open Beginner Guide →</a>
       </div>
@@ -673,6 +650,14 @@ Reason #2 — warrants → impact"></textarea>
   <a href="#top" id="float-button" title="Back to top">
     <img src="PDULOGO_Trans.png" alt="Return Home">
   </a>
+
+  <!-- ====================== FLOATING TIMER (MOVED NEAR BODY END) ====================== -->
+  <div class="floating-timer" id="floatingTimer" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="time" id="floatReadout">07:30</span>
+    <button id="floatToggle" title="Pause/Resume">Pause</button>
+    <button id="floatReset" title="Reset">Reset</button>
+  </div>
 
   <!-- ====================== PAGE SCRIPTS ====================== -->
   <script>
@@ -724,24 +709,31 @@ Reason #2 — warrants → impact"></textarea>
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    /* --- Contents drawer: desktop stays open; mobile closes on scroll; no memory --- */
+    /* --- Contents drawer: desktop defaults open, but can be X-closed & re-opened --- */
     const tocDrawer = document.getElementById('tocDrawer');
     const tocOpen = document.getElementById('tocOpen');
     const tocClose = document.getElementById('tocClose');
+    let tocUserClosedDesktop = false; // NEW: respect manual close on desktop
 
     function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
     function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
 
-    // Always open on desktop; toggle on mobile
-    function syncTOCByViewport(){
-      if(window.innerWidth >= 1024){ openTOC(); }
-      else { closeTOC(); }
+    // Default behavior: open on desktop load; do not force open if user closed.
+    function applyTOCMode(){
+      if(window.innerWidth >= 1024){
+        if(!tocUserClosedDesktop) openTOC();
+      } else {
+        closeTOC();
+      }
     }
-    syncTOCByViewport();
-    addEventListener('resize', syncTOCByViewport);
+    applyTOCMode();
+    addEventListener('resize', applyTOCMode);
 
-    tocOpen.addEventListener('click', openTOC);
-    tocClose.addEventListener('click', closeTOC);
+    tocOpen.addEventListener('click', ()=>{ tocUserClosedDesktop = false; openTOC(); });
+    tocClose.addEventListener('click', ()=>{
+      if(window.innerWidth >= 1024) tocUserClosedDesktop = true;
+      closeTOC();
+    });
 
     // Close on scroll ONLY for mobile
     addEventListener('scroll', () => {
@@ -768,7 +760,7 @@ Reason #2 — warrants → impact"></textarea>
     const poiWindow = document.getElementById('poiWindow');
     let totalSec = 450, remain = totalSec, ticking = null, lastWholeMin = null;
 
-    // Floating timer elements (NEW)
+    // Floating timer elements
     const floatWrap = document.getElementById('floatingTimer');
     const floatReadout = document.getElementById('floatReadout');
     const floatToggle = document.getElementById('floatToggle');
@@ -792,7 +784,7 @@ Reason #2 — warrants → impact"></textarea>
       totalSec = Math.max(1, sec|0); remain = totalSec; stopTimer(); updateDial();
       localStorage.setItem('pdu_timer_preset_sec', String(totalSec));
       lastWholeMin = null;
-      setFloatVisible(false); // hide when no active run
+      setFloatVisible(false); // hide when not running
     }
     function startTimer(){
       if(ticking) return;
@@ -800,7 +792,6 @@ Reason #2 — warrants → impact"></textarea>
         const prev = remain;
         remain = Math.max(0, remain-1);
         updateDial();
-        // minute beep (optional)
         if(beepToggle.checked){
           const thisWhole = Math.floor(remain/60);
           if(thisWhole !== lastWholeMin && prev!==remain){
@@ -819,11 +810,11 @@ Reason #2 — warrants → impact"></textarea>
     document.getElementById('pauseTimer').addEventListener('click', stopTimer);
     document.getElementById('resetTimer').addEventListener('click', ()=>{ resetTimer(); setFloatVisible(false); });
 
-    // Floating timer controls mirror main
+    // Floating controls mirror main
     floatToggle.addEventListener('click', ()=> ticking ? stopTimer() : startTimer());
     floatReset.addEventListener('click', ()=>{ resetTimer(); setFloatVisible(false); });
 
-    // POI bar: after 1:00 until last 1:00 for constructives (7:30/8:30)
+    // POI window: after 1:00 to last 1:00 for constructives (7:30/8:30)
     function updatePOI(){
       const show = poiToggle.checked;
       const constructive = (totalSec===450 || totalSec===510);
@@ -1013,39 +1004,32 @@ Reason #2 — warrants → impact"></textarea>
 
       const warnings = [];
 
-      // Presence checks
       if(!text.res.trim()){ warnings.push('Add a clear resolution.'); setFieldWarn('cbRes', true); } else setFieldWarn('cbRes', false);
       if(!text.mech.trim()){ warnings.push('Mechanism needs detail (actor, incentives, feasibility, enforcement).'); setFieldWarn('cbMech', true); } else setFieldWarn('cbMech', false);
       if(!text.reasons.trim()){ warnings.push('List 2–4 reasons with warrants → impacts.'); setFieldWarn('cbReasons', true); } else setFieldWarn('cbReasons', false);
 
-      // Tight / truism hints
       if(/always|never|obviously|undeniably|by definition|tautology|truism/.test(text.res)){
         warnings.push('Resolution language risks truism/tight—soften absolutes or broaden contestability.');
       }
 
-      // Spec-ish heuristics
       if(/esoteric|obscure|little-known|insider|technical detail/.test(text.reasons) || /specific year|dataset|secret/.test(text.reasons)){
         warnings.push('Avoid specific-knowledge (“spec”) dependence; keep warrants accessible or provide the facts in-round.');
       }
 
-      // Mechanism completeness heuristics
       if(!/(enforce|implement|agency|actor|government|university|company|mechanism|incentive|fund|budget|pilot|rollout)/.test(text.mech)){
         warnings.push('Mechanism may be thin — include who pays/implements and why it works.');
       }
 
-      // Counting reasons
       const reasonCount = (raw.reasons.match(/(^|\n)\s*reason/gi) || []).length;
       const newlineCount = (raw.reasons.trim()==='' ? 0 : raw.reasons.split(/\n+/).length);
       if(reasonCount < 2 && newlineCount < 2){
         warnings.push('Aim for at least 2 distinct reasons (with warrants and impacts).');
       }
 
-      // Comparative clarity
       if(!/(status quo|compared to|versus|relative to|better than)/.test(text.comp)){
         warnings.push('Comparative world: explicitly state why your world is better than status quo.');
       }
 
-      // Fill lint block
       cbLintList.innerHTML = warnings.map(w=> `<li>${w}</li>`).join('');
       if(warnings.length){
         cbLint.className = 'lint warn';
@@ -1234,17 +1218,36 @@ Weighing narrative to PMR
       if(!(window.JSZip && window.saveAs)){ alert('Zip libraries not loaded. We can still export individual files above.'); return; }
       const zip = new JSZip();
 
-      // Flow files
-      const txt = flowTxt();
-      const csv = flowCsv();
+      const txt = (function(){
+        const rows=[...document.querySelectorAll('#flowBody tr')].map((tr,idx)=>{
+          const tds = tr.querySelectorAll('td');
+          const cells = [];
+          for(let i=1;i<tds.length;i++){ cells.push(tds[i].innerText.replace(/\r?\n/g,'\\n')); }
+          return `${idx+1}\t` + cells.join('\t');
+        });
+        return `# PDU Flow\n# Cols: #\tPMC\tLOC\tMG\tMO\tLOR\tPMR\tNotes\n` + rows.join('\n');
+      })();
+      const csv = (function(){
+        const head = ['#','PMC','LOC','MG','MO','LOR','PMR','Notes'];
+        const lines = [[...head].join(',')];
+        [...document.querySelectorAll('#flowBody tr')].forEach((tr,idx)=>{
+          const tds = tr.querySelectorAll('td');
+          const cells = [idx+1];
+          for(let i=1;i<tds.length;i++){
+            const raw = tds[i].innerText.replace(/\r?\n/g,'\\n').replace(/"/g,'""');
+            cells.push(`"${raw}"`);
+          }
+          lines.push(cells.join(','));
+        });
+        return lines.join('\n');
+      })();
       zip.file('pdu_flow.txt', txt);
       zip.file('pdu_flow.csv', csv);
 
-      // POCs
       const pocs = document.getElementById('pocLog').value || '';
       zip.file('pdu_pocs.txt', pocs);
 
-      // Case
+      const cb = id => document.getElementById(id);
       const caseTxt = `PDU Case
 Resolution: ${cb('cbRes').value}
 
@@ -1262,7 +1265,6 @@ ${cb('cbComp').value}
 `;
       zip.file('pdu_case.txt', caseTxt);
 
-      // Outlines
       const outline = `PM/MG OUTLINE
 
 PM
