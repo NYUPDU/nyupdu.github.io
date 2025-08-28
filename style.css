@@ -79,6 +79,16 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .nav-left,.nav-right{ display:flex; align-items:center; }
 .logo-pdu{ height:64px; width:auto; margin-right:1rem; }
 .logo-nyu{ height:28px; width:auto; margin-left:0; }
+.brand-link{ display:flex; align-items:center; text-decoration:none; }
+.brand-text{ display:none; margin-left:.5rem; font-family:'DM Serif Display', serif; font-size:1.5rem; font-weight:700; color:#fff; }
+
+ @media (min-width:961px){
+  .nav-left{ order:0; }
+  .nav-links{ order:1; }
+  .nav-right{ order:2; }
+  .brand-text{ display:inline-block; }
+}
+
 
 /* ================= Desktop primary nav ================= */
 .nav-links{ display:block; }
