@@ -1,4 +1,15 @@
+# robots.txt for NYU PDU on GitHub Pages
+# - Allow all crawling.
+# - Declare multiple sitemap locations (totally valid).
+# - If you later switch to a custom domain, update these URLs to that domain.
+
 User-agent: *
 Allow: /
 
+# Primary sitemaps (existing)
 Sitemap: https://nyupdu.github.io/sitemap.xml
+Sitemap: https://nyupdu.github.io/sitemap.txt
+
+# Alternate sitemaps (new)
+Sitemap: https://nyupdu.github.io/pdu-map.xml
+Sitemap: https://nyupdu.github.io/pdu-urls.txt

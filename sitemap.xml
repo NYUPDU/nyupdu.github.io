@@ -1,56 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Simple, root-level sitemap for https://nyupdu.github.io
-     Notes:
-     - Keep URLs on the same host/protocol as this sitemap (https://nyupdu.github.io)
-     - <lastmod> is optional but recommended (ISO 8601 date)
-     - File must be UTF-8 and live at site root for widest coverage -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://nyupdu.github.io/</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/about.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/join.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/beginner.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/tournaments.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/leadership.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/equity.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/calendar.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/contact.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/judging.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/practicetools.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
-  <url>
-    <loc>https://nyupdu.github.io/resources.html</loc>
-    <lastmod>2025-08-28</lastmod>
-  </url>
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+<url>
+<loc>https://nyupdu.github.io/</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/index.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/about.html</loc>
+<lastmod>2025-08-28T20:51:58+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/beginner.html</loc>
+<lastmod>2025-08-28T20:51:58+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/equity.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/tournaments.html</loc>
+<lastmod>2025-08-28T20:51:58+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/calendar.html</loc>
+<lastmod>2025-08-28T20:51:58+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/join.html</loc>
+<lastmod>2025-08-28T20:51:58+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/practicetools.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/resources.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/leadership.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/members.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/contact.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/judging.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://nyupdu.github.io/advanced.html</loc>
+<lastmod>2025-08-28T20:51:59+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>
