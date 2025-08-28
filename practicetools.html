@@ -13,15 +13,14 @@
   <!-- Sitewide CSS -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- OPTIONAL: tiny zip helper (CDN) for the "Export Bundle" tool 
-       - Small, well-known lib; safe for GH Pages; if you prefer no CDNs, we can remove the bundler and fallback to multiple .txt downloads. -->
+  <!-- Zip helper (optional; can be removed if you prefer no CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>
 
   <!-- ====================== PAGE-LOCAL CSS ====================== -->
   <style>
-    /* ---------- GLOBAL SAFETY (fixes float button on some Android browsers) ---------- */
-    html, body { overflow-x: hidden; } /* prevent off-screen "negative headspace" horizontal scroll */
+    /* ---------- GLOBAL SAFETY (float button + no horizontal wiggle) ---------- */
+    html, body { overflow-x: hidden; }
     #float-button{
       position:fixed;
       right:clamp(12px, env(safe-area-inset-right) + 12px, 24px);
@@ -33,9 +32,7 @@
     /* ---------- HERO ---------- */
     .tools-hero .page-title{ font-size:3rem; }
     .tools-hero .page-subtitle{ max-width:64ch; margin-inline:auto; }
-    .cta-banner{
-      margin-top:.9rem; display:flex; justify-content:center;
-    }
+    .cta-banner{ margin-top:.9rem; display:flex; justify-content:center; }
     .cta-banner a{
       display:inline-flex; align-items:center; gap:.5rem;
       padding:.7rem 1rem; border-radius:14px;
@@ -43,12 +40,18 @@
       border:1px solid rgba(255,255,255,.28);
       font-weight:800; text-decoration:none; color:#fff;
       box-shadow:0 8px 24px rgba(0,0,0,.25), inset 0 0 24px rgba(199,191,255,.18);
+      transition:transform .16s ease, box-shadow .24s ease;
     }
-    .cta-banner a:hover{ background:rgba(124,58,237,.3); }
+    .cta-banner a:hover{ transform:translateY(-1px); box-shadow:0 12px 28px rgba(0,0,0,.3); }
 
     /* ---------- SECTIONS & CARDS ---------- */
     .section-intro{ margin:.2rem 0 .75rem; opacity:.95; }
-    .glass-card{ /* inherits site theme */ }
+    .glass-card{ animation:fadeUp .35s ease both; }
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(6px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
     .tool-grid{ display:grid; gap:1rem; }
     .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
     @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
@@ -57,7 +60,9 @@
       padding:1rem; border-radius:14px;
       border:1px solid rgba(255,255,255,.22);
       background:rgba(255,255,255,.08);
+      transition:box-shadow .2s ease, transform .12s ease;
     }
+    .tool-card:hover{ box-shadow:0 10px 28px rgba(0,0,0,.32), inset 0 0 18px rgba(199,191,255,.16); transform:translateY(-1px); }
     .tool-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .4rem; }
 
     .tool-row{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
@@ -68,8 +73,9 @@
     .btn, .chip, .ghost {
       padding:.5rem .85rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
       background:rgba(255,255,255,.10); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+      transition:transform .14s ease, box-shadow .2s ease, background .14s ease;
     }
-    .btn:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
+    .btn:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); transform:translateY(-1px); }
     .ghost{ background:transparent; }
     .btn-icon{ width:1.1rem; display:inline-block; text-align:center; }
 
@@ -82,6 +88,7 @@
         conic-gradient(rgba(124,58,237,.9) 0deg, rgba(124,58,237,.9) var(--angle,0deg), rgba(255,255,255,.12) var(--angle,0deg) 360deg);
       border:1px solid rgba(255,255,255,.28);
       box-shadow:inset 0 0 24px rgba(199,191,255,.18), 0 12px 36px rgba(0,0,0,.35);
+      transition:box-shadow .25s ease;
     }
     .timer-core{
       width:152px; height:152px; border-radius:50%;
@@ -102,14 +109,44 @@
     .timer-dial.glow60{ box-shadow:0 0 18px rgba(255,255,255,.25), 0 0 36px rgba(124,58,237,.45), inset 0 0 24px rgba(199,191,255,.28); }
     .timer-dial.glow30{ box-shadow:0 0 22px rgba(255,255,255,.3), 0 0 44px rgba(124,58,237,.6), inset 0 0 28px rgba(199,191,255,.34); }
 
+    /* ---------- FLOATING MINI-TIMER (NEW) ---------- */
+    /* UPDATED(1): appears when main timer is running; draggable area kept simple (click to pause/resume) */
+    .floating-timer{
+      position:fixed; left:clamp(12px, env(safe-area-inset-left) + 12px, 24px);
+      bottom:clamp(72px, env(safe-area-inset-bottom) + 72px, 88px); /* keep clear of back-to-top */
+      z-index:9998; display:none;
+      padding:.45rem .7rem; border-radius:12px;
+      background:rgba(17,16,28,.7); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.28); box-shadow:0 8px 24px rgba(0,0,0,.35);
+      align-items:center; gap:.5rem;
+      animation:popIn .18s ease both;
+    }
+    .floating-timer.show{ display:inline-flex; }
+    .floating-timer .time{ font-weight:900; letter-spacing:.4px; }
+    .floating-timer .dot{
+      width:.55rem; height:.55rem; border-radius:50%;
+      background:#7c3aed; box-shadow:0 0 10px rgba(124,58,237,.55);
+      animation:pulse 1.2s infinite ease-in-out;
+    }
+    .floating-timer button{ border:1px solid rgba(255,255,255,.28); border-radius:10px; background:rgba(255,255,255,.1); color:#fff; padding:.25rem .5rem; font-weight:800; cursor:pointer; }
+    @keyframes popIn{ from{ transform:scale(.92); opacity:0; } to{ transform:scale(1); opacity:1; } }
+    @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(.85); opacity:.6; } }
+
     /* ---------- PREP PLANNER ---------- */
     .planner-row{ display:grid; gap:.6rem; }
     .planner-selects{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
     .select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
-      padding:.5rem .9rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.08); color:#fff; font-weight:700;
+      padding:.5rem 2.1rem .5rem .9rem; /* UPDATED(2): extra right padding for arrow */
+      border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:
+        rgba(255,255,255,.08)
+        /* UPDATED(2): add chevron */
+        , url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right .6rem center / 1rem auto;
+      color:#fff; font-weight:700;
+      transition:box-shadow .2s ease, transform .08s ease;
     }
+    .select:focus{ outline:none; box-shadow:0 0 0 2px rgba(199,191,255,.35); }
 
     /* ---------- FLOW SHEET ---------- */
     .flow-wrap{ overflow:auto; }
@@ -118,9 +155,8 @@
       border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); padding:.55rem .6rem; vertical-align:top;
     }
     .flow-table th{ position:sticky; top:0; backdrop-filter:blur(6px); z-index:1; }
-    .flow-table td[contenteditable="true"]{
-      outline:none; white-space:pre-wrap; /* PRESERVE SPACES & linebreaks */
-    }
+    .flow-table td[contenteditable="true"]{ outline:none; white-space:pre-wrap; }
+
     .flow-toolbar{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 0; }
 
     /* ---------- CASE BUILDER ---------- */
@@ -128,12 +164,16 @@
     .form label{ font-weight:800; }
     .input, .textarea{
       width:100%; padding:.55rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.08); color:#fff;
+      background:rgba(255,255,255,.08); color:#fff; transition:border-color .18s ease, box-shadow .18s ease;
     }
     .textarea{ min-height:96px; }
+    .warn-field{ border-color:#f6c453 !important; box-shadow:0 0 0 2px rgba(246,196,83,.25); } /* UPDATED(4): field highlight */
+
     .lint{ border-left:4px solid transparent; padding-left:.5rem; }
     .lint.warn{ border-left-color:#f6c453; }
     .lint.ok{ border-left-color:#5ad17a; }
+    .lint .title{ font-weight:900; }
+    .lint ul{ margin:.35rem 0 .1rem .95rem; }
 
     /* ---------- DRILLS ---------- */
     .drill-grid{ display:grid; grid-template-columns:1fr; gap:1rem; }
@@ -143,10 +183,14 @@
     .drill textarea{ width:100%; min-height:110px; padding:.6rem; border-radius:10px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; }
     .drill .actions{ display:flex; gap:.45rem; flex-wrap:wrap; }
 
-    /* ---------- PACT, WEIGHING, POO ASSIST ---------- */
-    .mini-list{ margin:.3rem 0 .4rem; }
-    .mini-list li{ margin:.15rem 0; }
-    .status{ font-weight:800; }
+    /* ---------- WEIGHING COACH ---------- */
+    .tool-card.examples p, .tool-card.examples li{ overflow-wrap:anywhere; } /* UPDATED(6): prevent spill */
+    .tool-card.picker{ padding:1.15rem; } /* UPDATED(6): more padding on pick-axes card */
+
+    /* ---------- PARTNER PACT ---------- */
+    @media (max-width: 640px){
+      .tool-row{ gap:.7rem; } /* UPDATED(7): more breathing space between chips/controls on mobile */
+    }
 
     /* ---------- CTA BANDS ---------- */
     .cta-band{
@@ -156,8 +200,12 @@
       text-align:center;
     }
 
-    /* ---------- TOC drawer active state ---------- */
+    /* ---------- TOC drawer active state & desktop-stickiness ---------- */
     .toc-list a.active{ font-weight:800; }
+    @media (min-width: 1024px){
+      /* UPDATED(animations/nav): keep TOC visible on desktop */
+      .toc-drawer{ transform:none !important; opacity:1 !important; }
+    }
 
     /* ---------- RESPONSIVE TYPOGRAPHY ---------- */
     @media (max-width: 960px){
@@ -291,6 +339,7 @@
     <!-- ========= TIMER SUITE ========= -->
     <section class="glass-card" id="timers">
       <h3 class="about-header">Timer Suite</h3>
+      <!-- UPDATED(2): remove stray ** and keep clean text -->
       <p class="section-intro">APDA presets with grace baked in: <b>7:30</b> · <b>8:30</b> · <b>4:30</b> · <b>5:30</b>. Optional beeps and POI window.</p>
 
       <div class="timer-wrap">
@@ -299,7 +348,6 @@
         </div>
 
         <div class="timer-presets" aria-label="Timer presets">
-          <!-- PRESETS use minutes:seconds; stored as total seconds -->
           <button class="btn" data-sec="450">7:30</button>
           <button class="btn" data-sec="510">8:30</button>
           <button class="btn" data-sec="270">4:30</button>
@@ -324,12 +372,20 @@
 
         <p class="muted">Shortcuts: <b>Space</b> start/pause, <b>R</b> reset (disabled when typing).</p>
       </div>
+
+      <!-- UPDATED(1): Floating mini-timer (hidden until running) -->
+      <div class="floating-timer" id="floatingTimer" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="time" id="floatReadout">07:30</span>
+        <button id="floatToggle" title="Pause/Resume">Pause</button>
+        <button id="floatReset" title="Reset">Reset</button>
+      </div>
     </section>
 
     <!-- ========= PREP PLANNER ========= -->
     <section class="glass-card" id="planner">
       <h3 class="about-header">Prep Planner</h3>
-      <p class="section-intro">Quickly set up **Case** vs **Motions** rounds. The planner configures 15-minute prep and highlights who preps when.</p>
+      <p class="section-intro">Quickly set up <b>Case</b> vs <b>Motions</b> rounds. The planner configures 15-minute prep and highlights who preps when.</p>
 
       <div class="planner-row">
         <div class="planner-selects">
@@ -419,8 +475,11 @@ Reason #2 — warrants → impact"></textarea>
           <textarea id="cbComp" class="textarea" placeholder="Explain why your world is strictly better than the status quo."></textarea>
         </label>
 
-        <!-- Live lint / hints -->
-        <div id="cbLint" class="lint muted">Lint: (waiting for input)</div>
+        <!-- UPDATED(4): Expanded Lint with bullet list + field highlights -->
+        <div id="cbLint" class="lint muted">
+          <span class="title">Lint:</span> (waiting for input)
+          <ul id="cbLintList"></ul>
+        </div>
 
         <div class="tool-row">
           <button class="btn" id="cbSave">Save (local)</button>
@@ -481,7 +540,7 @@ Reason #2 — warrants → impact"></textarea>
       <p class="section-intro">Compose crisp, comparative weighing lines. Pick an axis, then fill the template.</p>
 
       <div class="two-col">
-        <div class="tool-card">
+        <div class="tool-card picker">
           <h4>Pick axes</h4>
           <div class="tool-row">
             <label class="chip"><input type="checkbox" class="waxe" value="magnitude"> Magnitude</label>
@@ -499,7 +558,7 @@ Reason #2 — warrants → impact"></textarea>
           </div>
         </div>
 
-        <div class="tool-card">
+        <div class="tool-card examples">
           <h4>Examples</h4>
           <ul class="mini-list">
             <li>“Even if they get <i>uptake</i>, our policy reaches <b>more people sooner</b> — higher magnitude, faster timeframe.”</li>
@@ -597,8 +656,9 @@ Reason #2 — warrants → impact"></textarea>
         <button class="btn" id="exportZip"><span class="btn-icon">⬇</span>Download .zip</button>
         <span class="muted">Includes: <i>pdu_flow.txt</i>, <i>pdu_flow.csv</i>, <i>pdu_pocs.txt</i>, <i>pdu_case.txt</i>, <i>pdu_outline.txt</i> (if present).</span>
       </div>
+      <!-- UPDATED(9): style CTA link like a chip instead of default blue -->
       <div class="cta-band" style="margin-top:.8rem;">
-        <a href="beginner.html">Need the learning guide? Open Beginner Guide →</a>
+        <a class="link-chip" href="beginner.html">Need the learning guide? Open Beginner Guide →</a>
       </div>
     </section>
 
@@ -617,7 +677,7 @@ Reason #2 — warrants → impact"></textarea>
   <!-- ====================== PAGE SCRIPTS ====================== -->
   <script>
     /* ==========================================================
-      GLOBAL UTILITIES & NAV/TOC (same patterns as other pages)
+      GLOBAL UTILITIES & NAV/TOC
     ========================================================== */
 
     /* --- Scroll reveal (light) --- */
@@ -664,23 +724,29 @@ Reason #2 — warrants → impact"></textarea>
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    /* --- Contents drawer --- */
+    /* --- Contents drawer: desktop stays open; mobile closes on scroll; no memory --- */
     const tocDrawer = document.getElementById('tocDrawer');
     const tocOpen = document.getElementById('tocOpen');
     const tocClose = document.getElementById('tocClose');
+
     function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
     function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+
+    // Always open on desktop; toggle on mobile
+    function syncTOCByViewport(){
+      if(window.innerWidth >= 1024){ openTOC(); }
+      else { closeTOC(); }
+    }
+    syncTOCByViewport();
+    addEventListener('resize', syncTOCByViewport);
+
     tocOpen.addEventListener('click', openTOC);
     tocClose.addEventListener('click', closeTOC);
 
-    if(!localStorage.getItem('pdu_toc_tools_v1')) {
-      openTOC();
-      localStorage.setItem('pdu_toc_tools_v1','1');
-      let justOpened = true; setTimeout(()=> justOpened=false, 600);
-      addEventListener('scroll', () => {
-        if (!justOpened && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
-      }, { passive: true });
-    }
+    // Close on scroll ONLY for mobile
+    addEventListener('scroll', () => {
+      if(window.innerWidth < 1024 && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+    }, { passive: true });
 
     /* --- TOC active highlight --- */
     const sections = [...document.querySelectorAll('section[id]')];
@@ -693,11 +759,7 @@ Reason #2 — warrants → impact"></textarea>
     }, { passive: true });
 
     /* ==========================================================
-      TIMER SUITE
-      - Presets: 7:30, 8:30, 4:30, 5:30
-      - Beep at each minute (optional)
-      - POI window (for constructives)
-      - Keyboard: Space start/pause, R reset (disabled in inputs)
+      TIMER SUITE (with Floating Timer)
     ========================================================== */
     const dial = document.getElementById('dial');
     const readout = document.getElementById('timeReadout');
@@ -706,7 +768,16 @@ Reason #2 — warrants → impact"></textarea>
     const poiWindow = document.getElementById('poiWindow');
     let totalSec = 450, remain = totalSec, ticking = null, lastWholeMin = null;
 
+    // Floating timer elements (NEW)
+    const floatWrap = document.getElementById('floatingTimer');
+    const floatReadout = document.getElementById('floatReadout');
+    const floatToggle = document.getElementById('floatToggle');
+    const floatReset = document.getElementById('floatReset');
+
     function fmt(s){ const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0'); return `${String(m).padStart(2,'0')}:${ss}`; }
+    function setFloatVisible(v){ floatWrap.classList.toggle('show', !!v); }
+    function syncFloat(){ floatReadout.textContent = fmt(remain); floatToggle.textContent = ticking ? 'Pause' : 'Start'; }
+
     function updateDial(){
       const pct = 1 - (remain/totalSec);
       const angle = Math.max(0, Math.min(360, pct*360));
@@ -715,11 +786,13 @@ Reason #2 — warrants → impact"></textarea>
       dial.classList.toggle('glow60', remain<=60 && remain>30);
       dial.classList.toggle('glow30', remain<=30);
       updatePOI();
+      syncFloat();
     }
     function setPreset(sec){
       totalSec = Math.max(1, sec|0); remain = totalSec; stopTimer(); updateDial();
       localStorage.setItem('pdu_timer_preset_sec', String(totalSec));
       lastWholeMin = null;
+      setFloatVisible(false); // hide when no active run
     }
     function startTimer(){
       if(ticking) return;
@@ -730,27 +803,32 @@ Reason #2 — warrants → impact"></textarea>
         // minute beep (optional)
         if(beepToggle.checked){
           const thisWhole = Math.floor(remain/60);
-          if(thisWhole !== lastWholeMin && prev!==remain){ // changed minute
+          if(thisWhole !== lastWholeMin && prev!==remain){
             lastWholeMin = thisWhole;
-            if(remain>0) beep(); // don't beep at 0
+            if(remain>0) beep();
           }
         }
-        if(remain===0) stopTimer();
+        if(remain===0){ stopTimer(); }
       }, 1000);
+      setFloatVisible(true);
     }
-    function stopTimer(){ clearInterval(ticking); ticking=null; }
+    function stopTimer(){ clearInterval(ticking); ticking=null; syncFloat(); }
     function resetTimer(){ remain = totalSec; updateDial(); }
     document.querySelectorAll('.timer-presets .btn').forEach(b => b.addEventListener('click', ()=> setPreset(+b.dataset.sec)));
     document.getElementById('startTimer').addEventListener('click', startTimer);
     document.getElementById('pauseTimer').addEventListener('click', stopTimer);
-    document.getElementById('resetTimer').addEventListener('click', resetTimer);
+    document.getElementById('resetTimer').addEventListener('click', ()=>{ resetTimer(); setFloatVisible(false); });
 
-    // POI bar: allowed after 1:00 until last 1:00 of constructives (7:30/8:30)
+    // Floating timer controls mirror main
+    floatToggle.addEventListener('click', ()=> ticking ? stopTimer() : startTimer());
+    floatReset.addEventListener('click', ()=>{ resetTimer(); setFloatVisible(false); });
+
+    // POI bar: after 1:00 until last 1:00 for constructives (7:30/8:30)
     function updatePOI(){
       const show = poiToggle.checked;
-      const constructive = (totalSec===450 || totalSec===510); // 7:30 or 8:30
+      const constructive = (totalSec===450 || totalSec===510);
       if(!show || !constructive){ poiWindow.style.width='0%'; return; }
-      const start = 60, end = totalSec - 60; // after 1:00 to last 1:00
+      const start = 60, end = totalSec - 60;
       const leftPct = (start/totalSec)*100, widthPct = ((end-start)/totalSec)*100;
       poiWindow.style.left = leftPct+'%'; poiWindow.style.width = Math.max(0,widthPct)+'%';
     }
@@ -764,10 +842,8 @@ Reason #2 — warrants → impact"></textarea>
         const o = audioCtx.createOscillator();
         const g = audioCtx.createGain();
         o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.value = 880; // A5
-        g.gain.value = 0.05;
-        o.start();
-        setTimeout(()=>{ o.stop(); }, 120);
+        o.frequency.value = 880; g.gain.value = 0.05;
+        o.start(); setTimeout(()=>{ o.stop(); }, 120);
       }catch{}
     }
 
@@ -785,14 +861,11 @@ Reason #2 — warrants → impact"></textarea>
     addEventListener('keydown', e=>{
       if(isTyping()) return;
       if(e.code==='Space'){ e.preventDefault(); ticking ? stopTimer() : startTimer(); }
-      if(e.key.toLowerCase()==='r'){ e.preventDefault(); resetTimer(); }
+      if(e.key.toLowerCase()==='r'){ e.preventDefault(); resetTimer(); setFloatVisible(false); }
     });
 
     /* ==========================================================
       PREP PLANNER
-      - Choose Case/Motions + side
-      - 15:00 countdown
-      - POCs quick-insert + log/copy/clear
     ========================================================== */
     const roundType = document.getElementById('roundType');
     const side = document.getElementById('side');
@@ -852,8 +925,6 @@ Reason #2 — warrants → impact"></textarea>
 
     /* ==========================================================
       FLOW SHEET
-      - Editable table with preserved spacing
-      - Add row, copy, export txt/csv, clear
     ========================================================== */
     const flowBody = document.getElementById('flowBody');
     function addFlowRow(i){
@@ -915,35 +986,74 @@ Reason #2 — warrants → impact"></textarea>
     document.getElementById('clearFlow').addEventListener('click', ()=> flowBody.innerHTML='');
 
     /* ==========================================================
-      CASE BUILDER
-      - Live lint for tight/spec hints
-      - Save/Load localStorage, export, copy outlines
+      CASE BUILDER — Expanded Lint
     ========================================================== */
     const cbIds = ['cbRes','cbDefs','cbMech','cbReasons','cbComp'];
     const cb = id => document.getElementById(id);
     const cbLint = document.getElementById('cbLint');
+    const cbLintList = document.getElementById('cbLintList');
+
+    function setFieldWarn(id, on){ cb(id).classList.toggle('warn-field', !!on); }
 
     function lintCase(){
-      const res = cb('cbRes').value.toLowerCase();
-      const defs = cb('cbDefs').value.toLowerCase();
-      const mech = cb('cbMech').value.toLowerCase();
-      const reasons = cb('cbReasons').value.toLowerCase();
+      const raw = {
+        res: cb('cbRes').value,
+        defs: cb('cbDefs').value,
+        mech: cb('cbMech').value,
+        reasons: cb('cbReasons').value,
+        comp: cb('cbComp').value
+      };
+      const text = {
+        res: raw.res.toLowerCase(),
+        defs: raw.defs.toLowerCase(),
+        mech: raw.mech.toLowerCase(),
+        reasons: raw.reasons.toLowerCase(),
+        comp: raw.comp.toLowerCase()
+      };
 
-      let warnings = [];
+      const warnings = [];
 
-      // Heuristic hints (simple keyword checks; we can refine later)
-      if(/always|never|obviously|undeniably/.test(res)) warnings.push('Resolution language might be too absolute.');
-      if(/we define .* as/.test(defs) && /unreasonable|unfair|exclude/.test(defs)) warnings.push('Definitions risk unfair ground—be careful.');
-      if(!/enforce|implement|agency|actor|government|university|company|mechanism|incentive/.test(mech)) warnings.push('Mechanism may need more detail (who acts, incentives, enforcement).');
-      if((reasons.match(/reason/gi)||[]).length<1 && reasons.split('\n').length<2) warnings.push('List 2–4 reasons with warrants → impacts.');
-      if(/trivial|tautology|by definition/.test(res) || /truism/.test(res)) warnings.push('May be truistic/tight—ensure it’s debatable.');
+      // Presence checks
+      if(!text.res.trim()){ warnings.push('Add a clear resolution.'); setFieldWarn('cbRes', true); } else setFieldWarn('cbRes', false);
+      if(!text.mech.trim()){ warnings.push('Mechanism needs detail (actor, incentives, feasibility, enforcement).'); setFieldWarn('cbMech', true); } else setFieldWarn('cbMech', false);
+      if(!text.reasons.trim()){ warnings.push('List 2–4 reasons with warrants → impacts.'); setFieldWarn('cbReasons', true); } else setFieldWarn('cbReasons', false);
 
+      // Tight / truism hints
+      if(/always|never|obviously|undeniably|by definition|tautology|truism/.test(text.res)){
+        warnings.push('Resolution language risks truism/tight—soften absolutes or broaden contestability.');
+      }
+
+      // Spec-ish heuristics
+      if(/esoteric|obscure|little-known|insider|technical detail/.test(text.reasons) || /specific year|dataset|secret/.test(text.reasons)){
+        warnings.push('Avoid specific-knowledge (“spec”) dependence; keep warrants accessible or provide the facts in-round.');
+      }
+
+      // Mechanism completeness heuristics
+      if(!/(enforce|implement|agency|actor|government|university|company|mechanism|incentive|fund|budget|pilot|rollout)/.test(text.mech)){
+        warnings.push('Mechanism may be thin — include who pays/implements and why it works.');
+      }
+
+      // Counting reasons
+      const reasonCount = (raw.reasons.match(/(^|\n)\s*reason/gi) || []).length;
+      const newlineCount = (raw.reasons.trim()==='' ? 0 : raw.reasons.split(/\n+/).length);
+      if(reasonCount < 2 && newlineCount < 2){
+        warnings.push('Aim for at least 2 distinct reasons (with warrants and impacts).');
+      }
+
+      // Comparative clarity
+      if(!/(status quo|compared to|versus|relative to|better than)/.test(text.comp)){
+        warnings.push('Comparative world: explicitly state why your world is better than status quo.');
+      }
+
+      // Fill lint block
+      cbLintList.innerHTML = warnings.map(w=> `<li>${w}</li>`).join('');
       if(warnings.length){
         cbLint.className = 'lint warn';
-        cbLint.textContent = 'Lint: ' + warnings.join(' ');
+        cbLint.querySelector('.title').textContent = 'Lint:';
       } else {
         cbLint.className = 'lint ok';
-        cbLint.textContent = 'Lint: Looks good. Clear, fair, and debatable.';
+        cbLint.querySelector('.title').textContent = 'Lint: Looks good — clear, fair, and debatable.';
+        cbLintList.innerHTML = '';
       }
     }
     cbIds.forEach(id => cb(id).addEventListener('input', lintCase));
