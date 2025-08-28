@@ -26,9 +26,7 @@
       background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(124,58,237,.35), rgba(255,255,255,.25));
       border-top:1px solid rgba(255,255,255,.25);
       border-bottom:1px solid rgba(255,255,255,.15);
-      box-shadow:
-        0 0 18px rgba(199,191,255,.45),
-        0 0 34px rgba(124,58,237,.35);
+      box-shadow: 0 0 18px rgba(199,191,255,.45), 0 0 34px rgba(124,58,237,.35);
       overflow:hidden;
       animation: pulseGlow 4.5s ease-in-out infinite alternate;
     }
@@ -59,11 +57,11 @@
       margin: 0 auto;
     }
 
-    /* NEW: wrapper so each card + external button stay together as one grid item */
+    /* WRAPPER so each card + external contact chip stay together */
     .leader-item{
       display:flex;
       flex-direction:column;
-      gap:.6rem;              /* tight spacing between card and chip */
+      gap:.6rem;               /* tight spacing between card and chip */
       align-items:stretch;
     }
 
@@ -74,13 +72,13 @@
       justify-self: center;
     }
 
-    /* ===== Card look: taller, glassier ===== */
+    /* ===== Card look ===== */
     .leader-card{
       position:relative;
-      /* FIX: give the card a definite height so the 80/20 grid works and prevents text over image */
-      height: 560px;          /* (previously min-height caused the overlaying) */
+      height: 560px;           /* FIX: concrete height keeps rows stable */
       display:grid;
-      grid-template-rows: 4fr 1fr;  /* ~80% image, ~20% info */
+      /* CHANGE: 70/30 split (was 80/20) */
+      grid-template-rows: 7fr 3fr;
       background: rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.2);
       border-radius: 20px;
@@ -90,7 +88,7 @@
       transition: transform .25s ease, box-shadow .25s ease, opacity .7s ease, transform .7s ease;
       cursor: default;
       isolation:isolate;
-      opacity:0;              /* for reveal entrance */
+      opacity:0;               /* for reveal entrance */
       transform: translateY(24px);
     }
     .leader-card.reveal{ opacity:1; transform: translateY(0); }
@@ -100,33 +98,53 @@
       box-shadow: 0 14px 40px rgba(0,0,0,.36);
     }
 
-    /* Photo area (fills first row) */
+    /* ===== Uniform image crop across different source aspect ratios =====
+       We enforce a consistent visual by:
+       - letting the media area control the height (row 1)
+       - object-fit: cover to crop without distortion
+       - object-position biased slightly upward for headshots
+       If you want a strict portrait ratio instead, see the commented OPTIONAL block below. */
     .leader-photo{
       grid-row: 1 / 2;
-      width:100%; height:100%;
-      object-fit:cover; display:block;
+      width:100%;
+      height:100%;
+      object-fit: cover;          /* keeps people proportional */
+      object-position: 50% 22%;   /* headshots tend to sit a bit higher */
+      display:block;
       border-bottom:1px solid rgba(255,255,255,.18);
     }
 
-    /* Info area (narrow text band) */
+    /* OPTIONAL (uncomment to enforce a strict portrait aspect ratio for the photo area)
+    .leader-card{ height:auto; }
+    .leader-photo{
+      height:auto;
+      aspect-ratio: 4 / 5;        // strict portrait crop
+      width:100%;
+      display:block;
+      object-fit: cover;
+      object-position: 50% 22%;
+    }
+    .leader-info{ min-height: 180px; } // ensures space for name/title when card height becomes auto
+    */
+
+    /* Info band (30% of card height) */
     .leader-info{
       grid-row: 2 / 3;
-      padding: 0.6rem 1rem;
+      padding: 0.75rem 1rem;      /* a touch more breathing room now that it's taller */
       display:flex; flex-direction:column;
       align-items:center; text-align:center; justify-content:center;
-      background: transparent; /* keep glass vibe */
+      background: transparent;
     }
     .leader-name{
       font-family:'DM Serif Display', serif;
-      font-size:1.9rem;       /* larger name per request */
+      font-size:1.9rem;           /* larger name retained */
       letter-spacing:.2px;
       line-height:1.15;
-      white-space:normal;
     }
     .leader-sep{
       width: 72%;
       height: 2px;
-      margin: .45rem auto .5rem;
+      margin: .5rem auto .55rem;  /* visible bar between name and title */
       background: linear-gradient(90deg, rgba(255,255,255,.4), rgba(124,58,237,.6), rgba(255,255,255,.4));
       box-shadow: 0 0 10px rgba(199,191,255,.4);
       border-radius: 999px;
@@ -147,19 +165,18 @@
       box-shadow:0 6px 18px rgba(0,0,0,.35);
     }
 
-    /* EXTERNAL action row (now truly outside the card) */
+    /* EXTERNAL action row (outside the card) */
     .leader-actions{
       display:flex; justify-content:center; align-items:center;
     }
-    /* FIX: some global .link-chip styles make chips full-width; override here to keep them compact */
+    /* Keep chips compact even if global style.css tries to make them wide */
     .leader-actions .link-chip{
       display:inline-flex;
-      width:auto;
-      min-width:unset;
+      width:auto; min-width:unset; max-width:100%;
       padding:.5rem .9rem;
       border-radius:999px;
+      white-space:nowrap;
       text-decoration:none;
-      /* keep site’s chip look but ensure size stays modest */
     }
 
     /* Hover/tap bio overlay */
@@ -197,7 +214,7 @@
     /* Mobile/touch: controlled via .open class */
     .leader-popup.open{ opacity:1; pointer-events:auto; }
 
-    /* Staggered entrance delays (target cards by order inside items) */
+    /* Staggered entrance delays */
     .leader-item:nth-of-type(1) .leader-card{ transition-delay:.05s; }
     .leader-item:nth-of-type(2) .leader-card{ transition-delay:.12s; }
     .leader-item:nth-of-type(3) .leader-card{ transition-delay:.19s; }
@@ -208,8 +225,11 @@
 
     /* Below-grid sections */
     .below-cards{
-      max-width: 1100px; margin: 0 auto; padding: 0 1.25rem 2rem;
-      display: grid; gap: 1.25rem;
+      max-width: 1100px;
+      margin: 1.5rem auto 2.25rem; /* CHANGE: extra top margin to clearly separate from grid */
+      padding: 0 1.25rem 2rem;
+      display: grid;
+      gap: 1.25rem;
     }
     .below-cards .glass-card{ max-width: 100%; }
 
@@ -224,8 +244,8 @@
         max-width: none;
         justify-self: stretch;
       }
-      .leader-card{ height: 500px; }       /* slightly shorter on mobile for fit */
-      .leader-name{ font-size:1.6rem; }    /* scale name down a touch on small screens */
+      .leader-card{ height: 520px; }     /* slightly shorter on mobile */
+      .leader-name{ font-size:1.6rem; }
     }
   </style>
 </head>
@@ -504,7 +524,7 @@
 
     <!-- Below-grid sections -->
     <div class="below-cards">
-      <!-- Find Us (unchanged) -->
+      <!-- Find Us -->
       <section class="glass-card">
         <h3 class="about-header">Find Us</h3>
         <p class="about-preview">
@@ -516,7 +536,7 @@
         </div>
       </section>
 
-      <!-- About the Executive Board (ADDED) -->
+      <!-- About the Executive Board (requested explainer) -->
       <section class="glass-card">
         <h3 class="about-header">About the Executive Board</h3>
         <p class="about-preview">
@@ -524,7 +544,7 @@
         </p>
       </section>
 
-      <!-- Next Steps (ADDED) -->
+      <!-- Next Steps (with exact four chips) -->
       <section class="glass-card">
         <h3 class="about-header">Next Steps</h3>
         <div class="cta-row" style="display:flex; flex-wrap:wrap; gap:.5rem;">
@@ -549,7 +569,7 @@
 
   <!-- Scripts -->
   <script>
-    // Scroll reveal for cards (targets the actual .leader-card inside each item)
+    // Scroll reveal for cards
     const cardObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.08 });
