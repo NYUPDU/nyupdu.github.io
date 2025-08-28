@@ -12,9 +12,6 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- If you prefer this semi-private, uncomment -->
-  <!-- <meta name="robots" content="noindex,nofollow" /> -->
-
   <!-- ===== Page-local dashboard styles (scoped to this page) ===== -->
   <style>
     /* ---------- Layout grid (12-col dashboard) ---------- */
@@ -46,14 +43,14 @@
       padding: 16px 16px 18px;
       overflow: visible; /* prevent text clipping at rounded corners */
     }
-    /* Soft glow/shade — replaces straight accent bars */
+    /* Soft glow/shade accents */
     .accent-info   { box-shadow: 0 10px 28px rgba(122, 92, 255, .22), inset 0 0 0 1px rgba(122, 92, 255, .18); }
     .accent-success{ box-shadow: 0 10px 28px rgba(16, 185, 129, .22),  inset 0 0 0 1px rgba(16, 185, 129, .16); }
     .accent-warn   { box-shadow: 0 10px 28px rgba(245, 158, 11,  .22),  inset 0 0 0 1px rgba(245, 158, 11,  .16); }
     .accent-neutral{ box-shadow: 0 10px 28px rgba(148,163,184, .22),  inset 0 0 0 1px rgba(148,163,184, .16); }
     .accent-rose   { box-shadow: 0 10px 28px rgba(251, 113,133, .22), inset 0 0 0 1px rgba(251, 113,133, .16); }
 
-    /* Micro stat chips in the top band */
+    /* Micro stat chips */
     .stat-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:.35rem; }
     .stat-chip{
       display:inline-flex; align-items:center; gap:6px;
@@ -65,13 +62,20 @@
     .dot.green{ background:#34d399; } .dot.purple{ background:#a78bfa; }
     .dot.orange{ background:#fb923c; } .dot.cyan{ background:#22d3ee; }
 
-    /* Tournaments card spacing tweaks (more air) */
+    /* Tournaments overview: stronger separation for each entry */
     .targets-grid { gap: 16px; }
-    .target-card  { padding: 18px; }                           /* more breathing room */
-    .target-card .chip-row { margin: .65rem 0 .65rem; }        /* extra gap between chips & text */
-    .target-card p { line-height: 1.5; }                       /* comfy text inside cards */
+    .overview .target-card{
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    }
+    .overview .target-card h3{ font-size: 1.25rem; margin: .15rem 0 .25rem; }
+    .overview .target-card .chip-row { margin: .7rem 0 .7rem; }
+    .overview .target-card p { line-height: 1.55; }
 
-    /* Announcements: bigger gaps to avoid crowding/clipping */
+    /* Announcements: more padding between date pill and text */
     .announce-grid{
       display:grid; gap:18px; grid-template-columns: repeat(12, minmax(0,1fr));
       grid-auto-flow:dense;
@@ -80,10 +84,16 @@
     .announce.wide { grid-column: span 8; }
     @media (max-width: 900px){ .announce, .announce.wide { grid-column: span 12; } }
     .announce .target-card{ box-shadow: 0 12px 30px rgba(87,6,140,.20); padding:20px; }
+    .announce .target-card .pill{ display:inline-block; margin-bottom:.6rem; } /* <-- extra space */
+    .announce .target-card h4{ margin-top:.1rem; margin-bottom:.25rem; }
+    .announce .target-card p.about-preview{ margin-top:.25rem; }
 
-    /* Bullet list comfort + no clipping (fix for “Upcoming Months”) */
+    /* Bullet list comfort (Upcoming Months) */
     .dash-card ul{ padding-left: 1.15rem; margin:.45rem 0 .25rem; line-height: 1.55; overflow: visible; }
     .dash-card li{ margin-bottom: .22rem; }
+
+    /* Track CTAs: more spacing when chips wrap/stack */
+    .track-cta{ display:flex; flex-wrap:wrap; gap:.9rem 1.2rem; } /* row-gap bigger on wrap */
 
     /* CTA emphasis */
     .btn-primary.glow{ box-shadow: 0 0 0 2px rgba(167,139,250,.28) inset, 0 8px 24px rgba(87,6,140,.35); }
@@ -94,7 +104,7 @@
 </head>
 
 <body id="top">
-  <!-- ===== GLOBAL NAVBAR (same as other pages) ===== -->
+  <!-- ===== GLOBAL NAVBAR ===== -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
       <div class="nav-right" aria-label="NYU logo">
@@ -215,7 +225,7 @@
 
   <main>
     <div class="dash-container">
-      <!-- ===== THIS MONTH AT PDU — SEPTEMBER (Calendar EMBED) ===== -->
+      <!-- ===== THIS MONTH AT PDU — SEPTEMBER ===== -->
       <section class="section" id="month">
         <div class="dash-grid">
           <!-- A) Calendar embed card -->
@@ -223,7 +233,6 @@
             <h3 class="about-header">This Month at PDU — <span>September 2025</span></h3>
             <p class="muted">Room locations and last-minute changes live on the calendar.</p>
 
-            <!-- ✅ Uses your real Google Calendar embed + subscribe links -->
             <div style="margin-top:.5rem; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18);">
               <iframe
                 title="PDU Calendar"
@@ -239,58 +248,44 @@
             <p class="tiny muted" style="margin-top:.35rem;">Specific room locations found on each calendar event. Subscribe now.</p>
           </div>
 
-          <!-- B) September tournaments overview (sample tournaments from tournaments.html) -->
+          <!-- B) September tournaments overview (sharper separation + bigger headers) -->
           <div class="dash-card accent-warn span-5">
-            <h4>September Tournaments — Overview</h4>
-            <p class="about-preview" style="margin-bottom:.7rem;">
+            <h3 class="about-header" style="margin-top:.1rem;">September Tournaments — Overview</h3>
+            <p class="about-preview" style="margin-bottom:.75rem;">
               Expect 2–3 weekend tournaments. Sign-ups open ~10–12 days prior; pairs posted the week-of; travel covered.
             </p>
-            <div class="targets-grid">
-              <!-- Sample 1: Princeton Invitational -->
+
+            <div class="targets-grid overview">
+              <!-- Princeton Invitational -->
               <article class="target-card">
                 <span class="pill open">Sign-ups Open</span>
-                <div class="chip-row">
-                  <span class="chip">Sep 12–13</span>
-                  <span class="chip">Northeast</span>
-                </div>
-                <h4>Princeton Invitational</h4>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">
-                  Balanced field; good for new partnerships and experienced teams alike.
-                </p>
+                <div class="chip-row"><span class="chip">Sep 12–13</span><span class="chip">Northeast</span></div>
+                <h3>Princeton Invitational</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Balanced field; great for new partnerships and experienced teams alike.</p>
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
                 </div>
               </article>
 
-              <!-- Sample 2: Harvard Intervarsity -->
+              <!-- Harvard Intervarsity -->
               <article class="target-card">
                 <span class="pill tentative">Tentative</span>
-                <div class="chip-row">
-                  <span class="chip">Sep 19–20</span>
-                  <span class="chip">Northeast</span>
-                </div>
-                <h4>Harvard Intervarsity</h4>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">
-                  Competitive field; strong option for experienced pairs aiming to break.
-                </p>
+                <div class="chip-row"><span class="chip">Sep 19–20</span><span class="chip">Northeast</span></div>
+                <h3>Harvard Intervarsity</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Competitive field; strong option for experienced pairs aiming to break.</p>
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
                 </div>
               </article>
 
-              <!-- Sample 3: Columbia Fall Open -->
+              <!-- Columbia Fall Open -->
               <article class="target-card">
                 <span class="pill confirmed">Roster Confirmed</span>
-                <div class="chip-row">
-                  <span class="chip">Sep 26–27</span>
-                  <span class="chip">NYC</span>
-                </div>
-                <h4>Columbia Fall Open</h4>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">
-                  Close to home with strong judging pool; excellent learning weekend.
-                </p>
+                <div class="chip-row"><span class="chip">Sep 26–27</span><span class="chip">NYC</span></div>
+                <h3>Columbia Fall Open</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Close to home with a strong judging pool; excellent learning weekend.</p>
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
@@ -301,7 +296,7 @@
         </div>
       </section>
 
-      <!-- ===== UPCOMING MONTHS AT A GLANCE (mini-cards; bullet fix) ===== -->
+      <!-- ===== UPCOMING MONTHS ===== -->
       <section class="section" id="glance">
         <div class="dash-grid">
           <div class="dash-card accent-info span-4">
@@ -364,7 +359,7 @@
           <div class="dash-card accent-rose span-4">
             <h4>Choose Your Track</h4>
             <p class="about-preview">Start where you are and level up.</p>
-            <div class="cta-row">
+            <div class="track-cta">
               <a class="link-chip" href="beginner.html">Beginner’s Guide →</a>
               <a class="link-chip" href="advanced.html">Advanced Guide →</a>
             </div>
@@ -372,7 +367,7 @@
         </div>
       </section>
 
-      <!-- ===== ANNOUNCEMENTS (extra padding + spacing; no overlap) ===== -->
+      <!-- ===== ANNOUNCEMENTS ===== -->
       <section class="section" id="announcements">
         <div class="dash-grid">
           <div class="dash-card accent-info span-12">
@@ -397,7 +392,7 @@
                 </article>
               </div>
 
-              <!-- Two standard announcements -->
+              <!-- Standard announcements -->
               <div class="announce">
                 <article class="target-card">
                   <span class="pill open">Sep 9</span>
