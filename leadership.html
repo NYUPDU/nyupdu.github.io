@@ -6,29 +6,159 @@
   <title>Leadership | NYU PDU</title>
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <meta name="description" content="Meet the leadership team of the NYU Parliamentary Debate Union at New York University." />
-    <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, leadership" />
-    <meta name="author" content="NYU Parliamentary Debate Union" />
-    <link rel="canonical" href="https://nyupdu.github.io/leadership.html" />
-    <meta property="og:title" content="Leadership | NYU PDU" />
-    <meta property="og:description" content="Meet the leadership team of the NYU Parliamentary Debate Union at New York University." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nyupdu.github.io/leadership.html" />
-    <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
-  </head>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="description" content="Meet the leadership team of the NYU Parliamentary Debate Union at New York University." />
+  <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, leadership" />
+  <meta name="author" content="NYU Parliamentary Debate Union" />
+  <link rel="canonical" href="https://nyupdu.github.io/leadership.html" />
+  <meta property="og:title" content="Leadership | NYU PDU" />
+  <meta property="og:description" content="Meet the leadership team of the NYU Parliamentary Debate Union at New York University." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nyupdu.github.io/leadership.html" />
+  <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
+
+  <!-- Page-local enhancements (non-destructive to global styles) -->
+  <style>
+    /* --- Glassy divider under hero --- */
+    .glow-divider{
+      position:relative;
+      height:26px;
+      margin:-13px auto 10px auto;
+      width:min(92%, 1100px);
+      border-radius:16px;
+      background:linear-gradient(90deg, rgba(124,58,237,.25), rgba(255,255,255,.08), rgba(124,58,237,.25));
+      filter:blur(.2px);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:
+        0 6px 30px rgba(0,0,0,.35),
+        inset 0 0 22px rgba(199,191,255,.18);
+    }
+
+    /* --- Bigger, glossier leader cards --- */
+    .leadership-grid{
+      grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+      gap:2.2rem;
+      max-width:1200px;
+    }
+    .leader-card{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.28);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      box-shadow:
+        0 14px 42px rgba(0,0,0,.35),
+        inset 0 0 28px rgba(199,191,255,.10);
+    }
+    .leader-photo{
+      height:240px; /* bigger */
+    }
+    .leader-info{
+      gap:.15rem;
+      padding:1.1rem 1rem 1.1rem 1rem;
+    }
+    .leader-info h3{
+      font-size:1.2rem;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .leader-title{
+      opacity:.9;
+      font-size:.98rem;
+      margin-bottom:.25rem;
+    }
+    .card-actions{
+      margin-top:.35rem;
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .contact-chip{
+      display:inline-block;
+      padding:.4rem .75rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:.2px;
+      transition:all .2s ease;
+    }
+    .contact-chip:hover{
+      background:rgba(255,255,255,.16);
+      box-shadow:0 0 12px rgba(199,191,255,.28);
+    }
+
+    /* Equity badge */
+    .badge-equity{
+      position:absolute;
+      top:10px; left:10px;
+      z-index:3;
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.28rem .55rem;
+      border-radius:999px;
+      background:rgba(124,58,237,.35);
+      border:1px solid rgba(255,255,255,.35);
+      font-weight:800; font-size:.85rem;
+      backdrop-filter:blur(6px);
+    }
+
+    /* Bio overlay refinements */
+    .leader-popup{
+      padding:1.25rem 1.25rem 1rem 1.25rem;
+      line-height:1.6;
+      border-top:1px solid rgba(255,255,255,.12);
+    }
+    .popup-inner{
+      max-width:540px;
+    }
+    .popup-actions{
+      margin-top:.75rem;
+      display:flex; gap:.5rem; flex-wrap:wrap;
+    }
+    .popup-close{
+      position:absolute; top:10px; right:10px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.25);
+      color:#fff; border-radius:10px;
+      width:32px; height:32px; font-size:1.05rem; line-height:1;
+      display:none; /* hidden on desktop, shown on mobile */
+    }
+
+    /* Hover-to-open on desktop (already supported globally) */
+    @media (hover:hover) and (pointer:fine){
+      .leader-card:hover .leader-popup{ opacity:1; }
+    }
+
+    /* Tap-to-open support on mobile */
+    @media (max-width: 960px){
+      .leader-photo{ height:220px; }
+      .popup-close{ display:inline-block; }
+    }
+
+    /* --- Find Us mini-card --- */
+    .findus{
+      margin-top: .5rem;
+      width:90%; max-width:1200px; margin-left:auto; margin-right:auto;
+    }
+    .findus .map{
+      width:100%; height:280px; border:1px solid rgba(255,255,255,.25);
+      border-radius:14px; overflow:hidden;
+      box-shadow:0 10px 28px rgba(0,0,0,.28);
+    }
+    .findus .cta-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
+  </style>
+</head>
 
 <body id="top">
   <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
-      <!-- NYU (left on mobile) -->
       <div class="nav-right" aria-label="NYU logo">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Desktop links center -->
-            <nav class="nav-links" aria-label="Primary">
+      <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html">Home</a></li>
 
@@ -68,14 +198,12 @@
         </ul>
       </nav>
 
-      <!-- PDU logo (left on desktop; centered on mobile) -->
       <div class="nav-left">
         <a href="index.html" aria-label="Home">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
         </a>
       </div>
 
-      <!-- Burger (right on mobile) -->
       <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
@@ -87,7 +215,7 @@
       <span>Menu</span>
       <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
     </div>
-        <nav class="drawer-nav" aria-label="Mobile">
+    <nav class="drawer-nav" aria-label="Mobile">
       <ul class="drawer-list">
         <li><a href="index.html">Home</a></li>
 
@@ -137,102 +265,159 @@
     </div>
   </section>
 
+  <!-- Glassy divider -->
+  <div class="glow-divider" aria-hidden="true"></div>
+
   <main class="main-content">
     <div class="leadership-grid">
-      <!-- Presidents -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Rayan" class="leader-photo" />
+      <!-- Rayan Sheikh -->
+      <div class="leader-card" data-name="Rayan Sheikh">
+        <img src="placeholder.jpg" alt="Portrait of Rayan Sheikh" class="leader-photo" />
         <div class="leader-info">
-          <h3>Rayan</h3>
-          <p>President</p>
+          <h3>Rayan Sheikh</h3>
+          <div class="leader-title">President</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Rayan%20Sheikh">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Rayan serves as President, setting strategy, supporting education initiatives, and representing NYU PDU on APDA.</p>
+          </div>
         </div>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Taylor" class="leader-photo" />
+      <!-- Allen Liu -->
+      <div class="leader-card" data-name="Allen Liu">
+        <img src="placeholder.jpg" alt="Portrait of Allen Liu" class="leader-photo" />
         <div class="leader-info">
-          <h3>Taylor</h3>
-          <p>President</p>
+          <h3>Allen Liu</h3>
+          <div class="leader-title">President</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Allen%20Liu">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Allen serves as President, coordinating competitive goals, mentorship, and external relations across the circuit.</p>
+          </div>
         </div>
       </div>
 
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Allen" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Allen</h3>
-          <p>President</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-
-      <!-- Operations -->
-      <div class="leader-card">
-        <img src="your-photo.jpg" alt="Marcel Cato" class="leader-photo" />
+      <!-- Marcel Cato -->
+      <div class="leader-card" data-name="Marcel Cato">
+        <img src="your-photo.jpg" alt="Portrait of Marcel Cato" class="leader-photo" />
         <div class="leader-info">
           <h3>Marcel Cato</h3>
-          <p>Director of Operations</p>
+          <div class="leader-title">Operations</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Marcel%20Cato">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus.</p>
-        </div>
-      </div>
-
-      <!-- Finance -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Pranav" class="leader-photo" />
-        <div class="leader-info">
-          <h3>Pranav</h3>
-          <p>Finance</p>
-        </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Marcel leads Operations — logistics, calendar, travel, and on-campus coordination to keep practices and tournaments smooth.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Equity -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Dara" class="leader-photo" />
+      <!-- Pranav Gupta -->
+      <div class="leader-card" data-name="Pranav Gupta">
+        <img src="pranav.jpg" alt="Portrait of Pranav Gupta" class="leader-photo" />
         <div class="leader-info">
-          <h3>Dara</h3>
-          <p>Equity</p>
+          <h3>Pranav Gupta</h3>
+          <div class="leader-title">Finance</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Pranav%20Gupta">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Pranav manages finance — budgeting, reimbursements, and planning for travel and tournament registration.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Communications -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Dedra" class="leader-photo" />
+      <!-- Dara Adebanjo (Equity) -->
+      <div class="leader-card" data-name="Dara Adebanjo">
+        <span class="badge-equity" aria-label="Equity Officer">★ Equity</span>
+        <img src="placeholder.jpg" alt="Portrait of Dara Adebanjo" class="leader-photo" />
         <div class="leader-info">
-          <h3>Dedra</h3>
-          <p>Communications</p>
+          <h3>Dara Adebanjo</h3>
+          <div class="leader-title">Equity</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Dara%20Adebanjo%20(Eq)">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Dara serves as Equity Officer — confidential reporting, culture support, and coordination with host tournament Equity.</p>
+            <div class="popup-actions">
+              <a class="contact-chip" href="equity.html">Equity Policy →</a>
+              <a class="contact-chip" href="contact.html">Confidential contact →</a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Education -->
-      <div class="leader-card">
-        <img src="placeholder.jpg" alt="Amish" class="leader-photo" />
+      <!-- Dedra Annakie -->
+      <div class="leader-card" data-name="Dedra Annakie">
+        <img src="placeholder.jpg" alt="Portrait of Dedra Annakie" class="leader-photo" />
         <div class="leader-info">
-          <h3>Amish</h3>
-          <p>Education</p>
+          <h3>Dedra Annakie</h3>
+          <div class="leader-title">Communications</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Dedra%20Annakie">Contact</a>
+          </div>
         </div>
-        <div class="leader-popup">
-          <p>Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Dedra leads Communications — web, social, and outreach. Share news, photos, and wins with the team and campus.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amish Gupta -->
+      <div class="leader-card" data-name="Amish Gupta">
+        <img src="amish.jpg" alt="Portrait of Amish Gupta" class="leader-photo" />
+        <div class="leader-info">
+          <h3>Amish Gupta</h3>
+          <div class="leader-title">Education</div>
+          <div class="card-actions">
+            <a class="contact-chip" href="mailto:pdu@nyu.edu?subject=For%20Amish%20Gupta">Contact</a>
+          </div>
+        </div>
+        <div class="leader-popup" aria-hidden="true">
+          <button class="popup-close" aria-label="Close bio">×</button>
+          <div class="popup-inner">
+            <p>Amish runs Education — curriculum, Monday lessons, Wednesday scrims, and mentorship for new and returning debaters.</p>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Find Us mini-card -->
+    <section class="glass-card findus">
+      <h3 class="about-header">Find Us</h3>
+      <p class="about-preview">Meetings are on campus near Washington Square. Check the calendar for room locations and any changes.</p>
+      <div class="map" aria-label="Map to NYU Washington Square (placeholder)">
+        <iframe
+          title="NYU Washington Square Map"
+          width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+          src="https://www.google.com/maps?q=Washington+Square+Park,+NYU&output=embed">
+        </iframe>
+      </div>
+      <div class="cta-row" style="margin-top:.75rem;">
+        <a class="link-chip" href="calendar.html">Open calendar →</a>
+        <a class="link-chip" href="contact.html">Contact us →</a>
+      </div>
+    </section>
   </main>
 
   <footer class="glass-footer">
@@ -251,7 +436,7 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.leader-card').forEach(el => observer.observe(el));
+    document.querySelectorAll('.leader-card, .findus').forEach(el => observer.observe(el));
 
     // Measure navbar
     const navbar = document.getElementById('siteNavbar');
@@ -291,11 +476,37 @@
       sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
 
-    // Touch toggle support for leader popups (tap to open/close)
+    // Tap-to-open for bios on touch devices; Esc closes
     document.querySelectorAll('.leader-card').forEach(card=>{
       const pop = card.querySelector('.leader-popup');
-      card.addEventListener('click', ()=> pop.classList.toggle('open'));
+      const close = card.querySelector('.popup-close');
+
+      // Toggle with card tap (mobile) — don't block desktop hover behavior
+      card.addEventListener('click', (e)=>{
+        // avoid toggling when clicking contact chip
+        if (e.target.closest('.contact-chip')) return;
+        // avoid immediate close when clicking inside popup
+        if (e.target.closest('.leader-popup') && !e.target.classList.contains('popup-close')) return;
+
+        const isOpen = pop.classList.contains('open');
+        document.querySelectorAll('.leader-popup.open').forEach(p => p.classList.remove('open'));
+        if (!isOpen) pop.classList.add('open');
+      });
+
+      // Close button
+      close?.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        pop.classList.remove('open');
+      });
+    });
+
+    // Close any open popup on Esc
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.leader-popup.open').forEach(p => p.classList.remove('open'));
+      }
     });
   </script>
 </body>
 </html>
+
