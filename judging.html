@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ============== META / HEAD ============== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Judging | NYU PDU</title>
+
+  <!-- Favicon & Fonts -->
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Sitewide styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ============== PAGE-LOCAL CSS (scoped) ============== -->
+  <style>
+    :root{ color-scheme: dark; }
+
+    /* ---------- Hero ---------- */
+    .judge-hero .page-title{ font-size:3rem; }
+    .judge-hero .page-subtitle{ max-width:68ch; margin-inline:auto; }
+    .hero-cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.9rem; }
+
+    /* ---------- Cards & bands ---------- */
+    .glass-card{ animation:fadeUp .3s ease both; }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
+
+    .tri-tiles{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 880px){ .tri-tiles{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+
+    .tile, .step, .kit-card, .expander{
+      padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+    }
+    .tile h4, .step h4, .kit-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .3rem; }
+
+    .muted{ opacity:.95; }
+
+    .cta-band{
+      margin:.4rem 0; padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.25);
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.12));
+      text-align:center;
+    }
+
+    .btn, .chip, .ghost{
+      padding:.5rem .9rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+      transition:transform .14s ease, box-shadow .2s ease, background .14s ease;
+    }
+    .btn:hover, .chip:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); transform:translateY(-1px); }
+    .ghost{ background:transparent; }
+
+    /* ---------- Steps band ---------- */
+    .steps{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 980px){ .steps{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+    .step .num{ font-weight:900; letter-spacing:.4px; margin-bottom:.25rem; opacity:.9; }
+
+    /* ---------- Expanders (Judging Guide) ---------- */
+    .expander{ padding:0; overflow:hidden; }
+    .exp-header{
+      display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+      padding:1rem; cursor:pointer; user-select:none;
+    }
+    .exp-header h4{ margin:0; font-family:'DM Serif Display',serif; }
+    .exp-arrow{
+      width:26px; height:26px; border-radius:999px; display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+      transition:transform .16s ease, box-shadow .2s ease;
+      box-shadow:0 0 10px rgba(124,58,237,.25);
+    }
+    .exp-arrow svg{ transition:transform .2s ease; }
+    .exp-body{ padding:0 1rem 1rem; display:none; }
+    .expander.open .exp-body{ display:block; }
+    .expander.open .exp-arrow svg{ transform:rotate(180deg); }
+
+    .list{ margin:.1rem 0 .2rem; }
+    .list li{ margin:.3rem 0; }
+
+    /* ---------- Starter Kit ---------- */
+    .kit{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 980px){ .kit{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+    .kit-card p{ margin:.35rem 0 .6rem; }
+
+    textarea.clean{
+      width:100%; min-height:140px; padding:.6rem .8rem; border-radius:10px;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff;
+    }
+
+    .mini-controls{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
+
+    /* ---------- Quiz chips ---------- */
+    .quiz-chips{ display:flex; flex-direction:column; gap:.45rem; }
+    .quiz-chip{
+      display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+      padding:.6rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
+      cursor:pointer;
+    }
+    .quiz-chip .answer{ display:none; opacity:.95; }
+    .quiz-chip.open .answer{ display:block; }
+
+    /* ---------- TOC active highlight ---------- */
+    .toc-list a.active{ font-weight:800; }
+
+    /* ---------- Responsive typography ---------- */
+    @media (max-width: 960px){
+      .judge-hero .page-title{ font-size:2.4rem; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- ============== NAVBAR (GLOBAL) ============== -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ============== MOBILE DRAWER (GLOBAL) ============== -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ============== HERO ============== -->
+  <section class="hero-section hero-compact judge-hero">
+    <div>
+      <h1 class="page-title">Judging at PDU</h1>
+      <p class="page-subtitle">Judging keeps our team on the circuit—your perspective makes rounds fair and helps novices grow. PDU strongly encourages members to judge.</p>
+      <div class="hero-cta-row">
+        <a class="link-chip" href="tournaments.html">Judge at the next tournament →</a>
+        <a class="link-chip" href="calendar.html">Calendar →</a>
+        <a class="link-chip" href="equity.html">Equity →</a>
+        <a class="link-chip" href="resources.html">Resources Library →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CONTENTS DRAWER ============== -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#why" class="active">Why judging matters</a>
+      <a href="#what">What you’ll do</a>
+      <a href="#signup">How to sign up</a>
+      <a href="#guide">Judging Guide</a>
+      <a href="#kit">First-time Judge Starter Kit</a>
+      <a href="#links">APDA & Links</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <!-- ============== MAIN ============== -->
+  <main class="main-content">
+    <!-- Why judging matters -->
+    <section class="glass-card" id="why">
+      <h3 class="about-header">Why judging matters</h3>
+      <div class="tri-tiles">
+        <div class="tile">
+          <h4>For PDU</h4>
+          <p class="muted">Tournaments require judging slots. When we cover them, more of our teams get to compete.</p>
+        </div>
+        <div class="tile">
+          <h4>For Debaters</h4>
+          <p class="muted">Clear, comparative feedback accelerates growth—especially for novices.</p>
+        </div>
+        <div class="tile">
+          <h4>For You</h4>
+          <p class="muted">Judging sharpens flow, weighing, and RFD craft—skills that also make you a stronger speaker.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What you do -->
+    <section class="glass-card" id="what">
+      <h3 class="about-header">What you’ll do</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1) Before the round</div>
+          <ul class="list">
+            <li>Conflict check (school/partner/prior student), confirm names & pronouns.</li>
+            <li>Equity note & timing norms; flow sheet ready.</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="num">2) During the round</div>
+          <ul class="list">
+            <li>Listen neutrally and flow.</li>
+            <li>Time speeches to inclusive marks: <b>7:30, 8:30, 8:30, 8:30, 4:30, 5:30</b>.</li>
+            <li>Track protected time: no POIs in the first 1:00 or last :30 of constructives.</li>
+            <li>Rule on <b>Points of Order</b> quickly when needed.</li>
+          </ul>
+          <div class="mini-controls">
+            <a class="chip" href="practicetools.html#timer">Open Timer →</a>
+            <a class="chip" href="practicetools.html#flow">Open Flow Sheet →</a>
+            <a class="chip" href="practicetools.html#poo">POO Assistant →</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3) After the round</div>
+          <ul class="list">
+            <li>Decide on comparative weighing; give a concise RFD and assign speaker points.</li>
+          </ul>
+          <div class="mini-controls">
+            <a class="chip" href="#kit">Build an RFD →</a>
+            <a class="chip" href="https://apda.online/speaker-scale/" target="_blank" rel="noopener">APDA Speaker Scale →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to sign up -->
+    <section class="glass-card" id="signup">
+      <h3 class="about-header">How to sign up for judging</h3>
+      <div class="cta-band">
+        <p class="muted" style="margin-bottom:.6rem;">
+          When a tournament opens for sign-ups, fill out the interest form as a <b>Judge</b>. Captains will confirm assignments and logistics.
+        </p>
+        <a class="btn" href="tournaments.html">Go to Tournaments page →</a>
+      </div>
+    </section>
+
+    <!-- Judging Guide (expanders) -->
+    <section class="glass-card" id="guide">
+      <h3 class="about-header">Judging Guide</h3>
+
+      <!-- A) Evaluate a round -->
+      <article class="expander open">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="true">
+          <h4>A) How to evaluate a round</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li><b>Win condition:</b> Which side makes the stronger <i>comparative</i> case?</li>
+            <li><b>Argument quality:</b> Claim → <b>Warrant</b> → Impact, then <b>weigh</b> (magnitude, probability, timeframe, reversibility).</li>
+            <li><b>Clash & drops:</b> Reward direct engagement; mark unanswered arguments.</li>
+            <li>Keep theory minimal unless needed (tight/spec); prioritize clarity & fairness.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- B) Timing & protected time -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>B) Timing & protected time</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li><b>Inclusive timings:</b> plan speeches to <b>7:30, 8:30, 8:30, 8:30, 4:30, 5:30</b>.</li>
+            <li><b>Protected time:</b> first 1:00 and last :30 of constructives—no POIs.</li>
+            <li>Signal time consistently (verbal cue or knock) and stay neutral.</li>
+            <li><a class="chip" href="practicetools.html#timer">Use the site Timer →</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- C) Points of Information -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>C) Points of Information (POIs)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li>Allowed outside protected time; optional to offer and to accept.</li>
+            <li>Judge strategic use and courtesy, not raw quantity.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- D) Points of Order -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>D) Points of Order (POOs)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li>Purpose: flag procedure (e.g., <b>new in rebuttal</b>, serious timing issues).</li>
+            <li>Rulings: “<b>Well-taken</b> / <b>Not well-taken</b> / <b>Under advisement</b>.” Keep it brief.</li>
+            <li><a class="chip" href="practicetools.html#poo">POO Assistant →</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- E) Writing a clear RFD -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>E) Writing a clear RFD</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li>1–2 sentence <b>round story</b> (what mattered, why).</li>
+            <li><b>Voters</b> tied to weighing; then concise feedback per team.</li>
+            <li><a class="chip" href="#kit">Use Ballot Builder →</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- F) Speaker points -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>F) Speaker points (speaks)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li>Calibrate to the <a class="chip" target="_blank" rel="noopener" href="https://apda.online/speaker-scale/">APDA Speaker Scale →</a></li>
+            <li>Anchor descriptions: average = did the job; high = clear & comparative; low = inaccessible or unstructured.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- G) Special formats -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>G) Case vs Motions & POCs</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li><b>Case round:</b> Gov writes the case; Opp gets ~<b>15 minutes after hearing the case statement</b> to prep.</li>
+            <li><b>Motions round:</b> Both teams see the motion at the same time; both get <b>15 minutes</b> to prep.</li>
+            <li><b>POCs:</b> Points of clarification asked <b>during prep time</b> to clarify text/scope.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- H) Equity -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>H) Equity & accessibility</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <ul class="list">
+            <li>Names & pronouns; accommodations; content warnings when relevant.</li>
+            <li>Conflict checks; when to escalate to Equity.</li>
+            <li><a class="chip" href="equity.html">PDU Equity Policy →</a>
+                <a class="chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">APDA Code of Conduct →</a></li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- Starter Kit -->
+    <section class="glass-card" id="kit">
+      <h3 class="about-header">First-time Judge Starter Kit</h3>
+      <div class="kit">
+        <!-- Checklist -->
+        <div class="kit-card">
+          <h4>Judge Checklist</h4>
+          <p class="muted">Before / During / After — quick sanity check you can print or save.</p>
+          <div class="mini-controls">
+            <button class="btn" id="dlChecklist">Download (.txt)</button>
+            <a class="chip" href="practicetools.html#timer">Open Timer →</a>
+          </div>
+        </div>
+
+        <!-- Ballot Builder -->
+        <div class="kit-card">
+          <h4>Ballot Builder (RFD)</h4>
+          <p class="muted">Fill and copy/download a clean RFD scaffold.</p>
+          <div class="two-col" style="gap:.5rem;">
+            <label class="chip" style="justify-content:space-between;">Winner
+              <select id="rfWinner" class="ghost" style="margin-left:.6rem; padding:.2rem .4rem; border-radius:8px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); color:#fff;">
+                <option value="Government">Government</option>
+                <option value="Opposition">Opposition</option>
+              </select>
+            </label>
+            <label class="chip" style="justify-content:space-between;">Round focus
+              <select id="rfFocus" class="ghost" style="margin-left:.6rem; padding:.2rem .4rem; border-radius:8px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); color:#fff;">
+                <option value="mechanism & weighing">mechanism & weighing</option>
+                <option value="comparative impacts">comparative impacts</option>
+                <option value="case viability vs status quo">case viability vs status quo</option>
+              </select>
+            </label>
+          </div>
+          <textarea id="rfIssues" class="clean" placeholder="Key issues (bullet points)…"></textarea>
+          <textarea id="rfWhy" class="clean" placeholder="Why the winner wins (comparative, weighed)…"></textarea>
+          <textarea id="rfFbGov" class="clean" placeholder="Feedback to Government (1–2 actionable tips)…"></textarea>
+          <textarea id="rfFbOpp" class="clean" placeholder="Feedback to Opposition (1–2 actionable tips)…"></textarea>
+          <div class="mini-controls">
+            <button class="btn" id="rfBuild">Build RFD</button>
+            <button class="ghost" id="rfCopy">Copy</button>
+            <button class="ghost" id="rfSave">Download (.txt)</button>
+          </div>
+          <textarea id="rfOut" class="clean" placeholder="Your RFD will appear here…" readonly></textarea>
+        </div>
+
+        <!-- POO Quiz -->
+        <div class="kit-card">
+          <h4>“Is this a valid POO?”</h4>
+          <p class="muted">Tap a scenario to see the ruling and why.</p>
+          <div class="quiz-chips" id="pooQuiz">
+            <!-- scenarios injected -->
+          </div>
+          <div class="mini-controls" style="margin-top:.45rem;">
+            <button class="ghost" id="resetQuiz">Reset</button>
+            <a class="chip" href="practicetools.html#poo">POO Assistant →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section class="glass-card" id="links">
+      <h3 class="about-header">APDA & helpful links</h3>
+      <div class="mini-controls" style="flex-wrap:wrap;">
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/speaker-scale/">APDA Speaker Scale →</a>
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">APDA Code of Conduct →</a>
+        <a class="chip" href="resources.html">Resources Library →</a>
+        <a class="chip" href="beginner.html">Beginner Guide →</a>
+        <a class="chip" href="practicetools.html">Practice Tools →</a>
+        <a class="chip" href="tournaments.html">Tournaments →</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="glass-card" id="faq">
+      <h3 class="about-header">FAQ</h3>
+      <div class="two-col">
+        <div class="tile">
+          <h4>Do I need prior experience?</h4>
+          <p class="muted">No. We’ll get you started—use the checklist, Ballot Builder, and tools above.</p>
+        </div>
+        <div class="tile">
+          <h4>What if I’m unsure about a rule?</h4>
+          <p class="muted">Make a fair, transparent call and explain it briefly in your RFD. For league policies, see APDA links.</p>
+        </div>
+        <div class="tile">
+          <h4>How long is a round?</h4>
+          <p class="muted">Typically 45–60 minutes including setup and RFD.</p>
+        </div>
+        <div class="tile">
+          <h4>Can I judge if I’m competing?</h4>
+          <p class="muted">Often yes between rounds—confirm with captains and the tournament tab room.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- ============== BACK TO TOP (GLOBAL) ============== -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- ============== SCRIPTS ============== -->
+  <script>
+    /* ==========================================================
+      GLOBAL: reveal-on-scroll, navbar sizing, mobile drawer
+    ========================================================== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first = drawer.querySelector('button,a'); first && first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    /* ==========================================================
+      CONTENTS DRAWER: desktop default open; closable/reopenable;
+      mobile auto-closes on scroll; NO persistence across refresh.
+    ========================================================== */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    let tocUserClosedDesktop = false;
+
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    function applyTOCMode(){
+      if(window.innerWidth >= 1024){
+        if(!tocUserClosedDesktop) openTOC();
+      } else { closeTOC(); }
+    }
+    applyTOCMode();
+    addEventListener('resize', applyTOCMode);
+    tocOpen.addEventListener('click', ()=>{ tocUserClosedDesktop = false; openTOC(); });
+    tocClose.addEventListener('click', ()=>{
+      if(window.innerWidth >= 1024) tocUserClosedDesktop = true;
+      closeTOC();
+    });
+    addEventListener('scroll', () => {
+      if(window.innerWidth < 1024 && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+    }, { passive: true });
+
+    // Active anchor highlighting
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ==========================================================
+      EXPANDERS (Judging Guide)
+    ========================================================== */
+    document.querySelectorAll('.expander .exp-header').forEach(h=>{
+      h.addEventListener('click', ()=>{
+        const card = h.parentElement;
+        const isOpen = card.classList.contains('open');
+        card.classList.toggle('open', !isOpen);
+        h.setAttribute('aria-expanded', String(!isOpen));
+      });
+      h.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); h.click(); }
+      });
+    });
+
+    /* ==========================================================
+      STARTER KIT: Checklist, Ballot Builder, POO Quiz
+    ========================================================== */
+    // Checklist (text)
+    function checklistText(){
+return `PDU JUDGE CHECKLIST
+
+BEFORE
+- Conflict check (school/partner/prior student)
+- Confirm names & pronouns
+- Equity notes & accommodations
+- Explain timing & protected time; timer ready
+- Flow sheet ready
+
+DURING
+- Time to inclusive marks: 7:30, 8:30, 8:30, 8:30, 4:30, 5:30
+- Track protected time (no POIs first 1:00 / last :30 of constructives)
+- Flow clearly; stay neutral
+- Rule on Points of Order quickly
+
+AFTER
+- Decide on comparative weighing
+- RFD: 1–2 sentence round story + voters
+- Brief, actionable feedback to each team
+- Assign speaker points (see APDA Speaker Scale)
+- Submit ballot
+`;
+    }
+    function saveText(name, text){
+      const blob = new Blob([text], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    document.getElementById('dlChecklist').addEventListener('click', ()=> saveText('pdu_judge_checklist.txt', checklistText()));
+
+    // Ballot Builder
+    const $ = id => document.getElementById(id);
+    function buildRFD(){
+      const winner = $('rfWinner').value;
+      const focus = $('rfFocus').value;
+      const issues = $('rfIssues').value.trim();
+      const why = $('rfWhy').value.trim();
+      const fbG = $('rfFbGov').value.trim();
+      const fbO = $('rfFbOpp').value.trim();
+
+      const text = `RFD — Winner: ${winner}
+
+Round focus: ${focus}
+
+Key issues:
+${issues || '—'}
+
+Why ${winner} wins (comparative, weighed):
+${why || '—'}
+
+Feedback to Government:
+${fbG || '—'}
+
+Feedback to Opposition:
+${fbO || '—'}
+`;
+      $('rfOut').value = text;
+    }
+    $('rfBuild').addEventListener('click', buildRFD);
+    $('rfCopy').addEventListener('click', async ()=>{
+      if(!$('rfOut').value) buildRFD();
+      try{ await navigator.clipboard.writeText($('rfOut').value); alert('RFD copied to clipboard.'); } catch{ alert('Copy failed.'); }
+    });
+    $('rfSave').addEventListener('click', ()=>{
+      if(!$('rfOut').value) buildRFD();
+      saveText('pdu_rfd.txt', $('rfOut').value);
+    });
+
+    // POO Quiz scenarios
+    const scenarios = [
+      {q:'PMR introduces a brand-new impact.', a:'Valid — new in rebuttal. Keep the ruling brief.', verdict:'valid'},
+      {q:'MO makes a weak characterization; LO stands to POO mid-speech.', a:'Invalid — POOs are for procedure (e.g., new in rebuttal, timing), not for disputing substance in constructives.', verdict:'invalid'},
+      {q:'LOR continues well past 5:30 and ignores time signals.', a:'Valid — significant timing issue. Make a quick ruling and keep the round moving.', verdict:'valid'},
+      {q:'Speaker refuses all POIs throughout their constructive.', a:'Invalid — offering/accepting POIs is optional. Note tactically, not procedurally.', verdict:'invalid'},
+      {q:'MG adds a brand-new advantage.', a:'Invalid — new material is allowed in constructives; evaluate it substantively.', verdict:'invalid'},
+      {q:'PM repeatedly takes POIs during protected time.', a:'Valid procedural reminder — enforce protected time; then proceed.', verdict:'valid'}
+    ];
+    const quizWrap = document.getElementById('pooQuiz');
+    function renderQuiz(){
+      quizWrap.innerHTML = scenarios.map((s,i)=>`
+        <div class="quiz-chip" data-i="${i}" tabindex="0" aria-expanded="false">
+          <div><b>Scenario:</b> ${s.q}</div>
+          <div class="answer"><b>${s.verdict.toUpperCase()}</b> — ${s.a}</div>
+        </div>
+      `).join('');
+      quizWrap.querySelectorAll('.quiz-chip').forEach(ch=>{
+        ch.addEventListener('click', ()=> toggleChip(ch));
+        ch.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleChip(ch); } });
+      });
+    }
+    function toggleChip(ch){
+      const open = ch.classList.contains('open');
+      ch.classList.toggle('open', !open);
+      ch.setAttribute('aria-expanded', String(!open));
+    }
+    renderQuiz();
+    document.getElementById('resetQuiz').addEventListener('click', renderQuiz);
+
+  </script>
+</body>
+</html>
