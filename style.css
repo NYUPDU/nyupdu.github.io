@@ -108,9 +108,10 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .submenu{
   position:absolute; top:100%; left:0;
   min-width:240px; list-style:none; padding:.5rem;
-  background:rgba(255,255,255,.10);
+  background:rgba(46,0,79,.75);
   border:1px solid rgba(255,255,255,.25);
-  border-radius:12px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-radius:12px;
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
   box-shadow:0 10px 30px rgba(0,0,0,.35);
   opacity:0; transform:translateY(8px); pointer-events:none;
   transition:opacity 140ms ease, transform 140ms ease;
