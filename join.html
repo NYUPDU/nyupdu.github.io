@@ -566,6 +566,9 @@
     }
     function zonedNYToDate(y,m,d,h,mi,s){
       const tz='America/New_York';
+      if(Intl.DateTimeFormat().resolvedOptions().timeZone===tz){
+        return new Date(y, m-1, d, h, mi, s||0);
+      }
       const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
       const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
       const diff=inv.getTime()-wall.getTime();
