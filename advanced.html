@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- =========================================
+       ADVANCED APDA GUIDE — NYU PDU (advanced.html)
+       ========================================= -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced APDA Guide | NYU PDU</title>
+
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ======== Page-local scoped styles ======== -->
+  <style>
+    :root{ color-scheme:dark; }
+
+    /* ---------- Hero ---------- */
+    .adv-hero .page-title{ font-size:3rem; }
+    .adv-hero .page-subtitle{ max-width:72ch; margin-inline:auto; }
+    .hero-cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.9rem; }
+
+    /* /* CHANGE: GOV/OPP quick-jump chips */ */
+    .role-jump{ display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin-top:.7rem; }
+    .role-jump .chip{ font-weight:800; }
+
+    @media (max-width: 960px){
+      .adv-hero .page-title{ font-size:2.4rem; }
+    }
+
+    /* ---------- Cards & layout primitives ---------- */
+    .glass-card{ animation:fadeUp .28s ease both; }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; min-width:0; }
+    @media (min-width: 980px){ .two-col{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+
+    .tri-tiles{ display:grid; gap:1rem; grid-template-columns:1fr; }
+    @media (min-width: 980px){ .tri-tiles{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+
+    .tile, .expander, .callout{
+      padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      min-width:0;
+    }
+    .tile h4, .callout h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .35rem; }
+
+    .muted{ opacity:.95; }
+    .small{ font-size:.95rem; opacity:.95; }
+
+    /* ---------- Lists robust against clipping ---------- */
+    .list{ margin:.2rem 0 .2rem; padding-left:1.2rem; }
+    .list li{ list-style:disc; margin:.28rem 0; overflow-wrap:anywhere; word-break:break-word; }
+
+    /* ---------- Expanders (Theory / Roles) ---------- */
+    .expander{ padding:0; overflow:visible; }
+    .exp-header{
+      display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:1rem;
+      cursor:pointer; user-select:none;
+    }
+    .exp-header h4{ margin:0; font-family:'DM Serif Display',serif; }
+    .exp-arrow{
+      width:28px; height:28px; border-radius:999px; display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
+      box-shadow:0 0 14px rgba(124,58,237,.35); /* glow cue */
+      transition:transform .16s ease, box-shadow .2s ease;
+      flex:0 0 auto;
+    }
+    .exp-arrow svg{ transition:transform .2s ease; }
+    .expander.open .exp-arrow svg{ transform:rotate(180deg); }
+    .exp-body{ padding:0 1rem 1rem; display:none; }
+    .expander.open .exp-body{ display:block; }
+
+    /* ---------- Callouts / stems ---------- */
+    .callout{
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.12));
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .stem{ font-weight:800; }
+
+    /* ---------- Contents drawer ---------- */
+    .toc-list a.active{ font-weight:800; }
+    /* Drawer open/close behavior handled in JS; no persistence across refresh */
+
+    /* ---------- Chips / buttons ---------- */
+    .btn, .chip, .ghost{
+      padding:.5rem .9rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+      transition:transform .14s ease, box-shadow .2s ease, background .14s ease;
+    }
+    .btn:hover, .chip:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); transform:translateY(-1px); }
+
+    /* ---------- Micro spacing helpers ---------- */
+    .mt-0{ margin-top:0 !important; }
+    .mt-4{ margin-top:.4rem !important; }
+    .mt-6{ margin-top:.6rem !important; }
+    .mt-8{ margin-top:.8rem !important; }
+    .mb-6{ margin-bottom:.6rem !important; }
+    .mb-8{ margin-bottom:.8rem !important; }
+
+    /* ---------- Mobile Firefox subtle spacing in hero ---------- */
+    @supports (-moz-appearance:none){
+      .hero-cta-row{ padding-bottom:.24rem; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- =========================================
+       GLOBAL NAVBAR (matches rest of site)
+       ========================================= -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- =========================================
+       GLOBAL MOBILE DRAWER
+       ========================================= -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================
+       HERO
+       ========================================= -->
+  <section class="hero-section hero-compact adv-hero">
+    <div>
+      <h1 class="page-title">Advanced APDA Guide</h1>
+      <p class="page-subtitle">Win upper rooms with airtight warrants, ruthless weighing, and clean theory control.</p>
+
+      <div class="hero-cta-row">
+        <a class="link-chip" href="practicetools.html">Practice Tools →</a>
+        <a class="link-chip" href="resources.html">Resources Library →</a>
+        <a class="link-chip" href="equity.html">Equity →</a>
+      </div>
+
+      <!-- /* CHANGE: GOV/OPP quick jumps for faster nav */ -->
+      <div class="role-jump">
+        <a class="chip" href="#roles-gov">You’re GOV? Start with PMC/MG/PMR →</a>
+        <a class="chip" href="#roles-opp">You’re OPP? Start with LOC/MO/LOR →</a>
+        <a class="chip" href="#onoff">On-case vs Off-case →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CONTENTS DRAWER
+       ========================================= -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#theory" class="active">Theory Playbook</a>
+      <a href="#framing">Framing</a>
+      <a href="#onoff">On-case vs Off-case</a>
+      <a href="#roundcraft">How to Win (Roundcraft)</a>
+      <a href="#tactics">Tactical Discipline</a>
+      <a href="#roles">Advanced Role Guides</a>
+      <a href="#modeling">Case & Motion Modeling</a>
+      <a href="#judge">Judge Adaptation</a>
+      <a href="#flow">Flowing (Advanced)</a>
+      <a href="#practice">Practice Regimen</a>
+      <a href="#quickref">Quick Reference</a>
+      <a href="#equity">Equity & Fairness</a>
+      <a href="#next">References & Next Steps</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <!-- =========================================
+       MAIN CONTENT
+       ========================================= -->
+  <main class="main-content">
+    <!-- ========== THEORY ========== -->
+    <section class="glass-card" id="theory">
+      <h3 class="about-header">1) The Theory Playbook (practical, not doctrinal)</h3>
+      <p class="muted">Use theory to preserve fair clash and protect the debate—not to avoid it.</p>
+
+      <!-- Tight calls -->
+      <article class="expander open">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="true">
+          <h4>A) Tight calls (when the case is unwinnable for Opp)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <p><b>Concept.</b> A case is “tight” if, even played perfectly, Opp has no reasonable, weighable path to a ballot.</p>
+          <p><b>When to call.</b> LO calls it <i>early</i> and sets a burden story; Gov replies by showing a real Opp path and asking to weigh the debate.</p>
+          <ul class="list">
+            <li><b>Opp burden (common):</b> Gov owes a fair, weighable Opp path; they haven’t left one—so fairness governs.</li>
+            <li><b>Gov pushback:</b> There <i>is</i> an Opp route—name it—and invite the judge to weigh.</li>
+          </ul>
+          <p class="small"><b>How to argue it.</b> Name the unfair constraint → show why it kills weighability → (Opp) propose a fairness-preserving alternative or (Gov) show Opp’s winnable route.</p>
+          <div class="callout mt-6">
+            <h4 class="mt-0">Sample tight-block skeletons (Opp)</h4>
+            <ul class="list">
+              <li><b>Policy tight:</b> Actor/constraints pre-solve feasibility; no Opp path remains—call tight.</li>
+              <li><b>Moral tight:</b> Standard defined so narrowly it excludes competing values (truism).</li>
+              <li><b>Actor-locked tight:</b> Only one actor allowed; all contestable ground ruled out.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Spec -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>B) Specific knowledge (“spec”)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <p>Rounds should hinge on accessible warrants, not obscure facts one side happens to know. If a decisive claim rests on niche specifics not in the PMC or common knowledge, ask to <b>de-weight</b> it unless rebuilt from first principles.</p>
+          <ul class="list">
+            <li><b>Opp challenge:</b> “This hinges on niche info; de-weight unless warranted accessibly.”</li>
+            <li><b>Gov sanitize:</b> “Even without the niche detail, the mechanism still yields the impact because [general causal story].”</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- SQ -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>C) Status-quo (SQ) calls</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <p>If Gov’s world equals the current world, there’s nothing to weigh.</p>
+          <ul class="list">
+            <li><b>Opp:</b> Prove equivalence with clear warrants; argue fairness (no comparative).</li>
+            <li><b>Gov:</b> Show the <b>delta</b> (incentives, enforcement, scope) and ask to evaluate the debate.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Counter-models -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>D) Counter-models (counter-cases)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <p>If Gov’s model is lopsided/abusive, propose a <b>fairer</b> alternative that preserves topic spirit and restores clash. Keep it simple, symmetrical, and contestable.</p>
+          <p class="small"><b>Template:</b> “Instead of [narrow/abusive], we defend [clean alternative] pursuing Gov’s aim while preserving weighable trade-offs.”</p>
+        </div>
+      </article>
+
+      <!-- New in rebuttal & POOs -->
+      <article class="expander">
+        <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
+          <h4>E) New in rebuttal & Points of Order (POOs)</h4>
+          <span class="exp-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </header>
+        <div class="exp-body">
+          <p>New <b>independent</b> arguments in rebuttals are illegit. If true “new” appears, stand for a POO; the judge rules and you move on.</p>
+          <ul class="list">
+            <li><b>If POO hits you:</b> If new, withdraw or reframe as analysis of an existing line; if not, one sentence, then crystallize.</li>
+            <li><b>PMR vs new MO:</b> Flag briefly; then center voters.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========== FRAMING ========== -->
+    <section class="glass-card" id="framing">
+      <h3 class="about-header">2) Framing: the lens that decides the ballot</h3>
+      <p><b>Framing</b> is the decision rule you hand the judge: the specific question they must answer to award the ballot (e.g., “Which world better reduces catastrophic risk within five years?”). A strong frame ties to weighing axes (magnitude, probability, timeframe, reversibility) and appears <b>early</b>—PMC/LOC—then dominates rebuttals.</p>
+      <div class="two-col mt-6">
+        <div class="tile">
+          <h4>Why it wins</h4>
+          <ul class="list">
+            <li>Gives the judge a clear route to an RFD.</li>
+            <li>Spotlights hinges vs distractions.</li>
+            <li>Makes collapse clean and voters obvious.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>How to set & keep it</h4>
+          <ul class="list">
+            <li><b>Name the ballot question out loud.</b></li>
+            <li><b>Pick comparators</b> (e.g., reversibility &gt; magnitude) and justify.</li>
+            <li><b>Pre-empt their lens</b> in one line.</li>
+            <li><b>Rebuttal discipline:</b> organize LOR/PMR only by your frame.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout mt-6">
+        <h4 class="mt-0">If they framed first</h4>
+        <p class="muted">Either <b>absorb</b> (“Under their lens we still win because…”) or <b>replace</b> (“That lens hides probability; the fairer question is…”). Always state which lens you want and why it matches the topic’s real trade-offs.</p>
+      </div>
+    </section>
+
+    <!-- ========== ON vs OFF CASE ========== -->
+    <section class="glass-card" id="onoff">
+      <h3 class="about-header">3) On-case vs Off-case (what belongs where)</h3>
+      <p><b>On-case</b> = direct responses to Gov’s text/mechanism (warrants, solvency, feasibility, scope, claimed impacts). <b>Off-case</b> = independent Opp positions beyond line-by-line: framework, counter-model, status-quo, theory (tight/spec), stand-alone disadvantages/principle objections.</p>
+      <div class="two-col mt-6">
+        <div class="tile">
+          <h4>Flow & balance</h4>
+          <ul class="list">
+            <li><b>Two pages:</b> off-case spine vs on-case surgery.</li>
+            <li><b>LOC:</b> ~60–70% off-case spine; 30–40% on-case.</li>
+            <li><b>MG:</b> rebuild on-case center, then neutralize off-case with warrants.</li>
+            <li><b>MO:</b> extend best off-case; triage on-case; know where to lose.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>Why it matters</h4>
+          <ul class="list">
+            <li>Prevents drift and repetition.</li>
+            <li>Helps highlight drops and hinges fast.</li>
+            <li>Makes LOR/PMR voters cleaner.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ROUNDCRAFT / HOW TO WIN ========== -->
+    <section class="glass-card" id="roundcraft">
+      <h3 class="about-header">4) How to Win Upper Rooms (roundcraft)</h3>
+      <div class="tri-tiles">
+        <div class="tile">
+          <h4>Decide the win-condition early</h4>
+          <p class="muted">Say the ballot question out loud and make every minute serve it.</p>
+          <ul class="list">
+            <li>Catastrophic misuse risk vs mitigations</li>
+            <li>Agency for directly affected people (≤ 5 years)</li>
+            <li>Handling deep uncertainty (EV vs precaution)</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>Proactive weighing</h4>
+          <ul class="list">
+            <li>Magnitude · Probability · Timeframe · Reversibility</li>
+            <li>Meta-weigh when incomparable (e.g., irreversible &gt; reversible)</li>
+            <li>Use EV when grounded; precaution for tail risks</li>
+          </ul>
+          <p class="small"><span class="stem">Stems:</span> “Even if…, we win on <b>magnitude</b> because…”, “Their links are brittle → we win <b>probability</b>”, “Our harm is <b>irreversible</b>…”</p>
+        </div>
+        <div class="tile">
+          <h4>Warrant engineering</h4>
+          <ul class="list">
+            <li>Stack <b>independent</b> warrants (mech / analogical / principle).</li>
+            <li>Pre-empt failure modes (“even if uptake is lower…”).</li>
+            <li>Impact, then weigh, every time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col mt-6">
+        <div class="tile">
+          <h4>Framing wars & preemption</h4>
+          <p class="muted">State what matters and inoculate: “Common response is X—here’s why it misses the hinge.” Two clean lines now save minutes later.</p>
+        </div>
+        <div class="tile">
+          <h4>Time-allocation defaults</h4>
+          <ul class="list small">
+            <li><b>PMC (7:30):</b> :30 roadmap; 1:00 context; 2:00 mech; 3:00–6:30 2–3 adv + weighing; :60 ballot story.</li>
+            <li><b>LOC (8:30):</b> :30 stance+burden (tight/spec/SQ if real); 2:30 mech clash; 4:00 best-line answers; 1:30 weigh + Opp world.</li>
+            <li><b>MG (8:30):</b> 1:00 roadmap/center; 4:00 rebuild; 2:00 targeted answers; 1:30 PMR setup.</li>
+            <li><b>MO (8:30):</b> 1:00 roadmap; 4:00 extend best Off; 2:00 mitigate/turn; 1:30 LOR voters frame.</li>
+            <li><b>LOR (4:30):</b> :30 ballot Q; 2:30 2–3 voters with weighing; 1:30 shut PMR doors.</li>
+            <li><b>PMR (5:30):</b> :30 ruling/new; 3:30 2–3 voters + meta-weigh; 1:30 ballot instruction.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout mt-6">
+        <h4 class="mt-0">Collapse trees</h4>
+        <p class="muted"><b>Gov:</b> “We win on (1) high-probability mechanism; (2) irreversible benefits. Even if some mitigation, magnitude+reversibility decide.”<br>
+        <b>Opp:</b> “We win on (1) feasibility hole crashing probability; (2) better world under SQ or fair counter-model. Even if some upside, probability/timeframe decide.”</p>
+      </div>
+    </section>
+
+    <!-- ========== TACTICS ========== -->
+    <section class="glass-card" id="tactics">
+      <h3 class="about-header">5) Tactical Discipline: concede, track, and conserve</h3>
+      <div class="two-col">
+        <div class="tile">
+          <h4>Concede on purpose</h4>
+          <ul class="list">
+            <li>Concede low-impact trivia not moving your frame.</li>
+            <li>Concede non-hinge links when they waste clock.</li>
+            <li>Concede background if undisputed.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>Track drops (without panic)</h4>
+          <ul class="list">
+            <li><b>Two-page flow:</b> off-case spine vs on-case surgery.</li>
+            <li>Symbols: Ø drop, ✱ hinge, ↑ strengthen, ↓ weaken, → extend, ⌛ timeframe, R rev.</li>
+            <li>End-of-speech 10-sec scan; forecast likely drops; cash them as voters.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout mt-6">
+        <h4 class="mt-0">Mental resource management</h4>
+        <ul class="list">
+          <li><b>Prep split:</b> one sculpts mechanism; one stress-tests, banks warrants, plans responses; last 2:00 for lens + roadmaps.</li>
+          <li><b>In-round blocks:</b> MG center-first; MO push best offense. Rebuttals = voters only.</li>
+          <li><b>Partner signals:</b> tap = move on; two fingers = weigh now; circled = voter (agree signals beforehand).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== ROLES ========== -->
+    <section class="glass-card" id="roles">
+      <h3 class="about-header">6) Advanced Role Guides</h3>
+
+      <div class="two-col" id="roles-gov">
+        <div class="tile">
+          <h4>PMC</h4>
+          <ul class="list">
+            <li>Clear resolution; fair defs; <b>precise mechanism</b> (who/what/how/enforcement).</li>
+            <li>2–3 advantages with <b>redundant warrants</b> and early weighing.</li>
+            <li>Fairness note to show it’s a debate, not a trap.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> vague actors; hiding the ball; context that starves warrants.</p>
+        </div>
+        <div class="tile">
+          <h4>MG</h4>
+          <ul class="list">
+            <li>Re-center the <b>heart</b> of case; rebuild with warrant density.</li>
+            <li>One deep new insight > many thin re-tags.</li>
+            <li>Set up PMR: announce collapse and lens.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> chasing every LO tag; re-tagging without warrants.</p>
+        </div>
+      </div>
+
+      <div class="two-col mt-6" id="roles-opp">
+        <div class="tile">
+          <h4>LOC</h4>
+          <ul class="list">
+            <li>Stance + <b>burden story</b> (tight/spec/SQ if real).</li>
+            <li>Group and answer <b>warrants</b>, not just tags.</li>
+            <li>Offer <b>counter-model</b> if mechanism is abusive.</li>
+            <li>Begin Opp world and <b>weigh</b>.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> hitting everything shallowly; conceding mech by nitpicking.</p>
+        </div>
+        <div class="tile">
+          <h4>MO</h4>
+          <ul class="list">
+            <li>Extend the <b>best</b> Opp offense with clarity.</li>
+            <li>Mitigate/turn the biggest Gov advantage; <b>weigh</b>.</li>
+            <li>Ladder to LOR voters; label them now.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> re-summarizing LO; going wide instead of deep.</p>
+        </div>
+      </div>
+
+      <div class="two-col mt-6">
+        <div class="tile">
+          <h4>LOR</h4>
+          <ul class="list">
+            <li>One <b>ballot question</b>; two or three <b>voters</b> with explicit weighing.</li>
+            <li>Use any POO ruling succinctly; get back to what matters.</li>
+            <li>Give a one-sentence round story the judge can repeat.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> new lines; laundry lists; implicit weighing.</p>
+        </div>
+        <div class="tile">
+          <h4>PMR</h4>
+          <ul class="list">
+            <li>10–20s for ruling/new push if needed; then <b>recenter</b>.</li>
+            <li>Two or three <b>voters</b> that squarely meet LOR’s story.</li>
+            <li><b>Ballot instruction:</b> under our lens, X dominates.</li>
+          </ul>
+          <p class="small"><b>Traps:</b> chasing everything; failing to say how to vote.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== MODELING ========== -->
+    <section class="glass-card" id="modeling">
+      <h3 class="about-header">7) Case & Motion Modeling at Varsity Level</h3>
+      <div class="two-col">
+        <div class="tile">
+          <h4>Gov case design (fair · simple · winnable)</h4>
+          <ul class="list">
+            <li><b>Clarity:</b> who acts, with what power, how enforced.</li>
+            <li><b>Contestability:</b> Opp can win via feasibility, principle, or comparative.</li>
+            <li><b>Avoid hazards:</b> not truistic; not secretly SQ; not reliant on esoterica.</li>
+          </ul>
+          <p class="small"><b>Mechanism hygiene:</b> actor → action → incentives/constraints → enforcement → compliance.</p>
+        </div>
+        <div class="tile">
+          <h4>Motions prep (15 minutes)</h4>
+          <ul class="list">
+            <li><b>Team roles:</b> sculptor vs stress-tester; switch if stuck; last 2:00 for lens + roadmaps.</li>
+            <li><b>Topic triage:</b> brainstorm 3 framings; pick 1 clean & clashable; commit.</li>
+            <li><b>POCs:</b> clarify scope/terms; don’t fish for strategy.</li>
+            <li><b>Heuristics:</b> 3′ map; 6′ mechanism+advantages; 3′ pre-empts; 3′ roadmaps+weighing.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== JUDGE ADAPTATION ========== -->
+    <section class="glass-card" id="judge">
+      <h3 class="about-header">8) Judge Adaptation (without pandering)</h3>
+      <div class="two-col">
+        <div class="tile">
+          <h4>Know your judge</h4>
+          <ul class="list">
+            <li>New judges: clarity, structure, plain language.</li>
+            <li>Experienced: still want explicit weighing and clean voters.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>Translation table</h4>
+          <ul class="list">
+            <li><b>Framework</b> → “Here’s how to decide this round.”</li>
+            <li><b>Impact calculus</b> → “Why our outcome matters more/sooner/irreversibly.”</li>
+            <li><b>Turn</b> → “Their argument actually helps our side because…”</li>
+          </ul>
+        </div>
+      </div>
+      <p class="small mt-6"><b>Speaks reality:</b> Structure, warrant density, and comparative analysis raise speaks. Give the judge a story they can write.</p>
+    </section>
+
+    <!-- ========== FLOWING ========== -->
+    <section class="glass-card" id="flow">
+      <h3 class="about-header">9) Flowing at Speed (advanced)</h3>
+      <div class="two-col">
+        <div class="tile">
+          <h4>Your flow is your map</h4>
+          <ul class="list">
+            <li><b>Columns</b> for speeches; <b>rows</b> for issues.</li>
+            <li>Mark <b>drops</b>; circle <b>hinges</b>.</li>
+            <li>Build a <b>weighing map</b> in margins (“We win #2 by prob+timeframe; they only have mag”).</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h4>Symbols & medium</h4>
+          <ul class="list">
+            <li>→ extension, ↑ strengthen, ↓ weaken, ✱ hinge, Ø drop, ⌛ TF, R rev.</li>
+            <li>Paper vs digital: pick what you can read under pressure; one template only.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PRACTICE ========== -->
+    <section class="glass-card" id="practice">
+      <h3 class="about-header">10) Practice Regimen (how to actually get elite)</h3>
+      <ul class="list">
+        <li><b>2× warrant sprints:</b> 5′ per claim; produce 3 independent warrants + a pre-empt.</li>
+        <li><b>2× weighing drills:</b> pick two incommensurable impacts; write a 3-line meta-weigh.</li>
+        <li><b>1× rebuttal gauntlet:</b> 90s LOR/PMR on random flow; record & self-critique.</li>
+        <li><b>1× scrim:</b> <i>collapse discipline</i> (coach stops you if you add issues after collapse).</li>
+        <li><b>RFD journal:</b> after rounds, write the judge’s RFD; note what you didn’t make easy.</li>
+      </ul>
+      <div class="mt-6">
+        <a class="chip" href="practicetools.html">Open Practice Tools →</a>
+      </div>
+    </section>
+
+    <!-- ========== QUICK REFERENCE ========== -->
+    <section class="glass-card" id="quickref">
+      <h3 class="about-header">11) Quick reference: protected time, POIs, optionality</h3>
+      <ul class="list">
+        <li><b>Protected time:</b> No POIs during first 1:00 or last :30 of constructives; no POIs in rebuttals.</li>
+        <li><b>POIs optionality:</b> Optional to offer; optional to accept—choose tactically and courteously.</li>
+        <li><b>Inclusive timings:</b> Plan to <b>7:30, 8:30, 8:30, 8:30, 4:30, 5:30</b>.</li>
+      </ul>
+    </section>
+
+    <!-- ========== EQUITY ========== -->
+    <section class="glass-card" id="equity">
+      <h3 class="about-header">12) Equity & Fairness in Advanced Tactics</h3>
+      <ul class="list">
+        <li>Names & pronouns; respect accommodations; content warnings when appropriate.</li>
+        <li>Don’t win dirty—preserve real clash; avoid abusive designs.</li>
+        <li>Escalate to Equity if needed; model respectful, accessible rooms.</li>
+      </ul>
+      <div class="mt-6">
+        <a class="chip" href="equity.html">Read our Equity Policy →</a>
+        <a class="chip" href="leadership.html">Learn PDU Leadership →</a>
+        <a class="chip" href="contact.html">Contact Us →</a>
+      </div>
+    </section>
+
+    <!-- ========== NEXT STEPS ========== -->
+    <section class="glass-card" id="next">
+      <h3 class="about-header">13) References & Next Steps</h3>
+      <ul class="list">
+        <li>For <b>official league policies</b> (code, scale, by-laws), use the APDA site.</li>
+        <li>For deep dives and primers, open our <b>Resources</b> page.</li>
+        <li>For hands-on practice, use <b>Practice Tools</b>.</li>
+        <li>Mentoring? Pair with the <b>Beginner Guide</b> and set one weekly goal (e.g., “two-issue collapse”).</li>
+      </ul>
+      <div class="mt-6">
+        <a class="chip" href="resources.html">Resources Library →</a>
+        <a class="chip" href="practicetools.html">Practice Tools →</a>
+        <a class="chip" href="beginner.html">Beginner Guide →</a>
+        <a class="chip" href="https://apda.online/" target="_blank" rel="noopener">APDA Home →</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================
+       FOOTER
+       ========================================= -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- =========================================
+       BACK TO TOP (GLOBAL)
+       ========================================= -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- =========================================
+       SCRIPTS
+       ========================================= -->
+  <script>
+    /* ==========================================================
+       Reveal-on-scroll
+    ========================================================== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    /* ==========================================================
+       Navbar sizing var
+    ========================================================== */
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    /* ==========================================================
+       Mobile drawer (global)
+    ========================================================== */
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first = drawer.querySelector('button,a'); first && first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    /* ==========================================================
+       Contents drawer:
+       - Desktop default open (closable + reopenable)
+       - Mobile closed; auto-closes on scroll
+       - NO persistence across refresh
+       ========================================================== */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    let tocUserClosedDesktop = false; /* no localStorage */
+
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    function applyTOCMode(){
+      if(window.innerWidth >= 1024){
+        if(!tocUserClosedDesktop) openTOC();
+      } else { closeTOC(); }
+    }
+    applyTOCMode();
+    addEventListener('resize', applyTOCMode);
+
+    tocOpen.addEventListener('click', ()=>{ tocUserClosedDesktop = false; openTOC(); });
+    tocClose.addEventListener('click', ()=>{
+      if(window.innerWidth >= 1024) tocUserClosedDesktop = true;
+      closeTOC();
+    });
+
+    addEventListener('scroll', () => {
+      if(window.innerWidth < 1024 && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+    }, { passive: true });
+
+    // Active anchor highlighting
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ==========================================================
+       Expanders (keyboard accessible)
+    ========================================================== */
+    document.querySelectorAll('.expander').forEach(ex=>{
+      const header = ex.querySelector('.exp-header');
+      header?.addEventListener('click', ()=> toggleExp(ex));
+      header?.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggleExp(ex); } });
+    });
+    function toggleExp(ex){
+      const isOpen = ex.classList.contains('open');
+      ex.classList.toggle('open', !isOpen);
+      const hdr = ex.querySelector('.exp-header');
+      hdr?.setAttribute('aria-expanded', String(!isOpen));
+    }
+  </script>
+</body>
+</html>
