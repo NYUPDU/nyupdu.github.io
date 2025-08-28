@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ===== Meta / Head ===== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Members’ Hub | NYU PDU</title>
+  <meta name="description" content="Members’ Hub — your go-to for PDU this semester: meetings, tournaments, forms, resources, announcements, and quick links." />
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- NOTE: If you ever want this semi-private, uncomment the line below -->
+  <!-- <meta name="robots" content="noindex,nofollow" /> -->
+</head>
+
+<body id="top">
+  <!-- ===== GLOBAL NAVBAR (copied pattern for cohesion) ===== -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <!-- NYU mark -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <!-- Desktop nav -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings (Monthly)</a></li>
+              <li role="none"><a role="menuitem" href="join.html#months">Month Cards</a></li>
+              <li role="none"><a role="menuitem" href="join.html#partners">Partners</a></li>
+              <li role="none"><a role="menuitem" href="join.html#myths">Costs & Support</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <!-- Optional: add Members to the main nav -->
+          <li><a href="members.html" aria-current="page">Members</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- PDU logo -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <!-- Mobile burger -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="join.html#meetings">Meetings (Monthly)</a></li>
+            <li><a href="join.html#months">Month Cards</a></li>
+            <li><a href="join.html#partners">Partners</a></li>
+            <li><a href="join.html#myths">Costs & Support</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="members.html" aria-current="page">Members</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero-section hero-compact">
+    <div class="container">
+      <h1 class="page-title">Members’ Hub</h1>
+      <p class="page-subtitle">Your go-to for PDU this semester.</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <!-- ===== THIS MONTH AT PDU (SEPTEMBER) ===== -->
+      <!-- Reuses your tournament card pattern for visual consistency -->
+      <section class="glass-card reveal" id="month">
+        <h3 class="about-header">This Month at PDU — <span>September 2025</span></h3>
+        <p class="about-preview">
+          Full meeting dates & times are below. For room locations and last-minute changes, see the Calendar.
+        </p>
+
+        <!-- Meetings list — Monday (Lesson) & Wednesday (Training) at 7 PM -->
+        <!-- Update these if meeting cadence changes -->
+        <div class="targets-grid" style="margin-top:.5rem;">
+          <article class="target-card">
+            <span class="pill confirmed">Meetings</span>
+            <h4>September Meetings (7:00 PM)</h4>
+            <p class="about-preview">
+              Mon Sep 1 · Wed Sep 3 · Mon Sep 8 · Wed Sep 10 · Mon Sep 15 · Wed Sep 17 · Mon Sep 22 · Wed Sep 24 · Mon Sep 29
+            </p>
+            <div class="chip-row" style="margin:.35rem 0 .2rem;">
+              <span class="chip">Mondays: Lesson</span>
+              <span class="chip">Wednesdays: Training</span>
+            </div>
+            <div class="cta-row">
+              <a class="link-chip" href="calendar.html">View Calendar →</a>
+              <a class="link-chip" href="calendar.html#subscribe">Subscribe (ICS) →</a>
+            </div>
+            <p class="tiny muted" style="margin-top:.35rem;">Specific room locations found on each calendar event. Subscribe now.</p>
+          </article>
+
+          <!-- High-level tournament overview for the month (placeholders) -->
+          <article class="target-card">
+            <span class="pill open">Tournaments</span>
+            <h4>September Tournament Overview</h4>
+            <p class="about-preview">
+              Expect 2–3 weekend tournaments. TIDs open ~10–12 days prior; pairs posted the week-of; travel covered.
+            </p>
+            <div class="chip-row">
+              <span class="chip">Sign-up windows vary</span>
+              <span class="chip">Travel & lodging covered</span>
+            </div>
+            <div class="cta-row">
+              <a class="link-chip" href="tournaments.html">Full Tournaments Page →</a>
+              <a class="link-chip" href="tournaments.html#tid">Current TID →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== UPCOMING MONTHS AT A GLANCE ===== -->
+      <section class="glass-card reveal" id="glance">
+        <h3 class="about-header">Upcoming Months at a Glance</h3>
+        <div class="targets-grid">
+          <!-- October mini-card -->
+          <article class="target-card">
+            <span class="pill tentative">October</span>
+            <h4>Key Dates</h4>
+            <ul class="about-preview">
+              <li>Mon/Wed meetings · 7:00 PM</li>
+              <li>2–3 tournaments (TIDs open mid-month)</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+              <a class="link-chip" href="tournaments.html#october">See October slate →</a>
+            </div>
+          </article>
+
+          <!-- November mini-card -->
+          <article class="target-card">
+            <span class="pill tentative">November</span>
+            <h4>Key Dates</h4>
+            <ul class="about-preview">
+              <li>Mon/Wed meetings · 7:00 PM</li>
+              <li>Travel-heavy weekends; plan ahead</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+              <a class="link-chip" href="tournaments.html#november">See November slate →</a>
+            </div>
+          </article>
+
+          <!-- December mini-card -->
+          <article class="target-card">
+            <span class="pill tentative">December</span>
+            <h4>Key Dates</h4>
+            <ul class="about-preview">
+              <li>Limited meetings (finals period)</li>
+              <li>Winter opens (optional)</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+              <a class="link-chip" href="tournaments.html#december">See December slate →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== BIG CTA → TOURNAMENTS ===== -->
+      <section class="glass-card reveal" id="cta-tournaments">
+        <div class="targets-grid" style="align-items:center;">
+          <article class="feature-card">
+            <span class="pill confirmed">Ready to travel?</span>
+            <h3 class="about-header" style="margin-top:.35rem;">See all tournaments, TIDs, and briefs</h3>
+            <p class="about-preview">Everything you need to sign up, pair, and go. Travel and lodging covered.</p>
+            <div class="cta-row" style="margin-top:.5rem;">
+              <a class="btn-primary" href="tournaments.html" style="font-size:1.05rem;">Open Tournaments Page →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== TOURNAMENTS (PREVIEW CARDS, SEPTEMBER) ===== -->
+      <!-- Uses the same card style as tournaments.html so it feels native -->
+      <section class="glass-card reveal" id="tournaments">
+        <h3 class="about-header">This Month’s Tournaments (Preview)</h3>
+        <div class="targets-grid">
+          <article class="target-card">
+            <span class="pill open">Sign-ups Open</span>
+            <div class="chip-row">
+              <span class="chip">Sep 12–13</span>
+              <span class="chip">Northeast</span>
+            </div>
+            <h4>Tournament A</h4>
+            <p class="about-preview">Novice-friendly. Expect early call times; limited judging obligations.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="tournaments.html#tid">TID →</a>
+              <a class="link-chip" href="tournaments.html#brief-a">Brief →</a>
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill tentative">Tentative</span>
+            <div class="chip-row">
+              <span class="chip">Sep 19–20</span>
+              <span class="chip">Northeast</span>
+            </div>
+            <h4>Tournament B</h4>
+            <p class="about-preview">Travel covered; pairs posted the week-of. Bring school ID and water bottle.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="tournaments.html#tid">TID →</a>
+              <a class="link-chip" href="tournaments.html#brief-b">Brief →</a>
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill confirmed">Planning</span>
+            <div class="chip-row">
+              <span class="chip">Sep 26–27</span>
+              <span class="chip">Northeast</span>
+            </div>
+            <h4>Tournament C</h4>
+            <p class="about-preview">Coach office hours available for case workshopping mid-week.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="tournaments.html#tid">TID →</a>
+              <a class="link-chip" href="tournaments.html#brief-c">Brief →</a>
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+            </div>
+          </article>
+        </div>
+        <p class="tiny muted" style="margin-top:.4rem;">Exact tournaments and dates are placeholders — see <a class="inline-link" href="tournaments.html">Tournaments</a> for the current slate.</p>
+      </section>
+
+      <!-- ===== PRACTICE & GROW ===== -->
+      <section class="glass-card reveal" id="practice">
+        <h3 class="about-header">Practice &amp; Grow</h3>
+        <p class="about-preview">Level up with drills, case banks, timers, and guides.</p>
+        <div class="targets-grid">
+          <article class="target-card">
+            <span class="pill confirmed">Resources</span>
+            <h4>Resources Library</h4>
+            <p class="about-preview">Slides, case bank, judging guides, and tools you’ll use all season.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="resources.html">Open Library →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill confirmed">Tools</span>
+            <h4>Practice Tools</h4>
+            <p class="about-preview">Timers, flashcards, drills, and prompts for solo or partner practice.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="tools.html">Practice Tools →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill open">Guides</span>
+            <h4>Choose Your Track</h4>
+            <p class="about-preview">Start where you are. Build habits that travel to tournaments.</p>
+            <div class="cta-row">
+              <a class="link-chip" href="beginner.html">Beginner’s Guide →</a>
+              <a class="link-chip" href="advanced.html">Advanced Guide →</a> <!-- create soon -->
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== ANNOUNCEMENTS (PROMINENT) ===== -->
+      <!-- Intentional visual break: feels like the start of a new page -->
+      <section class="glass-card reveal" id="announcements" style="padding-top:1.2rem;">
+        <h2 class="about-header">Announcements</h2>
+        <p class="about-preview">Latest updates from the board. Action items at a glance.</p>
+
+        <div class="targets-grid">
+          <!-- Floating cards with Date · Content · Action steps · Links (placeholders) -->
+          <article class="target-card">
+            <span class="pill confirmed">Sep 2</span>
+            <h4>Kickoff Meeting & Pizza</h4>
+            <p class="about-preview">
+              Welcome back! We’ll cover fall goals, travel norms, and how TIDs work.
+            </p>
+            <ul class="about-preview">
+              <li><strong>Action:</strong> Bring a friend; join the mailing list.</li>
+              <li><strong>Action:</strong> Subscribe to the Calendar.</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="calendar.html">Calendar →</a>
+              <a class="link-chip" href="join.html#mailing">Mailing List →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill open">Sep 9</span>
+            <h4>Reimbursements Window</h4>
+            <p class="about-preview">
+              Submit receipts from summer events. Finance will process Friday.
+            </p>
+            <ul class="about-preview">
+              <li><strong>Action:</strong> Upload receipts as a single PDF.</li>
+              <li><strong>Deadline:</strong> Fri 5:00 PM.</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="forms/reimbursements.html">Reimbursement Form →</a>
+              <a class="link-chip" href="resources.html#finance">Policy →</a>
+            </div>
+          </article>
+
+          <article class="target-card">
+            <span class="pill tentative">Sep 15</span>
+            <h4>Pairs Preview</h4>
+            <p class="about-preview">
+              Draft pairings for Tournament A will post in the Hub by Wednesday.
+            </p>
+            <ul class="about-preview">
+              <li><strong>Action:</strong> Confirm eligibility & availability.</li>
+            </ul>
+            <div class="cta-row">
+              <a class="link-chip" href="tournaments.html#pairs">Pairs Board →</a>
+              <a class="link-chip" href="tournaments.html#tid">TID →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== QUICK LINKS ===== -->
+      <section class="glass-card reveal" id="quick-links">
+        <h3 class="about-header">Quick Links</h3>
+        <div class="cta-row" style="margin-top:.4rem; flex-wrap:wrap;">
+          <a class="link-chip" href="faq.html">FAQ →</a>                    <!-- to be created -->
+          <a class="link-chip" href="leadership.html">Leadership →</a>
+          <a class="link-chip" href="roster.html">Debaters (Roster) →</a>   <!-- to be created -->
+          <a class="link-chip" href="contact.html">Gentle feedback / concern →</a>
+        </div>
+      </section>
+
+      <!-- ===== BOTTOM: NEXT STEPS ===== -->
+      <section class="glass-card reveal" id="next-steps">
+        <h3 class="about-header">Next steps? Consider these.</h3>
+        <div class="cta-row" style="margin-top:.4rem; flex-wrap:wrap;">
+          <a class="link-chip" href="tournaments.html#tid">Fill the current TID →</a>
+          <a class="link-chip" href="resources.html#case-bank">Browse the case bank →</a>
+          <a class="link-chip" href="tools.html#timers">Practice with timers →</a>
+          <a class="link-chip" href="forms/reimbursements.html">Submit reimbursements →</a>
+          <a class="link-chip" href="calendar.html#subscribe">Subscribe to the calendar →</a>
+          <a class="link-chip" href="leadership.html#office-hours">Officer office hours →</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- ===== Scripts ===== -->
+
+  <!-- Scroll reveal (same pattern as other pages) -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Nav + drawer JS (cohesion with rest of site) -->
+  <script>
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
+
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      burger.setAttribute('aria-expanded','true');
+      scrim.hidden=false;
+      document.body.style.overflow='hidden';
+      const first = drawer.querySelector('button,a'); if(first) first.focus();
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      burger.setAttribute('aria-expanded','false');
+      scrim.hidden=true;
+      document.body.style.overflow='';
+      burger.focus();
+    }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    // Desktop submenu accessibility
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link = item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm = item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+  </script>
+</body>
+</html>
