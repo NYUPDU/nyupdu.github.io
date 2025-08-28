@@ -7,17 +7,77 @@
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <meta name="google-site-verification" content="Vmv_l4au33m66RruE6TlNIBPAnksa1f2opZfgmCAvh4" />
-    <meta name="description" content="Official website of the NYU Parliamentary Debate Union, the debate club at New York University hosting practices, tournaments and resources." />
-    <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, home" />
-    <meta name="author" content="NYU Parliamentary Debate Union" />
-    <link rel="canonical" href="https://nyupdu.github.io/" />
-    <meta property="og:title" content="Parliamentary Debate Union @ NYU" />
-    <meta property="og:description" content="Official website of the NYU Parliamentary Debate Union, the debate club at New York University hosting practices, tournaments and resources." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nyupdu.github.io/" />
-    <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
-  </head>
+  <meta name="google-site-verification" content="Vmv_l4au33m66RruE6TlNIBPAnksa1f2opZfgmCAvh4" />
+  <meta name="description" content="Official website of the NYU Parliamentary Debate Union, the debate club at New York University hosting practices, tournaments and resources." />
+  <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, home" />
+  <meta name="author" content="NYU Parliamentary Debate Union" />
+  <link rel="canonical" href="https://nyupdu.github.io/" />
+  <meta property="og:title" content="Parliamentary Debate Union @ NYU" />
+  <meta property="og:description" content="Official website of the NYU Parliamentary Debate Union, the debate club at New York University hosting practices, tournaments and resources." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nyupdu.github.io/" />
+  <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
+
+  <!-- Page-local styles for the countdown + newcomer band -->
+  <style>
+    /* Countdown pill (desktop: top-right under navbar) */
+    .home-countdown{
+      position:fixed;
+      top:calc(var(--nav-height,80px) + 8px);
+      right:12px;
+      z-index:1101;
+      display:inline-block;
+      padding:.35rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.10);
+      font-weight:700; letter-spacing:.2px;
+      box-shadow:0 0 12px rgba(199,191,255,.18) inset, 0 8px 24px rgba(0,0,0,.25);
+      backdrop-filter:blur(10px);
+    }
+    /* Mobile: move countdown to bottom-left (above footer/back-to-top) */
+    @media (max-width: 960px){
+      .home-countdown{
+        top:auto; right:auto;
+        left:12px;
+        bottom:18px;
+      }
+      /* Nudge back-to-top a bit higher so they don't overlap */
+      #float-button{
+        bottom:76px;
+      }
+    }
+
+    /* Newcomer band (magazine-style, compact) */
+    .band-newcomer{
+      display:grid; gap:1rem;
+      grid-template-columns:1.1fr 1fr; align-items:center;
+      max-width:1100px; margin:2rem auto; padding:1.25rem 1.5rem;
+      border:1px solid rgba(255,255,255,.22);
+      border-radius:16px; background:rgba(255,255,255,.10);
+      backdrop-filter:blur(12px);
+    }
+    .band-newcomer .n-body h3{
+      font-family:'DM Serif Display', serif; margin-bottom:.35rem; font-size:1.6rem;
+      text-shadow:0 0 10px rgba(199,191,255,.28);
+    }
+    .band-newcomer .n-body p{ opacity:.95; margin-bottom:.75rem; }
+    .n-actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    .n-actions .link-chip{ font-weight:800; }
+    .n-side{
+      border-left:1px solid rgba(255,255,255,.18);
+      padding-left:1rem;
+    }
+    .n-side .mini{
+      display:flex; flex-direction:column; gap:.4rem;
+    }
+    .n-side .mini .chip{ align-self:flex-start; }
+    @media (max-width: 960px){
+      .band-newcomer{ grid-template-columns:1fr; }
+      .n-side{ border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:.9rem; }
+    }
+  </style>
+</head>
 
 <body id="top">
   <!-- Navbar -->
@@ -29,7 +89,7 @@
       </div>
 
       <!-- Center on desktop: nav links; on mobile the PDU logo is centered absolutely -->
-                  <nav class="nav-links" aria-label="Primary">
+      <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html" aria-current="page">Home</a></li>
 
@@ -88,7 +148,7 @@
       <span>Menu</span>
       <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
     </div>
-            <nav class="drawer-nav" aria-label="Mobile">
+    <nav class="drawer-nav" aria-label="Mobile">
       <ul class="drawer-list">
         <li><a href="index.html">Home</a></li>
 
@@ -133,29 +193,44 @@
   <!-- Hero -->
   <section class="hero-section hero-home">
     <div class="hero-content glass-card reveal">
-      <h1 class="hero-title">Welcome to PDU · Fall 2025</h1>
+      <h1 class="hero-title">NYU Debate · Parliamentary Debate Union</h1>
       <p class="hero-sub">
         Train twice a week. Compete most weekends. No experience needed.
       </p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="join.html">Join Us</a>
-        <a class="btn-secondary" href="about.html#apda">What is APDA?</a>
+        <a class="btn-primary" href="#newcomers">I’m New</a>
+        <a class="btn-secondary" href="#updates">I’m Returning</a>
       </div>
     </div>
   </section>
 
-  <!-- This Week strip -->
-  <section class="week-strip">
-    <ul class="week-pills">
-      <li class="chip">Mon 7–9p · Lesson</li>
-      <li class="chip">Wed 7–9p · Training</li>
-      <li class="chip">Fri–Sat · Yale IV</li>
-      <li class="chip">Travel covered</li>
-    </ul>
+  <!-- Countdown (NY time) -->
+  <div class="home-countdown" id="homeCountdown" aria-live="polite">Calculating next meeting…</div>
+
+  <!-- Newcomer band (compact, magazine-style) -->
+  <section class="band-newcomer" id="newcomers">
+    <div class="n-body">
+      <h3>Start here: join at your own pace</h3>
+      <p>
+        Drop in on <strong>Mondays (Lessons)</strong> or <strong>Wednesdays (Training)</strong>, 7–9 PM. We’ll help you get comfortable fast.
+      </p>
+      <div class="n-actions">
+        <a class="link-chip" href="join.html#mailing">Join the mailing list →</a>
+        <a class="link-chip" href="beginner.html">Beginner Guide →</a>
+        <a class="link-chip" href="calendar.html">Open the calendar →</a>
+      </div>
+    </div>
+    <div class="n-side">
+      <div class="mini">
+        <span class="chip">Mon & Wed · 7–9 PM</span>
+        <span class="chip">Travel covered</span>
+        <span class="chip">No experience needed</span>
+      </div>
+    </div>
   </section>
 
   <main class="main-content">
-    <!-- Quick-start tiles -->
+    <!-- Quick-start tiles (kept, but tuned to the new flow) -->
     <section class="tiles-quick">
       <div class="tile glass-card reveal">
         <div class="tile-emoji" aria-hidden="true">✨</div>
@@ -165,19 +240,22 @@
       </div>
       <div class="tile glass-card reveal">
         <div class="tile-emoji" aria-hidden="true">🎯</div>
-        <h3>I’m competing</h3>
-        <p>See the next events and request a partner.</p>
-        <a class="link-chip" href="tournaments.html">Upcoming tournaments →</a>
+        <h3>Beginner tools</h3>
+        <p>Timer, case builder, and flow sheets to get you rolling.</p>
+        <a class="link-chip" href="practicetools.html">Practice tools →</a>
       </div>
       <div class="tile glass-card reveal">
-        <div class="tile-emoji" aria-hidden="true">📚</div>
-        <h3>I’m returning</h3>
-        <p>This week’s drills and workshop plan.</p>
-        <a class="link-chip" href="about.html#meetings">This week at PDU →</a>
+        <div class="tile-emoji" aria-hidden="true">📅</div>
+        <h3>See the calendar</h3>
+        <p>Meetings, workshops, and tournament weekends.</p>
+        <a class="link-chip" href="calendar.html">Open calendar →</a>
       </div>
     </section>
 
-    <!-- Tournaments preview -->
+    <!-- Updates anchor for returning members -->
+    <div id="updates" style="height:1px;"></div>
+
+    <!-- Tournaments preview (serves as the “returning” hub on home) -->
     <section class="section-wrap reveal">
       <h3 class="about-header">Upcoming Tournaments</h3>
       <div class="h-scroll">
@@ -276,7 +354,7 @@
     document.querySelectorAll('.glass-card, .section-wrap, .tile').forEach(el => observer.observe(el));
   </script>
 
-  <!-- Nav + drawer JS -->
+  <!-- Nav + drawer JS + navbar measure -->
   <script>
     const burger = document.getElementById('burger');
     const drawer = document.getElementById('mobileDrawer');
@@ -316,6 +394,62 @@
       const sm=item.querySelector('.submenu');
       sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
     });
+  </script>
+
+  <!-- New York Time countdown (same logic family as join.html, scoped here) -->
+  <script>
+    function getNowPartsInTZ(timeZone){
+      const dtf = new Intl.DateTimeFormat('en-US', {
+        timeZone, year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false,
+        weekday:'short'
+      });
+      const parts = dtf.formatToParts(new Date());
+      const map = {};
+      for (const p of parts) map[p.type] = p.value;
+      const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
+      return {
+        year:+map.year, month:+map.month, day:+map.day,
+        hour:+map.hour, minute:+map.minute, second:+map.second,
+        weekday
+      };
+    }
+    function zonedNYToDate(y,m,d,h,mi,s){
+      const tz='America/New_York';
+      const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
+      const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
+      const diff=inv.getTime()-wall.getTime();
+      return new Date(wall.getTime()-diff);
+    }
+    function nextNYMeeting(){
+      const tz='America/New_York';
+      const p=getNowPartsInTZ(tz);
+      function nextDow(target){
+        let delta=(target - p.weekday + 7) % 7;
+        if (delta===0 && (p.hour>19 || (p.hour===19 && (p.minute>0 || p.second>0)))) delta=7;
+        const base=new Date(Date.UTC(p.year, p.month-1, p.day));
+        base.setUTCDate(base.getUTCDate()+delta);
+        return zonedNYToDate(base.getUTCFullYear(), base.getUTCMonth()+1, base.getUTCDate(), 19, 0, 0);
+      }
+      const mon=nextDow(1), wed=nextDow(3);
+      return (mon < wed) ? mon : wed;
+    }
+    const cdEl=document.getElementById('homeCountdown');
+    function tick(){
+      const target=nextNYMeeting();
+      const now=new Date();
+      const ms=target - now;
+      if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
+      const s=Math.floor(ms/1000);
+      const d=Math.floor(s/86400);
+      const h=Math.floor((s%86400)/3600);
+      const m=Math.floor((s%3600)/60);
+      const ss=s%60;
+      const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
+      const dateStr=target.toLocaleString('en-US',{timeZone:'America/New_York', month:'short', day:'numeric'});
+      cdEl.textContent=`Next meeting: ${weekday} ${dateStr} · 7:00 PM ET — in ${d}d ${h}h ${m}m ${ss}s`;
+    }
+    tick(); setInterval(tick,1000);
   </script>
 </body>
 </html>
