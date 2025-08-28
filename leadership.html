@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Leadership | NYU PDU</title>
 
-  <!-- Fav + type -->
+  <!-- SEO / social -->
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <meta name="description" content="Meet the leadership team of the NYU Parliamentary Debate Union at New York University." />
   <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, leadership" />
@@ -20,35 +20,33 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- (Optional) site-wide CSS if you have it; this page will “scope” its own rules to avoid conflicts -->
+  <!-- Site stylesheet (kept) -->
   <link rel="stylesheet" href="style.css" />
 
   <style>
     /* ============================================================
-       PAGE-SCOPED THEME (prevents interference from global CSS)
-       Wrap everything under .leadership-page to keep it safe.
+       Page-scoped theme tokens (kept glass + NYU purple vibe)
        ============================================================ */
     :root{
-      --pdu-purple: #7c3aed;               /* base accent */
+      --pdu-purple: #7c3aed;
       --pdu-purple-soft: rgba(124,58,237,.65);
-      --text-on-glass: #ffffff;            /* on-glass text */
-      --chip-border: rgba(255,255,255,.35);
       --glass-bg: rgba(255,255,255,.10);
       --glass-border: rgba(255,255,255,.20);
+      --chip-border: rgba(255,255,255,.35);
       --glass-shadow: 0 10px 28px rgba(0,0,0,.30);
+      --text-on-glass: #fff;
     }
 
     body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text-on-glass);
       background: radial-gradient(1200px 800px at 10% -10%, rgba(124,58,237,.15), transparent 40%),
                   radial-gradient(1000px 700px at 110% 10%, rgba(124,58,237,.15), transparent 40%),
                   #0b0b15;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ====== Compact hero ====== */
+    /* ===== Hero ===== */
     .hero-section{
       padding: calc(60px + 2vw) 1.25rem 1.25rem;
       text-align:center;
@@ -58,22 +56,16 @@
       font-size: clamp(2rem, 2.2rem + 1vw, 3rem);
       margin: 0 0 .25rem;
     }
-    .page-subtitle{
-      opacity:.9;
-      margin: 0;
-      font-size: 1.05rem;
-    }
+    .page-subtitle{ opacity:.9; margin:0; font-size:1.05rem; }
 
-    /* ====== PRESERVED: Glowing full-bleed divider (exact effect kept) ====== */
+    /* ===== PRESERVED GLOWING BAR (unchanged) ===== */
     .hero-divider{
       width:100vw; height:16px;
       position:relative; left:50%; transform:translateX(-50%);
       background: linear-gradient(90deg, rgba(255,255,255,.25), rgba(124,58,237,.35), rgba(255,255,255,.25));
       border-top:1px solid rgba(255,255,255,.25);
       border-bottom:1px solid rgba(255,255,255,.15);
-      box-shadow:
-        0 0 18px rgba(199,191,255,.45),
-        0 0 34px rgba(124,58,237,.35);
+      box-shadow: 0 0 18px rgba(199,191,255,.45), 0 0 34px rgba(124,58,237,.35);
       overflow:hidden;
       animation: pulseGlow 4.5s ease-in-out infinite alternate;
     }
@@ -89,442 +81,423 @@
       0% { box-shadow: 0 0 16px rgba(255,255,255,.35), 0 0 28px rgba(124,58,237,.28); }
       100% { box-shadow: 0 0 22px rgba(199,191,255,.6), 0 0 42px rgba(124,58,237,.5); }
     }
-    @keyframes sheen{
-      0% { transform:translateX(-100%); }
-      100% { transform:translateX(100%); }
+    @keyframes sheen{ 0% { transform:translateX(-100%); } 100% { transform:translateX(100%); } }
+
+    /* ===== Main wrapper ===== */
+    .container{ max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
+
+    /* ===== Fine print ===== */
+    .fine-print{
+      font-size:.92rem; opacity:.8; text-align:center;
+      margin: .5rem 0 1rem;
     }
 
-    /* ====== Main wrapper ====== */
-    .leadership-page{
-      padding: 1.25rem 0 2rem;
-    }
-    .container{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
-    }
-
-    /* ====== Prism Grid ====== */
+    /* ===== Grid: 1 / 2 / 3 / 4 columns ===== */
     .leaders-grid{
-      display: grid;
-      grid-template-columns: repeat(2, minmax(280px, 1fr));
-      gap: 1.75rem;
+      display:grid; gap:1.5rem;
+      grid-template-columns: 1fr;                 /* mobile */
+    }
+    @media (min-width: 768px){
+      .leaders-grid{ grid-template-columns: repeat(2, 1fr); } /* tablet */
+    }
+    @media (min-width: 1024px){
+      .leaders-grid{ grid-template-columns: repeat(3, 1fr); } /* desktop */
+    }
+    @media (min-width: 1440px){
+      .leaders-grid{ grid-template-columns: repeat(4, 1fr); } /* wide */
     }
 
-    /* Each item = card + actions (kept together) */
-    .leader-item{
-      display:flex;
-      flex-direction:column;
-      gap:.6rem;
-    }
-
-    /* Glass card core */
+    /* ===== Card (old style brought back, with glow) ===== */
     .leader-card{
+      --idle-glow: 0 0 0px rgba(124,58,237,.0), 0 0 0px rgba(199,191,255,.0);
+      --hover-glow: 0 0 14px rgba(199,191,255,.35), 0 0 28px rgba(124,58,237,.35);
+
+      /* Button reset so the whole card is a11y-clickable */
+      appearance:none; border:none; text-align:left; cursor:pointer; background:transparent; padding:0;
+      display:block; width:100%;
+
+      position:relative; isolation:isolate; overflow:hidden;
+      border-radius:20px;
       background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      box-shadow: var(--glass-shadow);
+      border:1px solid var(--glass-border);
       backdrop-filter: blur(14px);
-      overflow:hidden;
-      transition: transform .22s ease, box-shadow .22s ease;
-      will-change: transform;
-      position: relative;
-      isolation: isolate;
+      box-shadow: var(--glass-shadow), var(--idle-glow);
+      transition: transform .2s ease, box-shadow .25s ease;
     }
-    .leader-card:hover{
+    .leader-card:hover, .leader-card:focus-visible{
       transform: translateY(-4px);
-      box-shadow: 0 14px 38px rgba(0,0,0,.36);
+      box-shadow: var(--glass-shadow), var(--hover-glow);
+      outline: none;
     }
-
-    /* Strict 4:5 portrait for ALL images, face-centered */
-    .leader-media{
-      position: relative;
-      width:100%;
-      aspect-ratio: 4 / 5;         /* ← strict headshot frame */
-      overflow:hidden;
-      border-bottom: 1px solid rgba(255,255,255,.18);
+    /* Slow subtle pulsing glow (can be commented if you prefer hover-only) */
+    .leader-card::after{
+      content:""; position:absolute; inset:-2px; border-radius:22px; pointer-events:none;
+      box-shadow: 0 0 18px rgba(199,191,255,.18), 0 0 34px rgba(124,58,237,.18);
+      animation: cardPulse 5.8s ease-in-out infinite alternate;
     }
-    .leader-media img{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit: cover;
-      object-position: 50% 20%;
-      display:block;
-    }
-
-    /* Info band (roomy, never overlaps) */
-    .leader-info{
-      padding: .9rem 1rem 1.1rem;
-      display:flex; flex-direction:column;
-      align-items:center; text-align:center; justify-content:center;
-      min-height: 190px; /* ensures space for name + divider + title on all cards */
-    }
-    .leader-name{
-      font-family: "DM Serif Display", serif;
-      font-size: clamp(1.6rem, 1.4rem + .8vw, 2rem);
-      line-height: 1.15;
-      letter-spacing:.2px;
-      margin: 0;
-    }
-    /* Luminous divider kept */
-    .leader-sep{
-      width: 72%;
-      height: 2px;
-      margin: .55rem auto .6rem;
-      background: linear-gradient(90deg, rgba(255,255,255,.4), var(--pdu-purple), rgba(255,255,255,.4));
-      box-shadow: 0 0 10px rgba(199,191,255,.4);
-      border-radius: 999px;
-      flex: 0 0 auto;
-    }
-    .leader-title{
-      font-weight: 700;
-      letter-spacing:.3px;
-      opacity:.95;
-      margin: 0;
+    @keyframes cardPulse{
+      0% { box-shadow: 0 0 10px rgba(199,191,255,.10), 0 0 20px rgba(124,58,237,.10); }
+      100%{ box-shadow: 0 0 20px rgba(199,191,255,.22), 0 0 36px rgba(124,58,237,.22); }
     }
 
     /* Equity badge */
     .badge-equity{
-      position:absolute; top:10px; left:10px;
+      position:absolute; top:10px; left:10px; z-index:2;
       padding:.25rem .55rem; border-radius:999px;
       background: var(--pdu-purple-soft);
       border:1px solid var(--chip-border);
       font-weight:800; font-size:.85rem;
       box-shadow:0 6px 18px rgba(0,0,0,.35);
-      z-index:2;
     }
 
-    /* Inline bio (no overlay, no X) */
-    details.bio{
-      margin-top: .5rem;
-      width: 100%;
-    }
-    details.bio > summary{
-      list-style: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap:.45rem;
-      padding: .45rem .8rem;
-      border-radius: 999px;
-      border:1px solid var(--chip-border);
-      background: rgba(255,255,255,.08);
-      user-select: none;
-      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
-    }
-    details.bio > summary::marker{ display:none; }
-    details.bio > summary:focus-visible{
-      outline: 2px solid rgba(255,255,255,.6);
-      outline-offset: 2px;
-    }
-    details.bio[open] > summary{
-      background: rgba(124,58,237,.15);
-      box-shadow: 0 0 0 6px rgba(124,58,237,.10) inset;
-    }
-    .bio-content{
-      margin-top: .65rem;
-      padding: .85rem 1rem;
-      border-radius: 14px;
-      background: rgba(17,17,28,.72);
-      border: 1px solid rgba(255,255,255,.12);
-      line-height: 1.6;
-    }
+    /* Media (strict 4:5 headshot) */
+    .leader-media{ position:relative; aspect-ratio: 4 / 5; width:100%; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.18); }
+    .leader-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 20%; display:block; }
 
-    /* External action row: contact chip lives OUTSIDE card */
-    .leader-actions{
-      display:flex;
-      justify-content:center;
+    /* Info band */
+    .leader-info{ padding: .9rem 1rem 1.1rem; text-align:center; }
+    .leader-name{ font-family:"DM Serif Display", serif; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); margin:0; letter-spacing:.2px; }
+    .leader-sep{
+      width:72%; height:2px; margin:.5rem auto .55rem;
+      background: linear-gradient(90deg, rgba(255,255,255,.4), var(--pdu-purple), rgba(255,255,255,.4));
+      box-shadow: 0 0 10px rgba(199,191,255,.4);
+      border-radius:999px;
     }
+    .leader-title{ font-weight:700; letter-spacing:.3px; opacity:.95; margin:0; }
+
+    /* ===== Modal (full-screen) ===== */
+    .modal{ position:fixed; inset:0; z-index:1000; display:none; }
+    .modal.open{ display:block; }
+    .modal-scrim{
+      position:absolute; inset:0; background: rgba(8,8,16,.75); backdrop-filter: blur(6px);
+    }
+    .modal-panel{
+      position:relative; z-index:1001; max-width: 980px; margin: min(8vh,80px) auto; padding: 0;
+      background: var(--glass-bg); border:1px solid var(--glass-border); border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    .modal-media{ position:relative; width:100%; aspect-ratio: 4 / 5; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.18); }
+    .modal-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 18%; }
+
+    .modal-body{ padding: 1rem 1.25rem 1.25rem; }
+    .modal-name{ font-family:"DM Serif Display", serif; font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem); margin:.2rem 0 .15rem; }
+    .modal-role{ font-weight:700; margin:.25rem 0 .5rem; }
+    .modal-sep{ width: 200px; height:2px; background: linear-gradient(90deg, rgba(255,255,255,.4), var(--pdu-purple), rgba(255,255,255,.4)); box-shadow: 0 0 10px rgba(199,191,255,.4); border-radius:999px; margin:.5rem 0 .8rem; }
+    .modal-bio{ line-height:1.7; opacity:.95; }
+
+    .modal-actions{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
     .chip{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:.5rem .95rem;
-      border-radius:999px;
-      border:1px solid var(--chip-border);
-      background: rgba(255,255,255,.08);
-      text-decoration:none; color:#fff;
-      font-weight:600; font-size:.95rem;
-      white-space:nowrap;
-      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      padding:.55rem 1rem; border-radius:999px;
+      border:1px solid var(--chip-border); background: rgba(255,255,255,.08);
+      text-decoration:none; color:#fff; font-weight:600; font-size:.95rem; white-space:nowrap;
+      transition: transform .15s ease, background .15s ease;
     }
     .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); }
-    .chip:active{ transform: translateY(0); }
 
-    /* Grid: mobile → 1 col */
-    @media (max-width: 860px){
-      .leaders-grid{ grid-template-columns: 1fr; }
+    .modal-close{
+      position:absolute; top:10px; right:10px; z-index:1002;
+      width:40px; height:40px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.25);
+      color:#fff; font-size:1.2rem; line-height:1; cursor:pointer;
+    }
+    .modal-close:focus-visible{ outline:2px solid rgba(255,255,255,.65); outline-offset:2px; }
+
+    @media (max-width: 560px){
+      .modal-panel{ margin: 0.75rem; }
     }
 
-    /* ====== Below-grid sections (explicit visibility so they never “vanish”) ====== */
-    .below-cards{
-      margin-top: 2rem;
-      display:grid;
-      gap: 1.25rem;
-    }
+    /* ===== Below-grid sections (forced visible) ===== */
+    .below-cards{ margin-top: 2rem; display:grid; gap:1.25rem; }
     .glass-card{
-      background: var(--glass-bg);      /* explicit */
-      border:1px solid var(--glass-border);
-      border-radius: 18px;
-      padding: 1rem 1.1rem;
-      box-shadow: var(--glass-shadow);
-      backdrop-filter: blur(12px);
-      color: #fff;                      /* explicit */
+      background: var(--glass-bg); border:1px solid var(--glass-border);
+      border-radius:18px; padding:1rem 1.1rem; box-shadow: var(--glass-shadow);
+      backdrop-filter: blur(12px); color:#fff;
     }
-    .about-header{
-      font-family: "DM Serif Display", serif;
-      font-size: 1.4rem;
-      margin: 0 0 .5rem;
-    }
-    .about-preview{ margin: 0 0 .75rem; opacity:.92; }
-    .cta-row{ display:flex; flex-wrap:wrap; gap:.5rem; }
+    .about-header{ font-family:"DM Serif Display", serif; font-size:1.4rem; margin:0 0 .5rem; }
+    .about-preview{ margin:0 0 .75rem; opacity:.92; }
 
-    /* ====== Small niceties ====== */
-    .fade-in{
-      opacity:0;
-      transform: translateY(18px);
-      transition: all .6s ease;
-    }
+    /* Small reveal nicety */
+    .fade-in{ opacity:0; transform: translateY(18px); transition: all .6s ease; }
     .fade-in.reveal{ opacity:1; transform: translateY(0); }
   </style>
 </head>
-<body>
+<body id="top">
 
-  <!-- Simple hero -->
+  <!-- Hero -->
   <section class="hero-section">
     <h1 class="page-title">Leadership</h1>
     <p class="page-subtitle">Parliamentary Debate Union Executive Board</p>
   </section>
 
-  <!-- PRESERVED glowing divider -->
+  <!-- Glowing divider (kept) -->
   <div class="hero-divider" aria-hidden="true"></div>
 
-  <!-- Main content -->
-  <main class="leadership-page">
-    <div class="container">
+  <!-- Main -->
+  <main class="container">
+    <!-- Fine print (requested) -->
+    <p class="fine-print">Click any card to learn more.</p>
 
-      <!-- ===== Prism Grid (expanding tiles; images 4:5; contact chips under cards) ===== -->
-      <section class="leaders-grid">
+    <!-- Grid -->
+    <section class="leaders-grid">
 
-        <!-- President 1 -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <!-- TIP: replace placeholder.jpg with real image; any aspect works (4:5 enforced) -->
-              <img src="placeholder.jpg" alt="Rayan Sheikh">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Rayan Sheikh</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">President</p>
+      <!-- Card template notes:
+           - Entire card is a button for a11y click.
+           - Data-* attributes feed the modal. Update emails/photos/bios as needed. -->
 
-              <!-- Inline bio (no overlay) -->
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Rayan coordinates team strategy, outreach, and the competitive calendar, aligning training, travel, and culture across the season.
-                </div>
-              </details>
-            </div>
-          </article>
-
-          <!-- Contact chip OUTSIDE the card -->
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Rayan Sheikh"
+              data-role="President"
+              data-img="placeholder.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Rayan coordinates team strategy, outreach, and the competitive calendar—aligning training, travel, and culture across the season.">
+        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Rayan Sheikh"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Rayan Sheikh</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">President</p>
         </div>
+      </button>
 
-        <!-- President 2 -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <img src="placeholder.jpg" alt="Allen Liu">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Allen Liu</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">President</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Allen supports competitive development and represents PDU on the APDA circuit, aligning training with tournament goals.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Allen Liu"
+              data-role="President"
+              data-img="placeholder.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Allen supports competitive development and represents PDU on the APDA circuit, aligning training with tournament goals.">
+        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Allen Liu"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Allen Liu</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">President</p>
         </div>
+      </button>
 
-        <!-- Operations -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <img src="your-photo.jpg" alt="Marcel Cato">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Marcel Cato</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">Director of Operations</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Travel, logistics, rosters, and TIDs—your point of contact for sign-ups, itineraries, and attendance.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Marcel Cato"
+              data-role="Director of Operations"
+              data-img="your-photo.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Travel, logistics, rosters, and TIDs—your point of contact for sign-ups, itineraries, and attendance.">
+        <div class="leader-media"><img src="your-photo.jpg" alt="Portrait of Marcel Cato"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Marcel Cato</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">Director of Operations</p>
         </div>
+      </button>
 
-        <!-- Finance -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <img src="pranav.jpg" alt="Pranav Gupta">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Pranav Gupta</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">Finance</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Manages budgets, reimbursements, and funding so members can focus on growing as debaters.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Pranav Gupta"
+              data-role="Finance"
+              data-img="pranav.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Manages budgets, reimbursements, and funding so members can focus on growing as debaters.">
+        <div class="leader-media"><img src="pranav.jpg" alt="Portrait of Pranav Gupta"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Pranav Gupta</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">Finance</p>
         </div>
+      </button>
 
-        <!-- Equity -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <span class="badge-equity">★ Equity</span>
-            <div class="leader-media">
-              <img src="placeholder.jpg" alt="Dara Adebanjo">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Dara Adebanjo</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">Equity</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Confidential reports, team culture, and coordination with tournament Equity—ensuring challenging debate without harm.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Dara Adebanjo"
+              data-role="Equity"
+              data-img="placeholder.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Confidential reports, team culture, and coordination with tournament Equity—ensuring challenging debate without harm.">
+        <span class="badge-equity">★ Equity</span>
+        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Dara Adebanjo"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Dara Adebanjo</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">Equity</p>
         </div>
+      </button>
 
-        <!-- Communications -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <img src="placeholder.jpg" alt="Dedra Annakie">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Dedra Annakie</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">Communications</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Mailing list, announcements, and social updates—keeping members and partners in the loop.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Dedra Annakie"
+              data-role="Communications"
+              data-img="placeholder.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Mailing list, announcements, and social updates—keeping members and partners in the loop.">
+        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Dedra Annakie"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Dedra Annakie</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">Communications</p>
         </div>
+      </button>
 
-        <!-- Education -->
-        <div class="leader-item fade-in">
-          <article class="leader-card">
-            <div class="leader-media">
-              <img src="amish.jpg" alt="Amish Gupta">
-            </div>
-            <div class="leader-info">
-              <h3 class="leader-name">Amish Gupta</h3>
-              <div class="leader-sep" aria-hidden="true"></div>
-              <p class="leader-title">Education</p>
-
-              <details class="bio">
-                <summary>Bio</summary>
-                <div class="bio-content">
-                  Lessons, scrims, and feedback frameworks to help members grow at their own pace and prep for tournaments.
-                </div>
-              </details>
-            </div>
-          </article>
-          <div class="leader-actions">
-            <a class="chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-          </div>
+      <button class="leader-card fade-in"
+              aria-haspopup="dialog"
+              data-name="Amish Gupta"
+              data-role="Education"
+              data-img="amish.jpg"
+              data-email="placeholder@nyu.edu"
+              data-bio="Lessons, scrims, and feedback frameworks to help members grow at their own pace and prep for tournaments.">
+        <div class="leader-media"><img src="amish.jpg" alt="Portrait of Amish Gupta"></div>
+        <div class="leader-info">
+          <h3 class="leader-name">Amish Gupta</h3>
+          <div class="leader-sep" aria-hidden="true"></div>
+          <p class="leader-title">Education</p>
         </div>
+      </button>
 
-      </section>
+    </section>
 
-      <!-- ===== Below-grid sections (forced-visible glass so they never “disappear”) ===== -->
-      <section class="below-cards">
+    <!-- Below-grid sections (kept + forced visible) -->
+    <section class="below-cards">
+      <article class="glass-card fade-in">
+        <h3 class="about-header">About the Executive Board</h3>
+        <p class="about-preview">
+          PDU’s Executive Board (“E-Board”) plans meetings, coaches novices, coordinates travel, upholds equity, and represents NYU on the APDA circuit. Officers align training goals, publish TIDs, and keep the season running smoothly.
+        </p>
+      </article>
 
-        <!-- About E-Board -->
-        <article class="glass-card fade-in">
-          <h3 class="about-header">About the Executive Board</h3>
-          <p class="about-preview">
-            PDU’s Executive Board (“E-Board”) plans meetings, coaches novices, coordinates travel, upholds equity, and represents NYU on the APDA circuit. Officers align training goals, publish TIDs, and keep the season running smoothly.
-          </p>
-        </article>
-
-        <!-- Next Steps -->
-        <article class="glass-card fade-in">
-          <h3 class="about-header">Next Steps</h3>
-          <div class="cta-row">
-            <a class="chip" href="members.html">Members →</a>
-            <a class="chip" href="about.html">About Us →</a>
-            <a class="chip" href="join.html">New? Join us →</a>
-            <a class="chip" href="contact.html">Contact PDU →</a>
-          </div>
-        </article>
-
-      </section>
-
-    </div>
+      <article class="glass-card fade-in">
+        <h3 class="about-header">Next Steps</h3>
+        <div class="modal-actions">
+          <a class="chip" href="members.html">Members →</a>
+          <a class="chip" href="about.html">About Us →</a>
+          <a class="chip" href="join.html">New? Join us →</a>
+          <a class="chip" href="contact.html">Contact PDU →</a>
+        </div>
+      </article>
+    </section>
   </main>
 
-  <footer class="container" style="opacity:.85; padding:1.5rem 1.25rem 3rem; text-align:center;">
+  <!-- Footer (light) -->
+  <footer class="container" style="opacity:.85; padding-bottom:3rem; text-align:center;">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
     <p class="disclaimer">NYU PDU is a student-run club, approved by but not affiliated with New York University in an institutional capacity.</p>
   </footer>
 
-  <!-- Back to top (optional) -->
-  <a href="#top" id="float-button" title="Back to top" style="position:fixed; right:20px; bottom:20px; width:56px; height:56px; display:grid; place-items:center; border-radius:50%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); backdrop-filter:blur(8px);">
-    <img src="PDULOGO_Trans.png" alt="Return Home" style="width:34px; height:34px;">
-  </a>
+  <!-- ===== Full-screen Modal (single template populated from card data) ===== -->
+  <div id="leaderModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <div class="modal-scrim" data-close></div>
+    <div class="modal-panel" role="document">
+      <button class="modal-close" aria-label="Close" data-close>×</button>
+
+      <div class="modal-media">
+        <img id="modalImg" alt="">
+      </div>
+
+      <div class="modal-body">
+        <h3 id="modalName" class="modal-name"></h3>
+        <div class="modal-sep" aria-hidden="true"></div>
+        <p id="modalRole" class="modal-role"></p>
+        <p id="modalBio" class="modal-bio"></p>
+
+        <div class="modal-actions">
+          <a id="modalEmail" class="chip" href="#" target="_blank" rel="noopener">Email →</a>
+          <!-- Add more chips here (e.g., LinkedIn, Calendly) when available -->
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    /* Subtle entrance reveal for cards/sections */
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); }
-      });
+    // ===== reveal on scroll (subtle) =====
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); } });
     }, { threshold: .08 });
-
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+    // ===== modal logic =====
+    const modal = document.getElementById('leaderModal');
+    const modalImg  = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalBio  = document.getElementById('modalBio');
+    const modalEmail = document.getElementById('modalEmail');
+
+    let lastFocus = null;
+
+    function openModal(data){
+      lastFocus = document.activeElement;
+
+      modalImg.src = data.img || '';
+      modalImg.alt = data.name ? `Portrait of ${data.name}` : '';
+      modalName.textContent = data.name || '';
+      modalRole.textContent = data.role || '';
+      modalBio.textContent  = data.bio  || '';
+      modalEmail.href = data.email ? `mailto:${data.email}` : '#';
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+
+      // focus trap start at close button
+      const closeBtn = modal.querySelector('.modal-close');
+      closeBtn.focus();
+
+      trapFocus(modal);
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if(lastFocus) lastFocus.focus();
+      releaseTrap();
+    }
+
+    // open handlers
+    document.querySelectorAll('.leader-card').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        const data = {
+          name: card.dataset.name,
+          role: card.dataset.role,
+          img:  card.dataset.img,
+          bio:  card.dataset.bio,
+          email:card.dataset.email
+        };
+        openModal(data);
+      });
+      // Enter/Space already work on button; no extra key handler needed
+    });
+
+    // close handlers
+    modal.addEventListener('click', (e)=>{
+      if(e.target.matches('[data-close]')) closeModal();
+    });
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    // ===== focus trap =====
+    let trapListener = null;
+    function trapFocus(container){
+      const selectors = [
+        'a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])',
+        'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed',
+        '[contenteditable]', '[tabindex]:not([tabindex^="-"])'
+      ];
+      const focusables = () => Array.from(container.querySelectorAll(selectors.join(',')))
+                                    .filter(el => el.offsetParent !== null || el === document.activeElement);
+
+      trapListener = (e)=>{
+        if(e.key !== 'Tab') return;
+        const focusable = focusables();
+        if(!focusable.length) return;
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if(e.shiftKey && document.activeElement === first){ last.focus(); e.preventDefault(); }
+        else if(!e.shiftKey && document.activeElement === last){ first.focus(); e.preventDefault(); }
+      };
+      container.addEventListener('keydown', trapListener);
+    }
+    function releaseTrap(){
+      if(trapListener){ modal.removeEventListener('keydown', trapListener); trapListener = null; }
+    }
   </script>
 </body>
 </html>
