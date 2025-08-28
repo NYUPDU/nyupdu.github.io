@@ -243,6 +243,38 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .event-meta{ opacity:.9; margin:.1rem 0 .25rem; font-size:.95rem; }
 .event-note{ opacity:.85; font-size:.92rem; margin-bottom:.6rem; }
 
+/* === Tournament badges (judges needed) === */
+.event-badges{
+  display:flex; gap:.4rem; align-items:center; margin:.35rem 0 .25rem;
+}
+
+.badge-need{
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.25rem .5rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(255,255,255,.10);
+  font-size:.9rem; line-height:1;
+  backdrop-filter:blur(8px);
+}
+.badge-need .icon{
+  width:14px; height:14px; opacity:.9; display:inline-block;
+  fill:currentColor;
+}
+
+/* State tints */
+.badge-need.need{
+  border-color:rgba(255, 160, 122, .55); /* soft alert */
+  box-shadow:0 0 12px rgba(255,160,122,.22);
+}
+.badge-need.ok{
+  border-color:rgba(144, 238, 144, .45); /* soft good */
+  box-shadow:0 0 10px rgba(144,238,144,.18) inset;
+}
+.badge-need.tbd{
+  border-color:rgba(255,255,255,.28);
+  opacity:.95;
+}
+
 /* ====== Why PDU bullets ====== */
 .points{ margin:.25rem 0 1rem 1.2rem; }
 .points li{ margin:.25rem 0; }
