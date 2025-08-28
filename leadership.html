@@ -44,10 +44,6 @@
     }
 
     /* ===== Hero ===== */
-    .hero-section{
-      padding: calc(60px + 2vw) 1.25rem 1.25rem;
-      text-align:center;
-    }
     .page-title{
       font-family: "DM Serif Display", serif;
       font-size: clamp(2rem, 2.2rem + 1vw, 3rem);
@@ -122,6 +118,8 @@
     .leader-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 20%; display:block; }
 
     /* Info band */
+
+    .leader-info{ padding: .45rem 1rem 1.1rem; text-align:center; color:#fff; }
     .leader-info{ padding: .7rem 1rem .9rem; text-align:center; color:#fff; }
     .leader-name{ font-family:"DM Serif Display", serif; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); margin:0; letter-spacing:.2px; }
     .leader-sep{
@@ -130,7 +128,7 @@
       box-shadow: 0 0 10px rgba(199,191,255,.4);
       border-radius:999px;
     }
-    .leader-title{ font-weight:700; letter-spacing:.3px; opacity:.95; margin:0; }
+    .leader-title{ font-weight:400; letter-spacing:.3px; opacity:.95; margin:0; }
 
     /* ===== Modal (full-screen) ===== */
     .modal{ position:fixed; inset:0; z-index:1000; display:none; }
@@ -139,7 +137,7 @@
       position:absolute; inset:0; background: rgba(8,8,16,.75); backdrop-filter: blur(6px);
     }
     .modal-panel{
-      position:relative; z-index:1001; max-width: 980px; margin: min(8vh,80px) auto; padding: 0;
+      position:relative; z-index:1001; max-width: 980px; margin: calc(min(8vh,80px) + 40px) auto; padding: 0;
       background: var(--glass-bg); border:1px solid var(--glass-border); border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0,0,0,.45);
       overflow:hidden; display:flex; flex-direction:column;
@@ -178,7 +176,7 @@
     }
 
     @media (max-width: 560px){
-      .modal-panel{ margin: 0.75rem; }
+      .modal-panel{ margin: calc(60px + 0.75rem) 0.75rem 0.75rem; }
     }
 
     /* ===== Below-grid sections (forced visible) ===== */
@@ -312,7 +310,7 @@
   </aside>
 
   <!-- Hero -->
-  <section class="hero-section">
+  <section class="hero-section hero-compact" id="leadersHero">
     <h1 class="page-title">Leadership</h1>
     <p class="page-subtitle">Parliamentary Debate Union Executive Board</p>
   </section>
