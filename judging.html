@@ -22,7 +22,7 @@
     .judge-hero .page-subtitle{ max-width:68ch; margin-inline:auto; }
     .hero-cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.9rem; }
 
-    /* CHANGE: tiny size + padding adjustment for mobile hero chips (Firefox edge case) */
+    /* Mobile Firefox chip spacing fix */
     @media (max-width: 520px){
       .judge-hero .hero-cta-row{ padding-bottom:.25rem; }
       .judge-hero .hero-cta-row .link-chip{ padding:.42rem .72rem; font-size:.95rem; }
@@ -41,7 +41,7 @@
     .tile, .step, .kit-card, .expander{
       padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
       background:rgba(255,255,255,.08);
-      min-width:0; /* prevent clipping in grid children */
+      min-width:0;
     }
     .tile h4, .step h4, .kit-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .3rem; }
 
@@ -145,24 +145,23 @@
       border:1px solid rgba(255,255,255,.28); border-radius:8px; padding:.2rem .4rem;
     }
 
-    /* ====== CHANGES: Ballot Builder chip sizing & spacing ====== */
-    /* Desktop/tablet: compact chip controls */
+    /* ====== Ballot Builder chip sizing & spacing ====== */
     .chip.compact{ padding:.42rem .72rem; font-weight:700; }
     .chip.compact select{ font-size:.95rem; padding:.18rem .36rem; }
     .chip.compact{ width:100%; justify-content:space-between; align-items:center; }
 
-    /* Extra space between controls and RFD output */
-    .kit-rfd .mini-controls{ margin-bottom:.7rem; } /* CHANGE: added margin */
+    .kit-rfd .mini-controls{ margin-bottom:.7rem; }
     #rfOut{ margin-top:.1rem; }
 
-    /* ====== NEW: Mobile fallback to plain stacked fields ======
-       On small screens, convert those chip+select combos into simple
-       label+select fields to eliminate any chance of clipping. */
+    /* ====== NEW: Always-stacked controls for Winner & Round focus ====== */
+    /* CHANGE: force one-column stack regardless of viewport to prevent clipping on wide screens */
+    .stack-fields{ display:grid; grid-template-columns:1fr; gap:.5rem; }
+
+    /* ====== Mobile fallback: plain stacked fields ====== */
     @media (max-width: 520px){
       .chip.compact.mobileField{
-        /* strip chip chrome */
         padding:0; border:none; background:transparent; border-radius:0;
-        display:block; /* stack label + control */
+        display:block;
       }
       .chip.compact.mobileField > .field-label{
         display:block; font-weight:800; margin-bottom:.35rem; font-size:.95rem;
@@ -521,8 +520,8 @@
           <h4>Ballot Builder (RFD)</h4>
           <p class="muted">Fill and copy/download a clean RFD scaffold.</p>
 
-          <!-- CHANGE: desktop = compact chips; mobile = plain stacked fields via .mobileField -->
-          <div class="two-col" style="gap:.5rem;">
+          <!-- CHANGE: enforced stacked controls at ALL widths -->
+          <div class="stack-fields">
             <label class="chip compact mobileField">
               <span class="field-label">Winner</span>
               <select id="rfWinner">
@@ -645,6 +644,7 @@
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
     document.querySelectorAll('.drawer-toggle').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
