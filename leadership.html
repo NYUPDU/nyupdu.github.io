@@ -58,18 +58,27 @@
       max-width:1100px;
       margin: 0 auto;
     }
-    /* Center the last (7th) card across the row for 2/2/2/1 */
-    .leader-card:nth-child(7){
+
+    /* CHANGE: robust targeting of the 7th card using nth-of-type so added action rows don't break centering */
+    .leadership-grid > .leader-card:nth-of-type(7){
       grid-column: 1 / -1;
       max-width: 560px;
       justify-self: center;
+    }
+    /* CHANGE: ensure the external action row that follows the 7th card also centers and matches width */
+    .leadership-grid > .leader-card:nth-of-type(7) + .leader-actions{
+      grid-column: 1 / -1;
+      justify-self: center;
+      max-width: 560px;
     }
 
     /* ===== Card look: taller, glassier ===== */
     .leader-card{
       position:relative;
-      display:flex; flex-direction:column;
-      min-height: 540px; /* taller feel */
+      /* CHANGE: switch to grid to enforce ~80/20 photo:text ratio */
+      display:grid;
+      grid-template-rows: 4fr 1fr; /* ~80% image, ~20% info */
+      min-height: 540px; /* keep overall tall feel */
       background: rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.2);
       border-radius: 20px;
@@ -87,26 +96,26 @@
 
     /* Photo area (taller) */
     .leader-photo{
-      width:100%; height: 340px; /* tall */
+      width:100%; height:100%; /* CHANGE: fill the first grid row */
       object-fit:cover; display:block;
       border-bottom:1px solid rgba(255,255,255,.18);
     }
 
-    /* Info area */
+    /* Info area (narrower text band) */
     .leader-info{
-      flex: 1 1 auto;
-      padding: 1rem 1.1rem 0.5rem;
+      padding: 0.6rem 1rem; /* CHANGE: slightly tighter to emphasize 20% band */
       display:flex; flex-direction:column;
-      align-items:center; text-align:center; justify-content:flex-start;
+      align-items:center; text-align:center; justify-content:center; /* centered within the thin band */
     }
     .leader-name{
       font-family:'DM Serif Display', serif;
-      font-size:1.6rem; letter-spacing:.2px;
+      /* CHANGE: larger name font */
+      font-size:1.9rem; letter-spacing:.2px;
     }
     .leader-sep{
       width: 72%;
       height: 2px;
-      margin: .5rem auto .6rem;
+      margin: .45rem auto .5rem;
       background: linear-gradient(90deg, rgba(255,255,255,.4), rgba(124,58,237,.6), rgba(255,255,255,.4));
       box-shadow: 0 0 10px rgba(199,191,255,.4);
       border-radius: 999px;
@@ -126,9 +135,10 @@
       box-shadow:0 6px 18px rgba(0,0,0,.35);
     }
 
-    /* Always-visible actions under card */
+    /* CHANGE: Actions are now OUTSIDE the card as a sibling grid item */
     .leader-actions{
-      margin-top:.75rem; padding: 0 1.1rem 1.1rem;
+      margin-top:-1rem; /* visually tuck closer under the card */
+      padding: 0 0 0.25rem;
       display:flex; justify-content:center;
     }
 
@@ -148,11 +158,16 @@
       position:relative;
     }
     .leader-popup p{ font-size:.98rem; }
+
     .leader-close{
       position:absolute; top:-2px; right:-2px;
       background:transparent; color:#fff; border:1px solid rgba(255,255,255,.3);
       width:34px; height:34px; border-radius:10px; font-size:1.1rem; line-height:1;
       cursor:pointer;
+    }
+    /* CHANGE: Hide the "X" close button on desktop/hover devices; only show on touch/mobile */
+    @media (hover:hover) and (pointer:fine){
+      .leader-close{ display:none !important; }
     }
 
     /* Desktop: show on hover */
@@ -165,13 +180,13 @@
     /* Staggered entrance (subtle) */
     .leader-card{ opacity:0; transform: translateY(24px); }
     .leader-card.reveal{ opacity:1; transform: translateY(0); transition: all .7s ease; }
-    .leader-card:nth-child(1){ transition-delay:.05s; }
-    .leader-card:nth-child(2){ transition-delay:.12s; }
-    .leader-card:nth-child(3){ transition-delay:.19s; }
-    .leader-card:nth-child(4){ transition-delay:.26s; }
-    .leader-card:nth-child(5){ transition-delay:.33s; }
-    .leader-card:nth-child(6){ transition-delay:.40s; }
-    .leader-card:nth-child(7){ transition-delay:.47s; }
+    .leader-card:nth-of-type(1){ transition-delay:.05s; }
+    .leader-card:nth-of-type(2){ transition-delay:.12s; }
+    .leader-card:nth-of-type(3){ transition-delay:.19s; }
+    .leader-card:nth-of-type(4){ transition-delay:.26s; }
+    .leader-card:nth-of-type(5){ transition-delay:.33s; }
+    .leader-card:nth-of-type(6){ transition-delay:.40s; }
+    .leader-card:nth-of-type(7){ transition-delay:.47s; }
 
     /* Below-grid sections */
     .below-cards{
@@ -186,20 +201,24 @@
         grid-template-columns: 1fr;
         max-width: 680px;
       }
-      .leader-card:nth-child(7){
+      /* CHANGE: keep 7th centered logic simple on mobile by removing special-case widths */
+      .leadership-grid > .leader-card:nth-of-type(7){
         grid-column: auto;
         max-width: none;
         justify-self: stretch;
       }
-      .leader-photo{ height: 300px; }
+      .leader-photo{ height: 100%; } /* still fills its grid row */
+      /* Slightly reduce name size on small screens for fit */
+      .leader-name{ font-size:1.6rem; }
+      .leader-actions{ margin-top:-0.5rem; }
     }
   </style>
 </head>
-
 <body id="top">
   <!-- Navbar (desktop unchanged; mobile = NYU left · PDU centered · burger right) -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
+
       <!-- NYU (left on mobile) -->
       <div class="nav-right" aria-label="NYU logo">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
@@ -242,16 +261,14 @@
           </li>
 
           <li><a href="leadership.html" aria-current="page">Leadership</a></li>
-          <li><a href="members.html">Members</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
 
       <!-- PDU logo (left on desktop; centered on mobile) -->
       <div class="nav-left">
-        <a href="index.html" aria-label="Home" class="brand-link">
+        <a href="index.html" aria-label="Home">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
-          <span class="brand-text">NYU | PDU</span>
         </a>
       </div>
 
@@ -304,7 +321,6 @@
         </li>
 
         <li><a href="leadership.html">Leadership</a></li>
-        <li><a href="members.html">Members</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -333,14 +349,16 @@
         </div>
         <div class="leader-popup" aria-hidden="true">
           <div class="leader-popup-inner">
+            <!-- NOTE: the close button remains in markup; it's hidden on desktop via CSS -->
             <button class="leader-close" aria-label="Close bio">×</button>
             <p>Rayan serves as President of the Parliamentary Debate Union, coordinating strategy, outreach, and the competitive calendar. They help set goals for training, travel, and team culture.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
       <article class="leader-card" data-name="Allen Liu">
         <img src="placeholder.jpg" alt="Allen Liu" class="leader-photo" />
@@ -355,10 +373,11 @@
             <p>Allen serves as President, supporting competitive development and representing PDU on the APDA circuit. They work with officers to align training with tournament goals.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
       <!-- Operations -->
       <article class="leader-card" data-name="Marcel Cato">
@@ -374,10 +393,11 @@
             <p>Marcel leads Operations—travel, logistics, rosters, and the Tournament Information Documents (TIDs). They’re your point of contact for sign-ups, travel, and attendance.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
       <!-- Finance -->
       <article class="leader-card" data-name="Pranav Gupta">
@@ -393,10 +413,11 @@
             <p>Pranav manages budgets, reimbursements, and funding, keeping travel and tournament fees squared away so members can focus on debating.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
       <!-- Equity -->
       <article class="leader-card" data-name="Dara Adebanjo">
@@ -417,10 +438,11 @@
             </p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
       <!-- Communications -->
       <article class="leader-card" data-name="Dedra Annakie">
@@ -436,12 +458,13 @@
             <p>Dedra handles Communications—mailing list, announcements, and social updates—keeping members and campus partners in the loop.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
 
-      <!-- Education -->
+      <!-- Education (7th card: auto-centered by CSS; action row also centered) -->
       <article class="leader-card" data-name="Amish Gupta">
         <img src="amish.jpg" alt="Amish Gupta" class="leader-photo" />
         <div class="leader-info">
@@ -455,15 +478,16 @@
             <p>Amish runs Education—lesson meetings, scrims, and feedback frameworks. They help members grow skills at their own pace and prepare for tournaments.</p>
           </div>
         </div>
-        <div class="leader-actions">
-          <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
-        </div>
       </article>
+      <!-- CHANGE: Contact moved OUTSIDE the card (this one auto-centers to match the card width) -->
+      <div class="leader-actions">
+        <a class="link-chip" href="mailto:placeholder@nyu.edu">Contact →</a>
+      </div>
     </div>
 
     <!-- Below-grid sections -->
     <div class="below-cards">
-      <!-- Find Us -->
+      <!-- Find Us (preserved) -->
       <section class="glass-card">
         <h3 class="about-header">Find Us</h3>
         <p class="about-preview">
@@ -475,26 +499,22 @@
         </div>
       </section>
 
-      <!-- About the Executive Board -->
+      <!-- CHANGE: About the Executive Board (requested explainer card just below profiles) -->
       <section class="glass-card">
         <h3 class="about-header">About the Executive Board</h3>
         <p class="about-preview">
-          PDU’s Executive Board works as a single team: planning meetings, coordinating travel, supporting novices, maintaining equity, and representing NYU on the APDA circuit. We meet regularly to review training goals, share feedback, and keep the team running smoothly.
+          PDU’s Executive Board (“E-Board”) works as one team to plan meetings, coach novices, coordinate travel, uphold equity, and represent NYU on the APDA circuit. Officers meet regularly to align training goals, publish TIDs, and ensure a smooth, supportive season for all members.
         </p>
       </section>
 
-      <!-- Next Steps -->
+      <!-- CHANGE: Next Steps at the very bottom with exactly four chips -->
       <section class="glass-card">
         <h3 class="about-header">Next Steps</h3>
         <div class="cta-row" style="display:flex; flex-wrap:wrap; gap:.5rem;">
-          <a class="link-chip" href="join.html">Join Us →</a>
-          <a class="link-chip" href="beginner.html">Beginner Guide →</a>
-          <a class="link-chip" href="practicetools.html">Practice Tools →</a>
-          <a class="link-chip" href="tournaments.html">Tournaments →</a>
-          <a class="link-chip" href="resources.html">Resources Library →</a>
-          <a class="link-chip" href="equity.html">Equity Policy →</a>
-          <a class="link-chip" href="calendar.html">Calendar →</a>
-          <a class="link-chip" href="contact.html">Contact →</a>
+          <a class="link-chip" href="members.html">Members →</a>
+          <a class="link-chip" href="about.html">About Us →</a>
+          <a class="link-chip" href="join.html">New? Join us →</a>
+          <a class="link-chip" href="contact.html">Contact PDU →</a>
         </div>
       </section>
     </div>
@@ -567,9 +587,9 @@
       if(isTouch){
         // open on card body tap
         card.addEventListener('click', (e)=>{
-          const inActions = e.target.closest('.leader-actions');
+          // CHANGE NOTE: actions moved outside the card, so this guard simply ignores clicks on the close button
           const inClose = e.target.closest('.leader-close');
-          if(inActions || inClose) return; // don't toggle if clicking chip or close
+          if(inClose) return;
           popup.classList.add('open');
           popup.setAttribute('aria-hidden','false');
         });
