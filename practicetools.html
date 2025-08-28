@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ====================== META & HEAD ====================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Practice Tools | NYU PDU</title>
+
+  <!-- Favicon & Fonts -->
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Sitewide CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- OPTIONAL: tiny zip helper (CDN) for the "Export Bundle" tool 
+       - Small, well-known lib; safe for GH Pages; if you prefer no CDNs, we can remove the bundler and fallback to multiple .txt downloads. -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>
+
+  <!-- ====================== PAGE-LOCAL CSS ====================== -->
+  <style>
+    /* ---------- GLOBAL SAFETY (fixes float button on some Android browsers) ---------- */
+    html, body { overflow-x: hidden; } /* prevent off-screen "negative headspace" horizontal scroll */
+    #float-button{
+      position:fixed;
+      right:clamp(12px, env(safe-area-inset-right) + 12px, 24px);
+      bottom:clamp(12px, env(safe-area-inset-bottom) + 12px, 24px);
+      z-index: 9999;
+    }
+    #float-button img{ display:block; max-width:56px; height:auto; }
+
+    /* ---------- HERO ---------- */
+    .tools-hero .page-title{ font-size:3rem; }
+    .tools-hero .page-subtitle{ max-width:64ch; margin-inline:auto; }
+    .cta-banner{
+      margin-top:.9rem; display:flex; justify-content:center;
+    }
+    .cta-banner a{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.7rem 1rem; border-radius:14px;
+      background:rgba(124,58,237,.22);
+      border:1px solid rgba(255,255,255,.28);
+      font-weight:800; text-decoration:none; color:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.25), inset 0 0 24px rgba(199,191,255,.18);
+    }
+    .cta-banner a:hover{ background:rgba(124,58,237,.3); }
+
+    /* ---------- SECTIONS & CARDS ---------- */
+    .section-intro{ margin:.2rem 0 .75rem; opacity:.95; }
+    .glass-card{ /* inherits site theme */ }
+    .tool-grid{ display:grid; gap:1rem; }
+    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
+
+    .tool-card{
+      padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+    }
+    .tool-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .4rem; }
+
+    .tool-row{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+    .stack{ display:grid; gap:.5rem; }
+    .muted{ opacity:.9; }
+
+    /* ---------- BUTTONS / CHIPS ---------- */
+    .btn, .chip, .ghost {
+      padding:.5rem .85rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+    }
+    .btn:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); }
+    .ghost{ background:transparent; }
+    .btn-icon{ width:1.1rem; display:inline-block; text-align:center; }
+
+    /* ---------- TIMERS ---------- */
+    .timer-wrap{ display:grid; justify-items:center; gap:.7rem; text-align:center; }
+    .timer-dial{
+      width:200px; height:200px; border-radius:50%;
+      display:grid; place-items:center;
+      background:
+        conic-gradient(rgba(124,58,237,.9) 0deg, rgba(124,58,237,.9) var(--angle,0deg), rgba(255,255,255,.12) var(--angle,0deg) 360deg);
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:inset 0 0 24px rgba(199,191,255,.18), 0 12px 36px rgba(0,0,0,.35);
+    }
+    .timer-core{
+      width:152px; height:152px; border-radius:50%;
+      display:grid; place-items:center; backdrop-filter:blur(10px);
+      background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.25);
+      font-weight:800; letter-spacing:.5px; font-size:1.5rem;
+      text-shadow:0 0 12px rgba(199,191,255,.25);
+    }
+    .timer-controls, .timer-presets{ display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; }
+    .poi-bar{
+      width:100%; max-width:520px; height:12px; border-radius:999px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
+    }
+    .poi-window{
+      height:100%; background:linear-gradient(90deg, transparent 0, rgba(199,191,255,.35) 20%, rgba(199,191,255,.35) 80%, transparent 100%);
+      position:relative;
+    }
+    .timer-dial.glow60{ box-shadow:0 0 18px rgba(255,255,255,.25), 0 0 36px rgba(124,58,237,.45), inset 0 0 24px rgba(199,191,255,.28); }
+    .timer-dial.glow30{ box-shadow:0 0 22px rgba(255,255,255,.3), 0 0 44px rgba(124,58,237,.6), inset 0 0 28px rgba(199,191,255,.34); }
+
+    /* ---------- PREP PLANNER ---------- */
+    .planner-row{ display:grid; gap:.6rem; }
+    .planner-selects{ display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+    .select{
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      padding:.5rem .9rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff; font-weight:700;
+    }
+
+    /* ---------- FLOW SHEET ---------- */
+    .flow-wrap{ overflow:auto; }
+    .flow-table{ border-collapse:separate; border-spacing:0; min-width:800px; width:100%; }
+    .flow-table th, .flow-table td{
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); padding:.55rem .6rem; vertical-align:top;
+    }
+    .flow-table th{ position:sticky; top:0; backdrop-filter:blur(6px); z-index:1; }
+    .flow-table td[contenteditable="true"]{
+      outline:none; white-space:pre-wrap; /* PRESERVE SPACES & linebreaks */
+    }
+    .flow-toolbar{ display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 0; }
+
+    /* ---------- CASE BUILDER ---------- */
+    .form{ display:grid; gap:.6rem; }
+    .form label{ font-weight:800; }
+    .input, .textarea{
+      width:100%; padding:.55rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff;
+    }
+    .textarea{ min-height:96px; }
+    .lint{ border-left:4px solid transparent; padding-left:.5rem; }
+    .lint.warn{ border-left-color:#f6c453; }
+    .lint.ok{ border-left-color:#5ad17a; }
+
+    /* ---------- DRILLS ---------- */
+    .drill-grid{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 960px){ .drill-grid{ grid-template-columns:repeat(3,1fr); } }
+    .drill{ padding:1rem; border-radius:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); display:grid; gap:.5rem; }
+    .drill .prompt{ opacity:.95; min-height:1.2lh; }
+    .drill textarea{ width:100%; min-height:110px; padding:.6rem; border-radius:10px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; }
+    .drill .actions{ display:flex; gap:.45rem; flex-wrap:wrap; }
+
+    /* ---------- PACT, WEIGHING, POO ASSIST ---------- */
+    .mini-list{ margin:.3rem 0 .4rem; }
+    .mini-list li{ margin:.15rem 0; }
+    .status{ font-weight:800; }
+
+    /* ---------- CTA BANDS ---------- */
+    .cta-band{
+      margin:.4rem 0; padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.25);
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.12));
+      text-align:center;
+    }
+
+    /* ---------- TOC drawer active state ---------- */
+    .toc-list a.active{ font-weight:800; }
+
+    /* ---------- RESPONSIVE TYPOGRAPHY ---------- */
+    @media (max-width: 960px){
+      .tools-hero .page-title{ font-size:2.4rem; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- ====================== NAVBAR (GLOBAL) ====================== -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ====================== MOBILE DRAWER (GLOBAL) ====================== -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero-section hero-compact tools-hero">
+    <div>
+      <h1 class="page-title">Practice Tools</h1>
+      <p class="page-subtitle">Everything you need to prep, flow, time, and sharpen your debating—mobile-first, offline-friendly.</p>
+      <div class="cta-banner">
+        <a href="beginner.html" aria-label="Open Beginner Guide">← Back to Beginner Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CONTENTS DRAWER ====================== -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#timers" class="active">Timer Suite</a>
+      <a href="#planner">Prep Planner</a>
+      <a href="#flow">Flow Sheet</a>
+      <a href="#case-lab">Case Builder</a>
+      <a href="#drills">Drills Arena</a>
+      <a href="#weigh">Weighing Coach</a>
+      <a href="#pact">Partner Pact</a>
+      <a href="#poo">POO Assistant</a>
+      <a href="#export">Export Bundle</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <!-- ====================== MAIN ====================== -->
+  <main class="main-content">
+
+    <!-- ========= TIMER SUITE ========= -->
+    <section class="glass-card" id="timers">
+      <h3 class="about-header">Timer Suite</h3>
+      <p class="section-intro">APDA presets with grace baked in: <b>7:30</b> · <b>8:30</b> · <b>4:30</b> · <b>5:30</b>. Optional beeps and POI window.</p>
+
+      <div class="timer-wrap">
+        <div class="timer-dial" id="dial">
+          <div class="timer-core" id="timeReadout">07:30</div>
+        </div>
+
+        <div class="timer-presets" aria-label="Timer presets">
+          <!-- PRESETS use minutes:seconds; stored as total seconds -->
+          <button class="btn" data-sec="450">7:30</button>
+          <button class="btn" data-sec="510">8:30</button>
+          <button class="btn" data-sec="270">4:30</button>
+          <button class="btn" data-sec="330">5:30</button>
+        </div>
+
+        <div class="timer-controls" aria-label="Timer controls">
+          <button class="btn" id="startTimer"><span class="btn-icon">▶</span>Start</button>
+          <button class="btn" id="pauseTimer"><span class="btn-icon">⏸</span>Pause</button>
+          <button class="btn" id="resetTimer"><span class="btn-icon">⟲</span>Reset</button>
+          <label class="chip" style="cursor:pointer;">
+            <input type="checkbox" id="poiToggle" style="margin-right:.4rem;"> Show POI window
+          </label>
+          <label class="chip" style="cursor:pointer;">
+            <input type="checkbox" id="beepToggle" style="margin-right:.4rem;"> Beep at minutes
+          </label>
+        </div>
+
+        <div class="poi-bar" aria-hidden="true">
+          <div class="poi-window" id="poiWindow" style="width:0%; left:0%"></div>
+        </div>
+
+        <p class="muted">Shortcuts: <b>Space</b> start/pause, <b>R</b> reset (disabled when typing).</p>
+      </div>
+    </section>
+
+    <!-- ========= PREP PLANNER ========= -->
+    <section class="glass-card" id="planner">
+      <h3 class="about-header">Prep Planner</h3>
+      <p class="section-intro">Quickly set up **Case** vs **Motions** rounds. The planner configures 15-minute prep and highlights who preps when.</p>
+
+      <div class="planner-row">
+        <div class="planner-selects">
+          <select id="roundType" class="select" aria-label="Round type">
+            <option value="case">Case Round (Gov pre-written case)</option>
+            <option value="motions">Motions Round (motion revealed)</option>
+          </select>
+          <select id="side" class="select" aria-label="Your side">
+            <option value="gov">Government</option>
+            <option value="opp">Opposition</option>
+          </select>
+          <button class="btn" id="startPrep"><span class="btn-icon">⏱</span>Start 15:00 Prep</button>
+          <button class="ghost" id="stopPrep"><span class="btn-icon">✖</span>Stop</button>
+        </div>
+
+        <div class="tool-row">
+          <span id="prepStatus" class="status">Status: Idle</span>
+          <span id="prepCountdown" class="chip" aria-live="polite">15:00</span>
+        </div>
+
+        <div class="tool-card">
+          <h4>POCs (during prep)</h4>
+          <p class="muted">Use these to clarify definitions/mechanism right after the case statement, then work them into prep.</p>
+          <div class="stack">
+            <div class="tool-row">
+              <button class="btn" data-poc="defs">Ask to clarify a definition</button>
+              <button class="btn" data-poc="actors">Ask who the actor is</button>
+              <button class="btn" data-poc="mech">Ask how enforcement works</button>
+              <button class="btn" data-poc="scope">Ask about scope/limits</button>
+            </div>
+            <textarea id="pocLog" class="textarea" placeholder="Your POCs & answers will collect here…"></textarea>
+            <div class="tool-row">
+              <button class="ghost" id="copyPOCs">Copy POCs</button>
+              <button class="ghost" id="clearPOCs">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= FLOW SHEET ========= -->
+    <section class="glass-card" id="flow">
+      <h3 class="about-header">Flow Sheet</h3>
+      <p class="section-intro">Type freely; spaces/line breaks are preserved. Add rows, copy or export text/CSV.</p>
+
+      <div class="flow-wrap">
+        <table class="flow-table" id="flowTable" aria-label="Flow sheet">
+          <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th>PMC</th><th>LOC</th><th>MG</th><th>MO</th><th>LOR</th><th>PMR</th>
+            <th>Notes</th>
+          </tr>
+          </thead>
+          <tbody id="flowBody"><!-- rows injected --></tbody>
+        </table>
+      </div>
+      <div class="flow-toolbar">
+        <button class="btn" id="addRow"><span class="btn-icon">＋</span>Add row</button>
+        <button class="btn" id="copyFlow"><span class="btn-icon">📋</span>Copy</button>
+        <button class="btn" id="exportFlowTxt"><span class="btn-icon">⬇</span>Export .txt</button>
+        <button class="btn" id="exportFlowCsv"><span class="btn-icon">⬇</span>Export .csv</button>
+        <button class="ghost" id="clearFlow"><span class="btn-icon">✖</span>Clear</button>
+      </div>
+    </section>
+
+    <!-- ========= CASE BUILDER ========= -->
+    <section class="glass-card" id="case-lab">
+      <h3 class="about-header">Case Builder</h3>
+      <p class="section-intro">Build a fair, winnable case. Lints flag potential tight/spec issues early. Save locally or export.</p>
+
+      <div class="form">
+        <label>Resolution (“This House believes that…”)
+          <input id="cbRes" class="input" placeholder="This House believes that…">
+        </label>
+        <label>Key definitions
+          <textarea id="cbDefs" class="textarea" placeholder="Define terms that matter; be clear and fair."></textarea>
+        </label>
+        <label>Actors & mechanism (who does what, how)
+          <textarea id="cbMech" class="textarea" placeholder="Specify who acts, incentives, feasibility, enforcement."></textarea>
+        </label>
+        <label>Reasons (2–4), with warrants → impacts
+          <textarea id="cbReasons" class="textarea" placeholder="Reason #1 — warrants → impact
+Reason #2 — warrants → impact"></textarea>
+        </label>
+        <label>Comparative world (why your world is better)
+          <textarea id="cbComp" class="textarea" placeholder="Explain why your world is strictly better than the status quo."></textarea>
+        </label>
+
+        <!-- Live lint / hints -->
+        <div id="cbLint" class="lint muted">Lint: (waiting for input)</div>
+
+        <div class="tool-row">
+          <button class="btn" id="cbSave">Save (local)</button>
+          <button class="btn" id="cbLoad">Load</button>
+          <button class="btn" id="cbExport">Export .txt</button>
+          <button class="ghost" id="cbClear">Clear</button>
+          <button class="btn" id="cbOutline"><span class="btn-icon">📋</span>Copy PM/MG outline</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= DRILLS ARENA ========= -->
+    <section class="glass-card" id="drills">
+      <h3 class="about-header">Drills Arena</h3>
+      <p class="section-intro">Fast reps. Timers live here so you don’t need to scroll back.</p>
+
+      <div class="drill-grid">
+        <!-- Rebuttal sprint -->
+        <div class="drill">
+          <h4>90s Rebuttal Sprint</h4>
+          <div class="prompt" id="rebPrompt">Click “New prompt”.</div>
+          <div class="actions">
+            <button class="btn" id="rebNew">New prompt</button>
+            <button class="btn" id="rebStart">Start 90s</button>
+            <button class="ghost" id="rebCopy">Copy</button>
+          </div>
+          <textarea id="rebText" placeholder="Write your rebuttal…"></textarea>
+        </div>
+
+        <!-- Weighing sprint -->
+        <div class="drill">
+          <h4>Weighing Sprint</h4>
+          <div class="prompt" id="wghPrompt">Click “New weighing”.</div>
+          <div class="actions">
+            <button class="btn" id="wghNew">New weighing</button>
+            <button class="ghost" id="wghCopy">Copy</button>
+          </div>
+          <textarea id="wghText" placeholder="Write two sentences that weigh clearly…"></textarea>
+        </div>
+
+        <!-- POI burst (Optional practice) -->
+        <div class="drill">
+          <h4>POI Burst (60s)</h4>
+          <div class="prompt" id="poiPrompt">Click “New prompt”.</div>
+          <div class="actions">
+            <button class="btn" id="poiNew">New prompt</button>
+            <button class="btn" id="poiStart">Start 60s</button>
+            <button class="ghost" id="poiCopy">Copy</button>
+          </div>
+          <textarea id="poiText" placeholder="Draft 2 concise POIs…"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= WEIGHING COACH ========= -->
+    <section class="glass-card" id="weigh">
+      <h3 class="about-header">Weighing Coach</h3>
+      <p class="section-intro">Compose crisp, comparative weighing lines. Pick an axis, then fill the template.</p>
+
+      <div class="two-col">
+        <div class="tool-card">
+          <h4>Pick axes</h4>
+          <div class="tool-row">
+            <label class="chip"><input type="checkbox" class="waxe" value="magnitude"> Magnitude</label>
+            <label class="chip"><input type="checkbox" class="waxe" value="probability"> Probability</label>
+            <label class="chip"><input type="checkbox" class="waxe" value="timeframe"> Timeframe</label>
+            <label class="chip"><input type="checkbox" class="waxe" value="reversibility"> Reversibility</label>
+          </div>
+          <div class="stack">
+            <button class="btn" id="wTemplate">Generate template</button>
+            <textarea id="wOut" class="textarea" placeholder="Your weighing line will appear here…"></textarea>
+            <div class="tool-row">
+              <button class="ghost" id="wCopy">Copy</button>
+              <button class="ghost" id="wClear">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <h4>Examples</h4>
+          <ul class="mini-list">
+            <li>“Even if they get <i>uptake</i>, our policy reaches <b>more people sooner</b> — higher magnitude, faster timeframe.”</li>
+            <li>“Their harm is <i>low-probability</i> and reversible; ours is <b>likely</b> and hard to reverse.”</li>
+          </ul>
+          <p class="muted">Tip: speak the weighing line twice—when introducing an argument and again in rebuttal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= PARTNER PACT ========= -->
+    <section class="glass-card" id="pact">
+      <h3 class="about-header">Partner Pact</h3>
+      <p class="section-intro">Assign roles before the round; keep it simple and repeatable.</p>
+
+      <div class="two-col">
+        <div class="tool-card">
+          <h4>Assign roles</h4>
+          <div class="tool-row">
+            <select id="pFlow" class="select"><option>Master flow keeper</option><option>Timekeeper</option><option>POO watcher</option><option>Case notes</option></select>
+            <input id="pFlowName" class="input" placeholder="Name (optional)">
+          </div>
+          <div class="tool-row">
+            <select id="pTime" class="select"><option>Timekeeper</option><option>Master flow keeper</option><option>POO watcher</option><option>Case notes</option></select>
+            <input id="pTimeName" class="input" placeholder="Name (optional)">
+          </div>
+          <div class="tool-row">
+            <select id="pPOO" class="select"><option>POO watcher</option><option>Master flow keeper</option><option>Timekeeper</option><option>Case notes</option></select>
+            <input id="pPOOName" class="input" placeholder="Name (optional)">
+          </div>
+          <div class="tool-row">
+            <select id="pCase" class="select"><option>Case notes</option><option>Master flow keeper</option><option>Timekeeper</option><option>POO watcher</option></select>
+            <input id="pCaseName" class="input" placeholder="Name (optional)">
+          </div>
+          <div class="tool-row">
+            <button class="btn" id="pGen">Generate pact</button>
+            <button class="ghost" id="pCopy">Copy</button>
+            <button class="ghost" id="pClear">Clear</button>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <h4>Pact text</h4>
+          <textarea id="pText" class="textarea" placeholder="Your one-line pact appears here…"></textarea>
+          <p class="muted">Recommended: Max two passed notes to the speaker (missing warrant; weighing line). Set simple hand signals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= POO ASSISTANT ========= -->
+    <section class="glass-card" id="poo">
+      <h3 class="about-header">POO Assistant</h3>
+      <p class="section-intro">Quick phrasing + simple checker for “new in rebuttal”.</p>
+
+      <div class="two-col">
+        <div class="tool-card">
+          <h4>Sample phrasing</h4>
+          <div class="stack">
+            <textarea id="pooLine" class="textarea">Point of order: new argument in rebuttal on [issue].</textarea>
+            <div class="tool-row">
+              <button class="ghost" id="pooCopy">Copy</button>
+              <button class="ghost" id="pooReset">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class="tool-card">
+          <h4>Is it POO-able?</h4>
+          <p class="muted">Rebuttals are LOR & PMR. New material there → valid POO; constructives (PMC/LOC/MG/MO) → not a POO for novelty.</p>
+          <div class="stack">
+            <div class="tool-row">
+              <select id="pooSpeech" class="select" aria-label="Speech">
+                <option value="pmc">PMC</option><option value="loc">LOC</option>
+                <option value="mg">MG</option><option value="mo">MO</option>
+                <option value="lor">LOR</option><option value="pmr">PMR</option>
+              </select>
+              <select id="pooType" class="select" aria-label="Type">
+                <option value="new-arg">New argument</option>
+                <option value="new-impact">New impact</option>
+                <option value="clarify">Clarification of existing line</option>
+                <option value="timing">Timing/overage</option>
+              </select>
+              <button class="btn" id="pooCheck">Check</button>
+            </div>
+            <div id="pooVerdict" class="chip" aria-live="polite">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= EXPORT BUNDLE ========= -->
+    <section class="glass-card" id="export">
+      <h3 class="about-header">Export Bundle</h3>
+      <p class="section-intro">Download your session: flows, POCs, and case materials as a single .zip for easy sharing.</p>
+      <div class="tool-row">
+        <button class="btn" id="exportZip"><span class="btn-icon">⬇</span>Download .zip</button>
+        <span class="muted">Includes: <i>pdu_flow.txt</i>, <i>pdu_flow.csv</i>, <i>pdu_pocs.txt</i>, <i>pdu_case.txt</i>, <i>pdu_outline.txt</i> (if present).</span>
+      </div>
+      <div class="cta-band" style="margin-top:.8rem;">
+        <a href="beginner.html">Need the learning guide? Open Beginner Guide →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- ====================== BACK TO TOP (GLOBAL) ====================== -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- ====================== PAGE SCRIPTS ====================== -->
+  <script>
+    /* ==========================================================
+      GLOBAL UTILITIES & NAV/TOC (same patterns as other pages)
+    ========================================================== */
+
+    /* --- Scroll reveal (light) --- */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    /* --- Navbar sizing var --- */
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    /* --- Mobile drawer --- */
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first = drawer.querySelector('button,a'); first && first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    /* --- Contents drawer --- */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
+
+    if(!localStorage.getItem('pdu_toc_tools_v1')) {
+      openTOC();
+      localStorage.setItem('pdu_toc_tools_v1','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    /* --- TOC active highlight --- */
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ==========================================================
+      TIMER SUITE
+      - Presets: 7:30, 8:30, 4:30, 5:30
+      - Beep at each minute (optional)
+      - POI window (for constructives)
+      - Keyboard: Space start/pause, R reset (disabled in inputs)
+    ========================================================== */
+    const dial = document.getElementById('dial');
+    const readout = document.getElementById('timeReadout');
+    const poiToggle = document.getElementById('poiToggle');
+    const beepToggle = document.getElementById('beepToggle');
+    const poiWindow = document.getElementById('poiWindow');
+    let totalSec = 450, remain = totalSec, ticking = null, lastWholeMin = null;
+
+    function fmt(s){ const m=Math.floor(s/60), ss=String(s%60).padStart(2,'0'); return `${String(m).padStart(2,'0')}:${ss}`; }
+    function updateDial(){
+      const pct = 1 - (remain/totalSec);
+      const angle = Math.max(0, Math.min(360, pct*360));
+      dial.style.setProperty('--angle', angle+'deg');
+      readout.textContent = fmt(remain);
+      dial.classList.toggle('glow60', remain<=60 && remain>30);
+      dial.classList.toggle('glow30', remain<=30);
+      updatePOI();
+    }
+    function setPreset(sec){
+      totalSec = Math.max(1, sec|0); remain = totalSec; stopTimer(); updateDial();
+      localStorage.setItem('pdu_timer_preset_sec', String(totalSec));
+      lastWholeMin = null;
+    }
+    function startTimer(){
+      if(ticking) return;
+      ticking = setInterval(()=>{
+        const prev = remain;
+        remain = Math.max(0, remain-1);
+        updateDial();
+        // minute beep (optional)
+        if(beepToggle.checked){
+          const thisWhole = Math.floor(remain/60);
+          if(thisWhole !== lastWholeMin && prev!==remain){ // changed minute
+            lastWholeMin = thisWhole;
+            if(remain>0) beep(); // don't beep at 0
+          }
+        }
+        if(remain===0) stopTimer();
+      }, 1000);
+    }
+    function stopTimer(){ clearInterval(ticking); ticking=null; }
+    function resetTimer(){ remain = totalSec; updateDial(); }
+    document.querySelectorAll('.timer-presets .btn').forEach(b => b.addEventListener('click', ()=> setPreset(+b.dataset.sec)));
+    document.getElementById('startTimer').addEventListener('click', startTimer);
+    document.getElementById('pauseTimer').addEventListener('click', stopTimer);
+    document.getElementById('resetTimer').addEventListener('click', resetTimer);
+
+    // POI bar: allowed after 1:00 until last 1:00 of constructives (7:30/8:30)
+    function updatePOI(){
+      const show = poiToggle.checked;
+      const constructive = (totalSec===450 || totalSec===510); // 7:30 or 8:30
+      if(!show || !constructive){ poiWindow.style.width='0%'; return; }
+      const start = 60, end = totalSec - 60; // after 1:00 to last 1:00
+      const leftPct = (start/totalSec)*100, widthPct = ((end-start)/totalSec)*100;
+      poiWindow.style.left = leftPct+'%'; poiWindow.style.width = Math.max(0,widthPct)+'%';
+    }
+    poiToggle.addEventListener('change', updatePOI);
+
+    // Minute beep (Web Audio)
+    let audioCtx = null;
+    function beep(){
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        o.frequency.value = 880; // A5
+        g.gain.value = 0.05;
+        o.start();
+        setTimeout(()=>{ o.stop(); }, 120);
+      }catch{}
+    }
+
+    // Load last preset
+    const savedPreset = +localStorage.getItem('pdu_timer_preset_sec') || 450;
+    setPreset(savedPreset);
+
+    // Keyboard shortcuts (guard against typing fields)
+    function isTyping(){
+      const el = document.activeElement;
+      if(!el) return false;
+      const tag = el.tagName?.toLowerCase();
+      return tag==='input' || tag==='textarea' || el.isContentEditable;
+    }
+    addEventListener('keydown', e=>{
+      if(isTyping()) return;
+      if(e.code==='Space'){ e.preventDefault(); ticking ? stopTimer() : startTimer(); }
+      if(e.key.toLowerCase()==='r'){ e.preventDefault(); resetTimer(); }
+    });
+
+    /* ==========================================================
+      PREP PLANNER
+      - Choose Case/Motions + side
+      - 15:00 countdown
+      - POCs quick-insert + log/copy/clear
+    ========================================================== */
+    const roundType = document.getElementById('roundType');
+    const side = document.getElementById('side');
+    const startPrepBtn = document.getElementById('startPrep');
+    const stopPrepBtn = document.getElementById('stopPrep');
+    const prepStatus = document.getElementById('prepStatus');
+    const prepCountdown = document.getElementById('prepCountdown');
+    let prepRemain = 900, prepTick = null;
+
+    function plannerStatus(){
+      const rt = roundType.value, sd = side.value;
+      if(rt==='case'){
+        prepStatus.textContent = (sd==='opp')
+          ? 'Status: Opp has 15:00 after hearing the case.'
+          : 'Status: Gov presenting a pre-written case; Opp gets 15:00 after case.';
+      } else {
+        prepStatus.textContent = 'Status: Both teams have 15:00 after motion reveal.';
+      }
+    }
+    plannerStatus();
+    roundType.addEventListener('change', plannerStatus);
+    side.addEventListener('change', plannerStatus);
+
+    function startPrep(){
+      clearInterval(prepTick); prepRemain = 900;
+      prepCountdown.textContent = '15:00';
+      prepTick = setInterval(()=>{
+        prepRemain = Math.max(0, prepRemain-1);
+        const m = Math.floor(prepRemain/60), s = String(prepRemain%60).padStart(2,'0');
+        prepCountdown.textContent = `${String(m).padStart(2,'0')}:${s}`;
+        if(prepRemain===0){ clearInterval(prepTick); prepTick=null; beep(); }
+      }, 1000);
+    }
+    startPrepBtn.addEventListener('click', startPrep);
+    stopPrepBtn.addEventListener('click', ()=>{ clearInterval(prepTick); prepTick=null; prepCountdown.textContent='15:00'; });
+
+    // POCs quick add
+    const pocLog = document.getElementById('pocLog');
+    document.querySelectorAll('button[data-poc]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const map = {
+          defs: 'POC: Could you clarify how you’re defining [term]? — A:',
+          actors: 'POC: Who is the actor implementing this? — A:',
+          mech: 'POC: How will this be enforced or implemented in practice? — A:',
+          scope: 'POC: What is the scope/limit of this policy? — A:'
+        };
+        const line = map[btn.dataset.poc] || 'POC: — A:';
+        pocLog.value = (pocLog.value ? pocLog.value + '\n' : '') + line;
+        pocLog.focus();
+        pocLog.setSelectionRange(pocLog.value.length, pocLog.value.length);
+      });
+    });
+    document.getElementById('copyPOCs').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(pocLog.value); alert('POCs copied.'); } catch{ alert('Copy failed.'); }
+    });
+    document.getElementById('clearPOCs').addEventListener('click', ()=> pocLog.value='');
+
+    /* ==========================================================
+      FLOW SHEET
+      - Editable table with preserved spacing
+      - Add row, copy, export txt/csv, clear
+    ========================================================== */
+    const flowBody = document.getElementById('flowBody');
+    function addFlowRow(i){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="text-align:center;">${i}</td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>`;
+      flowBody.appendChild(tr);
+    }
+    for(let i=1;i<=10;i++) addFlowRow(i);
+    document.getElementById('addRow').addEventListener('click', ()=> addFlowRow(flowBody.children.length+1));
+
+    function gatherFlowRows(){
+      const rows=[...flowBody.querySelectorAll('tr')].map((tr,idx)=>{
+        const tds = tr.querySelectorAll('td');
+        const cells = [];
+        for(let i=1;i<tds.length;i++){ cells.push(tds[i].innerText.replace(/\r?\n/g,'\\n')); }
+        return `${idx+1}\t` + cells.join('\t');
+      });
+      return rows;
+    }
+    function flowTxt(){
+      return `# PDU Flow
+# Cols: #\tPMC\tLOC\tMG\tMO\tLOR\tPMR\tNotes
+` + gatherFlowRows().join('\n');
+    }
+    function flowCsv(){
+      const head = ['#','PMC','LOC','MG','MO','LOR','PMR','Notes'];
+      const lines = [[...head].join(',')];
+      [...flowBody.querySelectorAll('tr')].forEach((tr,idx)=>{
+        const tds = tr.querySelectorAll('td');
+        const cells = [idx+1];
+        for(let i=1;i<tds.length;i++){
+          const raw = tds[i].innerText.replace(/\r?\n/g,'\\n').replace(/"/g,'""');
+          cells.push(`"${raw}"`);
+        }
+        lines.push(cells.join(','));
+      });
+      return lines.join('\n');
+    }
+    document.getElementById('copyFlow').addEventListener('click', async ()=>{
+      try{ await navigator.clipboard.writeText(flowTxt()); alert('Flow copied.'); } catch{ alert('Copy failed.'); }
+    });
+    document.getElementById('exportFlowTxt').addEventListener('click', ()=>{
+      const blob = new Blob([flowTxt()], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'pdu_flow.txt' });
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+    document.getElementById('exportFlowCsv').addEventListener('click', ()=>{
+      const blob = new Blob([flowCsv()], {type:'text/csv'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'pdu_flow.csv' });
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+    document.getElementById('clearFlow').addEventListener('click', ()=> flowBody.innerHTML='');
+
+    /* ==========================================================
+      CASE BUILDER
+      - Live lint for tight/spec hints
+      - Save/Load localStorage, export, copy outlines
+    ========================================================== */
+    const cbIds = ['cbRes','cbDefs','cbMech','cbReasons','cbComp'];
+    const cb = id => document.getElementById(id);
+    const cbLint = document.getElementById('cbLint');
+
+    function lintCase(){
+      const res = cb('cbRes').value.toLowerCase();
+      const defs = cb('cbDefs').value.toLowerCase();
+      const mech = cb('cbMech').value.toLowerCase();
+      const reasons = cb('cbReasons').value.toLowerCase();
+
+      let warnings = [];
+
+      // Heuristic hints (simple keyword checks; we can refine later)
+      if(/always|never|obviously|undeniably/.test(res)) warnings.push('Resolution language might be too absolute.');
+      if(/we define .* as/.test(defs) && /unreasonable|unfair|exclude/.test(defs)) warnings.push('Definitions risk unfair ground—be careful.');
+      if(!/enforce|implement|agency|actor|government|university|company|mechanism|incentive/.test(mech)) warnings.push('Mechanism may need more detail (who acts, incentives, enforcement).');
+      if((reasons.match(/reason/gi)||[]).length<1 && reasons.split('\n').length<2) warnings.push('List 2–4 reasons with warrants → impacts.');
+      if(/trivial|tautology|by definition/.test(res) || /truism/.test(res)) warnings.push('May be truistic/tight—ensure it’s debatable.');
+
+      if(warnings.length){
+        cbLint.className = 'lint warn';
+        cbLint.textContent = 'Lint: ' + warnings.join(' ');
+      } else {
+        cbLint.className = 'lint ok';
+        cbLint.textContent = 'Lint: Looks good. Clear, fair, and debatable.';
+      }
+    }
+    cbIds.forEach(id => cb(id).addEventListener('input', lintCase));
+    lintCase();
+
+    document.getElementById('cbSave').addEventListener('click', ()=>{
+      const obj = {}; cbIds.forEach(id => obj[id]=cb(id).value);
+      localStorage.setItem('pdu_case_builder', JSON.stringify(obj));
+      alert('Saved locally.');
+    });
+    document.getElementById('cbLoad').addEventListener('click', ()=>{
+      const raw = localStorage.getItem('pdu_case_builder'); if(!raw) return alert('No local save found.');
+      try{ const obj=JSON.parse(raw); cbIds.forEach(id => cb(id).value = obj[id]||''); lintCase(); } catch{}
+    });
+    document.getElementById('cbExport').addEventListener('click', ()=>{
+      const txt = `PDU Case
+Resolution: ${cb('cbRes').value}
+
+Definitions:
+${cb('cbDefs').value}
+
+Actors & Mechanism:
+${cb('cbMech').value}
+
+Reasons (warrants → impacts):
+${cb('cbReasons').value}
+
+Comparative world:
+${cb('cbComp').value}
+`;
+      const blob = new Blob([txt], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'pdu_case.txt' });
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+    document.getElementById('cbClear').addEventListener('click', ()=> { cbIds.forEach(id => cb(id).value=''); lintCase(); });
+    document.getElementById('cbOutline').addEventListener('click', async ()=>{
+      const outline = `PM SPEAKING OUTLINE
+Intro (15–30s): ${cb('cbRes').value || 'THBT …'}
+Definitions / Actors:
+${cb('cbDefs').value}
+
+Mechanism:
+${cb('cbMech').value}
+
+Reasons (2–4) with warrants → impacts:
+${cb('cbReasons').value}
+
+Comparative / Harms avoided:
+${cb('cbComp').value}
+
+MG ROADMAP
+Group & answer Opp (warranted)
+Re-center mechanism & benefits
+Weighing narrative to PMR
+`;
+      try{ await navigator.clipboard.writeText(outline); alert('Outline copied.'); } catch{ alert('Copy failed.'); }
+    });
+
+    /* ==========================================================
+      DRILLS ARENA
+    ========================================================== */
+    const rebPrompts = [
+      'Claim: Cash bail deters crime. Respond.',
+      'Claim: Universal basic income disincentivizes work. Respond.',
+      'Claim: Mandatory voting undermines freedom. Respond.',
+      'Claim: Sin taxes don’t change behavior. Respond.',
+      'Claim: Banning legacy admissions harms diversity. Respond.'
+    ];
+    const wghAxes = ['Magnitude', 'Probability', 'Timeframe', 'Reversibility'];
+    const poiPrompts = [
+      'Gov claims: national service builds civic trust.',
+      'Gov claims: citywide congestion pricing improves equity.',
+      'Gov claims: social media platforms should verify all users.',
+      'Gov claims: universities should divest from fossil fuels.',
+      'Gov claims: decriminalizing all drugs reduces harm.'
+    ];
+    const byId = id => document.getElementById(id);
+    const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+    byId('rebNew').addEventListener('click', ()=> byId('rebPrompt').textContent = pick(rebPrompts));
+    byId('wghNew').addEventListener('click', ()=> byId('wghPrompt').textContent = `Weigh on: ${pick(wghAxes)} — versus their best impact.`);
+    byId('poiNew').addEventListener('click', ()=> byId('poiPrompt').textContent = pick(poiPrompts));
+
+    let drillTick=null, drillRemain=0;
+    function startDrill(seconds, labelEl){
+      clearInterval(drillTick); drillRemain=seconds;
+      const base = labelEl.textContent.replace(/\(\d+s\)$/,'').trim();
+      labelEl.textContent = `${base} (${seconds}s)`;
+      drillTick = setInterval(()=>{
+        drillRemain--;
+        labelEl.textContent = `${base} (${drillRemain}s)`;
+        if(drillRemain<=0){ clearInterval(drillTick); drillTick=null; beep(); }
+      },1000);
+    }
+    byId('rebStart').addEventListener('click', ()=> startDrill(90, byId('rebPrompt')));
+    byId('poiStart').addEventListener('click', ()=> startDrill(60, byId('poiPrompt')));
+
+    byId('rebCopy').addEventListener('click', async ()=> { try{ await navigator.clipboard.writeText(byId('rebText').value); alert('Copied.'); } catch{} });
+    byId('wghCopy').addEventListener('click', async ()=> { try{ await navigator.clipboard.writeText(byId('wghText').value); alert('Copied.'); } catch{} });
+    byId('poiCopy').addEventListener('click', async ()=> { try{ await navigator.clipboard.writeText(byId('poiText').value); alert('Copied.'); } catch{} });
+
+    /* ==========================================================
+      WEIGHING COACH
+    ========================================================== */
+    document.getElementById('wTemplate').addEventListener('click', ()=>{
+      const axes = [...document.querySelectorAll('.waxe:checked')].map(x=>x.value);
+      const out = document.getElementById('wOut');
+      if(!axes.length){ out.value = 'Pick at least one axis (magnitude/probability/timeframe/reversibility).'; return; }
+      const pretty = {
+        magnitude:'affects more people / larger harm/benefit',
+        probability:'more likely to occur',
+        timeframe:'happens sooner / lasts longer',
+        reversibility:'harder to undo / theirs is reversible'
+      };
+      const parts = axes.map(ax=>pretty[ax]||ax);
+      out.value = `Even if they achieve X, our impact wins on ${parts.join(' and ')} because Y.`;
+      out.focus(); out.setSelectionRange(out.value.length, out.value.length);
+    });
+    document.getElementById('wCopy').addEventListener('click', async ()=> {
+      try{ await navigator.clipboard.writeText(document.getElementById('wOut').value); alert('Copied.'); } catch{}
+    });
+    document.getElementById('wClear').addEventListener('click', ()=> document.getElementById('wOut').value='');
+
+    /* ==========================================================
+      PARTNER PACT
+    ========================================================== */
+    function pactLine(){
+      const sections = [];
+      const grab = (sel, nameSel) => {
+        const role = document.getElementById(sel).value;
+        const name = document.getElementById(nameSel).value.trim();
+        return name ? `${role}: ${name}` : role;
+      };
+      sections.push(grab('pFlow','pFlowName'));
+      sections.push(grab('pTime','pTimeName'));
+      sections.push(grab('pPOO','pPOOName'));
+      sections.push(grab('pCase','pCaseName'));
+      return `Partner pact — ${sections.join(' · ')}. Max two passed notes (warrant; weighing).`;
+    }
+    document.getElementById('pGen').addEventListener('click', ()=>{
+      const t = document.getElementById('pText'); t.value = pactLine();
+      t.focus(); t.setSelectionRange(t.value.length, t.value.length);
+    });
+    document.getElementById('pCopy').addEventListener('click', async ()=> { try{ await navigator.clipboard.writeText(document.getElementById('pText').value); alert('Copied.'); } catch{} });
+    document.getElementById('pClear').addEventListener('click', ()=> document.getElementById('pText').value='');
+
+    /* ==========================================================
+      POO ASSISTANT
+    ========================================================== */
+    document.getElementById('pooCopy').addEventListener('click', async ()=> { try{ await navigator.clipboard.writeText(document.getElementById('pooLine').value); alert('Copied.'); } catch{} });
+    document.getElementById('pooReset').addEventListener('click', ()=> document.getElementById('pooLine').value='Point of order: new argument in rebuttal on [issue].');
+
+    document.getElementById('pooCheck').addEventListener('click', ()=>{
+      const speech = document.getElementById('pooSpeech').value;
+      const type = document.getElementById('pooType').value;
+      const verdict = document.getElementById('pooVerdict');
+
+      const isRebuttal = (speech==='lor' || speech==='pmr');
+      let msg = '';
+      if(type==='timing'){
+        msg = 'Valid: timing/overage POOs are procedural.';
+      } else if(isRebuttal && (type==='new-arg' || type==='new-impact')){
+        msg = 'Valid: new material in rebuttal.';
+      } else if(!isRebuttal && (type==='new-arg' || type==='new-impact')){
+        msg = 'Invalid: novelty in constructives isn’t a POO target.';
+      } else if(type==='clarify'){
+        msg = 'Usually not POO: clarifying an existing line is typically fine.';
+      } else {
+        msg = '—';
+      }
+      verdict.textContent = msg;
+    });
+
+    /* ==========================================================
+      EXPORT BUNDLE (ZIP)
+    ========================================================== */
+    document.getElementById('exportZip').addEventListener('click', async ()=>{
+      if(!(window.JSZip && window.saveAs)){ alert('Zip libraries not loaded. We can still export individual files above.'); return; }
+      const zip = new JSZip();
+
+      // Flow files
+      const txt = flowTxt();
+      const csv = flowCsv();
+      zip.file('pdu_flow.txt', txt);
+      zip.file('pdu_flow.csv', csv);
+
+      // POCs
+      const pocs = document.getElementById('pocLog').value || '';
+      zip.file('pdu_pocs.txt', pocs);
+
+      // Case
+      const caseTxt = `PDU Case
+Resolution: ${cb('cbRes').value}
+
+Definitions:
+${cb('cbDefs').value}
+
+Actors & Mechanism:
+${cb('cbMech').value}
+
+Reasons (warrants → impacts):
+${cb('cbReasons').value}
+
+Comparative world:
+${cb('cbComp').value}
+`;
+      zip.file('pdu_case.txt', caseTxt);
+
+      // Outlines
+      const outline = `PM/MG OUTLINE
+
+PM
+Intro (15–30s): ${cb('cbRes').value || 'THBT …'}
+Definitions / Actors:
+${cb('cbDefs').value}
+
+Mechanism:
+${cb('cbMech').value}
+
+Reasons (2–4) with warrants → impacts:
+${cb('cbReasons').value}
+
+Comparative:
+${cb('cbComp').value}
+
+MG
+Group & answer Opp (warranted)
+Re-center mechanism & benefits
+Weighing narrative to PMR
+`;
+      zip.file('pdu_outline.txt', outline);
+
+      const blob = await zip.generateAsync({type:'blob'});
+      saveAs(blob, 'pdu_practice_pack.zip');
+    });
+
+  </script>
+</body>
+</html>
