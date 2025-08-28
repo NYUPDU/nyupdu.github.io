@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Simple, root-level sitemap for https://nyupdu.github.io
+     Notes:
+     - Keep URLs on the same host/protocol as this sitemap (https://nyupdu.github.io)
+     - <lastmod> is optional but recommended (ISO 8601 date)
+     - File must be UTF-8 and live at site root for widest coverage -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nyupdu.github.io/</loc></url>
-  <url><loc>https://nyupdu.github.io/about.html</loc></url>
-  <url><loc>https://nyupdu.github.io/join.html</loc></url>
-  <url><loc>https://nyupdu.github.io/beginner.html</loc></url>
-  <url><loc>https://nyupdu.github.io/tournaments.html</loc></url>
-  <url><loc>https://nyupdu.github.io/leadership.html</loc></url>
-  <url><loc>https://nyupdu.github.io/equity.html</loc></url>
-  <url><loc>https://nyupdu.github.io/calendar.html</loc></url>
-  <url><loc>https://nyupdu.github.io/contact.html</loc></url>
-  <url><loc>https://nyupdu.github.io/judging.html</loc></url>
-  <url><loc>https://nyupdu.github.io/practicetools.html</loc></url>
-  <url><loc>https://nyupdu.github.io/resources.html</loc></url>
+  <url>
+    <loc>https://nyupdu.github.io/</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/about.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/join.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/beginner.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/tournaments.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/leadership.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/equity.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/calendar.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/contact.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/judging.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/practicetools.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://nyupdu.github.io/resources.html</loc>
+    <lastmod>2025-08-28</lastmod>
+  </url>
 </urlset>
