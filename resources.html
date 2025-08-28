@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ====================== META ====================== -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resources | NYU PDU</title>
+
+  <!-- Favicon & Fonts -->
+  <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Sitewide CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Zip helper (safe CDN; remove if not bundling) -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js" defer></script>
+
+  <!-- ====================== PAGE-LOCAL CSS ====================== -->
+  <style>
+    :root{ color-scheme: dark; } /* make native controls dark-friendly */
+
+    /* ---------- HERO ---------- */
+    .res-hero .page-title{ font-size:3rem; }
+    .res-hero .page-subtitle{ max-width:64ch; margin-inline:auto; }
+    .hero-cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.9rem; }
+
+    /* ---------- CARDS & SECTIONS ---------- */
+    .glass-card{ animation:fadeUp .3s ease both; }
+    @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+
+    .res-section-intro{ margin:.2rem 0 .8rem; opacity:.95; }
+
+    .res-cards{
+      display:grid; grid-template-columns:1fr; gap:1rem;
+    }
+    @media (min-width: 880px){
+      .res-cards{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (min-width: 1240px){
+      .res-cards{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+
+    .res-card{
+      padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      transition:box-shadow .2s ease, transform .12s ease, background .2s ease;
+      display:grid; gap:.55rem;
+    }
+    .res-card:hover{ box-shadow:0 10px 28px rgba(0,0,0,.32), inset 0 0 18px rgba(199,191,255,.16); transform:translateY(-1px); }
+    .res-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .2rem; }
+    .meta-row{ display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
+    .badge{
+      display:inline-flex; align-items:center; gap:.35rem; padding:.28rem .6rem; border-radius:999px;
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.25); font-weight:800; font-size:.9rem;
+    }
+    .muted{ opacity:.92; }
+
+    .btn, .chip, .ghost {
+      padding:.5rem .85rem; border-radius:999px; border:1px solid rgba(255,255,255,.28);
+      background:rgba(255,255,255,.10); color:#fff; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
+      transition:transform .14s ease, box-shadow .2s ease, background .14s ease;
+    }
+    .btn:hover, .chip:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); transform:translateY(-1px); }
+    .ghost{ background:transparent; }
+
+    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
+
+    /* ---------- SEARCH / FILTER BAR ---------- */
+    .library-controls{
+      position:sticky; top:calc(var(--nav-height, 64px) + 12px); z-index:5;
+      border:1px solid rgba(255,255,255,.22); background:rgba(17,16,28,.68); backdrop-filter:blur(10px);
+      padding:.7rem; border-radius:14px; box-shadow:0 10px 24px rgba(0,0,0,.22);
+    }
+    .ctrl-row{ display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+    .search{
+      flex:1 1 260px; min-width:220px;
+      padding:.55rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff;
+    }
+    .select{
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      padding:.5rem 2.1rem .5rem .9rem;
+      border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background-color:rgba(20,18,36,.9) !important; color:#fff !important;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right .6rem center; background-size:1rem auto;
+      color-scheme: dark;
+    }
+    select option{ color:#fff; background:#120f21; }
+
+    /* ---------- TILES (Quick Start) ---------- */
+    .tiles{ display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 880px){ .tiles{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+    .tile{
+      padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.10));
+      display:grid; gap:.5rem;
+    }
+    .tile h4{ font-family:'DM Serif Display',serif; margin:0; }
+
+    /* ---------- GLOSSARY ---------- */
+    .glossary-search{
+      width:100%; padding:.6rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,255,255,.08); color:#fff; margin-bottom:.6rem;
+    }
+    .glossary-list{ display:grid; gap:.45rem; }
+    .gloss-term{
+      padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08);
+    }
+    .gloss-term b{ font-weight:900; }
+
+    /* ---------- CTA BANDS ---------- */
+    .cta-band{
+      margin:.4rem 0; padding:1rem; border-radius:14px;
+      border:1px solid rgba(255,255,255,.25);
+      background:linear-gradient(180deg, rgba(124,58,237,.22), rgba(124,58,237,.12));
+      text-align:center;
+    }
+
+    /* ---------- TOC active highlight ---------- */
+    .toc-list a.active{ font-weight:800; }
+
+    /* ---------- Responsive typography ---------- */
+    @media (max-width: 960px){
+      .res-hero .page-title{ font-size:2.4rem; }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- ====================== NAVBAR (GLOBAL) ====================== -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="about.html#apda">What is APDA?</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li><a href="tournaments.html">Tournaments</a></li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#beginner-cta">Beginners</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+        </a>
+      </div>
+
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ====================== MOBILE DRAWER (GLOBAL) ====================== -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="about.html#apda">What is APDA?</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="tournaments.html">Tournaments</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#beginner-cta">Beginners</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero-section hero-compact res-hero">
+    <div>
+      <h1 class="page-title">Resources Library</h1>
+      <p class="page-subtitle">Templates, explainers, and curated links for NYU PDU novices—skim, save, and get back to practice.</p>
+      <div class="hero-cta-row">
+        <a class="link-chip" href="beginner.html">Beginner Guide →</a>
+        <a class="link-chip" href="practicetools.html">Practice Tools →</a>
+        <a class="link-chip" href="calendar.html">Calendar →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CONTENTS DRAWER ====================== -->
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#quick" class="active">Quick Start</a>
+      <a href="#library">Library (Search/Filter)</a>
+      <a href="#templates">Templates & Downloads</a>
+      <a href="#skills">Skills Hub</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#apda">APDA Links</a>
+      <a href="#equity">Equity & Contacts</a>
+      <a href="#fresh">New & Noteworthy</a>
+      <a href="#request">Request a Resource</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <!-- ====================== MAIN ====================== -->
+  <main class="main-content">
+
+    <!-- ========= QUICK START ========= -->
+    <section class="glass-card" id="quick">
+      <h3 class="about-header">Quick Start</h3>
+      <div class="tiles">
+        <div class="tile">
+          <h4>New? Start here</h4>
+          <p class="muted">How rounds work, how to argue, and what to expect day one.</p>
+          <div><a class="btn" href="beginner.html">Open Beginner Guide</a></div>
+        </div>
+        <div class="tile">
+          <h4>Practice Tools</h4>
+          <p class="muted">Timers (with grace), Flow sheet, Case Builder, Drills, Weighing Coach, POO assistant.</p>
+          <div><a class="btn" href="practicetools.html">Open Practice Tools</a></div>
+        </div>
+        <div class="tile">
+          <h4>APDA Overview</h4>
+          <p class="muted">For league specifics (boards, awards, policies), use the official APDA pages.</p>
+          <div><a class="btn" href="https://apda.online/about/guide-to-apda/" target="_blank" rel="noopener">APDA Guide</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= LIBRARY (Search/Filter) ========= -->
+    <section class="glass-card" id="library">
+      <h3 class="about-header">Library</h3>
+      <p class="res-section-intro">Search or filter to find what you need fast. Cards show type, skill level, and quick actions.</p>
+
+      <!-- Sticky controls -->
+      <div class="library-controls" role="region" aria-label="Search and filters">
+        <div class="ctrl-row" style="margin-bottom:.45rem;">
+          <input type="search" id="q" class="search" placeholder="Search title or description… (e.g., warranting, rebuttal)">
+          <select id="fType" class="select" aria-label="Type filter">
+            <option value="">Type (all)</option>
+            <option>Template</option>
+            <option>Explainer</option>
+            <option>Checklist</option>
+            <option>Video</option>
+            <option>External</option>
+          </select>
+          <select id="fSkill" class="select" aria-label="Skill filter">
+            <option value="">Skill (all)</option>
+            <option>Novice</option>
+            <option>Intermediate</option>
+          </select>
+          <select id="fTopic" class="select" aria-label="Topic filter">
+            <option value="">Topic (all)</option>
+            <option>Warranting</option>
+            <option>Weighing</option>
+            <option>Rebuttal & POO</option>
+            <option>Flowing & Clash</option>
+            <option>Cases</option>
+            <option>Partnering</option>
+            <option>POIs</option>
+            <option>Equity</option>
+          </select>
+          <select id="sort" class="select" aria-label="Sort">
+            <option value="new">Newest</option>
+            <option value="short">Shortest read</option>
+            <option value="popular">Most used</option>
+            <option value="az">A → Z</option>
+          </select>
+          <button class="ghost" id="clearFilters">Clear</button>
+        </div>
+        <div class="ctrl-row">
+          <span class="badge" id="libCount">0 results</span>
+          <span class="muted">Maintainers: edit the data list in this file (search for <i>LIBRARY_DATA</i>).</span>
+        </div>
+      </div>
+
+      <!-- Cards injected by JS -->
+      <div class="res-cards" id="libCards" style="margin-top:.8rem;"></div>
+    </section>
+
+    <!-- ========= TEMPLATES & DOWNLOADS ========= -->
+    <section class="glass-card" id="templates">
+      <h3 class="about-header">Templates & Downloads</h3>
+      <p class="res-section-intro">Grab the starter kit. Print for practice or keep them handy on your phone.</p>
+
+      <div class="two-col">
+        <div class="res-card">
+          <h4>Flow Sheet (print + digital)</h4>
+          <p class="muted">CSV and TXT for digital; print-friendly HTML for paper.</p>
+          <div class="meta-row">
+            <span class="badge">Template</span>
+            <span class="badge">Novice</span>
+          </div>
+          <div class="meta-row">
+            <button class="btn" id="dlFlowCsv">Download .csv</button>
+            <button class="btn" id="dlFlowTxt">Download .txt</button>
+            <a class="chip" href="practicetools.html#flow">Open in Flow tool →</a>
+          </div>
+        </div>
+
+        <div class="res-card">
+          <h4>PM/MG Speaking Outline (1-pager)</h4>
+          <p class="muted">Slim outline for Gov constructives (PM/MG) that enforces warranting & weighing.</p>
+          <div class="meta-row"><span class="badge">Template</span><span class="badge">Novice</span></div>
+          <div class="meta-row">
+            <button class="btn" id="dlOutline">Download .txt</button>
+            <a class="chip" href="practicetools.html#case-lab">Open Case Builder →</a>
+          </div>
+        </div>
+
+        <div class="res-card">
+          <h4>Rebuttal Checklist (LOR/PMR)</h4>
+          <p class="muted">2–3 voters, weighing, and the “no new” sanity check.</p>
+          <div class="meta-row"><span class="badge">Checklist</span><span class="badge">Novice</span></div>
+          <div class="meta-row"><button class="btn" id="dlRebuttal">Download .txt</button></div>
+        </div>
+
+        <div class="res-card">
+          <h4>POO Quick Reference</h4>
+          <p class="muted">When to call it, how to phrase it, what rulings mean.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span></div>
+          <div class="meta-row">
+            <button class="btn" id="dlPOORef">Download .txt</button>
+            <a class="chip" href="practicetools.html#poo">POO Assistant →</a>
+          </div>
+        </div>
+
+        <div class="res-card">
+          <h4>Partner Pact</h4>
+          <p class="muted">Who flows, who watches POOs, who times. Keep it consistent.</p>
+          <div class="meta-row"><span class="badge">Template</span><span class="badge">Novice</span></div>
+          <div class="meta-row">
+            <button class="btn" id="dlPact">Download .txt</button>
+            <a class="chip" href="practicetools.html#pact">Partner Pact tool →</a>
+          </div>
+        </div>
+
+        <div class="res-card">
+          <h4>Round Timeline (with grace)</h4>
+          <p class="muted">7:30 • 8:30 • 8:30 • 8:30 • 4:30 • 5:30. Use it to plan pacing.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span></div>
+          <div class="meta-row"><button class="btn" id="dlTimeline">Download .txt</button></div>
+        </div>
+      </div>
+
+      <div class="cta-band" style="margin-top:.9rem;">
+        <button class="btn" id="dlAllZip">Download All Templates (.zip)</button>
+      </div>
+    </section>
+
+    <!-- ========= SKILLS HUB ========= -->
+    <section class="glass-card" id="skills">
+      <h3 class="about-header">Skills Hub</h3>
+      <p class="res-section-intro">Short explainers with links to the right tool or guide section. Keep it brief; practice does the rest.</p>
+
+      <div class="res-cards">
+        <div class="res-card">
+          <h4>How to Argue (Claim → Warrant → Impact)</h4>
+          <p class="muted">State the claim, prove it with warrants, and show why it matters with impacts. Then compare worlds.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Warranting</span></div>
+          <div class="meta-row">
+            <a class="chip" href="beginner.html#argue">Open guide section →</a>
+            <a class="chip" href="practicetools.html#case-lab">Case Builder →</a>
+            <a class="chip" href="practicetools.html#weigh">Weighing Coach →</a>
+          </div>
+        </div>
+
+        <div class="res-card">
+          <h4>Weighing</h4>
+          <p class="muted">Magnitude, probability, timeframe, reversibility. Use them to show why your world matters more.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Weighing</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#weigh">Open Weighing Coach →</a></div>
+        </div>
+
+        <div class="res-card">
+          <h4>Rebuttals & Points of Order (POO)</h4>
+          <p class="muted">Rebuttals (LOR/PMR) = crystallization and weighing. New material there is POO-able.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Rebuttal & POO</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#poo">POO Assistant →</a></div>
+        </div>
+
+        <div class="res-card">
+          <h4>Flowing & Clash</h4>
+          <p class="muted">Track claims → warrants → impacts; flag direct clashes; mark drops clearly.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Flowing & Clash</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#flow">Open Flow Sheet →</a></div>
+        </div>
+
+        <div class="res-card">
+          <h4>Building Gov Cases</h4>
+          <p class="muted">Fair, simple, winnable. Clean mechanism; 2–4 warranted reasons; explicit comparative world.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Cases</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#case-lab">Open Case Builder →</a></div>
+        </div>
+
+        <div class="res-card">
+          <h4>Partnering 101</h4>
+          <p class="muted">Divide roles: one speaks, one flows; pass only crucial notes (warrant, weighing).</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">Partnering</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#pact">Partner Pact →</a></div>
+        </div>
+
+        <div class="res-card">
+          <h4>POIs (optional)</h4>
+          <p class="muted">Optional to offer; optional to accept. Use tactically; keep them concise and courteous.</p>
+          <div class="meta-row"><span class="badge">Explainer</span><span class="badge">Novice</span><span class="badge">POIs</span></div>
+          <div class="meta-row"><a class="chip" href="practicetools.html#drills">POI practice →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= GLOSSARY ========= -->
+    <section class="glass-card" id="glossary">
+      <h3 class="about-header">Glossary</h3>
+      <p class="res-section-intro">Concise definitions with examples. Use Beginner Guide for deeper context, and APDA for league policies.</p>
+
+      <input class="glossary-search" id="gSearch" placeholder="Filter terms… (e.g., tight, turn, tab, spec)">
+      <div class="glossary-list" id="gList"><!-- terms injected --></div>
+
+      <div class="meta-row" style="margin-top:.6rem;">
+        <button class="btn" id="gExport">Download Glossary (.txt)</button>
+        <a class="chip" href="beginner.html#glossary">See glossary in-context →</a>
+      </div>
+    </section>
+
+    <!-- ========= APDA LINKS ========= -->
+    <section class="glass-card" id="apda">
+      <h3 class="about-header">APDA Links</h3>
+      <p class="res-section-intro">League specifics (boards, awards, forums, speaker scales, code of conduct) live on APDA.</p>
+      <div class="meta-row" style="flex-wrap:wrap;">
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/">APDA Home →</a>
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/about/guide-to-apda/">Guide to APDA →</a>
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">Code of Conduct →</a>
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/speaker-scale/">Speaker Scales →</a>
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/schedule/">Schedule →</a>
+      </div>
+    </section>
+
+    <!-- ========= EQUITY & CONTACTS ========= -->
+    <section class="glass-card" id="equity">
+      <h3 class="about-header">Equity & Contacts</h3>
+      <p class="res-section-intro">We are equity-first. If you need anything to debate safely and fairly, please reach out.</p>
+      <div class="meta-row" style="flex-wrap:wrap;">
+        <a class="chip" href="equity.html">Read our Equity Policy →</a>
+        <a class="chip" href="leadership.html">Learn PDU Leadership →</a>
+        <a class="chip" href="contact.html">Contact Us →</a>
+      </div>
+    </section>
+
+    <!-- ========= NEW & NOTEWORTHY ========= -->
+    <section class="glass-card" id="fresh">
+      <h3 class="about-header">New & Noteworthy</h3>
+      <p class="res-section-intro">A few items we’re spotlighting. Maintainers can toggle these in the data list.</p>
+      <div class="res-cards" id="freshCards"><!-- injected --></div>
+    </section>
+
+    <!-- ========= REQUEST A RESOURCE ========= -->
+    <section class="glass-card" id="request">
+      <h3 class="about-header">Request a Resource</h3>
+      <div class="cta-band">
+        <p class="muted" style="margin-bottom:.6rem;">Missing a template or explainer? Tell us what would help you.</p>
+        <a class="btn" href="contact.html">Request via Contact Page</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer class="glass-footer">
+    <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
+  </footer>
+
+  <!-- ====================== BACK TO TOP (GLOBAL) ====================== -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
+
+  <!-- ====================== PAGE SCRIPTS ====================== -->
+  <script>
+    /* ==========================================================
+      GLOBAL UTILITIES & NAV/TOC
+    ========================================================== */
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    /* --- Mobile drawer --- */
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first = drawer.querySelector('button,a'); first && first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
+
+    /* --- Contents drawer: desktop defaults open, can be X-closed & re-opened; no memory across refresh --- */
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    let tocUserClosedDesktop = false;
+
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    function applyTOCMode(){
+      if(window.innerWidth >= 1024){
+        if(!tocUserClosedDesktop) openTOC();
+      } else { closeTOC(); }
+    }
+    applyTOCMode();
+    addEventListener('resize', applyTOCMode);
+    tocOpen.addEventListener('click', ()=>{ tocUserClosedDesktop = false; openTOC(); });
+    tocClose.addEventListener('click', ()=>{
+      if(window.innerWidth >= 1024) tocUserClosedDesktop = true;
+      closeTOC();
+    });
+    addEventListener('scroll', () => {
+      if(window.innerWidth < 1024 && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+    }, { passive: true });
+
+    /* --- TOC active highlight --- */
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections[0]?.id;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
+    /* ==========================================================
+      LIBRARY DATA & RENDERING
+      - Maintain this array to add/edit resources.
+      - Fields:
+        id, title, blurb, type, skill, topic, url, external (bool), readMin, added (ISO), featured (bool)
+    ========================================================== */
+    const LIBRARY_DATA = [
+      // Templates / checklists (internal)
+      {id:'tmpl-flow', title:'Flow Sheet (CSV/TXT)', blurb:'Simple columns for PMC→PMR and notes.', type:'Template', skill:'Novice', topic:'Flowing & Clash', url:'#templates', external:false, readMin:1, added:'2025-08-01', featured:false},
+      {id:'tmpl-outline', title:'PM/MG Speaking Outline', blurb:'Scaffold to enforce warrants and weighing.', type:'Template', skill:'Novice', topic:'Cases', url:'#templates', external:false, readMin:1, added:'2025-08-01', featured:true},
+      {id:'tmpl-reb', title:'Rebuttal Checklist (LOR/PMR)', blurb:'Voters, weighing, and “no new” sanity check.', type:'Checklist', skill:'Novice', topic:'Rebuttal & POO', url:'#templates', external:false, readMin:1, added:'2025-08-01', featured:false},
+      {id:'tmpl-poo', title:'POO Quick Reference', blurb:'When to call, how to phrase, rulings snapshot.', type:'Explainer', skill:'Novice', topic:'Rebuttal & POO', url:'#templates', external:false, readMin:2, added:'2025-08-01', featured:false},
+      {id:'tmpl-pact', title:'Partner Pact', blurb:'Assign roles: flow, time, POO, case notes.', type:'Template', skill:'Novice', topic:'Partnering', url:'#templates', external:false, readMin:1, added:'2025-08-01', featured:true},
+      {id:'tmpl-time', title:'Round Timeline (with grace)', blurb:'7:30 • 8:30 • 8:30 • 8:30 • 4:30 • 5:30.', type:'Explainer', skill:'Novice', topic:'Flowing & Clash', url:'#templates', external:false, readMin:1, added:'2025-08-01', featured:false},
+
+      // Skills (internal anchors)
+      {id:'sk-argue', title:'How to Argue (C→W→I)', blurb:'Claim, warrant, impact; then weigh.', type:'Explainer', skill:'Novice', topic:'Warranting', url:'beginner.html#argue', external:false, readMin:3, added:'2025-08-01', featured:true},
+      {id:'sk-weigh', title:'Weighing Axes', blurb:'Magnitude, probability, timeframe, reversibility.', type:'Explainer', skill:'Novice', topic:'Weighing', url:'practicetools.html#weigh', external:false, readMin:2, added:'2025-08-01', featured:false},
+      {id:'sk-reb', title:'Rebuttals & POO', blurb:'Crystallization & valid POOs in rebuttals.', type:'Explainer', skill:'Novice', topic:'Rebuttal & POO', url:'practicetools.html#poo', external:false, readMin:3, added:'2025-08-01', featured:false},
+      {id:'sk-flow', title:'Flowing & Clash', blurb:'Track lines, spot clash, mark drops.', type:'Explainer', skill:'Novice', topic:'Flowing & Clash', url:'practicetools.html#flow', external:false, readMin:2, added:'2025-08-01', featured:false},
+      {id:'sk-cases', title:'Building Gov Cases', blurb:'Fair, simple, winnable mechanisms.', type:'Explainer', skill:'Novice', topic:'Cases', url:'practicetools.html#case-lab', external:false, readMin:3, added:'2025-08-01', featured:false},
+      {id:'sk-partner', title:'Partnering 101', blurb:'Divide roles; streamline in-round communication.', type:'Explainer', skill:'Novice', topic:'Partnering', url:'practicetools.html#pact', external:false, readMin:2, added:'2025-08-01', featured:false},
+      {id:'sk-poi', title:'POIs (optional)', blurb:'Offer/accept optionally; be concise & polite.', type:'Explainer', skill:'Novice', topic:'POIs', url:'practicetools.html#drills', external:false, readMin:2, added:'2025-08-01', featured:false},
+
+      // Externals (APDA & high-signal)
+      {id:'apda-guide', title:'APDA Guide', blurb:'League overview, norms, and pointers.', type:'External', skill:'Novice', topic:'Equity', url:'https://apda.online/about/guide-to-apda/', external:true, readMin:5, added:'2025-08-01', featured:true},
+      {id:'apda-home', title:'APDA Home', blurb:'Official posts, links, and schedule.', type:'External', skill:'Novice', topic:'Equity', url:'https://apda.online/', external:true, readMin:2, added:'2025-08-01', featured:false},
+      {id:'apda-coc', title:'APDA Code of Conduct', blurb:'League policy & reporting routes.', type:'External', skill:'Novice', topic:'Equity', url:'https://apda.online/code-of-conduct/', external:true, readMin:4, added:'2025-08-01', featured:false},
+      {id:'apda-speaker', title:'APDA Speaker Scales', blurb:'How speaks are typically calibrated.', type:'External', skill:'Novice', topic:'Equity', url:'https://apda.online/speaker-scale/', external:true, readMin:3, added:'2025-08-01', featured:false},
+      {id:'apda-schedule', title:'APDA Schedule', blurb:'Season calendar (official).', type:'External', skill:'Novice', topic:'Equity', url:'https://apda.online/schedule/', external:true, readMin:1, added:'2025-08-01', featured:false},
+    ];
+
+    function $(id){ return document.getElementById(id); }
+
+    // Render library cards with filters
+    function renderLibrary(){
+      const q = $('q').value.trim().toLowerCase();
+      const t = $('fType').value;
+      const s = $('fSkill').value;
+      const m = $('fTopic').value;
+      const sort = $('sort').value;
+
+      let items = LIBRARY_DATA.slice();
+
+      if(q){
+        items = items.filter(it =>
+          it.title.toLowerCase().includes(q) ||
+          it.blurb.toLowerCase().includes(q)
+        );
+      }
+      if(t) items = items.filter(it => it.type === t);
+      if(s) items = items.filter(it => it.skill === s);
+      if(m) items = items.filter(it => it.topic === m);
+
+      if(sort==='new'){
+        items.sort((a,b)=> (b.added>a.added) - (a.added>b.added));
+      } else if(sort==='short'){
+        items.sort((a,b)=> (a.readMin||9) - (b.readMin||9));
+      } else if(sort==='popular'){
+        // Placeholder: keep featured near top as proxy
+        items.sort((a,b)=> (b.featured===true) - (a.featured===true));
+      } else if(sort==='az'){
+        items.sort((a,b)=> a.title.localeCompare(b.title));
+      }
+
+      const out = items.map(it => `
+        <article class="res-card">
+          <h4>${it.title}</h4>
+          <p class="muted">${it.blurb}</p>
+          <div class="meta-row">
+            <span class="badge">${it.type}</span>
+            <span class="badge">${it.skill}</span>
+            <span class="badge">${it.topic}</span>
+            <span class="badge">~${it.readMin} min</span>
+          </div>
+          <div class="meta-row">
+            <a class="btn" ${it.external ? 'target="_blank" rel="noopener"' : ''} href="${it.url}">${it.external ? 'Open (external) →' : 'Open →'}</a>
+          </div>
+        </article>
+      `).join('');
+
+      $('libCards').innerHTML = out || `<div class="muted">No results. Try clearing filters or a different search.</div>`;
+      $('libCount').textContent = `${items.length} result${items.length===1?'':'s'}`;
+    }
+
+    ['q','fType','fSkill','fTopic','sort'].forEach(id => $(id).addEventListener('input', renderLibrary));
+    $('clearFilters').addEventListener('click', ()=>{
+      $('q').value=''; $('fType').value=''; $('fSkill').value=''; $('fTopic').value=''; $('sort').value='new';
+      renderLibrary();
+    });
+    renderLibrary();
+
+    // Fresh / featured
+    const fresh = LIBRARY_DATA.filter(x=>x.featured).slice(0,6).map(x=>`
+      <article class="res-card">
+        <h4>${x.title}</h4>
+        <p class="muted">${x.blurb}</p>
+        <div class="meta-row">
+          <span class="badge">${x.type}</span><span class="badge">${x.skill}</span>
+        </div>
+        <div class="meta-row"><a class="btn" ${x.external?'target="_blank" rel="noopener"':''} href="${x.url}">Open →</a></div>
+      </article>
+    `).join('');
+    $('freshCards').innerHTML = fresh || `<div class="muted">We’ll spotlight new items here.</div>`;
+
+    /* ==========================================================
+      TEMPLATES — DOWNLOADS & BUNDLE
+    ========================================================== */
+    function saveText(name, text){
+      const blob = new Blob([text], {type:'text/plain'});
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    function flowCsvTemplate(){
+      const head = ['#','PMC','LOC','MG','MO','LOR','PMR','Notes'].join(',');
+      return head + '\n' + Array.from({length:10}, (_,i)=>[i+1,'','','','','','',''].join(',')).join('\n');
+    }
+    function flowTxtTemplate(){
+      return `# PDU Flow
+# Cols: #\\tPMC\\tLOC\\tMG\\tMO\\tLOR\\tPMR\\tNotes
+1\\t\\t\\t\\t\\t\\t\\t
+2\\t\\t\\t\\t\\t\\t\\t
+3\\t\\t\\t\\t\\t\\t\\t
+4\\t\\t\\t\\t\\t\\t\\t
+5\\t\\t\\t\\t\\t\\t\\t
+6\\t\\t\\t\\t\\t\\t\\t
+7\\t\\t\\t\\t\\t\\t\\t
+8\\t\\t\\t\\t\\t\\t\\t
+9\\t\\t\\t\\t\\t\\t\\t
+10\\t\\t\\t\\t\\t\\t\\t
+`;
+    }
+    function outlineTxt(){
+      return `PM/MG OUTLINE
+
+PM
+Intro (15–30s): THBT …
+Definitions / Actors
+Mechanism (who/what/how)
+Reasons (2–4) with warrants → impacts
+Comparative / Harms avoided
+
+MG
+Group & answer Opp (warranted)
+Re-center mechanism & benefits
+Weighing narrative to PMR
+`;
+    }
+    function rebuttalChecklist(){
+      return `REBUTTAL CHECKLIST — LOR / PMR
+
+[ ] Collapse: pick the winning path
+[ ] Explicit weighing (mag/prob/time/reversibility)
+[ ] 2–3 voters phrased as ballot reasons
+[ ] Answer their best line well
+[ ] No new arguments (new weighing on existing is okay)
+[ ] Closing sentence: why your world is better
+`;
+    }
+    function pooQuickRef(){
+      return `POO QUICK REFERENCE
+
+When valid:
+- New argument / new impact in rebuttal (LOR/PMR)
+- Timing overage beyond grace
+Phrase it:
+"Point of order: new argument in rebuttal on [issue]."
+Rulings:
+- Well taken / Not well taken / Under advisement
+`;
+    }
+    function pactTxt(){
+      return `PARTNER PACT
+Roles: Master flow keeper · Timekeeper · POO watcher · Case notes
+Policy: Max two passed notes (missing warrant; weighing line). Simple hand signals for POIs/timing.
+`;
+    }
+    function timelineTxt(){
+      return `ROUND TIMELINE (with grace)
+
+PMC — 7:30
+LOC — 8:30
+MG  — 8:30
+MO  — 8:30
+LOR — 4:30
+PMR — 5:30
+
+Protected time: first 1:00 and last :30 of constructives. POIs optional to offer and accept.
+`;
+    }
+
+    $('dlFlowCsv').addEventListener('click', ()=> saveText('pdu_flow_template.csv', flowCsvTemplate()));
+    $('dlFlowTxt').addEventListener('click', ()=> saveText('pdu_flow_template.txt', flowTxtTemplate()));
+    $('dlOutline').addEventListener('click', ()=> saveText('pdu_pm_mg_outline.txt', outlineTxt()));
+    $('dlRebuttal').addEventListener('click', ()=> saveText('pdu_rebuttal_checklist.txt', rebuttalChecklist()));
+    $('dlPOORef').addEventListener('click', ()=> saveText('pdu_poo_quick_reference.txt', pooQuickRef()));
+    $('dlPact').addEventListener('click', ()=> saveText('pdu_partner_pact.txt', pactTxt()));
+    $('dlTimeline').addEventListener('click', ()=> saveText('pdu_round_timeline.txt', timelineTxt()));
+
+    $('dlAllZip').addEventListener('click', async ()=>{
+      if(!(window.JSZip && window.saveAs)){ alert('Zip libraries not loaded. Try individual downloads above.'); return; }
+      const zip = new JSZip();
+      zip.file('pdu_flow_template.csv', flowCsvTemplate());
+      zip.file('pdu_flow_template.txt', flowTxtTemplate());
+      zip.file('pdu_pm_mg_outline.txt', outlineTxt());
+      zip.file('pdu_rebuttal_checklist.txt', rebuttalChecklist());
+      zip.file('pdu_poo_quick_reference.txt', pooQuickRef());
+      zip.file('pdu_partner_pact.txt', pactTxt());
+      zip.file('pdu_round_timeline.txt', timelineTxt());
+      const blob = await zip.generateAsync({type:'blob'});
+      saveAs(blob, 'pdu_resources_bundle.zip');
+    });
+
+    /* ==========================================================
+      GLOSSARY — DATA & SEARCH
+    ========================================================== */
+    const GLOSSARY = [
+      ['APDA','American Parliamentary Debate Association; the 2v2 circuit we compete in.'],
+      ['Government (Gov)','The team proposing the case (PM, MG).'],
+      ['Opposition (Opp)','The team responding to the case (LO, MO).'],
+      ['Constructive','The four longer speeches where new arguments are built (PMC, LOC, MG, MO).'],
+      ['Rebuttal','Final two speeches (LOR, PMR) focused on weighing/crystallization; no new arguments.'],
+      ['Grace','~30s leniency beyond nominal speech time (e.g., 7:30, 8:30).'],
+      ['Protected time','First 1:00 and last :30 of constructives; POIs are not taken.'],
+      ['POC','Point of Clarification: questions during prep time to clarify case/motion text.'],
+      ['POI','Point of Information: optional, brief interruption outside protected time.'],
+      ['POO','Point of Order: flags a violation (e.g., new in rebuttal, timing). Judge rules quickly.'],
+      ['Claim','Your assertion.'],
+      ['Warrant','The reasoning that makes your claim true.'],
+      ['Impact','Why it matters (harms avoided or benefits achieved).'],
+      ['Weighing','Comparing worlds/impacts by magnitude, probability, timeframe, reversibility.'],
+      ['Mechanism','Who does what, how; the model of implementation/enforcement.'],
+      ['Comparative world','How the world looks under each side; why yours is better.'],
+      ['Turn','Make their argument support your side (link turn or impact turn).'],
+      ['Mitigation','Reduce the size/likelihood of their impact.'],
+      ['Extension','Carry an argument forward with deeper warrants.'],
+      ['Collapse','Focus on the few arguments that win the round.'],
+      ['Voters','2–3 ballot reasons crystallized in rebuttal.'],
+      ['Clash','Direct engagement on the same question; head-to-head comparison.'],
+      ['Drop','An argument that goes unanswered; judges may grant it strong weight.'],
+      ['Flow','Your notes tracing arguments and responses through the round.'],
+      ['Roadmap','Guide to where you’re going next; helps judges flow.'],
+      ['Tight call','Opp claims the case is unfair/unwinnable; judge applies a fairness test.'],
+      ['Spec (specific knowledge)','Niche facts not reasonably shared; avoid relying on them without grounding.'],
+      ['Speaks','Speaker points awarded by judges (see APDA Speaker Scale).'],
+      ['RFD','Reason for Decision — judge’s explanation.'],
+      ['Break','Advance to elimination rounds.'],
+      ['Tab','Tournament tabulation (pairings, results).'],
+      ['Pro-Am','Tournament/round where a varsity partners with a novice (convention varies).'],
+      ['Equity / EOF','People/processes ensuring fairness and access at events.']
+    ];
+
+    function renderGlossary(filter=''){
+      const f = filter.trim().toLowerCase();
+      $('gList').innerHTML = GLOSSARY
+        .filter(([t,d]) => t.toLowerCase().includes(f) || d.toLowerCase().includes(f))
+        .map(([t,d]) => `<div class="gloss-term"><b>${t}:</b> ${d}</div>`).join('');
+    }
+    renderGlossary();
+    $('gSearch').addEventListener('input', e=> renderGlossary(e.target.value));
+    $('gExport').addEventListener('click', ()=>{
+      const lines = GLOSSARY.map(([t,d]) => `${t}: ${d}`);
+      saveText('pdu_glossary.txt', lines.join('\n'));
+    });
+
+  </script>
+</body>
+</html>
