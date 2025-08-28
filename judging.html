@@ -22,12 +22,18 @@
     .judge-hero .page-subtitle{ max-width:68ch; margin-inline:auto; }
     .hero-cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.9rem; }
 
+    /* CHANGE: tiny size + padding adjustment for mobile hero chips (Firefox edge case) */
+    @media (max-width: 520px){
+      .judge-hero .hero-cta-row{ padding-bottom:.25rem; }
+      .judge-hero .hero-cta-row .link-chip{ padding:.42rem .72rem; font-size:.95rem; }
+    }
+
     /* ---------- Cards & bands ---------- */
     .glass-card{ animation:fadeUp .3s ease both; }
     @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
 
-    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
-    @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
+    .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; min-width:0; }
+    @media (min-width: 980px){ .two-col{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
 
     .tri-tiles{ display:grid; grid-template-columns:1fr; gap:1rem; }
     @media (min-width: 880px){ .tri-tiles{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
@@ -35,8 +41,7 @@
     .tile, .step, .kit-card, .expander{
       padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
       background:rgba(255,255,255,.08);
-      /* CHANGE: prevent grid overflow clipping in some browsers */
-      min-width:0; 
+      min-width:0; /* prevent clipping in grid children */
     }
     .tile h4, .step h4, .kit-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .3rem; }
 
@@ -62,12 +67,12 @@
     @media (min-width: 980px){ .steps{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
     .step .num{ font-weight:900; letter-spacing:.4px; margin-bottom:.25rem; opacity:.9; }
 
-    /* CHANGE: robust list styling to avoid clipping */
+    /* Robust list styling to avoid clipping */
     .list{ margin:.1rem 0 .2rem; padding-left:1.2rem; }
     .list li{ list-style:disc; margin:.3rem 0; overflow-wrap:anywhere; word-break:break-word; }
 
     /* ---------- Expanders (Judging Guide) ---------- */
-    .expander{ padding:0; overflow:visible; } /* CHANGE: allow content to flow */
+    .expander{ padding:0; overflow:visible; }
     .exp-header{
       display:flex; align-items:center; justify-content:space-between; gap:.6rem;
       padding:1rem; cursor:pointer; user-select:none;
@@ -85,8 +90,7 @@
     .expander.open .exp-body{ display:block; }
     .expander.open .exp-arrow svg{ transform:rotate(180deg); }
 
-    /* ---------- Starter Kit (reworked layout) ---------- */
-    /* CHANGE: new grid with areas — desktop: two columns (left: checklist+quiz; right: ballot builder) */
+    /* ---------- Starter Kit (layout) ---------- */
     .kit{
       display:grid; gap:1rem;
       grid-template-areas:
@@ -103,7 +107,7 @@
           "quiz  rfd";
       }
     }
-    .kit-card{ min-width:0; } /* defensive */
+    .kit-card{ min-width:0; }
     .kit-check{ grid-area:check; }
     .kit-rfd{ grid-area:rfd; }
     .kit-quiz{ grid-area:quiz; }
@@ -112,7 +116,6 @@
     textarea.clean{
       width:100%; min-height:140px; padding:.6rem .8rem; border-radius:10px;
       border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff;
-      /* defensive for Safari/Android line-wrap */
       overflow-wrap:anywhere; word-break:break-word;
     }
 
@@ -131,16 +134,26 @@
     /* ---------- TOC active highlight ---------- */
     .toc-list a.active{ font-weight:800; }
 
-    /* ---------- Responsive typography ---------- */
+    /* Responsive type */
     @media (max-width: 960px){
       .judge-hero .page-title{ font-size:2.4rem; }
     }
 
-    /* CHANGE: selects inside chips should not overflow */
+    /* ---------- Selects inside chips ---------- */
     .chip select{
       max-width:100%; color:#fff; background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.28); border-radius:8px; padding:.2rem .4rem;
     }
+
+    /* ====== CHANGES: Ballot Builder chip sizing & spacing ====== */
+    /* Compact variant to prevent clipping */
+    .chip.compact{ padding:.42rem .72rem; font-weight:700; }
+    .chip.compact select{ font-size:.95rem; padding:.18rem .36rem; }
+    .chip.compact{ width:100%; justify-content:space-between; }
+
+    /* Extra space between controls and RFD output */
+    .kit-rfd .mini-controls{ margin-bottom:.7rem; } /* CHANGE: added margin */
+    #rfOut{ margin-top:.1rem; } /* slight separation from controls */
   </style>
 </head>
 
@@ -317,7 +330,6 @@
           </ul>
           <div class="mini-controls">
             <a class="chip" href="#kit">Build an RFD →</a>
-            <!-- CHANGE: updated to working PDF link -->
             <a class="chip" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf" target="_blank" rel="noopener">APDA Speaker Scale (PDF) →</a>
           </div>
         </div>
@@ -339,7 +351,6 @@
     <section class="glass-card" id="guide">
       <h3 class="about-header">Judging Guide</h3>
 
-      <!-- A) Evaluate a round -->
       <article class="expander open">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="true">
           <h4>A) How to evaluate a round</h4>
@@ -357,7 +368,6 @@
         </div>
       </article>
 
-      <!-- B) Timing & protected time -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>B) Timing & protected time</h4>
@@ -375,7 +385,6 @@
         </div>
       </article>
 
-      <!-- C) Points of Information -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>C) Points of Information (POIs)</h4>
@@ -391,7 +400,6 @@
         </div>
       </article>
 
-      <!-- D) Points of Order -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>D) Points of Order (POOs)</h4>
@@ -408,7 +416,6 @@
         </div>
       </article>
 
-      <!-- E) Writing a clear RFD -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>E) Writing a clear RFD</h4>
@@ -425,7 +432,6 @@
         </div>
       </article>
 
-      <!-- F) Speaker points -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>F) Speaker points (speaks)</h4>
@@ -435,14 +441,12 @@
         </header>
         <div class="exp-body">
           <ul class="list">
-            <!-- CHANGE: updated link to working PDF -->
             <li>Calibrate to the <a class="chip" target="_blank" rel="noopener" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf">APDA Speaker Scale (PDF) →</a></li>
             <li>Anchor descriptions: average = did the job; high = clear & comparative; low = inaccessible or unstructured.</li>
           </ul>
         </div>
       </article>
 
-      <!-- G) Special formats -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>G) Case vs Motions & POCs</h4>
@@ -459,7 +463,6 @@
         </div>
       </article>
 
-      <!-- H) Equity -->
       <article class="expander">
         <header class="exp-header" role="button" tabindex="0" aria-expanded="false">
           <h4>H) Equity & accessibility</h4>
@@ -482,7 +485,6 @@
     <section class="glass-card" id="kit">
       <h3 class="about-header">First-time Judge Starter Kit</h3>
 
-      <!-- CHANGE: redesigned layout using grid areas -->
       <div class="kit">
         <!-- Checklist -->
         <div class="kit-card kit-check">
@@ -498,30 +500,38 @@
         <div class="kit-card kit-rfd">
           <h4>Ballot Builder (RFD)</h4>
           <p class="muted">Fill and copy/download a clean RFD scaffold.</p>
+
+          <!-- CHANGE: compact chips to prevent clipping -->
           <div class="two-col" style="gap:.5rem;">
-            <label class="chip" style="justify-content:space-between;">Winner
-              <select id="rfWinner">
+            <label class="chip compact" style="align-items:center;">
+              <span>Winner</span>
+              <select id="rfWinner" style="margin-left:.6rem; flex:1 1 auto; min-width:0;">
                 <option value="Government">Government</option>
                 <option value="Opposition">Opposition</option>
               </select>
             </label>
-            <label class="chip" style="justify-content:space-between;">Round focus
-              <select id="rfFocus">
+            <label class="chip compact" style="align-items:center;">
+              <span>Round focus</span>
+              <select id="rfFocus" style="margin-left:.6rem; flex:1 1 auto; min-width:0;">
                 <option value="mechanism & weighing">mechanism & weighing</option>
                 <option value="comparative impacts">comparative impacts</option>
                 <option value="case viability vs status quo">case viability vs status quo</option>
               </select>
             </label>
           </div>
+
           <textarea id="rfIssues" class="clean" placeholder="Key issues (bullet points)…"></textarea>
           <textarea id="rfWhy" class="clean" placeholder="Why the winner wins (comparative, weighed)…"></textarea>
           <textarea id="rfFbGov" class="clean" placeholder="Feedback to Government (1–2 actionable tips)…"></textarea>
           <textarea id="rfFbOpp" class="clean" placeholder="Feedback to Opposition (1–2 actionable tips)…"></textarea>
+
           <div class="mini-controls">
             <button class="btn" id="rfBuild">Build RFD</button>
             <button class="ghost" id="rfCopy">Copy</button>
             <button class="ghost" id="rfSave">Download (.txt)</button>
           </div>
+
+          <!-- CHANGE: extra breathing room above the output -->
           <textarea id="rfOut" class="clean" placeholder="Your RFD will appear here…" readonly></textarea>
         </div>
 
@@ -544,7 +554,6 @@
     <section class="glass-card" id="links">
       <h3 class="about-header">APDA & helpful links</h3>
       <div class="mini-controls" style="flex-wrap:wrap;">
-        <!-- CHANGE: updated to working Speaker Scale PDF -->
         <a class="chip" target="_blank" rel="noopener" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf">APDA Speaker Scale (PDF) →</a>
         <a class="chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">APDA Code of Conduct →</a>
         <a class="chip" href="resources.html">Resources Library →</a>
@@ -600,7 +609,7 @@
 
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
-      const h = navbar.getBoundingClientClientRect ? navbar.getBoundingClientRect().height : navbar.offsetHeight;
+      const h = navbar.getBoundingClientRect().height; /* CHANGE: clean call */
       document.documentElement.style.setProperty('--nav-height', h + 'px');
     }
     setNavHeightVar(); addEventListener('resize', setNavHeightVar);
@@ -669,21 +678,6 @@
       for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
       tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
     }, { passive: true });
-
-    /* ==========================================================
-      EXPANDERS (Judging Guide)
-    ========================================================== */
-    document.querySelectorAll('.expander .exp-header').forEach(h=>{
-      h.addEventListener('click', ()=>{
-        const card = h.parentElement;
-        const isOpen = card.classList.contains('open');
-        card.classList.toggle('open', !isOpen);
-        h.setAttribute('aria-expanded', String(!isOpen));
-      });
-      h.addEventListener('keydown', (e)=>{
-        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); h.click(); }
-      });
-    });
 
     /* ==========================================================
       STARTER KIT: Checklist, Ballot Builder, POO Quiz
