@@ -35,6 +35,8 @@
     .tile, .step, .kit-card, .expander{
       padding:1rem; border-radius:14px; border:1px solid rgba(255,255,255,.22);
       background:rgba(255,255,255,.08);
+      /* CHANGE: prevent grid overflow clipping in some browsers */
+      min-width:0; 
     }
     .tile h4, .step h4, .kit-card h4{ font-family:'DM Serif Display',serif; margin:.1rem 0 .3rem; }
 
@@ -60,8 +62,12 @@
     @media (min-width: 980px){ .steps{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
     .step .num{ font-weight:900; letter-spacing:.4px; margin-bottom:.25rem; opacity:.9; }
 
+    /* CHANGE: robust list styling to avoid clipping */
+    .list{ margin:.1rem 0 .2rem; padding-left:1.2rem; }
+    .list li{ list-style:disc; margin:.3rem 0; overflow-wrap:anywhere; word-break:break-word; }
+
     /* ---------- Expanders (Judging Guide) ---------- */
-    .expander{ padding:0; overflow:hidden; }
+    .expander{ padding:0; overflow:visible; } /* CHANGE: allow content to flow */
     .exp-header{
       display:flex; align-items:center; justify-content:space-between; gap:.6rem;
       padding:1rem; cursor:pointer; user-select:none;
@@ -72,23 +78,42 @@
       border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10);
       transition:transform .16s ease, box-shadow .2s ease;
       box-shadow:0 0 10px rgba(124,58,237,.25);
+      flex:0 0 auto;
     }
     .exp-arrow svg{ transition:transform .2s ease; }
     .exp-body{ padding:0 1rem 1rem; display:none; }
     .expander.open .exp-body{ display:block; }
     .expander.open .exp-arrow svg{ transform:rotate(180deg); }
 
-    .list{ margin:.1rem 0 .2rem; }
-    .list li{ margin:.3rem 0; }
-
-    /* ---------- Starter Kit ---------- */
-    .kit{ display:grid; grid-template-columns:1fr; gap:1rem; }
-    @media (min-width: 980px){ .kit{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+    /* ---------- Starter Kit (reworked layout) ---------- */
+    /* CHANGE: new grid with areas — desktop: two columns (left: checklist+quiz; right: ballot builder) */
+    .kit{
+      display:grid; gap:1rem;
+      grid-template-areas:
+        "check"
+        "rfd"
+        "quiz";
+      grid-template-columns:1fr;
+    }
+    @media (min-width: 980px){
+      .kit{
+        grid-template-columns:1fr 1.4fr;
+        grid-template-areas:
+          "check rfd"
+          "quiz  rfd";
+      }
+    }
+    .kit-card{ min-width:0; } /* defensive */
+    .kit-check{ grid-area:check; }
+    .kit-rfd{ grid-area:rfd; }
+    .kit-quiz{ grid-area:quiz; }
     .kit-card p{ margin:.35rem 0 .6rem; }
 
     textarea.clean{
       width:100%; min-height:140px; padding:.6rem .8rem; border-radius:10px;
       border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff;
+      /* defensive for Safari/Android line-wrap */
+      overflow-wrap:anywhere; word-break:break-word;
     }
 
     .mini-controls{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
@@ -96,9 +121,9 @@
     /* ---------- Quiz chips ---------- */
     .quiz-chips{ display:flex; flex-direction:column; gap:.45rem; }
     .quiz-chip{
-      display:flex; align-items:center; justify-content:space-between; gap:.6rem;
+      display:flex; flex-direction:column; align-items:flex-start; gap:.4rem;
       padding:.6rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08);
-      cursor:pointer;
+      cursor:pointer; min-width:0;
     }
     .quiz-chip .answer{ display:none; opacity:.95; }
     .quiz-chip.open .answer{ display:block; }
@@ -109,6 +134,12 @@
     /* ---------- Responsive typography ---------- */
     @media (max-width: 960px){
       .judge-hero .page-title{ font-size:2.4rem; }
+    }
+
+    /* CHANGE: selects inside chips should not overflow */
+    .chip select{
+      max-width:100%; color:#fff; background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.28); border-radius:8px; padding:.2rem .4rem;
     }
   </style>
 </head>
@@ -286,7 +317,8 @@
           </ul>
           <div class="mini-controls">
             <a class="chip" href="#kit">Build an RFD →</a>
-            <a class="chip" href="https://apda.online/speaker-scale/" target="_blank" rel="noopener">APDA Speaker Scale →</a>
+            <!-- CHANGE: updated to working PDF link -->
+            <a class="chip" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf" target="_blank" rel="noopener">APDA Speaker Scale (PDF) →</a>
           </div>
         </div>
       </div>
@@ -297,7 +329,7 @@
       <h3 class="about-header">How to sign up for judging</h3>
       <div class="cta-band">
         <p class="muted" style="margin-bottom:.6rem;">
-          When a tournament opens for sign-ups, fill out the interest form as a <b>Judge</b>. Captains will confirm assignments and logistics.
+          When a tournament opens for sign-ups, fill out the interest form as a <b>Judge</b>. The <b>Board</b> will confirm assignments and logistics.
         </p>
         <a class="btn" href="tournaments.html">Go to Tournaments page →</a>
       </div>
@@ -403,7 +435,8 @@
         </header>
         <div class="exp-body">
           <ul class="list">
-            <li>Calibrate to the <a class="chip" target="_blank" rel="noopener" href="https://apda.online/speaker-scale/">APDA Speaker Scale →</a></li>
+            <!-- CHANGE: updated link to working PDF -->
+            <li>Calibrate to the <a class="chip" target="_blank" rel="noopener" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf">APDA Speaker Scale (PDF) →</a></li>
             <li>Anchor descriptions: average = did the job; high = clear & comparative; low = inaccessible or unstructured.</li>
           </ul>
         </div>
@@ -448,9 +481,11 @@
     <!-- Starter Kit -->
     <section class="glass-card" id="kit">
       <h3 class="about-header">First-time Judge Starter Kit</h3>
+
+      <!-- CHANGE: redesigned layout using grid areas -->
       <div class="kit">
         <!-- Checklist -->
-        <div class="kit-card">
+        <div class="kit-card kit-check">
           <h4>Judge Checklist</h4>
           <p class="muted">Before / During / After — quick sanity check you can print or save.</p>
           <div class="mini-controls">
@@ -460,18 +495,18 @@
         </div>
 
         <!-- Ballot Builder -->
-        <div class="kit-card">
+        <div class="kit-card kit-rfd">
           <h4>Ballot Builder (RFD)</h4>
           <p class="muted">Fill and copy/download a clean RFD scaffold.</p>
           <div class="two-col" style="gap:.5rem;">
             <label class="chip" style="justify-content:space-between;">Winner
-              <select id="rfWinner" class="ghost" style="margin-left:.6rem; padding:.2rem .4rem; border-radius:8px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); color:#fff;">
+              <select id="rfWinner">
                 <option value="Government">Government</option>
                 <option value="Opposition">Opposition</option>
               </select>
             </label>
             <label class="chip" style="justify-content:space-between;">Round focus
-              <select id="rfFocus" class="ghost" style="margin-left:.6rem; padding:.2rem .4rem; border-radius:8px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); color:#fff;">
+              <select id="rfFocus">
                 <option value="mechanism & weighing">mechanism & weighing</option>
                 <option value="comparative impacts">comparative impacts</option>
                 <option value="case viability vs status quo">case viability vs status quo</option>
@@ -491,7 +526,7 @@
         </div>
 
         <!-- POO Quiz -->
-        <div class="kit-card">
+        <div class="kit-card kit-quiz">
           <h4>“Is this a valid POO?”</h4>
           <p class="muted">Tap a scenario to see the ruling and why.</p>
           <div class="quiz-chips" id="pooQuiz">
@@ -509,7 +544,8 @@
     <section class="glass-card" id="links">
       <h3 class="about-header">APDA & helpful links</h3>
       <div class="mini-controls" style="flex-wrap:wrap;">
-        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/speaker-scale/">APDA Speaker Scale →</a>
+        <!-- CHANGE: updated to working Speaker Scale PDF -->
+        <a class="chip" target="_blank" rel="noopener" href="https://apda.online/wp-content/uploads/2021/09/RevisedSpeakerScale.pdf">APDA Speaker Scale (PDF) →</a>
         <a class="chip" target="_blank" rel="noopener" href="https://apda.online/code-of-conduct/">APDA Code of Conduct →</a>
         <a class="chip" href="resources.html">Resources Library →</a>
         <a class="chip" href="beginner.html">Beginner Guide →</a>
@@ -536,7 +572,7 @@
         </div>
         <div class="tile">
           <h4>Can I judge if I’m competing?</h4>
-          <p class="muted">Often yes between rounds—confirm with captains and the tournament tab room.</p>
+          <p class="muted">Often yes between rounds—confirm with the Board and the tournament tab room.</p>
         </div>
       </div>
     </section>
@@ -564,7 +600,7 @@
 
     const navbar = document.getElementById('siteNavbar');
     function setNavHeightVar(){
-      const h = navbar.getBoundingClientRect().height;
+      const h = navbar.getBoundingClientClientRect ? navbar.getBoundingClientRect().height : navbar.offsetHeight;
       document.documentElement.style.setProperty('--nav-height', h + 'px');
     }
     setNavHeightVar(); addEventListener('resize', setNavHeightVar);
