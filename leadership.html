@@ -39,18 +39,16 @@
 
     body{
       color: var(--text-on-glass);
-      background: radial-gradient(1200px 800px at 10% -10%, rgba(124,58,237,.15), transparent 40%),
-                  radial-gradient(1000px 700px at 110% 10%, rgba(124,58,237,.15), transparent 40%),
-                  #0b0b15;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Navbar sizing tweaked to match homepage */
+    .glass-navbar{ padding:.5rem 0; }
+    .logo-pdu{ height:56px; }
+    .logo-nyu{ height:24px; }
+
     /* ===== Hero ===== */
-    .hero-section{
-      padding: calc(60px + 2vw) 1.25rem 1.25rem;
-      text-align:center;
-    }
     .page-title{
       font-family: "DM Serif Display", serif;
       font-size: clamp(2rem, 2.2rem + 1vw, 3rem);
@@ -69,20 +67,13 @@
       margin: .5rem 0 1rem;
     }
 
-    /* ===== Grid: 1 / 2 / 3 / 4 columns ===== */
+    /* ===== Card layout ===== */
     .leaders-grid{
-      display:grid; gap:1.5rem;
-      grid-template-columns: 1fr;                 /* mobile */
+      display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center;
     }
-    @media (min-width: 768px){
-      .leaders-grid{ grid-template-columns: repeat(2, 1fr); } /* tablet */
-    }
-    @media (min-width: 1024px){
-      .leaders-grid{ grid-template-columns: repeat(3, 1fr); } /* desktop */
-    }
-    @media (min-width: 1440px){
-      .leaders-grid{ grid-template-columns: repeat(4, 1fr); } /* wide */
-    }
+    .leader-card{ flex:1 1 100%; }
+    @media (min-width:768px){ .leader-card{ flex:0 0 calc(50% - 1.5rem); } }
+    @media (min-width:1024px){ .leader-card{ flex:0 0 calc(25% - 1.5rem); } }
 
     /* ===== Card (old style brought back, with glow) ===== */
     .leader-card{
@@ -132,27 +123,27 @@
     .leader-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 20%; display:block; }
 
     /* Info band */
-    .leader-info{ padding: .9rem 1rem 1.1rem; text-align:center; }
+    .leader-info{ padding:.25rem 1rem .8rem; text-align:center; color:#fff; }
     .leader-name{ font-family:"DM Serif Display", serif; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); margin:0; letter-spacing:.2px; }
     .leader-sep{
-      width:72%; height:2px; margin:.5rem auto .55rem;
+      width:72%; height:2px; margin:.3rem auto .35rem;
       background: linear-gradient(90deg, rgba(255,255,255,.4), var(--pdu-purple), rgba(255,255,255,.4));
       box-shadow: 0 0 10px rgba(199,191,255,.4);
       border-radius:999px;
     }
-    .leader-title{ font-weight:700; letter-spacing:.3px; opacity:.95; margin:0; }
+    .leader-title{ font-weight:400; letter-spacing:.3px; opacity:.95; margin:0; }
 
     /* ===== Modal (full-screen) ===== */
-    .modal{ position:fixed; inset:0; z-index:1000; display:none; }
-    .modal.open{ display:block; }
+    .modal{ position:fixed; inset:0; z-index:1000; display:none; align-items:center; justify-content:center; }
+    .modal.open{ display:flex; }
     .modal-scrim{
       position:absolute; inset:0; background: rgba(8,8,16,.75); backdrop-filter: blur(6px);
     }
     .modal-panel{
-      position:relative; z-index:1001; max-width: 980px; margin: min(8vh,80px) auto; padding: 0;
+      position:relative; z-index:1001; max-width:980px; margin:0 1rem; padding:0;
       background: var(--glass-bg); border:1px solid var(--glass-border); border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0,0,0,.45);
-      overflow:hidden;
+      display:flex; flex-direction:column; max-height:90vh; overflow-x:hidden; overflow-y:auto;
     }
     .modal-media{ position:relative; width:100%; aspect-ratio: 4 / 5; overflow:hidden; border-bottom:1px solid rgba(255,255,255,.18); }
     .modal-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 18%; }
@@ -181,9 +172,13 @@
     }
     .modal-close:focus-visible{ outline:2px solid rgba(255,255,255,.65); outline-offset:2px; }
 
-    @media (max-width: 560px){
-      .modal-panel{ margin: 0.75rem; }
+    @media (min-width:700px){
+      .modal-panel{ flex-direction:row; }
+      .modal-media{ flex:0 0 40%; border-bottom:none; border-right:1px solid rgba(255,255,255,.18); }
+      .modal-body{ flex:1; }
     }
+
+    @media (max-width:560px){ .modal-panel{ margin:0.75rem; } }
 
     /* ===== Below-grid sections (forced visible) ===== */
     .below-cards{ margin-top: 2rem; display:grid; gap:1.25rem; }
@@ -202,10 +197,125 @@
 </head>
 <body id="top">
 
+  <!-- Navbar (desktop: PDU left, links center, NYU right) (mobile: NYU left · PDU centered · burger right) -->
+  <header class="glass-navbar" id="siteNavbar">
+    <div class="container nav-container">
+      <!-- NYU (left on mobile) -->
+      <div class="nav-right" aria-label="NYU logo">
+        <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
+      </div>
+
+      <!-- Desktop links center -->
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html">Home</a></li>
+
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="submenu" role="menu" aria-label="About submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity Policy</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false">Tournaments</a>
+            <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+              <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="join.html" class="top-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
+              <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
+            </ul>
+          </li>
+
+          <li><a href="leadership.html" aria-current="page">Leadership</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- PDU logo (left on desktop; centered on mobile) -->
+      <div class="nav-left">
+        <a href="index.html" aria-label="Home" class="brand-link">
+          <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
+          <span class="brand-text">NYU | PDU</span>
+        </a>
+      </div>
+
+      <!-- Burger (right on mobile) -->
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity Policy</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
+          <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
+            <li><a href="tournaments.html">Upcoming</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#meetings">Meetings</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="practicetools.html">Practice Tools</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html" aria-current="page">Leadership</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
   <!-- Hero -->
-  <section class="hero-section">
-    <h1 class="page-title">Leadership</h1>
-    <p class="page-subtitle">Parliamentary Debate Union Executive Board</p>
+  <section class="hero-section hero-compact" id="leadersHero">
+    <div>
+      <h1 class="page-title">Leadership</h1>
+      <p class="page-subtitle">NYU Parliamentary Debate Union Executive Board</p>
+    </div>
   </section>
 
   <!-- Glowing divider (kept) -->
@@ -223,14 +333,14 @@
            - Entire card is a button for a11y click.
            - Data-* attributes feed the modal. Update emails/photos/bios as needed. -->
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Rayan Sheikh"
               data-role="President"
               data-img="placeholder.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Rayan coordinates team strategy, outreach, and the competitive calendar—aligning training, travel, and culture across the season.">
-        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Rayan Sheikh"></div>
+        <div class="leader-media"><img loading="lazy" src="placeholder.jpg" alt="Portrait of Rayan Sheikh"></div>
         <div class="leader-info">
           <h3 class="leader-name">Rayan Sheikh</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -238,14 +348,14 @@
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Allen Liu"
               data-role="President"
               data-img="placeholder.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Allen supports competitive development and represents PDU on the APDA circuit, aligning training with tournament goals.">
-        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Allen Liu"></div>
+        <div class="leader-media"><img loading="lazy" src="placeholder.jpg" alt="Portrait of Allen Liu"></div>
         <div class="leader-info">
           <h3 class="leader-name">Allen Liu</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -253,29 +363,29 @@
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Marcel Cato"
-              data-role="Director of Operations"
+              data-role="Operations"
               data-img="your-photo.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Travel, logistics, rosters, and TIDs—your point of contact for sign-ups, itineraries, and attendance.">
-        <div class="leader-media"><img src="your-photo.jpg" alt="Portrait of Marcel Cato"></div>
+        <div class="leader-media"><img loading="lazy" src="your-photo.jpg" alt="Portrait of Marcel Cato"></div>
         <div class="leader-info">
           <h3 class="leader-name">Marcel Cato</h3>
           <div class="leader-sep" aria-hidden="true"></div>
-          <p class="leader-title">Director of Operations</p>
+          <p class="leader-title">Operations</p>
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Pranav Gupta"
               data-role="Finance"
               data-img="pranav.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Manages budgets, reimbursements, and funding so members can focus on growing as debaters.">
-        <div class="leader-media"><img src="pranav.jpg" alt="Portrait of Pranav Gupta"></div>
+        <div class="leader-media"><img loading="lazy" src="pranav.jpg" alt="Portrait of Pranav Gupta"></div>
         <div class="leader-info">
           <h3 class="leader-name">Pranav Gupta</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -283,7 +393,7 @@
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Dara Adebanjo"
               data-role="Equity"
@@ -291,7 +401,7 @@
               data-email="placeholder@nyu.edu"
               data-bio="Confidential reports, team culture, and coordination with tournament Equity—ensuring challenging debate without harm.">
         <span class="badge-equity">★ Equity</span>
-        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Dara Adebanjo"></div>
+        <div class="leader-media"><img loading="lazy" src="placeholder.jpg" alt="Portrait of Dara Adebanjo"></div>
         <div class="leader-info">
           <h3 class="leader-name">Dara Adebanjo</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -299,14 +409,14 @@
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Dedra Annakie"
               data-role="Communications"
               data-img="placeholder.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Mailing list, announcements, and social updates—keeping members and partners in the loop.">
-        <div class="leader-media"><img src="placeholder.jpg" alt="Portrait of Dedra Annakie"></div>
+        <div class="leader-media"><img loading="lazy" src="placeholder.jpg" alt="Portrait of Dedra Annakie"></div>
         <div class="leader-info">
           <h3 class="leader-name">Dedra Annakie</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -314,14 +424,14 @@
         </div>
       </button>
 
-      <button class="leader-card fade-in"
+      <button type="button" class="leader-card fade-in"
               aria-haspopup="dialog"
               data-name="Amish Gupta"
               data-role="Education"
               data-img="amish.jpg"
               data-email="placeholder@nyu.edu"
               data-bio="Lessons, scrims, and feedback frameworks to help members grow at their own pace and prep for tournaments.">
-        <div class="leader-media"><img src="amish.jpg" alt="Portrait of Amish Gupta"></div>
+        <div class="leader-media"><img loading="lazy" src="amish.jpg" alt="Portrait of Amish Gupta"></div>
         <div class="leader-info">
           <h3 class="leader-name">Amish Gupta</h3>
           <div class="leader-sep" aria-hidden="true"></div>
@@ -352,11 +462,16 @@
     </section>
   </main>
 
-  <!-- Footer (light) -->
-  <footer class="container" style="opacity:.85; padding-bottom:3rem; text-align:center;">
+  <!-- Footer -->
+  <footer class="glass-footer">
     <p>© 2025 NYU Parliamentary Debate Union. All rights reserved.</p>
     <p class="disclaimer">NYU PDU is a student-run club, approved by but not affiliated with New York University in an institutional capacity.</p>
   </footer>
+
+  <!-- Back to top -->
+  <a href="#top" id="float-button" title="Back to top">
+    <img src="PDULOGO_Trans.png" alt="Return Home">
+  </a>
 
   <!-- ===== Full-screen Modal (single template populated from card data) ===== -->
   <div id="leaderModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalName">
@@ -365,7 +480,7 @@
       <button class="modal-close" aria-label="Close" data-close>×</button>
 
       <div class="modal-media">
-        <img id="modalImg" alt="">
+        <img id="modalImg" alt="" loading="lazy">
       </div>
 
       <div class="modal-body">
@@ -375,7 +490,7 @@
         <p id="modalBio" class="modal-bio"></p>
 
         <div class="modal-actions">
-          <a id="modalEmail" class="chip" href="#" target="_blank" rel="noopener">Email →</a>
+          <a id="modalEmail" class="chip" href="#" target="_blank" rel="noopener" style="display:none">Email →</a>
           <!-- Add more chips here (e.g., LinkedIn, Calendly) when available -->
         </div>
       </div>
@@ -388,6 +503,42 @@
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); } });
     }, { threshold: .08 });
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+    // ===== navbar / drawer =====
+    const navbar = document.getElementById('siteNavbar');
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if('ResizeObserver' in window){ new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const drawerClose = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    function openDrawer(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); burger.setAttribute('aria-expanded','true'); scrim.hidden=false; document.body.style.overflow='hidden'; const first=drawer.querySelector('button,a'); if(first) first.focus(); }
+    function closeDrawer(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); burger.setAttribute('aria-expanded','false'); scrim.hidden=true; document.body.style.overflow=''; burger.focus(); }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+    burger.addEventListener('click', toggleDrawer);
+    drawerClose.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.has-submenu').forEach(item=>{
+      const link=item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm=item.querySelector('.submenu');
+      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+    });
 
     // ===== modal logic =====
     const modal = document.getElementById('leaderModal');
@@ -407,7 +558,12 @@
       modalName.textContent = data.name || '';
       modalRole.textContent = data.role || '';
       modalBio.textContent  = data.bio  || '';
-      modalEmail.href = data.email ? `mailto:${data.email}` : '#';
+      if(data.email && !data.email.includes('placeholder')){
+        modalEmail.href = `mailto:${data.email}`;
+        modalEmail.style.display = '';
+      } else {
+        modalEmail.style.display = 'none';
+      }
 
       modal.classList.add('open');
       modal.setAttribute('aria-hidden','false');
