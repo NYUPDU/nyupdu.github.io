@@ -43,9 +43,7 @@
         bottom:18px;
       }
       /* Nudge back-to-top a bit higher so they don't overlap */
-      #float-button{
-        bottom:76px;
-      }
+      #float-button{ bottom:76px; }
     }
 
     /* Newcomer band (magazine-style, compact) */
@@ -64,13 +62,8 @@
     .band-newcomer .n-body p{ opacity:.95; margin-bottom:.75rem; }
     .n-actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
     .n-actions .link-chip{ font-weight:800; }
-    .n-side{
-      border-left:1px solid rgba(255,255,255,.18);
-      padding-left:1rem;
-    }
-    .n-side .mini{
-      display:flex; flex-direction:column; gap:.4rem;
-    }
+    .n-side{ border-left:1px solid rgba(255,255,255,.18); padding-left:1rem; }
+    .n-side .mini{ display:flex; flex-direction:column; gap:.4rem; }
     .n-side .mini .chip{ align-self:flex-start; }
     @media (max-width: 960px){
       .band-newcomer{ grid-template-columns:1fr; }
@@ -83,12 +76,10 @@
   <!-- Navbar -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
-      <!-- Left (NYU on desktop & mobile) -->
       <div class="nav-right" aria-label="NYU logo (left on mobile)">
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      <!-- Center on desktop: nav links; on mobile the PDU logo is centered absolutely -->
       <nav class="nav-links" aria-label="Primary">
         <ul class="menu-root">
           <li><a href="index.html" aria-current="page">Home</a></li>
@@ -129,14 +120,12 @@
         </ul>
       </nav>
 
-      <!-- PDU logo (left on desktop; centered on mobile via CSS absolute positioning) -->
       <div class="nav-left">
         <a href="index.html" aria-label="Home">
           <img src="PDULOGO_Trans.png" alt="PDU Logo" class="logo-pdu" />
         </a>
       </div>
 
-      <!-- Mobile hamburger (right on mobile; hidden on desktop) -->
       <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
@@ -193,12 +182,10 @@
   <!-- Hero -->
   <section class="hero-section hero-home">
     <div class="hero-content glass-card reveal">
-      <h1 class="hero-title">NYU Debate · Parliamentary Debate Union</h1>
-      <p class="hero-sub">
-        Train twice a week. Compete most weekends. No experience needed.
-      </p>
+      <h1 class="hero-title">Welcome to PDU · Fall 2025</h1>
+      <p class="hero-sub">Train twice a week. Compete most weekends. No experience needed.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="#newcomers">I’m New</a>
+        <a class="btn-primary" href="#newcomers">Join Us</a>
         <a class="btn-secondary" href="#updates">I’m Returning</a>
       </div>
     </div>
@@ -207,15 +194,20 @@
   <!-- Countdown (NY time) -->
   <div class="home-countdown" id="homeCountdown" aria-live="polite">Calculating next meeting…</div>
 
-  <!-- Newcomer band (compact, magazine-style) -->
+  <!-- Single-chip strip under hero -->
+  <section class="week-strip">
+    <ul class="week-pills">
+      <li class="chip">NYU Debate - Parliamentary Debate Union</li>
+    </ul>
+  </section>
+
+  <!-- Newcomer band -->
   <section class="band-newcomer" id="newcomers">
     <div class="n-body">
       <h3>Start here: join at your own pace</h3>
-      <p>
-        Drop in on <strong>Mondays (Lessons)</strong> or <strong>Wednesdays (Training)</strong>, 7–9 PM. We’ll help you get comfortable fast.
-      </p>
+      <p>Drop in on <strong>Mondays (Lessons)</strong> or <strong>Wednesdays (Training)</strong>, 7–9 PM. We’ll help you get comfortable fast.</p>
       <div class="n-actions">
-        <a class="link-chip" href="join.html#mailing">Join the mailing list →</a>
+        <a class="link-chip" href="join.html">Click here to get started →</a>
         <a class="link-chip" href="beginner.html">Beginner Guide →</a>
         <a class="link-chip" href="calendar.html">Open the calendar →</a>
       </div>
@@ -230,7 +222,7 @@
   </section>
 
   <main class="main-content">
-    <!-- Quick-start tiles (kept, but tuned to the new flow) -->
+    <!-- Quick-start tiles -->
     <section class="tiles-quick">
       <div class="tile glass-card reveal">
         <div class="tile-emoji" aria-hidden="true">✨</div>
@@ -255,7 +247,7 @@
     <!-- Updates anchor for returning members -->
     <div id="updates" style="height:1px;"></div>
 
-    <!-- Tournaments preview (serves as the “returning” hub on home) -->
+    <!-- Tournaments preview -->
     <section class="section-wrap reveal">
       <h3 class="about-header">Upcoming Tournaments</h3>
       <div class="h-scroll">
@@ -396,7 +388,7 @@
     });
   </script>
 
-  <!-- New York Time countdown (same logic family as join.html, scoped here) -->
+  <!-- New York Time countdown -->
   <script>
     function getNowPartsInTZ(timeZone){
       const dtf = new Intl.DateTimeFormat('en-US', {
