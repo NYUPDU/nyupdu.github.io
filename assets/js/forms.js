@@ -83,7 +83,7 @@
         body: fd
       });
       if(res.ok){
-        showToast('Thanks — your message was sent.');
+        showToast('Thanks  -  your message was sent.');
         form.reset();
         // reset submit timers
         const start2 = form.querySelector('input[name="_submit_start"]');

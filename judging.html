@@ -301,7 +301,7 @@
   <section class="hero-section hero-compact judge-hero">
     <div>
       <h1 class="page-title">Judging at PDU</h1>
-      <p class="page-subtitle">Judging keeps our team on the circuit—your perspective makes rounds fair and helps novices grow. PDU strongly encourages members to judge.</p>
+      <p class="page-subtitle">Judging keeps our team on the circuit - your perspective makes rounds fair and helps novices grow. PDU strongly encourages members to judge.</p>
       <div class="hero-cta-row">
         <a class="link-chip" href="tournaments.html">Judge at the next tournament →</a>
         <a class="link-chip" href="calendar.html">Calendar →</a>
@@ -343,11 +343,11 @@
         </div>
         <div class="tile">
           <h4>For Debaters</h4>
-          <p class="muted">Clear, comparative feedback accelerates growth—especially for novices.</p>
+          <p class="muted">Clear, comparative feedback accelerates growth - especially for novices.</p>
         </div>
         <div class="tile">
           <h4>For You</h4>
-          <p class="muted">Judging sharpens flow, weighing, and RFD craft—skills that also make you a stronger speaker.</p>
+          <p class="muted">Judging sharpens flow, weighing, and RFD craft - skills that also make you a stronger speaker.</p>
         </div>
       </div>
     </section>
@@ -432,7 +432,7 @@
         <div class="exp-body">
           <ul class="list">
             <li><b>Inclusive timings:</b> plan speeches to <b>7:30, 8:30, 8:30, 8:30, 4:30, 5:30</b>.</li>
-            <li><b>Protected time:</b> first 1:00 and last :30 of constructives—no POIs.</li>
+            <li><b>Protected time:</b> first 1:00 and last :30 of constructives - no POIs.</li>
             <li>Signal time consistently (verbal cue or knock) and stay neutral.</li>
             <li><a class="chip" href="practicetools.html#timer">Use the site Timer →</a></li>
           </ul>
@@ -543,7 +543,7 @@
         <!-- Checklist -->
         <div class="kit-card kit-check">
           <h4>Judge Checklist</h4>
-          <p class="muted">Before / During / After — quick sanity check you can print or save.</p>
+          <p class="muted">Before / During / After  -  quick sanity check you can print or save.</p>
           <div class="mini-controls">
             <button class="btn" id="dlChecklist">Download (.txt)</button>
             <a class="chip" href="practicetools.html#timer">Open Timer →</a>
@@ -622,7 +622,7 @@
       <div class="two-col">
         <div class="tile">
           <h4>Do I need prior experience?</h4>
-          <p class="muted">No. We’ll get you started—use the checklist, Ballot Builder, and tools above.</p>
+          <p class="muted">No. We’ll get you started - use the checklist, Ballot Builder, and tools above.</p>
         </div>
         <div class="tile">
           <h4>What if I’m unsure about a rule?</h4>
@@ -634,7 +634,7 @@
         </div>
         <div class="tile">
           <h4>Can I judge if I’m competing?</h4>
-          <p class="muted">Often yes between rounds—confirm with the Board and the tournament tab room.</p>
+          <p class="muted">Often yes between rounds - confirm with the Board and the tournament tab room.</p>
         </div>
       </div>
     </section>
@@ -779,21 +779,21 @@ AFTER
       const fbG = $('rfFbGov').value.trim();
       const fbO = $('rfFbOpp').value.trim();
 
-      const text = `RFD — Winner: ${winner}
+      const text = `RFD  -  Winner: ${winner}
 
 Round focus: ${focus}
 
 Key issues:
-${issues || '—'}
+${issues || ' - '}
 
 Why ${winner} wins (comparative, weighed):
-${why || '—'}
+${why || ' - '}
 
 Feedback to Government:
-${fbG || '—'}
+${fbG || ' - '}
 
 Feedback to Opposition:
-${fbO || '—'}
+${fbO || ' - '}
 `;
       $('rfOut').value = text;
     }
@@ -809,19 +809,19 @@ ${fbO || '—'}
 
     // POO Quiz scenarios
     const scenarios = [
-      {q:'PMR introduces a brand-new impact.', a:'Valid — new in rebuttal. Keep the ruling brief.', verdict:'valid'},
-      {q:'MO makes a weak characterization; LO stands to POO mid-speech.', a:'Invalid — POOs are for procedure (e.g., new in rebuttal, timing), not for disputing substance in constructives.', verdict:'invalid'},
-      {q:'LOR continues well past 5:30 and ignores time signals.', a:'Valid — significant timing issue. Make a quick ruling and keep the round moving.', verdict:'valid'},
-      {q:'Speaker refuses all POIs throughout their constructive.', a:'Invalid — offering/accepting POIs is optional. Note tactically, not procedurally.', verdict:'invalid'},
-      {q:'MG adds a brand-new advantage.', a:'Invalid — new material is allowed in constructives; evaluate it substantively.', verdict:'invalid'},
-      {q:'PM repeatedly takes POIs during protected time.', a:'Valid procedural reminder — enforce protected time; then proceed.', verdict:'valid'}
+      {q:'PMR introduces a brand-new impact.', a:'Valid  -  new in rebuttal. Keep the ruling brief.', verdict:'valid'},
+      {q:'MO makes a weak characterization; LO stands to POO mid-speech.', a:'Invalid  -  POOs are for procedure (e.g., new in rebuttal, timing), not for disputing substance in constructives.', verdict:'invalid'},
+      {q:'LOR continues well past 5:30 and ignores time signals.', a:'Valid  -  significant timing issue. Make a quick ruling and keep the round moving.', verdict:'valid'},
+      {q:'Speaker refuses all POIs throughout their constructive.', a:'Invalid  -  offering/accepting POIs is optional. Note tactically, not procedurally.', verdict:'invalid'},
+      {q:'MG adds a brand-new advantage.', a:'Invalid  -  new material is allowed in constructives; evaluate it substantively.', verdict:'invalid'},
+      {q:'PM repeatedly takes POIs during protected time.', a:'Valid procedural reminder  -  enforce protected time; then proceed.', verdict:'valid'}
     ];
     const quizWrap = document.getElementById('pooQuiz');
     function renderQuiz(){
       quizWrap.innerHTML = scenarios.map((s,i)=>`
         <div class="quiz-chip" data-i="${i}" tabindex="0" aria-expanded="false">
           <div><b>Scenario:</b> ${s.q}</div>
-          <div class="answer"><b>${s.verdict.toUpperCase()}</b> — ${s.a}</div>
+          <div class="answer"><b>${s.verdict.toUpperCase()}</b>  -  ${s.a}</div>
         </div>
       `).join('');
       quizWrap.querySelectorAll('.quiz-chip').forEach(ch=>{

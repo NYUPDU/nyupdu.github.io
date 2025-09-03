@@ -375,7 +375,7 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
   margin-top:.3rem;
 }
 
-/* ================= Contents Drawer (About) — locked in ================= */
+/* ================= Contents Drawer (About)  -  locked in ================= */
 .toc-drawer{
   position:fixed; top:calc(var(--nav-height) + 10px); left:0; bottom:30px; width:280px;
   transform:translateX(-100%); transition:transform .35s ease; z-index:1085;
