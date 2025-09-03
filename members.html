@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Members Dashboard | NYU PDU</title>
-  <meta name="description" content="Members Dashboard — your go-to for PDU this semester: meetings, tournaments, resources, announcements, and quick links." />
+  <meta name="description" content="Members Dashboard  -  your go-to for PDU this semester: meetings, tournaments, resources, announcements, and quick links." />
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
 
   <!-- Global site styles / fonts for cohesion -->
@@ -241,12 +241,12 @@
 
   <main>
     <div class="dash-container">
-      <!-- ===== THIS MONTH AT PDU — SEPTEMBER ===== -->
+      <!-- ===== THIS MONTH AT PDU  -  SEPTEMBER ===== -->
       <section class="section" id="month">
         <div class="dash-grid">
           <!-- A) Calendar embed card -->
           <div class="dash-card accent-success span-7">
-            <h3 class="about-header">This Month at PDU — <span>September 2025</span></h3>
+            <h3 class="about-header">This Month at PDU  -  <span>September 2025</span></h3>
             <p class="muted">Room locations and last-minute changes live on the calendar.</p>
 
             <div style="margin-top:.5rem; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.18);">
@@ -266,7 +266,7 @@
 
           <!-- B) September tournaments overview (sharper separation + bigger headers) -->
           <div class="dash-card accent-warn span-5">
-            <h3 class="about-header" style="margin-top:.1rem;">September Tournaments — Overview</h3>
+            <h3 class="about-header" style="margin-top:.1rem;">September Tournaments  -  Overview</h3>
             <p class="about-preview" style="margin-bottom:.75rem;">
               Expect 2–3 weekend tournaments. Sign-ups open ~10–12 days prior; pairs posted the week-of; travel covered.
             </p>
@@ -327,7 +327,7 @@
           <div class="dash-card accent-warn span-4">
             <h4>November</h4>
             <ul>
-              <li>Busy travel window — plan ahead</li>
+              <li>Busy travel window  -  plan ahead</li>
               <li>Rooming notes on Calendar events</li>
             </ul>
             <div class="cta-row"><a class="link-chip" href="tournaments.html#november">See slate →</a></div>
@@ -336,7 +336,7 @@
           <div class="dash-card accent-rose span-4">
             <h4>December</h4>
             <ul>
-              <li>Finals period — limited meetings</li>
+              <li>Finals period  -  limited meetings</li>
               <li>Optional winter opens</li>
             </ul>
             <div class="cta-row"><a class="link-chip" href="tournaments.html#december">See slate →</a></div>
@@ -368,7 +368,7 @@
 
           <div class="dash-card accent-info span-4">
             <h4>Practice Tools</h4>
-            <p class="about-preview">Timers, flashcards, drills, prompts—solo or with a partner.</p>
+            <p class="about-preview">Timers, flashcards, drills, prompts - solo or with a partner.</p>
             <div class="cta-row"><a class="link-chip" href="practicetools.html">Practice Tools →</a></div>
           </div>
 
@@ -523,7 +523,7 @@
       const ss=s%60;
       const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
       const dateStr=target.toLocaleString('en-US',{timeZone:'America/New_York', month:'short', day:'numeric'});
-      cdEl.textContent=`Next meeting: ${weekday} ${dateStr} · 7:00 PM ET — in ${d}d ${h}h ${m}m ${ss}s`;
+      cdEl.textContent=`Next meeting: ${weekday} ${dateStr} · 7:00 PM ET  -  in ${d}d ${h}h ${m}m ${ss}s`;
     }
     tick(); setInterval(tick,1000);
   </script>

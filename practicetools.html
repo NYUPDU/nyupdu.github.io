@@ -485,8 +485,8 @@
           <textarea id="cbMech" class="textarea" placeholder="Specify who acts, incentives, feasibility, enforcement."></textarea>
         </label>
         <label>Reasons (2–4), with warrants → impacts
-          <textarea id="cbReasons" class="textarea" placeholder="Reason #1 — warrants → impact
-Reason #2 — warrants → impact"></textarea>
+          <textarea id="cbReasons" class="textarea" placeholder="Reason #1  -  warrants → impact
+Reason #2  -  warrants → impact"></textarea>
         </label>
         <label>Comparative world (why your world is better)
           <textarea id="cbComp" class="textarea" placeholder="Explain why your world is strictly better than the status quo."></textarea>
@@ -574,10 +574,10 @@ Reason #2 — warrants → impact"></textarea>
         <div class="tool-card examples">
           <h4>Examples</h4>
           <ul class="mini-list">
-            <li>“Even if they get <i>uptake</i>, our policy reaches <b>more people sooner</b> — higher magnitude, faster timeframe.”</li>
+            <li>“Even if they get <i>uptake</i>, our policy reaches <b>more people sooner</b>  -  higher magnitude, faster timeframe.”</li>
             <li>“Their harm is <i>low-probability</i> and reversible; ours is <b>likely</b> and hard to reverse.”</li>
           </ul>
-          <p class="muted">Tip: speak the weighing line twice—when introducing an argument and again in rebuttal.</p>
+          <p class="muted">Tip: speak the weighing line twice - when introducing an argument and again in rebuttal.</p>
         </div>
       </div>
     </section>
@@ -655,7 +655,7 @@ Reason #2 — warrants → impact"></textarea>
               </select>
               <button class="btn" id="pooCheck">Check</button>
             </div>
-            <div id="pooVerdict" class="chip" aria-live="polite">—</div>
+            <div id="pooVerdict" class="chip" aria-live="polite"> - </div>
           </div>
         </div>
       </div>
@@ -934,12 +934,12 @@ Reason #2 — warrants → impact"></textarea>
     document.querySelectorAll('button[data-poc]').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const map = {
-          defs: 'POC: Could you clarify how you’re defining [term]? — A:',
-          actors: 'POC: Who is the actor implementing this? — A:',
-          mech: 'POC: How will this be enforced or implemented in practice? — A:',
-          scope: 'POC: What is the scope/limit of this policy? — A:'
+          defs: 'POC: Could you clarify how you’re defining [term]?  -  A:',
+          actors: 'POC: Who is the actor implementing this?  -  A:',
+          mech: 'POC: How will this be enforced or implemented in practice?  -  A:',
+          scope: 'POC: What is the scope/limit of this policy?  -  A:'
         };
-        const line = map[btn.dataset.poc] || 'POC: — A:';
+        const line = map[btn.dataset.poc] || 'POC:  -  A:';
         pocLog.value = (pocLog.value ? pocLog.value + '\n' : '') + line;
         pocLog.focus();
         pocLog.setSelectionRange(pocLog.value.length, pocLog.value.length);
@@ -1013,7 +1013,7 @@ Reason #2 — warrants → impact"></textarea>
     document.getElementById('clearFlow').addEventListener('click', ()=> flowBody.innerHTML='');
 
     /* ==========================================================
-      CASE BUILDER — Expanded Lint
+      CASE BUILDER  -  Expanded Lint
     ========================================================== */
     const cbIds = ['cbRes','cbDefs','cbMech','cbReasons','cbComp'];
     const cb = id => document.getElementById(id);
@@ -1045,7 +1045,7 @@ Reason #2 — warrants → impact"></textarea>
       if(!text.reasons.trim()){ warnings.push('List 2–4 reasons with warrants → impacts.'); setFieldWarn('cbReasons', true); } else setFieldWarn('cbReasons', false);
 
       if(/always|never|obviously|undeniably|by definition|tautology|truism/.test(text.res)){
-        warnings.push('Resolution language risks truism/tight—soften absolutes or broaden contestability.');
+        warnings.push('Resolution language risks truism/tight - soften absolutes or broaden contestability.');
       }
 
       if(/esoteric|obscure|little-known|insider|technical detail/.test(text.reasons) || /specific year|dataset|secret/.test(text.reasons)){
@@ -1053,7 +1053,7 @@ Reason #2 — warrants → impact"></textarea>
       }
 
       if(!/(enforce|implement|agency|actor|government|university|company|mechanism|incentive|fund|budget|pilot|rollout)/.test(text.mech)){
-        warnings.push('Mechanism may be thin — include who pays/implements and why it works.');
+        warnings.push('Mechanism may be thin  -  include who pays/implements and why it works.');
       }
 
       const reasonCount = (raw.reasons.match(/(^|\n)\s*reason/gi) || []).length;
@@ -1072,7 +1072,7 @@ Reason #2 — warrants → impact"></textarea>
         cbLint.querySelector('.title').textContent = 'Lint:';
       } else {
         cbLint.className = 'lint ok';
-        cbLint.querySelector('.title').textContent = 'Lint: Looks good — clear, fair, and debatable.';
+        cbLint.querySelector('.title').textContent = 'Lint: Looks good  -  clear, fair, and debatable.';
         cbLintList.innerHTML = '';
       }
     }
@@ -1154,7 +1154,7 @@ Weighing narrative to PMR
     const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 
     byId('rebNew').addEventListener('click', ()=> byId('rebPrompt').textContent = pick(rebPrompts));
-    byId('wghNew').addEventListener('click', ()=> byId('wghPrompt').textContent = `Weigh on: ${pick(wghAxes)} — versus their best impact.`);
+    byId('wghNew').addEventListener('click', ()=> byId('wghPrompt').textContent = `Weigh on: ${pick(wghAxes)}  -  versus their best impact.`);
     byId('poiNew').addEventListener('click', ()=> byId('poiPrompt').textContent = pick(poiPrompts));
 
     let drillTick=null, drillRemain=0;
@@ -1211,7 +1211,7 @@ Weighing narrative to PMR
       sections.push(grab('pTime','pTimeName'));
       sections.push(grab('pPOO','pPOOName'));
       sections.push(grab('pCase','pCaseName'));
-      return `Partner pact — ${sections.join(' · ')}. Max two passed notes (warrant; weighing).`;
+      return `Partner pact  -  ${sections.join(' · ')}. Max two passed notes (warrant; weighing).`;
     }
     document.getElementById('pGen').addEventListener('click', ()=>{
       const t = document.getElementById('pText'); t.value = pactLine();
@@ -1242,7 +1242,7 @@ Weighing narrative to PMR
       } else if(type==='clarify'){
         msg = 'Usually not POO: clarifying an existing line is typically fine.';
       } else {
-        msg = '—';
+        msg = ' - ';
       }
       verdict.textContent = msg;
     });
