@@ -18,9 +18,9 @@
   <meta property="og:url" content="https://nyupdu.github.io/" />
   <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
 
-  <!-- Page-local styles for the countdown + newcomer band -->
+  <!-- Page-local styles for glow divider, photo rail, two-path tiles, featured event -->
   <style>
-    /* Countdown pill (desktop: top-right under navbar) */
+    /* ===== Countdown pill (desktop top-right; mobile bottom-left) ===== */
     .home-countdown{
       position:fixed;
       top:calc(var(--nav-height,80px) + 8px);
@@ -35,18 +35,37 @@
       box-shadow:0 0 12px rgba(199,191,255,.18) inset, 0 8px 24px rgba(0,0,0,.25);
       backdrop-filter:blur(10px);
     }
-    /* Mobile: move countdown to bottom-left (above footer/back-to-top) */
     @media (max-width: 960px){
-      .home-countdown{
-        top:auto; right:auto;
-        left:12px;
-        bottom:18px;
-      }
-      /* Nudge back-to-top a bit higher so they don't overlap */
-      #float-button{ bottom:76px; }
+      .home-countdown{ top:auto; right:auto; left:12px; bottom:18px; }
+      #float-button{ bottom:76px; } /* avoid overlap */
     }
 
-    /* Newcomer band (magazine-style, compact) */
+    /* ===== Animated glow divider under hero ===== */
+    .hero-divider{
+      position:relative; height:8px; width:100%;
+      margin:0; /* sits tight under hero */
+      background:linear-gradient(90deg, rgba(255,255,255,.35), rgba(124,58,237,.45), rgba(255,255,255,.35));
+      border-top:1px solid rgba(255,255,255,.18);
+      border-bottom:1px solid rgba(255,255,255,.18);
+      overflow:hidden;
+    }
+    .hero-divider::after{
+      content:"";
+      position:absolute; inset:-12px 0;
+      background:radial-gradient(60% 120% at 0% 50%, rgba(255,255,255,.5), transparent 60%),
+                 radial-gradient(60% 120% at 100% 50%, rgba(124,58,237,.55), transparent 60%);
+      mix-blend-mode:screen; filter:blur(10px);
+      animation:glowShift 6s ease-in-out infinite alternate;
+    }
+    @keyframes glowShift{
+      0%   { transform:translateX(-8%); opacity:.9; }
+      100% { transform:translateX(8%);  opacity:1; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .hero-divider::after{ animation:none; }
+    }
+
+    /* ===== Newcomer band (kept) ===== */
     .band-newcomer{
       display:grid; gap:1rem;
       grid-template-columns:1.1fr 1fr; align-items:center;
@@ -69,6 +88,81 @@
       .band-newcomer{ grid-template-columns:1fr; }
       .n-side{ border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:.9rem; }
     }
+
+    /* ===== Photo rail (gallery) ===== */
+    .photo-rail{
+      width:90%; max-width:1100px; margin:2rem auto 0 auto;
+    }
+    .rail-wrap{
+      display:flex; gap:12px; overflow-x:auto; padding:4px 2px 10px 2px;
+      scroll-snap-type:x mandatory;
+    }
+    .rail-wrap::-webkit-scrollbar{ height:8px; }
+    .rail-wrap::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.18); border-radius:999px; }
+    .rail-item{
+      flex:0 0 32%; min-width:280px; max-width:360px; aspect-ratio:4/3;
+      border-radius:14px; overflow:hidden; position:relative;
+      border:1px solid rgba(255,255,255,.22); scroll-snap-align:start;
+      background:rgba(255,255,255,.06); backdrop-filter:blur(6px);
+    }
+    .rail-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+    @media (min-width: 1100px){
+      .rail-wrap{ overflow-x:visible; }
+      .rail-item{ flex:1; }
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.6); z-index:1200; padding:24px;
+      backdrop-filter:blur(4px);
+    }
+    .lightbox.open{ display:flex; }
+    .lightbox img{
+      max-width:min(100%, 1100px); max-height:82vh; border-radius:12px;
+      border:1px solid rgba(255,255,255,.25);
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+    .lightbox button{
+      position:absolute; top:calc(var(--nav-height,80px) + 10px); right:16px;
+      background:rgba(255,255,255,.10); color:#fff; border:1px solid rgba(255,255,255,.25);
+      border-radius:10px; padding:.45rem .7rem; font-weight:800; cursor:pointer;
+    }
+
+    /* ===== Two-path tiles (New vs Returning) ===== */
+    .tiles-duo{
+      display:grid; gap:1.25rem; max-width:1100px; width:90%; margin:2rem auto;
+      grid-template-columns: 1fr 1fr;
+    }
+    .path-card{
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22);
+      border-radius:16px; padding:1.35rem 1.4rem; backdrop-filter:blur(12px);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .path-card:hover{ transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,.28); }
+    .path-card h3{ font-size:1.35rem; margin-bottom:.35rem; font-weight:800; }
+    .path-card ul{ margin:.4rem 0 .9rem 1.15rem; }
+    .path-card li{ margin:.25rem 0; }
+    .path-actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
+    @media (max-width: 960px){
+      .tiles-duo{ grid-template-columns:1fr; }
+    }
+
+    /* ===== Featured event card ===== */
+    .featured-wrap{ width:90%; max-width:1100px; margin:2rem auto 0 auto; }
+    .featured-card{
+      display:grid; grid-template-columns: 1.2fr 1fr; gap:1rem; align-items:center;
+      background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22);
+      border-radius:16px; padding:1.25rem 1.35rem; backdrop-filter:blur(12px);
+    }
+    .featured-card h3{ font-size:1.35rem; margin-bottom:.25rem; }
+    .featured-meta{ display:flex; gap:.5rem; flex-wrap:wrap; margin:.25rem 0 .6rem; }
+    .featured-side{ text-align:right; }
+    .featured-side .pill{ display:inline-block; }
+    @media (max-width: 960px){
+      .featured-card{ grid-template-columns:1fr; text-align:left; }
+      .featured-side{ text-align:left; }
+    }
   </style>
 </head>
 
@@ -80,47 +174,45 @@
         <img src="NYU_Short_RGB_White.png" alt="NYU Logo" class="logo-nyu" />
       </div>
 
-      
-<nav class="nav-links" aria-label="Primary">
-  <ul class="menu-root">
-    <li><a href="index.html" aria-current="page">Home</a></li>
-    <li><a href="members.html">Members</a></li>
-    <li class="has-submenu">
-      <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false">Tournaments</a>
-      <ul class="submenu" role="menu" aria-label="Tournaments submenu">
-        <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
-        <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
-      </ul>
-    </li>
+      <nav class="nav-links" aria-label="Primary">
+        <ul class="menu-root">
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li class="has-submenu">
+            <a href="tournaments.html" class="top-link" aria-haspopup="true" aria-expanded="false">Tournaments</a>
+            <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+              <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+            </ul>
+          </li>
 
-    <li class="has-submenu">
-      <a href="join.html" class="top-link join-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
-      <ul class="submenu" role="menu" aria-label="Join Us submenu">
-        <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
-        <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
-        <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
-        <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
-        <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
-        <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
-      </ul>
-    </li>
+          <li class="has-submenu">
+            <a href="join.html" class="top-link join-link" aria-haspopup="true" aria-expanded="false">Join Us</a>
+            <ul class="submenu" role="menu" aria-label="Join Us submenu">
+              <li role="none"><a role="menuitem" href="join.html#mailing">Mailing List</a></li>
+              <li role="none"><a role="menuitem" href="join.html#meetings">Meetings</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
+              <li role="none"><a role="menuitem" href="practicetools.html">Practice Tools</a></li>
+              <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+              <li role="none"><a role="menuitem" href="resources.html">Resources Library</a></li>
+            </ul>
+          </li>
 
+          <li class="has-submenu">
+            <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About Us</a>
+            <ul class="submenu" role="menu" aria-label="About Us submenu">
+              <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
+              <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
+              <li role="none"><a role="menuitem" href="equity.html">Equity Policy</a></li>
+              <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
+            </ul>
+          </li>
 
-    <li class="has-submenu">
-      <a href="about.html" class="top-link" aria-haspopup="true" aria-expanded="false">About Us</a>
-      <ul class="submenu" role="menu" aria-label="About Us submenu">
-        <li role="none"><a role="menuitem" href="about.html#who-we-are">Who We Are</a></li>
-        <li role="none"><a role="menuitem" href="beginner.html">Beginners Guide</a></li>
-        <li role="none"><a role="menuitem" href="about.html#meetings">Meetings & Attendance</a></li>
-        <li role="none"><a role="menuitem" href="equity.html">Equity Policy</a></li>
-        <li role="none"><a role="menuitem" href="why-pdu.html">Why PDU</a></li>
-      </ul>
-    </li>
-
-    <li><a href="leadership.html">Leadership</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+          <li><a href="leadership.html">Leadership</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
 
       <div class="nav-left">
         <a href="index.html" aria-label="Home" class="brand-link">
@@ -140,48 +232,48 @@
       <span>Menu</span>
       <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
     </div>
-    
-<nav class="drawer-nav" aria-label="Mobile">
-  <ul class="drawer-list">
-    <li><a href="index.html" aria-current="page">Home</a></li>
-    <li><a href="members.html">Members</a></li>
-    <li class="drawer-group">
-      <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
-      <ul class="drawer-submenu">
-        <li><a href="tournaments.html#featured">Next Tournament</a></li>
-        <li><a href="tournaments.html">Upcoming</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
+
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="members.html">Members</a></li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
+          <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
+            <li><a href="tournaments.html">Upcoming</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle join-link" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="join.html#mailing">Mailing List</a></li>
+            <li><a href="join.html#meetings">Meetings</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="practicetools.html">Practice Tools</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity Policy</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
-    </li>
-
-    <li class="drawer-group">
-      <button class="drawer-toggle join-link" aria-expanded="false">Join Us</button>
-      <ul class="drawer-submenu">
-        <li><a href="join.html#mailing">Mailing List</a></li>
-        <li><a href="join.html#meetings">Meetings</a></li>
-        <li><a href="beginner.html">Beginners Guide</a></li>
-        <li><a href="practicetools.html">Practice Tools</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="resources.html">Resources Library</a></li>
-      </ul>
-    </li>
-
-
-    <li class="drawer-group">
-      <button class="drawer-toggle" aria-expanded="false">About Us</button>
-      <ul class="drawer-submenu">
-        <li><a href="about.html#who-we-are">Who We Are</a></li>
-        <li><a href="beginner.html">Beginners Guide</a></li>
-        <li><a href="about.html#meetings">Meetings & Attendance</a></li>
-        <li><a href="equity.html">Equity Policy</a></li>
-        <li><a href="why-pdu.html">Why PDU</a></li>
-      </ul>
-    </li>
-
-    <li><a href="leadership.html">Leadership</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+    </nav>
   </aside>
 
   <!-- Hero -->
@@ -190,19 +282,22 @@
       <h1 class="hero-title">Welcome to PDU · Fall 2025</h1>
       <p class="hero-sub">Train twice a week. Compete most weekends. No experience needed.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="#newcomers">Join Us</a>
-        <a class="btn-secondary" href="#updates">I’m Returning</a>
+        <a class="btn-primary" href="join.html">Click here to get started</a>
+        <a class="btn-secondary" href="members.html">I’m Returning</a>
       </div>
     </div>
   </section>
 
+  <!-- Glow divider -->
+  <div class="hero-divider" aria-hidden="true"></div>
+
   <!-- Countdown (NY time) -->
   <div class="home-countdown" id="homeCountdown" aria-live="polite">Calculating next meeting…</div>
 
-  <!-- Single-chip strip under hero -->
+  <!-- Identity chip -->
   <section class="week-strip">
     <ul class="week-pills">
-      <li class="chip">NYU Debate - Parliamentary Debate Union</li>
+      <li class="chip">NYU Debate — Parliamentary Debate Union</li>
     </ul>
   </section>
 
@@ -226,63 +321,103 @@
     </div>
   </section>
 
+  <!-- Photo rail (magazine energy, no quotes) -->
+  <section class="photo-rail" aria-label="Club photos">
+    <div class="rail-wrap">
+      <figure class="rail-item">
+        <img src="catalog1.jpg" alt="PDU team at a tournament venue" loading="lazy">
+      </figure>
+      <figure class="rail-item">
+        <img src="catalog2.jpg" alt="Two PDU debaters prepping before a round" loading="lazy">
+      </figure>
+      <figure class="rail-item">
+        <img src="catalog3.jpg" alt="Judging and feedback session during practice" loading="lazy">
+      </figure>
+      <figure class="rail-item">
+        <img src="catalog4.jpg" alt="Team travel moment on the APDA circuit" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- Lightbox (click any photo) -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
+    <button id="lightboxClose" aria-label="Close image">Close</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
   <main class="main-content">
-    <!-- Quick-start tiles -->
-    <section class="tiles-quick">
-      <div class="tile glass-card reveal">
-        <div class="tile-emoji" aria-hidden="true">✨</div>
-        <h3>I’m new</h3>
-        <p>No experience? Perfect. We’ll teach you from day one.</p>
-        <a class="link-chip" href="join.html">How to join →</a>
-      </div>
-      <div class="tile glass-card reveal">
-        <div class="tile-emoji" aria-hidden="true">🎯</div>
-        <h3>Beginner tools</h3>
-        <p>Timer, case builder, and flow sheets to get you rolling.</p>
-        <a class="link-chip" href="practicetools.html">Practice tools →</a>
-      </div>
-      <div class="tile glass-card reveal">
-        <div class="tile-emoji" aria-hidden="true">📅</div>
-        <h3>See the calendar</h3>
-        <p>Meetings, workshops, and tournament weekends.</p>
-        <a class="link-chip" href="calendar.html">Open calendar →</a>
+    <!-- Two-path tiles -->
+    <section class="tiles-duo">
+      <article class="path-card glass-card reveal">
+        <h3>New to PDU</h3>
+        <ul>
+          <li>No experience needed</li>
+          <li>Travel covered for tournaments</li>
+          <li>Learn at your own pace</li>
+        </ul>
+        <div class="path-actions">
+          <a class="link-chip" href="join.html">How to join →</a>
+          <a class="link-chip" href="beginner.html">Beginner Guide →</a>
+          <a class="link-chip" href="calendar.html">Calendar →</a>
+        </div>
+      </article>
+
+      <article class="path-card glass-card reveal">
+        <h3>Returning Members</h3>
+        <ul>
+          <li>Members dashboard & quick links</li>
+          <li>Practice tools and drills</li>
+          <li>Upcoming tournaments</li>
+        </ul>
+        <div class="path-actions">
+          <a class="link-chip" href="members.html">Open Members →</a>
+          <a class="link-chip" href="practicetools.html">Practice Tools →</a>
+          <a class="link-chip" href="tournaments.html">Tournaments →</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Featured tournament -->
+    <section class="featured-wrap reveal" id="featured">
+      <div class="featured-card">
+        <div>
+          <h3 class="about-header" style="margin-bottom:.4rem;">Featured: Yale IV</h3>
+          <div class="featured-meta">
+            <span class="chip">Oct 4–5</span>
+            <span class="chip">New Haven, CT</span>
+            <span class="chip">5 prelims · Break to Octos</span>
+          </div>
+          <p class="about-preview" style="margin:.25rem 0 0;">Travel, reg, and lodging covered. Novices welcome.</p>
+          <div class="cta-row" style="margin-top:.6rem;">
+            <a class="link-chip" href="tournaments.html">Event details →</a>
+          </div>
+        </div>
+        <div class="featured-side">
+          <span class="pill">Status: Placeholder</span>
+        </div>
       </div>
     </section>
 
-    <!-- Updates anchor for returning members -->
-    <div id="updates" style="height:1px;"></div>
-
-    <!-- Tournaments preview -->
-    <section class="section-wrap reveal">
-      <h3 class="about-header">Upcoming Tournaments</h3>
+    <!-- Remaining tournament strip -->
+    <section class="section-wrap reveal" aria-label="More upcoming tournaments">
       <div class="h-scroll">
         <article class="event-card">
           <div class="event-head">
-              <h4>TBD</h4>
-              <span class="pill">Dates TBD</span>
+            <h4>Princeton Pro-Ams</h4>
+            <span class="pill">Oct 18–19</span>
           </div>
-            <p class="event-meta">Details to be announced.</p>
-            <p class="event-note">Check back soon for more info.</p>
+          <p class="event-meta">Princeton, NJ · Novice friendly</p>
+          <p class="event-note">Great for first-timers.</p>
           <a class="link-chip" href="tournaments.html">Details →</a>
         </article>
 
         <article class="event-card">
           <div class="event-head">
-              <h4>TBD</h4>
-              <span class="pill">Dates TBD</span>
+            <h4>Harvard Invitational</h4>
+            <span class="pill">Nov 1–2</span>
           </div>
-            <p class="event-meta">Details to be announced.</p>
-            <p class="event-note">Check back soon for more info.</p>
-          <a class="link-chip" href="tournaments.html">Details →</a>
-        </article>
-
-        <article class="event-card">
-          <div class="event-head">
-              <h4>TBD</h4>
-              <span class="pill">Dates TBD</span>
-          </div>
-            <p class="event-meta">Details to be announced.</p>
-            <p class="event-note">Check back soon for more info.</p>
+          <p class="event-meta">Cambridge, MA · Large field</p>
+          <p class="event-note">High-energy weekend.</p>
           <a class="link-chip" href="tournaments.html">Details →</a>
         </article>
       </div>
@@ -304,14 +439,14 @@
       </div>
     </section>
 
-    <!-- Recent highlight -->
+    <!-- Recent highlight (photo-first) -->
     <section class="glass-card highlight-card reveal">
       <div class="highlight-media">
-        <img src="placeholder.jpg" alt="PDU at recent tournament (placeholder)">
+        <img src="placeholder.jpg" alt="PDU at recent tournament (placeholder)" loading="lazy">
       </div>
       <div class="highlight-body">
         <h3 class="about-header">Recent Highlights</h3>
-          <p>Quarterfinals at a recent tournament + Top 10 Speaks. Big shoutout to our novice squads — huge strides this month.</p>
+        <p>Quarterfinals at Princeton + Top 10 Speaks. Big shoutout to our novice squads — huge strides this month.</p>
         <a class="link-chip" href="tournaments.html">See results & recaps →</a>
       </div>
     </section>
@@ -348,7 +483,7 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.glass-card, .section-wrap, .tile').forEach(el => observer.observe(el));
+    document.querySelectorAll('.glass-card, .section-wrap, .tile, .tiles-duo .path-card, .featured-wrap').forEach(el => observer.observe(el));
   </script>
 
   <!-- Nav + drawer JS + navbar measure -->
@@ -405,11 +540,7 @@
       const map = {};
       for (const p of parts) map[p.type] = p.value;
       const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
-      return {
-        year:+map.year, month:+map.month, day:+map.day,
-        hour:+map.hour, minute:+map.minute, second:+map.second,
-        weekday
-      };
+      return { year:+map.year, month:+map.month, day:+map.day, hour:+map.hour, minute:+map.minute, second:+map.second, weekday };
     }
     function zonedNYToDate(y,m,d,h,mi,s){
       const tz='America/New_York';
@@ -450,6 +581,26 @@
       cdEl.textContent=`Next meeting: ${weekday} ${dateStr} · 7:00 PM ET — in ${d}d ${h}h ${m}m ${ss}s`;
     }
     tick(); setInterval(tick,1000);
+  </script>
+
+  <!-- Photo lightbox JS -->
+  <script>
+    const railImgs = document.querySelectorAll('.rail-item img');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbClose = document.getElementById('lightboxClose');
+
+    railImgs.forEach(img=>{
+      img.addEventListener('click', ()=>{
+        lbImg.src = img.src;
+        lbImg.alt = img.alt || '';
+        lb.classList.add('open');
+      });
+    });
+    function closeLB(){ lb.classList.remove('open'); lbImg.src=''; }
+    lbClose.addEventListener('click', closeLB);
+    lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLB(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLB(); });
   </script>
 </body>
 </html>
