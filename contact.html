@@ -278,6 +278,7 @@
           <div class="contact-row">
             <a class="link-chip" href="mailto:ooa328@nyu.edu">Email →</a>
             <a class="link-chip" href="tel:7138744557">713-874-4557</a>
+            <a class="link-chip" href="https://tinyurl.com/equitynyupdu" target="_blank" rel="noopener">Anonymous equity report →</a>
           </div>
           <p class="helper">For time-sensitive concerns at an event, speak to any officer in person when safe.</p>
         </article>
@@ -289,74 +290,18 @@
       </div>
     </section>
 
-    <!-- ===== Anonymous Feedback (static form) ===== -->
+    <!-- ===== Anonymous Feedback ===== -->
     <section class="glass-card reveal" aria-labelledby="anon-feedback">
       <h3 id="anon-feedback" class="about-header">Anonymous Feedback</h3>
       <p class="about-preview">
-        No sign-in, no name required. Use this for quick suggestions, website bugs, or non-urgent concerns.
+        No sign-in, no name required. Use this for quick suggestions, website bugs, or non-urgent concerns. Opens external form.
       </p>
-
-      <!-- Success & error banners -->
-      <div id="formSuccess" class="banner success" role="status" aria-live="polite">
-        Thank you  -  your feedback was sent. We appreciate it.
+      <div class="helper">
+        Please avoid sensitive personal data here; for urgent equity/safety concerns, contact Equity or an officer directly.
       </div>
-      <div id="formError" class="banner error" role="alert" aria-live="assertive">
-        Sorry, something went wrong. Please try again later.
+      <div class="cta-row">
+        <a class="btn-primary" href="https://tinyurl.com/feedbacknyupdu" target="_blank" rel="noopener">Open feedback form →</a>
       </div>
-
-      <!--
-        NOTE:
-        1) Replace action with your real Formspree endpoint.
-        2) This JS intercepts submission to keep users on-site and show a success state.
-        3) If you prefer Google Forms, you can embed an <iframe> below (see commented block).
-      -->
-      <form id="feedbackForm" class="form-row" action="https://formspree.io/f/your-id" method="POST" novalidate>
-        <!-- Anti-bot honeypot (hidden from users) -->
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none;">
-
-        <div class="form-split">
-          <label>
-            <span class="helper">Topic (optional)</span>
-            <select class="select" name="topic">
-              <option value=""> -  Choose a topic  - </option>
-              <option>General feedback</option>
-              <option>Website bug</option>
-              <option>Practice/meetings</option>
-              <option>Tournament logistics</option>
-              <option>Equity (non-urgent)</option>
-            </select>
-          </label>
-
-          <label>
-            <span class="helper">Reply email (optional)</span>
-            <input class="input" type="email" name="email" placeholder="Add if you'd like a response" />
-          </label>
-        </div>
-
-        <label>
-          <span class="helper">Your message</span>
-          <textarea class="textarea" name="message" required placeholder="Share your idea, issue, or suggestion"></textarea>
-        </label>
-
-        <div class="helper">
-          Please avoid sensitive personal data here; for urgent equity/safety concerns, contact Equity or an officer directly.
-        </div>
-
-        <div class="cta-row">
-          <button class="btn-primary" type="submit">Send feedback</button>
-          <a class="link-chip" href="#" id="clearForm">Clear</a>
-        </div>
-      </form>
-
-      <!-- Optional: swap in Google Forms instead of Formspree -->
-      <!--
-      <div style="margin-top:1rem;">
-        <iframe src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
-                width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0">
-          Loading…
-        </iframe>
-      </div>
-      -->
     </section>
   </main>
 
@@ -442,43 +387,5 @@
     });
   </script>
 
-  <!-- 3) Contact form JS: static-friendly anonymous submission (Formspree) -->
-  <script>
-    const form = document.getElementById('feedbackForm');
-    const success = document.getElementById('formSuccess');
-    const error = document.getElementById('formError');
-    const clearBtn = document.getElementById('clearForm');
-
-    clearBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      form.reset();
-      success.classList.remove('show');
-      error.classList.remove('show');
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      success.classList.remove('show');
-      error.classList.remove('show');
-
-      const data = new FormData(form);
-      // Formspree JSON endpoint accepts standard form data
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: data
-        });
-        if (res.ok) {
-          form.reset();
-          success.classList.add('show');
-        } else {
-          error.classList.add('show');
-        }
-      } catch (err) {
-        error.classList.add('show');
-      }
-    });
-  </script>
 </body>
 </html>
