@@ -57,14 +57,24 @@
     .intro-sub{ margin:.6rem auto 1.1rem; opacity:.95; max-width:48ch; }
     .intro-actions{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; margin-top:.6rem; }
 
-    .intro-skip{
+    .intro-join{
       margin-top:.6rem;
-      background:transparent; color:#fff; font-weight:800;
-      border:1px solid rgba(255,255,255,.28);
+      text-decoration:none;
+      color:#fff; font-weight:800;
       border-radius:999px; padding:.55rem .9rem; cursor:pointer;
       backdrop-filter:blur(6px);
     }
-    .intro-skip:hover{ background:rgba(255,255,255,.12); box-shadow:0 0 12px rgba(199,191,255,.28); }
+    .intro-join:hover{ background:rgba(124,58,237,.25); }
+
+    .purple-glow{
+      background:#7c3aed;
+      border:1px solid rgba(124,58,237,.8);
+      box-shadow:0 0 12px rgba(124,58,237,.8);
+    }
+    .purple-glow:hover{
+      background:#7c3aed;
+      box-shadow:0 0 16px rgba(124,58,237,1);
+    }
 
     .join-intro.fading{ animation:introFadeOut .35s ease forwards; }
     .join-intro.fading .intro-panel{ animation:introPanelOut .35s ease forwards; }
@@ -290,7 +300,7 @@
       <h2 id="introTitle" class="intro-title">Welcome to PDU</h2>
       <p id="introSub" class="intro-sub">We’re happy you’re here. Let’s get you started.</p>
       <div class="intro-actions">
-        <button type="button" class="intro-skip" id="introSkip" aria-label="Skip intro">Skip</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener" class="intro-join purple-glow" id="introJoin">Join the Mailing List</a>
       </div>
     </div>
   </div>
@@ -316,7 +326,7 @@
         This is our main way to share <strong>monthly</strong> schedules, travel notes, and updates. Joining the list is the fastest way to plug in.
       </p>
       <div class="cta-row">
-        <a class="link-chip" href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener">Join the mailing list →</a>
+        <a class="link-chip purple-glow" href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener">Join the mailing list →</a>
       </div>
     </section>
 
@@ -614,15 +624,15 @@
     (function(){
       const INTRO_KEY = 'pdu_join_intro_seen'; // change value for a new semester if desired
       const intro = document.getElementById('joinIntro');
-      const skip  = document.getElementById('introSkip');
+      const joinBtn  = document.getElementById('introJoin');
       const heroTitle = document.querySelector('#joinHero .page-title');
 
       function openIntro(){
         intro.hidden = false;
         intro.classList.add('show');
         document.body.style.overflow = 'hidden';
-        // focus skip for a11y
-        setTimeout(()=> skip?.focus(), 50);
+        // focus join button for a11y
+        setTimeout(()=> joinBtn?.focus(), 50);
       }
       function closeIntro(){
         intro.classList.add('fading');
@@ -637,16 +647,16 @@
       if(!localStorage.getItem(INTRO_KEY)){
         openIntro();
         localStorage.setItem(INTRO_KEY, '1');
-        // auto-dismiss after ~2.2s
-        const t = setTimeout(closeIntro, 2200);
+        // auto-dismiss after ~5s
+        const t = setTimeout(closeIntro, 5000);
 
-        // Skip interactions
+        // Button interactions
         function dismiss(){
           clearTimeout(t); closeIntro();
         }
-        skip?.addEventListener('click', dismiss);
+        joinBtn?.addEventListener('click', dismiss);
         intro.addEventListener('click', e=>{
-          // allow clicking the dim background to skip; ignore clicks inside the panel
+          // allow clicking the dim background to dismiss; ignore clicks inside the panel
           if(e.target === intro) dismiss();
         });
         window.addEventListener('keydown', e=>{ if(e.key === 'Escape') dismiss(); });
