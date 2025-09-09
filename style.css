@@ -449,3 +449,28 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
 /* Highlight Join Us link */
 .join-link{ color:#ffd700; text-shadow:0 0 8px rgba(255,215,0,.8); }
 .drawer-list .join-link{ color:#ffd700; text-shadow:0 0 8px rgba(255,215,0,.8); }
+
+/* ================= Notable Achievements ================= */
+.achievement-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:.75rem;
+  margin:.5rem 0 1.2rem;
+}
+.achievement-card{
+  display:flex; align-items:flex-start; gap:.5rem;
+  background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.25);
+  border-radius:12px; padding:.65rem .75rem; backdrop-filter:blur(8px);
+  transition:background .25s ease;
+}
+.achievement-card:hover{ background:rgba(255,255,255,.18); }
+.achievement-icon{ font-size:1.2rem; line-height:1; }
+.year-badge{
+  display:inline-block;
+  margin:.8rem 0 .4rem;
+  padding:.2rem .6rem;
+  border-radius:8px;
+  background:rgba(124,58,237,.25);
+  border:1px solid rgba(255,255,255,.25);
+  font-weight:700;
+}
