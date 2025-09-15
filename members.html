@@ -58,6 +58,22 @@
       background: rgba(255,255,255,.06);
       border-radius:999px; padding:.42rem .66rem; font-weight:600;
     }
+    .stat-chip.attendance-link{
+      text-decoration:none;
+      color:#fff;
+      background: rgba(167,139,250,.18);
+      box-shadow: 0 0 0 1px rgba(167,139,250,.35) inset, 0 8px 18px rgba(87,6,140,.28);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .stat-chip.attendance-link:hover,
+    .stat-chip.attendance-link:focus-visible{
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1px rgba(196,181,253,.65) inset, 0 12px 24px rgba(87,6,140,.35);
+    }
+    .stat-chip.attendance-link:focus-visible{
+      outline: 2px solid rgba(196,181,253,.9);
+      outline-offset: 2px;
+    }
     .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
     .dot.green{ background:#34d399; } .dot.purple{ background:#a78bfa; }
     .dot.orange{ background:#fb923c; } .dot.cyan{ background:#22d3ee; }
@@ -233,7 +249,11 @@
       <div class="dash-card accent-info span-12">
         <div class="stat-row">
           <span class="stat-chip"><i class="dot purple blink"></i> <span id="memberCountdown">Calculating next meeting…</span></span>
-            <span class="stat-chip"><i class="dot purple"></i> Next tournament: <strong>TBD</strong></span>
+          <span class="stat-chip"><i class="dot purple"></i> Next tournament: <strong>TBD</strong></span>
+          <a class="stat-chip attendance-link" href="https://forms.gle/HEqqch1fvxPHEvKt6" target="_blank" rel="noopener">
+            <i class="dot green"></i>
+            Mark your attendance →
+          </a>
         </div>
       </div>
     </div>
