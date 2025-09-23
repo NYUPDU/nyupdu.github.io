@@ -196,28 +196,32 @@
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
 
-    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+    for (const btn of document.querySelectorAll('.drawer-toggle')) {
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded', String(!ex));
         btn.nextElementSibling.classList.toggle('open');
       });
-    });
+    }
 
-    document.querySelectorAll('.has-submenu').forEach(item=>{
+    for (const item of document.querySelectorAll('.has-submenu')) {
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
-      sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
-    });
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
 
     // Reveal effect for cards
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+    for (const el of document.querySelectorAll('.glass-card')) {
+      observer.observe(el);
+    }
   </script>
 </body>
 </html>

@@ -524,7 +524,9 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.dash-card, .target-card').forEach(el => observer.observe(el));
+    for (const el of document.querySelectorAll('.dash-card, .target-card')) {
+      observer.observe(el);
+    }
   </script>
 
   <script>
@@ -566,14 +568,16 @@
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
     // Desktop submenu accessibility affordances
-    document.querySelectorAll('.has-submenu').forEach(item=>{
+    for (const item of document.querySelectorAll('.has-submenu')) {
       const link = item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm = item.querySelector('.submenu');
-      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
-    });
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
   </script>
 </body>
 </html>

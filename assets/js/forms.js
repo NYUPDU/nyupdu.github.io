@@ -22,15 +22,17 @@
   function nowISO(){ return new Date().toISOString(); }
 
   // Attach timers for spam check
-  document.querySelectorAll('form.pdu-form').forEach(f=>{
+  for (const f of document.querySelectorAll('form.pdu-form')) {
     const start = f.querySelector('input[name="_submit_start"]');
     if(start){ start.value = String(Date.now()); }
-  });
+  }
 
   // Micro thumbs behavior
-  document.querySelectorAll('.pdu-form.micro .thumb').forEach(btn=>{
+  for (const btn of document.querySelectorAll('.pdu-form.micro .thumb')) {
     btn.addEventListener('click', ()=>{
-      document.querySelectorAll('.pdu-form.micro .thumb').forEach(b=>b.classList.remove('active'));
+      for (const b of document.querySelectorAll('.pdu-form.micro .thumb')) {
+        b.classList.remove('active');
+      }
       btn.classList.add('active');
       // ensure a hidden field stores value
       let hidden = btn.closest('form').querySelector('input[name="vote"]');
@@ -42,7 +44,7 @@
       }
       hidden.value = btn.dataset.value;
     });
-  });
+  }
 
   // Generic submit handler
   async function handleSubmit(ev){
@@ -96,12 +98,12 @@
     }
   }
 
-  document.querySelectorAll('form.pdu-form').forEach(f=>{
+  for (const f of document.querySelectorAll('form.pdu-form')) {
     f.addEventListener('submit', handleSubmit);
-  });
+  }
 
   // If a link/button includes data-topic, set the select on click
-  document.querySelectorAll('a[data-topic], button[data-topic]').forEach(el=>{
+  for (const el of document.querySelectorAll('a[data-topic], button[data-topic]')) {
     el.addEventListener('click', (e)=>{
       const topic = el.getAttribute('data-topic');
       const select = document.querySelector('#topic');
@@ -112,7 +114,7 @@
         if(form) form.dataset.topic = topic;
       }
     });
-  });
+  }
 
   // Quick drawer
   const fab = document.getElementById('feedbackFab');
