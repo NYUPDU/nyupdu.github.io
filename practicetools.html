@@ -706,7 +706,9 @@ Reason #2  -  warrants → impact"></textarea>
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+    for (const el of document.querySelectorAll('.glass-card')) {
+      observer.observe(el);
+    }
 
     /* --- Navbar sizing var --- */
     const navbar = document.getElementById('siteNavbar');
@@ -730,21 +732,23 @@ Reason #2  -  warrants → impact"></textarea>
     scrim.addEventListener('click', closeDrawer);
     addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
 
-    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+    for (const btn of document.querySelectorAll('.drawer-toggle')) {
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded', String(!ex));
         btn.nextElementSibling.classList.toggle('open');
       });
-    });
-    document.querySelectorAll('.has-submenu').forEach(item=>{
+    }
+    for (const item of document.querySelectorAll('.has-submenu')) {
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
-      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
-    });
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
 
     /* --- Contents drawer: desktop defaults open, but can be X-closed & re-opened --- */
     const tocDrawer = document.getElementById('tocDrawer');
@@ -782,7 +786,7 @@ Reason #2  -  warrants → impact"></textarea>
     const tocLinks = [...document.querySelectorAll('.toc-list a')];
     addEventListener('scroll', () => {
       const y = scrollY + 120;
-      let current = sections[0]?.id;
+      let current = sections.length > 0 ? sections[0].id : undefined;
       for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
       tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
     }, { passive: true });
@@ -842,7 +846,9 @@ Reason #2  -  warrants → impact"></textarea>
     }
     function stopTimer(){ clearInterval(ticking); ticking=null; syncFloat(); }
     function resetTimer(){ remain = totalSec; updateDial(); }
-    document.querySelectorAll('.timer-presets .btn').forEach(b => b.addEventListener('click', ()=> setPreset(+b.dataset.sec)));
+    for (const b of document.querySelectorAll('.timer-presets .btn')) {
+      b.addEventListener('click', ()=> setPreset(+b.dataset.sec));
+    }
     document.getElementById('startTimer').addEventListener('click', startTimer);
     document.getElementById('pauseTimer').addEventListener('click', stopTimer);
     document.getElementById('resetTimer').addEventListener('click', ()=>{ resetTimer(); setFloatVisible(false); });
@@ -883,7 +889,7 @@ Reason #2  -  warrants → impact"></textarea>
     function isTyping(){
       const el = document.activeElement;
       if(!el) return false;
-      const tag = el.tagName?.toLowerCase();
+      const tag = el.tagName ? el.tagName.toLowerCase() : undefined;
       return tag==='input' || tag==='textarea' || el.isContentEditable;
     }
     addEventListener('keydown', e=>{
@@ -932,7 +938,7 @@ Reason #2  -  warrants → impact"></textarea>
 
     // POCs quick add
     const pocLog = document.getElementById('pocLog');
-    document.querySelectorAll('button[data-poc]').forEach(btn=>{
+    for (const btn of document.querySelectorAll('button[data-poc]')) {
       btn.addEventListener('click', ()=>{
         const map = {
           defs: 'POC: Could you clarify how you’re defining [term]?  -  A:',
@@ -945,7 +951,7 @@ Reason #2  -  warrants → impact"></textarea>
         pocLog.focus();
         pocLog.setSelectionRange(pocLog.value.length, pocLog.value.length);
       });
-    });
+    }
     document.getElementById('copyPOCs').addEventListener('click', async ()=>{
       try{ await navigator.clipboard.writeText(pocLog.value); alert('POCs copied.'); } catch{ alert('Copy failed.'); }
     });

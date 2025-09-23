@@ -501,7 +501,9 @@
     const io = new IntersectionObserver((entries)=> {
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); } });
     }, { threshold: .08 });
-    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+    for (const el of document.querySelectorAll('.fade-in')) {
+      io.observe(el);
+    }
 
     // ===== navbar / drawer =====
     const navbar = document.getElementById('siteNavbar');
@@ -523,21 +525,23 @@
     drawerClose.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+    for (const btn of document.querySelectorAll('.drawer-toggle')) {
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded', String(!ex));
         btn.nextElementSibling.classList.toggle('open');
       });
-    });
-    document.querySelectorAll('.has-submenu').forEach(item=>{
+    }
+    for (const item of document.querySelectorAll('.has-submenu')) {
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
-      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
-    });
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
 
     // ===== modal logic =====
     const modal = document.getElementById('leaderModal');
@@ -584,7 +588,7 @@
     }
 
     // open handlers
-    document.querySelectorAll('.leader-card').forEach(card=>{
+    for (const card of document.querySelectorAll('.leader-card')) {
       card.addEventListener('click', ()=>{
         const data = {
           name: card.dataset.name,
@@ -596,7 +600,7 @@
         openModal(data);
       });
       // Enter/Space already work on button; no extra key handler needed
-    });
+    }
 
     // close handlers
     modal.addEventListener('click', (e)=>{

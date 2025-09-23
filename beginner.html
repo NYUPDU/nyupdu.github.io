@@ -659,7 +659,9 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('reveal'));
     }, { threshold: 0.06 });
-    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+    for (const el of document.querySelectorAll('.glass-card')) {
+      observer.observe(el);
+    }
 
     /* ====== Navbar sizing var ====== */
     const navbar = document.getElementById('siteNavbar');
@@ -682,21 +684,23 @@
     closeBtn.addEventListener('click', closeDrawer);
     scrim.addEventListener('click', closeDrawer);
     addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
-    document.querySelectorAll('.drawer-toggle').forEach(btn=>{
+    for (const btn of document.querySelectorAll('.drawer-toggle')) {
       btn.addEventListener('click',()=>{
         const ex = btn.getAttribute('aria-expanded')==='true';
         btn.setAttribute('aria-expanded', String(!ex));
         btn.nextElementSibling.classList.toggle('open');
       });
-    });
-    document.querySelectorAll('.has-submenu').forEach(item=>{
+    }
+    for (const item of document.querySelectorAll('.has-submenu')) {
       const link=item.querySelector('.top-link');
       item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
       item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
       link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
       const sm=item.querySelector('.submenu');
-      sm?.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
-    });
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
 
     /* ====== Contents drawer (first visit) ====== */
     const tocDrawer = document.getElementById('tocDrawer');
@@ -721,19 +725,21 @@
     const tocLinks = [...document.querySelectorAll('.toc-list a')];
     addEventListener('scroll', () => {
       const y = scrollY + 120;
-      let current = sections[0]?.id;
+      let current = sections.length > 0 ? sections[0].id : undefined;
       for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
       tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
     }, { passive: true });
 
     /* ====== Accordions: allow only one open at a time (roles) ====== */
-    document.querySelectorAll('details.role-acc').forEach((det)=>{
+    for (const det of document.querySelectorAll('details.role-acc')) {
       det.addEventListener('toggle', ()=>{
         if(det.open){
-          document.querySelectorAll('details.role-acc').forEach(d=>{ if(d!==det) d.open=false; });
+          for (const d of document.querySelectorAll('details.role-acc')) {
+            if(d!==det) d.open=false;
+          }
         }
       });
-    });
+    }
 
     /* ====== Micro interactions ====== */
 
@@ -746,7 +752,7 @@
     function renderOrderQuiz(){
       orderQuizWrap.innerHTML = pool.map(x=> `<button class="quiz-btn" data-val="${x}">${x}</button>`).join('');
       picked = []; orderFeedback.textContent = '';
-      orderQuizWrap.querySelectorAll('button').forEach(b=>{
+      for (const b of orderQuizWrap.querySelectorAll('button')) {
         b.addEventListener('click', ()=>{
           const val = b.dataset.val;
           if(picked.includes(val)) return;
@@ -758,17 +764,17 @@
             if(!ok){ setTimeout(renderOrderQuiz, 800); }
           }
         });
-      });
+      }
     }
     renderOrderQuiz();
 
     // How to argue: what’s missing?
     const argueFeedback = document.getElementById('argueFeedback');
-    document.querySelectorAll('#argue .quiz-btn').forEach(btn=>{
+    for (const btn of document.querySelectorAll('#argue .quiz-btn')) {
       btn.addEventListener('click', ()=>{
         argueFeedback.textContent = 'Warranting. Give the reason/mechanism that makes the claim true.';
       });
-    });
+    }
 
     // Roles: Copy all outlines
     const rolesFeedback = document.getElementById('rolesFeedback');
@@ -785,35 +791,35 @@
       'poo-mo-new': ['Invalid', 'POOs target rebuttals/timing issues; MO is a constructive  -  not a POO.'],
       'poo-pmr-clarify': ['Invalid', 'Clarifying an existing mechanism isn’t new; usually not POOable.']
     };
-    document.querySelectorAll('#rebuttals .quiz-btn[data-q^="poo-"]').forEach(btn=>{
+    for (const btn of document.querySelectorAll('#rebuttals .quiz-btn[data-q^="poo-"]')) {
       btn.addEventListener('click', ()=>{
         const [verdict, why] = pooAnswers[btn.dataset.q] || ['',''];
         pooFeedback.textContent = `${verdict}: ${why}`;
       });
-    });
+    }
 
     // HOW TO WIN: A/B weighing
     const winFeedback = document.getElementById('winFeedback');
-    document.querySelectorAll('#win .quiz-btn').forEach(btn=>{
+    for (const btn of document.querySelectorAll('#win .quiz-btn')) {
       btn.addEventListener('click', ()=> winFeedback.textContent = 'B wins: it’s explicit weighing (comparative + axis).');
-    });
+    }
 
     // Flowing: spot the drop (tap option)
     const flowFeedback = document.getElementById('flowFeedback');
-    document.querySelectorAll('#flowing .quiz-btn[data-q="drop"]').forEach(btn=>{
+    for (const btn of document.querySelectorAll('#flowing .quiz-btn[data-q="drop"]')) {
       btn.addEventListener('click', ()=>{
         const guess = btn.dataset.guess;
         flowFeedback.textContent = (guess==='g2')
           ? 'Correct: G2 was dropped  -  extend and weigh it to a voter.'
           : 'Not quite  -  the drop was G2. Say it clearly and weigh it.';
       });
-    });
+    }
 
     // POIs quick question
     const poiFeedback = document.getElementById('poiFeedback');
-    document.querySelectorAll('#pois .quiz-btn').forEach(btn=>{
+    for (const btn of document.querySelectorAll('#pois .quiz-btn')) {
       btn.addEventListener('click', ()=> poiFeedback.textContent = 'Correct: rebuttals do not take POIs.');
-    });
+    }
   </script>
 </body>
 </html>
