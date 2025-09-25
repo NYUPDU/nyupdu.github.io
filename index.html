@@ -164,6 +164,55 @@
       .featured-card{ grid-template-columns:1fr; text-align:left; }
       .featured-side{ text-align:left; }
     }
+
+    /* ===== Recent highlight glow card ===== */
+    .recent-highlight{
+      position:relative;
+      display:block;
+      overflow:hidden;
+      border:1px solid rgba(199,191,255,.35);
+      background:radial-gradient(120% 140% at 10% 0%, rgba(93,63,211,.55), transparent 65%),
+                 radial-gradient(140% 120% at 90% 20%, rgba(236,72,153,.45), transparent 70%),
+                 rgba(18,18,33,.85);
+      box-shadow:0 22px 48px rgba(0,0,0,.35), inset 0 0 18px rgba(199,191,255,.18);
+    }
+    .recent-highlight::before{
+      content:"";
+      position:absolute; inset:-40% -20%;
+      background:conic-gradient(from 90deg, rgba(124,58,237,.22), transparent 40%, rgba(236,72,153,.18), transparent 75%);
+      filter:blur(40px); opacity:.75; z-index:0;
+      animation:highlightAurora 12s ease-in-out infinite alternate;
+    }
+    @keyframes highlightAurora{
+      0%{ transform:rotate(0deg) scale(1); }
+      100%{ transform:rotate(12deg) scale(1.05); }
+    }
+    .highlight-message{
+      position:relative; z-index:1;
+      padding:1.6rem 1.8rem;
+      display:flex; flex-direction:column; gap:.75rem;
+      color:#fff;
+    }
+    .highlight-lead{
+      font-size:1.05rem; line-height:1.65; font-weight:500;
+      text-shadow:0 0 12px rgba(199,191,255,.25);
+    }
+    .highlight-shout{
+      font-weight:600; letter-spacing:.2px;
+    }
+    .highlight-tagline{
+      align-self:flex-start;
+      padding:.4rem .9rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.55);
+      background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(236,72,153,.28));
+      font-weight:700; text-transform:uppercase; letter-spacing:.15rem;
+      box-shadow:0 0 18px rgba(255,255,255,.18);
+    }
+    @media (max-width: 600px){
+      .highlight-message{ padding:1.4rem; }
+      .highlight-tagline{ letter-spacing:.1rem; }
+    }
   </style>
 </head>
 
@@ -480,20 +529,22 @@
         <figure class="rail-item">
           <img src="image000000.jpg" alt="Travel snapshot" loading="lazy">
         </figure>
+        <figure class="rail-item">
+          <img src="ClubfestFall2025-highlight.jpg" alt="Club Fest Fall 2025 crowd" loading="lazy">
+        </figure>
       </div>
       <div class="cta-row">
         <a class="link-chip" href="why-pdu.html">Read the full Why PDU →</a>
       </div>
     </section>
 
-    <!-- Recent highlight (photo-first) -->
-    <section class="glass-card highlight-card reveal">
-      <div class="highlight-media">
-        <img src="ClubfestFall2025-highlight.jpg" alt="NYU PDU at Club Fest Fall 2025" loading="lazy">
-      </div>
-      <div class="highlight-body">
+    <!-- Recent highlight (glow message) -->
+    <section class="glass-card highlight-card recent-highlight reveal">
+      <div class="highlight-message">
         <h3 class="about-header">Recent Highlights</h3>
-        <p>Thrilled to meet so many new faces at Club Fest Fall 2025! Thanks and welcome to everyone who expressed interest in signing up, and here's to a good semester of debate at PDU!</p>
+        <p class="highlight-lead">We&rsquo;re over the moon with the turnout at our September 2025 meetings&mdash;thank you for filling the room with energy and curiosity.</p>
+        <p class="highlight-shout">Extra love to everyone who jumped into the practice round; your speeches made the room crackle.</p>
+        <p class="highlight-tagline">Very impressive roster this semester.</p>
       </div>
     </section>
 
