@@ -81,6 +81,69 @@
     .band-newcomer .n-body p{ opacity:.95; margin-bottom:.75rem; }
     .n-actions{ display:flex; gap:.5rem; flex-wrap:wrap; }
     .n-actions .link-chip{ font-weight:800; }
+    .link-chip.calendar-spotlight{
+      position:relative;
+      isolation:isolate;
+      overflow:visible;
+      background:linear-gradient(120deg, rgba(253,224,71,.92), rgba(244,114,182,.95), rgba(129,140,248,.95));
+      background-size:200% 200%;
+      border-color:rgba(255,255,255,.65);
+      color:#0d061b;
+      text-shadow:0 1px 6px rgba(255,255,255,.55);
+      box-shadow:0 0 0 4px rgba(244,114,182,.22), 0 18px 36px rgba(99,102,241,.45);
+      animation:calendarWave 5s ease-in-out infinite alternate;
+    }
+    .link-chip.calendar-spotlight::before{
+      content:"";
+      position:absolute;
+      inset:-12px;
+      border-radius:inherit;
+      background:radial-gradient(circle at 18% 30%, rgba(253,224,71,.6), transparent 60%),
+                 radial-gradient(circle at 82% 30%, rgba(244,114,182,.55), transparent 65%),
+                 radial-gradient(circle at 50% 90%, rgba(129,140,248,.55), transparent 70%);
+      filter:blur(18px);
+      opacity:.85;
+      z-index:-1;
+      animation:calendarGlow 3.8s ease-in-out infinite alternate;
+    }
+    .link-chip.calendar-spotlight::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:inherit;
+      background:linear-gradient(120deg, rgba(255,255,255,.2), rgba(255,255,255,.05));
+      mix-blend-mode:screen;
+      opacity:.7;
+      animation:calendarSheen 6s linear infinite;
+      pointer-events:none;
+    }
+    .link-chip.calendar-spotlight:hover{
+      background-position:85% center;
+      box-shadow:0 0 0 4px rgba(244,114,182,.28), 0 24px 44px rgba(99,102,241,.55);
+      transform:translateY(-1px);
+    }
+    .link-chip.calendar-spotlight:focus-visible{
+      outline:3px solid rgba(253,224,71,.9);
+      outline-offset:4px;
+    }
+    @keyframes calendarWave{
+      0%{ background-position:0% 50%; }
+      100%{ background-position:100% 50%; }
+    }
+    @keyframes calendarGlow{
+      0%{ opacity:.65; filter:blur(16px); }
+      100%{ opacity:.95; filter:blur(22px); }
+    }
+    @keyframes calendarSheen{
+      0%{ opacity:.45; }
+      50%{ opacity:.85; }
+      100%{ opacity:.45; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .link-chip.calendar-spotlight{ animation:none; background-position:50% 50%; }
+      .link-chip.calendar-spotlight::before,
+      .link-chip.calendar-spotlight::after{ animation:none; }
+    }
     .n-side{ border-left:1px solid rgba(255,255,255,.18); padding-left:1rem; }
     .n-side .mini{ display:flex; flex-direction:column; gap:.4rem; }
     .n-side .mini .chip{ align-self:flex-start; }
@@ -358,7 +421,7 @@
       <div class="n-actions">
         <a class="link-chip" href="join.html">Click here to Join!</a>
         <a class="link-chip" href="beginner.html">Beginner Guide →</a>
-        <a class="link-chip" href="calendar.html">Open the calendar →</a>
+        <a class="link-chip calendar-spotlight" href="calendar.html">📅 Open the calendar →</a>
       </div>
     </div>
     <div class="n-side">
@@ -407,7 +470,7 @@
         <div class="path-actions">
           <a class="link-chip" href="join.html">How to join →</a>
           <a class="link-chip" href="beginner.html">Beginner Guide →</a>
-          <a class="link-chip" href="calendar.html">Calendar →</a>
+          <a class="link-chip calendar-spotlight" href="calendar.html">📅 Calendar →</a>
         </div>
       </article>
 
