@@ -80,6 +80,8 @@
     .blink{ animation: blink 1s steps(2, start) infinite; }
     @keyframes blink{ 0%,50%{opacity:1;} 50%,100%{opacity:0;} }
 
+    .pill.pending{ background:rgba(224,185,255,.16); border-color:rgba(224,185,255,.52); }
+
     /* Tournaments overview: stronger separation for each entry */
     .targets-grid { gap: 16px; }
     .overview .target-card{
@@ -288,7 +290,7 @@
           <div class="dash-card accent-warn span-5">
             <h3 class="about-header" style="margin-top:.1rem;">Upcoming Travel  -  Overview</h3>
             <p class="about-preview" style="margin-bottom:.75rem;">
-              Next up: Harvard (APDA Meeting) — Oct 10–11 in Cambridge. Roster and judging are locked; Brown closes the month once details finalize. Huge thanks to everyone who wrapped Johns Hopkins Novice — recap incoming.
+              Next up: Harvard (APDA Meeting) — Oct 10–11 in Cambridge. Sign-ups are pending for Brandeis (Sept 31–Oct 1) and Fordham (Nov 21–22) while we wait on host packets, and Brown closes October once logistics finalize. Huge thanks to everyone who wrapped Johns Hopkins Novice — recap incoming.
             </p>
 
             <div class="targets-grid overview">
@@ -305,13 +307,13 @@
               </article>
 
               <article class="target-card">
-                <span class="pill passed">Passed</span>
-                <div class="chip-row"><span class="chip">Oct 3–4</span><span class="chip">Johns Hopkins Novice</span></div>
-                <h3>Johns Hopkins Recap</h3>
-                <p class="about-preview" style="margin:.55rem 0 .65rem;">Baltimore is in the books! Look for shout-outs in Recent Highlights and share photos for the drive.</p>
+                <span class="pill pending">Sign-ups pending</span>
+                <div class="chip-row"><span class="chip">Sept 31–Oct 1</span><span class="chip">Brandeis</span></div>
+                <h3>Brandeis</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Details TBD — we’ll collect interest once the host packet arrives. Let Education know if you’re eyeing the trip.</p>
                 <div class="cta-row">
-                  <a class="link-chip" href="index.html#recent-highlights">Highlights →</a>
-                  <a class="link-chip" href="tournaments.html#passed">Passed tournaments →</a>
+                  <a class="link-chip" href="tournaments.html">Details →</a>
+                  <a class="link-chip" href="calendar.html">Calendar →</a>
                 </div>
               </article>
 
@@ -323,6 +325,28 @@
                 <div class="cta-row">
                   <a class="link-chip" href="tournaments.html">Details →</a>
                   <a class="link-chip" href="calendar.html">Calendar →</a>
+                </div>
+              </article>
+
+              <article class="target-card">
+                <span class="pill pending">Sign-ups pending</span>
+                <div class="chip-row"><span class="chip">Nov 21–22</span><span class="chip">Fordham</span></div>
+                <h3>Fordham</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Details TBD — expect the invite closer to November. We’ll open the form once allocations land.</p>
+                <div class="cta-row">
+                  <a class="link-chip" href="tournaments.html">Details →</a>
+                  <a class="link-chip" href="calendar.html">Calendar →</a>
+                </div>
+              </article>
+
+              <article class="target-card">
+                <span class="pill passed">Passed</span>
+                <div class="chip-row"><span class="chip">Oct 3–4</span><span class="chip">Johns Hopkins Novice</span></div>
+                <h3>Johns Hopkins Recap</h3>
+                <p class="about-preview" style="margin:.55rem 0 .65rem;">Baltimore is in the books! Look for shout-outs in Recent Highlights and share photos for the drive.</p>
+                <div class="cta-row">
+                  <a class="link-chip" href="index.html#recent-highlights">Highlights →</a>
+                  <a class="link-chip" href="tournaments.html#passed">Passed tournaments →</a>
                 </div>
               </article>
             </div>
@@ -337,7 +361,7 @@
             <h4>October</h4>
             <ul>
               <li>Mon/Wed meetings · 7:00 PM</li>
-              <li>Travel: Harvard (APDA Meeting) — Oct 10–11 in Cambridge (roster & judging confirmed); Brown (tentative) later in the month; Johns Hopkins recap drops in Highlights</li>
+              <li>Travel: Harvard (APDA Meeting) — Oct 10–11 in Cambridge (roster & judging confirmed); Brandeis (Sept 31–Oct 1) sign-ups pending; Brown (Oct 24–25) details TBD; Johns Hopkins recap drops in Highlights</li>
             </ul>
             <div class="cta-row"><a class="link-chip" href="tournaments.html#october">See slate →</a></div>
           </div>
@@ -347,6 +371,7 @@
             <ul>
               <li>Busy travel window  -  plan ahead</li>
               <li>Rooming notes on Calendar events</li>
+              <li>Travel: Fordham (Nov 21–22) — sign-ups pending while details stay TBD</li>
             </ul>
             <div class="cta-row"><a class="link-chip" href="tournaments.html#november">See slate →</a></div>
           </div>
