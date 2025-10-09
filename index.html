@@ -221,6 +221,7 @@
     .featured-meta{ display:flex; gap:.5rem; flex-wrap:wrap; margin:.25rem 0 .6rem; }
     .featured-side{ text-align:right; }
     .featured-side .pill{ display:inline-block; }
+    .pill.open{ background:rgba(80,200,120,.12); border-color:rgba(80,200,120,.45); }
     .pill.tentative{ background:rgba(255,200,80,.12); border-color:rgba(255,200,80,.45); }
     .pill.pending{ background:rgba(224,185,255,.16); border-color:rgba(224,185,255,.52); }
     @media (max-width: 960px){
@@ -568,11 +569,14 @@
         <article class="event-card">
           <div class="event-head">
             <h4>Brown</h4>
-            <span class="pill tentative">Tentative</span>
+            <span class="pill open">Sign-ups open</span>
           </div>
           <p class="event-meta">Oct 24–25 · Providence, RI</p>
-          <p class="event-note">Details coming soon.</p>
-          <a class="link-chip" href="tournaments.html">Details →</a>
+          <p class="event-note">Our third fall travel weekend heads to Providence. Share your travel and housing info on the sign-up form.</p>
+          <div class="cta-row" style="gap:.4rem;">
+            <a class="link-chip" href="tournaments.html">Details →</a>
+            <a class="link-chip" href="https://tinyurl.com/Brown2025pdu" target="_blank" rel="noopener">Sign-up form →</a>
+          </div>
         </article>
 
         <article class="event-card">
