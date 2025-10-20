@@ -278,6 +278,11 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 .event-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:.25rem; }
 .event-head h4{ font-size:1.1rem; }
 .pill{ padding:.2rem .5rem; border-radius:999px; border:1px solid rgba(255,255,255,.25); font-size:.85rem; }
+.pill.open{
+  border-color:rgba(144,238,144,.55);
+  background:rgba(144,238,144,.16);
+  box-shadow:0 0 14px rgba(144,238,144,.2);
+}
 .event-meta{ opacity:.9; margin:.1rem 0 .25rem; font-size:.95rem; }
 .event-note{ opacity:.85; font-size:.92rem; margin-bottom:.6rem; }
 
