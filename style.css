@@ -239,6 +239,13 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   backdrop-filter:blur(8px);
 }
 .hero-title{ font-family:'DM Serif Display',serif; font-size:2.6rem; letter-spacing:.3px; text-shadow:0 0 10px rgba(199,191,255,.35); }
+.hero-kicker{
+  font-family:'DM Serif Display',serif;
+  margin:.45rem auto .2rem;
+  letter-spacing:.2px;
+  opacity:.95;
+  text-shadow:0 0 10px rgba(199,191,255,.28);
+}
 .hero-sub{ margin:.6rem auto 1.1rem; opacity:.95; max-width:48ch; }
 .hero-ctas{ display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
 
