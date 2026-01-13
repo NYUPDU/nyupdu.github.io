@@ -152,43 +152,6 @@
       .n-side{ border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:.9rem; }
     }
 
-    /* ===== Photo rail (gallery) ===== */
-    .photo-rail{
-      width:92%; max-width:1180px; margin:2rem auto 0 auto;
-    }
-    .gallery-header{ display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:.75rem; }
-    .gallery-header h3{ margin:0; font-family:'DM Serif Display', serif; letter-spacing:.3px; }
-    .gallery-header .muted{ margin:0; }
-    .gallery-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap:12px;
-    }
-    .gallery-card{
-      position:relative;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.22);
-      background:radial-gradient(circle at 30% 20%, rgba(255,255,255,.06), transparent 55%), rgba(255,255,255,.05);
-      min-height:200px;
-      box-shadow:0 14px 40px rgba(0,0,0,.26);
-    }
-    .gallery-card.tall{ grid-row: span 2; min-height:360px; }
-    .gallery-card.wide{ grid-column: span 2; }
-    .gallery-card img{
-      width:100%; height:100%; object-fit:cover; display:block;
-    }
-    .gallery-caption{
-      position:absolute; left:10px; bottom:10px;
-      padding:.35rem .65rem; border-radius:999px;
-      background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.18);
-      font-size:.9rem; letter-spacing:.15px; text-shadow:0 1px 6px rgba(0,0,0,.5);
-    }
-    @media (max-width: 720px){
-      .gallery-card.wide{ grid-column: span 1; }
-      .gallery-card.tall{ grid-row: span 1; }
-    }
-
     /* Lightbox */
     .lightbox{
       position:fixed; inset:0; display:none; align-items:center; justify-content:center;
@@ -452,104 +415,6 @@
     </div>
   </section>
 
-  <!-- Photo rail (magazine energy, no quotes) -->
-  <section class="photo-rail" aria-label="Club photos">
-    <div class="gallery-header">
-      <h3>Season gallery</h3>
-      <p class="muted">Moments from Fordham's finale and fall travels.</p>
-    </div>
-    <div class="gallery-grid">
-      <figure class="gallery-card wide" aria-label="Fordham campus arrival">
-        <img src="20251121_145310.jpg" alt="Team members heading into Fordham's campus for round check-in" loading="lazy">
-        <figcaption class="gallery-caption">Fordham arrival</figcaption>
-      </figure>
-      <figure class="gallery-card tall" aria-label="Team greeting">
-        <img src="20251121_145718.jpg" alt="NYU debaters greeting one another outside the Fordham tab room" loading="lazy">
-        <figcaption class="gallery-caption">Reuniting before rounds</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Hallway prep">
-        <img src="20251121_145911.jpg" alt="Squad comparing notes in a Fordham hallway" loading="lazy">
-        <figcaption class="gallery-caption">Hallway prep</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Team pose outside">
-        <img src="20251121_150559.jpg" alt="NYU debaters posing outside Fordham's Lincoln Center building" loading="lazy">
-        <figcaption class="gallery-caption">Fordham courtyard</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Post-round smiles">
-        <img src="20251121_150601(0).jpg" alt="Friends laughing together after a round at Fordham" loading="lazy">
-        <figcaption class="gallery-caption">Post-round laughs</figcaption>
-      </figure>
-      <figure class="gallery-card tall" aria-label="Morning briefing">
-        <img src="20251122_074123.jpg" alt="Early morning briefing with NYU debaters holding coffees" loading="lazy">
-        <figcaption class="gallery-caption">Day two kickoff</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Hopkins Friday meetup">
-        <img src="20251003_161539.jpg" alt="Squad meet-up on the Johns Hopkins quad" loading="lazy">
-        <figcaption class="gallery-caption">Hopkins Friday meetup</figcaption>
-      </figure>
-      <figure class="gallery-card wide" aria-label="Hopkins morning prep">
-        <img src="20251004_081440.jpg" alt="NYU debaters huddled before a Johns Hopkins novice round" loading="lazy">
-        <figcaption class="gallery-caption">Hopkins prep huddle</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Evening strategy">
-        <img src="20251003_224823.jpg" alt="Late night strategy huddle at Johns Hopkins" loading="lazy">
-        <figcaption class="gallery-caption">Late-night flow</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Final round debrief">
-        <img src="20251003_225512.jpg" alt="Team debrief after the final Johns Hopkins round" loading="lazy">
-        <figcaption class="gallery-caption">Hopkins debrief</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Hotel lobby start">
-        <img src="20251003_155520.jpg" alt="Early arrival outside the tournament hotel" loading="lazy">
-        <figcaption class="gallery-caption">Arrival day</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Hopkins morning walk">
-        <img src="20251004_080035.jpg" alt="Walking between buildings on the Johns Hopkins campus" loading="lazy">
-        <figcaption class="gallery-caption">Campus stroll</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Judge prep">
-        <img src="20251004_081227.jpg" alt="Morning prep before Johns Hopkins novice rounds begin" loading="lazy">
-        <figcaption class="gallery-caption">Notes and ballots</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Outdoor pause">
-        <img src="20251004_081447.jpg" alt="NYU debaters pause for air outside the Hopkins venue" loading="lazy">
-        <figcaption class="gallery-caption">Fresh air break</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Afternoon sunlight">
-        <img src="20251004_154241.jpg" alt="Debaters standing together in afternoon sun at Johns Hopkins" loading="lazy">
-        <figcaption class="gallery-caption">Golden hour</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Round room doorway">
-        <img src="20251003_163824.jpg" alt="Waiting outside a Hopkins round room" loading="lazy">
-        <figcaption class="gallery-caption">Waiting on pairings</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Club practice">
-        <img src="IMG_2178.JPEG" alt="General club photo of debaters practicing on campus" loading="lazy">
-        <figcaption class="gallery-caption">Campus practice</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Community photo">
-        <img src="IMG_2199.JPEG" alt="Group photo of PDU members smiling" loading="lazy">
-        <figcaption class="gallery-caption">Community</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Tournament friends">
-        <img src="IMG_3138.JPEG" alt="Friends posing at a tournament venue" loading="lazy">
-        <figcaption class="gallery-caption">Tournament friends</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Team photo">
-        <img src="IMG_4879.JPEG" alt="Team photo with NYU debaters" loading="lazy">
-        <figcaption class="gallery-caption">Team portrait</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Season wrap">
-        <img src="Image_20251123_205324_400.jpeg" alt="Post-season celebration selfie" loading="lazy">
-        <figcaption class="gallery-caption">Season wrap</figcaption>
-      </figure>
-      <figure class="gallery-card" aria-label="Spring teaser">
-        <img src="20250416_204645.jpg" alt="Debaters brainstorming with notes on a whiteboard" loading="lazy">
-        <figcaption class="gallery-caption">Workshop energy</figcaption>
-      </figure>
-    </div>
-  </section>
-
   <!-- Lightbox (click any photo) -->
   <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
     <button id="lightboxClose" aria-label="Close image">Close</button>
@@ -600,8 +465,13 @@
           <a class="tag-link spark-tag" href="calendar.html">Check the calendar</a>
         </div>
       </div>
-      <figure class="highlight-hero highlight-photo">
-        <img src="20251121_150641.jpg" alt="NYU debaters gathered together at Fordham for the season finale" loading="lazy">
+      <figure class="highlight-hero highlight-photo hero-slideshow" aria-label="Season photo slideshow">
+        <img class="slideshow-image active" src="20251121_145310.jpg" alt="Team members heading into Fordham's campus for round check-in" loading="lazy">
+        <img class="slideshow-image" src="20251121_145718.jpg" alt="NYU debaters greeting one another outside the Fordham tab room" loading="lazy">
+        <img class="slideshow-image" src="20251121_150559.jpg" alt="NYU debaters posing outside Fordham's Lincoln Center building" loading="lazy">
+        <img class="slideshow-image" src="20251122_074123.jpg" alt="Early morning briefing with NYU debaters holding coffees" loading="lazy">
+        <img class="slideshow-image" src="20251003_161539.jpg" alt="Squad meet-up on the Johns Hopkins quad" loading="lazy">
+        <img class="slideshow-image" src="20251004_081440.jpg" alt="NYU debaters huddled before a Johns Hopkins novice round" loading="lazy">
       </figure>
       <div class="highlight-gallery" aria-label="Highlights from the Fordham season finale weekend">
         <figure class="highlight-thumb highlight-photo">
@@ -893,9 +763,26 @@
     tick(); setInterval(tick,1000);
   </script>
 
+  <!-- Hero slideshow -->
+  <script>
+    const heroSlideshow = document.querySelector('.hero-slideshow');
+    if (heroSlideshow) {
+      const slides = Array.from(heroSlideshow.querySelectorAll('.slideshow-image'));
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReducedMotion && slides.length > 1) {
+        let currentIndex = 0;
+        setInterval(() => {
+          slides[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % slides.length;
+          slides[currentIndex].classList.add('active');
+        }, 5000);
+      }
+    }
+  </script>
+
   <!-- Photo lightbox JS -->
   <script>
-    const lbTriggers = document.querySelectorAll('.rail-item img, .highlight-photo img, .gallery-card img');
+    const lbTriggers = document.querySelectorAll('.rail-item img, .highlight-photo img');
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbClose = document.getElementById('lightboxClose');
