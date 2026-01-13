@@ -6,7 +6,7 @@
   <title>Parliamentary Debate Union @ NYU</title>
   <link rel="icon" type="image/png" href="PDUVIOLETWHITE.png">
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&family=Newsreader:wght@600&display=swap" rel="stylesheet">
   <meta name="google-site-verification" content="Vmv_l4au33m66RruE6TlNIBPAnksa1f2opZfgmCAvh4" />
   <meta name="description" content="Official website of the NYU Parliamentary Debate Union, the debate club at New York University hosting practices, tournaments and resources." />
   <meta name="keywords" content="NYU Debate, Debate Club, New York University, Parliamentary Debate, PDU, speech and debate, college debate, home" />
@@ -20,6 +20,15 @@
 
   <!-- Page-local styles for glow divider, photo rail, two-path tiles, featured event -->
   <style>
+    .home-page h1,
+    .home-page h2,
+    .home-page h3,
+    .home-page h4,
+    .home-page h5,
+    .home-page h6{
+      font-family:'Newsreader', serif;
+      font-weight:600;
+    }
     /* ===== Countdown pill (desktop top-right; mobile bottom-left) ===== */
     .home-countdown{
       position:fixed;
@@ -152,6 +161,33 @@
       .n-side{ border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:.9rem; }
     }
 
+    /* ===== Home welcome chip ===== */
+    .chip.chip-welcome{
+      text-align:center;
+      padding:1.1rem 1.5rem;
+      max-width:min(960px, 92vw);
+      margin:0 auto;
+    }
+    .chip-welcome .chip-line{ display:block; }
+    .chip-welcome .chip-line-primary{
+      font-family:'Newsreader', serif;
+      font-weight:900;
+      font-size:clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing:.02em;
+    }
+    .chip-welcome .chip-line-secondary{
+      font-family:'Newsreader', serif;
+      font-weight:800;
+      font-size:clamp(1.1rem, 2vw, 1.6rem);
+      margin-top:.35rem;
+    }
+    .chip-welcome .chip-line-body{
+      font-family:'Alan Sans','Inter',sans-serif;
+      font-weight:500;
+      font-size:clamp(.95rem, 1.6vw, 1.15rem);
+      margin-top:.5rem;
+    }
+
     /* Lightbox */
     .lightbox{
       position:fixed; inset:0; display:none; align-items:center; justify-content:center;
@@ -259,7 +295,7 @@
   </style>
 </head>
 
-<body id="top">
+<body id="top" class="home-page">
   <!-- Navbar -->
   <header class="glass-navbar" id="siteNavbar">
     <div class="container nav-container">
@@ -377,15 +413,17 @@
       <img class="slideshow-image" src="20251121_150559.jpg" alt="NYU debaters posing outside Fordham's Lincoln Center building" loading="lazy">
       <img class="slideshow-image" src="20251122_074123.jpg" alt="Early morning briefing with NYU debaters holding coffees" loading="lazy">
       <img class="slideshow-image" src="20251003_161539.jpg" alt="Squad meet-up on the Johns Hopkins quad" loading="lazy">
-      <img class="slideshow-image" src="20251004_081440.jpg" alt="NYU debaters huddled before a Johns Hopkins novice round" loading="lazy">
+      <img class="slideshow-image" src="HopkinsHighlightTeamPhoto.jpg" alt="NYU debaters huddled before a Johns Hopkins novice round" loading="lazy">
       <img class="slideshow-image" src="Fall2025ClubShot.jpg" alt="Fall 2025 NYU PDU club group photo" loading="lazy">
+      <img class="slideshow-image" src="2025-26 Eboard.jpg" alt="Fall 2025 NYU PDU club group photo" loading="lazy">
+      <img class="slideshow-image" src="IMG_2178.JPEG" alt="Fall 2025 NYU PDU club group photo" loading="lazy">
       <img class="slideshow-image" src="ClubfestFall2025-highlight.jpg" alt="NYU PDU members at the Fall 2025 club fest table" loading="lazy">
     </figure>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content glass-card reveal">
-      <h1 class="hero-title">Thank you for a good Fall 2025!</h1>
-      <h2 class="hero-kicker">See you in Spring</h2>
-      <p class="hero-sub">Thanks for closing out the semester with us. We’ll share Spring details soon — enjoy the break and get ready to come back strong.</p>
+      <h1 class="hero-title">Welcome to PDU</h1>
+      <h2 class="hero-kicker">Spring 2026</h2>
+      <p class="hero-sub">The Parliamentary Debate Union is NYU’s premiere debate club, specializing in American Parliamentary Style.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="join.html">Click here to Join!</a>
         <a class="btn-secondary" href="members.html">I’m Returning</a>
@@ -402,7 +440,7 @@
   <!-- Identity chip -->
   <section class="week-strip">
     <ul class="week-pills">
-      <li class="chip">NYU Debate  -  Parliamentary Debate Union</li>
+      <li class="chip">Parliamentary Debate Union - NYU Debate</li>
     </ul>
   </section>
 

@@ -262,7 +262,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border-radius:18px; padding:2rem 2.2rem; text-align:center;
   backdrop-filter:blur(8px);
 }
-.hero-title{ font-family:'DM Serif Display',serif; font-size:2.6rem; letter-spacing:.3px; text-shadow:0 0 10px rgba(199,191,255,.35); }
+.hero-title{ font-family:'DM Serif Display',serif; font-size:3.2rem; letter-spacing:.3px; text-shadow:0 0 10px rgba(199,191,255,.35); }
 .hero-kicker{
   font-family:'DM Serif Display',serif;
   margin:.45rem auto .2rem;
@@ -591,7 +591,7 @@ section[id] .about-header, section[id] h3, section[id] h4{ scroll-margin-top:96p
 
   .two-col{ grid-template-columns:1fr; }
   .tiles-quick{ grid-template-columns:1fr; }
-  .hero-title{ font-size:2.1rem; }
+  .hero-title{ font-size:2.5rem; }
   .week-strip{ margin-top:-26px; }
 }
 
