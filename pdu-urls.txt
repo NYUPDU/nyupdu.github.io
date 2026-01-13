@@ -10,3 +10,4 @@ https://nyupdu.github.io/contact.html
 https://nyupdu.github.io/judging.html
 https://nyupdu.github.io/practicetools.html
 https://nyupdu.github.io/resources.html
+https://nyupdu.github.io/records.html
