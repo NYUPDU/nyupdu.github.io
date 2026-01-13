@@ -161,6 +161,33 @@
       .n-side{ border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,.18); padding-top:.9rem; }
     }
 
+    /* ===== Home welcome chip ===== */
+    .chip.chip-welcome{
+      text-align:center;
+      padding:1.1rem 1.5rem;
+      max-width:min(960px, 92vw);
+      margin:0 auto;
+    }
+    .chip-welcome .chip-line{ display:block; }
+    .chip-welcome .chip-line-primary{
+      font-family:'Newsreader', serif;
+      font-weight:900;
+      font-size:clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing:.02em;
+    }
+    .chip-welcome .chip-line-secondary{
+      font-family:'Newsreader', serif;
+      font-weight:800;
+      font-size:clamp(1.1rem, 2vw, 1.6rem);
+      margin-top:.35rem;
+    }
+    .chip-welcome .chip-line-body{
+      font-family:'Alan Sans','Inter',sans-serif;
+      font-weight:500;
+      font-size:clamp(.95rem, 1.6vw, 1.15rem);
+      margin-top:.5rem;
+    }
+
     /* Lightbox */
     .lightbox{
       position:fixed; inset:0; display:none; align-items:center; justify-content:center;
@@ -411,7 +438,11 @@
   <!-- Identity chip -->
   <section class="week-strip">
     <ul class="week-pills">
-      <li class="chip">NYU Debate  -  Parliamentary Debate Union</li>
+      <li class="chip chip-welcome">
+        <span class="chip-line chip-line-primary">-Welcome to PDU-</span>
+        <span class="chip-line chip-line-secondary">~Spring 2026~</span>
+        <span class="chip-line chip-line-body">--The Parliamentary Debate Union is NYU’s premiere debate club, specializing in American Parliamentary Style.--</span>
+      </li>
     </ul>
   </section>
 
