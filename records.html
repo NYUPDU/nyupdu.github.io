@@ -18,46 +18,85 @@
   <meta property="og:image" content="https://nyupdu.github.io/PDULOGO_Trans.png" />
   <style>
     .records-intro{
-      max-width:860px; margin:0 auto; text-align:center; color:#f1edff;
+      max-width:860px;
+      margin:0 auto;
+      text-align:center;
+      color:#f1edff;
     }
-    .records-intro p{ opacity:.9; line-height:1.7; }
+    .records-hero{
+      background:#1a1622;
+      padding:3.5rem 1.5rem 2.5rem;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .records-hero .page-title{
+      font-size:2.6rem;
+      text-shadow:none;
+    }
+    .records-hero .page-subtitle{
+      font-size:1rem;
+      letter-spacing:.12rem;
+      text-transform:uppercase;
+      opacity:.75;
+    }
+    .records-hero .hero-copy{
+      max-width:760px;
+      margin:1rem auto 0;
+      color:rgba(255,255,255,.85);
+      line-height:1.7;
+    }
+    .records-grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      margin-top:1.2rem;
+    }
+    .records-panel{
+      padding:1.1rem 1.2rem;
+      border-radius:14px;
+      background:rgba(12,10,18,.6);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .records-panel h4{
+      margin-bottom:.4rem;
+      font-size:1.05rem;
+      color:#f6f1ff;
+    }
     .records-meta{
-      margin:1.4rem auto 0; display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center;
+      display:grid;
+      gap:.75rem;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      margin-top:1rem;
     }
-    .records-tag{
-      padding:.35rem .85rem; border-radius:999px; font-size:.85rem; letter-spacing:.3px;
-      background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.2);
+    .records-meta div{
+      padding:.85rem 1rem;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(124,58,237,.12);
     }
     .records-table{
-      width:100%; border-collapse:collapse; margin-top:1.4rem; font-size:.96rem;
-      background:rgba(11,5,23,.55); border-radius:16px; overflow:hidden;
+      width:100%;
+      border-collapse:collapse;
+      margin-top:1rem;
+      background:rgba(12,10,18,.55);
+      border-radius:12px;
+      overflow:hidden;
     }
     .records-table th,
     .records-table td{
-      padding:1rem; border-bottom:1px solid rgba(255,255,255,.08); text-align:left;
+      padding:.85rem 1rem;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:left;
+      font-size:.95rem;
     }
-    .records-table th{ font-weight:600; color:#f7f2ff; background:rgba(124,58,237,.18); }
-    .records-table td{ color:rgba(255,255,255,.85); }
-    .records-status{
-      display:inline-flex; align-items:center; gap:.4rem; padding:.2rem .65rem; border-radius:999px;
-      background:rgba(148,116,255,.2); border:1px solid rgba(148,116,255,.45); font-size:.8rem;
-      text-transform:uppercase; letter-spacing:.6px;
-    }
-    .records-grid{
-      display:grid; gap:1.2rem; grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-      margin-top:1.5rem;
-    }
-    .records-panel{
-      padding:1.2rem; border-radius:16px; background:rgba(13,6,28,.5);
-      border:1px solid rgba(255,255,255,.08); box-shadow:0 10px 20px rgba(0,0,0,.2);
-    }
-    .records-panel h4{ margin-bottom:.5rem; font-size:1.05rem; color:#f5f1ff; }
-    .records-note{
-      padding:1rem 1.2rem; border-radius:14px; background:rgba(124,58,237,.18);
-      border:1px solid rgba(124,58,237,.35); color:#f7f2ff; line-height:1.6; margin-top:1.5rem;
+    .records-table th{
+      background:rgba(124,58,237,.16);
+      color:#f3efff;
+      font-weight:600;
     }
     @media (max-width: 720px){
-      .records-table th, .records-table td{ padding:.75rem; font-size:.9rem; }
+      .records-hero{ padding:3rem 1.2rem 2rem; }
+      .records-hero .page-title{ font-size:2.15rem; }
+      .records-table th, .records-table td{ padding:.7rem .8rem; font-size:.9rem; }
     }
   </style>
 </head>
@@ -171,129 +210,94 @@
     </nav>
   </aside>
 
-  <section class="hero-section hero-compact">
+  <section class="records-hero">
     <div class="records-intro">
-      <h1 class="page-title">Internal Records Archive</h1>
-      <p class="page-subtitle">Semester-by-semester materials, outcomes, and governance notes for internal use.</p>
-      <p>Use this archive to review past tournament activity, membership operations, budgeting, and strategic notes. Materials are structured for continuity and handoffs between leadership teams.</p>
-      <div class="records-meta">
-        <span class="records-tag">Restricted circulation</span>
-        <span class="records-tag">Updated each semester close</span>
-        <span class="records-tag">Board + committee access</span>
-      </div>
+      <h1 class="page-title">Internal Records</h1>
+      <p class="page-subtitle">Internal Archive</p>
+      <p class="hero-copy">A streamlined, internal-only archive for prior semester materials, tournament participation, and leadership continuity. This page captures record snapshots for quick reference by current officers.</p>
     </div>
   </section>
 
-  <div class="hero-divider" aria-hidden="true"></div>
-
   <main class="main-content">
     <section class="glass-card">
-      <h3 class="about-header">Archive Overview</h3>
-      <p class="about-preview">
-        The internal archive consolidates all institutional materials required for continuity across academic years. Each record bundle includes leadership notes, competitive results, finance summaries, and operational documentation approved by the Executive Board.
-      </p>
-      <div class="records-note">
-        Confidential materials include travel receipts, eligibility notes, and meeting attendance logs. Share internally only with current officers, tournament captains, and approved advisors.
+      <h3 class="about-header">Past Attended Tournaments</h3>
+      <p class="about-preview">Recent travel activity recorded in team updates and recap cards.</p>
+      <div class="records-grid">
+        <div class="records-panel">
+          <h4>Brown (Oct 24–25)</h4>
+          <p>Travel completed with follow-ups and TID closeout noted.</p>
+        </div>
+        <div class="records-panel">
+          <h4>Harvard (Oct 10–11)</h4>
+          <p>APDA Meeting travel wrapped with recap updates.</p>
+        </div>
+        <div class="records-panel">
+          <h4>Johns Hopkins Novice (Oct 3–4)</h4>
+          <p>Recap highlights shared following the Baltimore trip.</p>
+        </div>
+        <div class="records-panel">
+          <h4>Brandeis (Oct 31–Nov 1)</h4>
+          <p>Roster notes and recap logistics circulated after attendance.</p>
+        </div>
+        <div class="records-panel">
+          <h4>Fordham Fall Finale (Nov 21–22)</h4>
+          <p>Final tournament travel for the semester.</p>
+        </div>
       </div>
     </section>
 
     <section class="glass-card">
-      <h3 class="about-header">Semester Index</h3>
-      <p class="about-preview">Select a semester bundle to access the latest finalized record sets and supporting documents.</p>
-      <table class="records-table" aria-label="Semester records index">
+      <h3 class="about-header">Past Accolades</h3>
+      <p class="about-preview">Highlights sourced from recent achievements listed on the main site.</p>
+      <div class="records-grid">
+        <div class="records-panel">
+          <h4>2024–25</h4>
+          <ul class="section-list">
+            <li>UVA Tournament, 5th best varsity speaker.</li>
+            <li>American University Tournament, 6th best varsity speaker.</li>
+            <li>Columbia University Tournament, 10th best varsity team.</li>
+          </ul>
+        </div>
+        <div class="records-panel">
+          <h4>2023–24</h4>
+          <ul class="section-list">
+            <li>2nd best team of the year, Ailin Jia and Aadhavaarasan Raviarasan.</li>
+            <li>8th best club of the year.</li>
+            <li>2nd best speaker of the year, Aadhavaarasan Raviarasan.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-card">
+      <h3 class="about-header">Past Election Results</h3>
+      <p class="about-preview">Template for documenting officer transitions and voting outcomes.</p>
+      <table class="records-table" aria-label="Past election results">
         <thead>
           <tr>
             <th>Semester</th>
-            <th>Contents</th>
-            <th>Owner</th>
-            <th>Status</th>
+            <th>Positions</th>
+            <th>Summary</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Fall 2024</td>
-            <td>Travel logs, tournament outcomes, budget close</td>
-            <td>Operations + Treasurer</td>
-            <td><span class="records-status">Finalized</span></td>
+            <td>Executive Board</td>
+            <td>Recorded vote tallies, slate confirmation, transition notes.</td>
           </tr>
           <tr>
             <td>Spring 2025</td>
-            <td>Selection memos, attendance reports, equity summary</td>
-            <td>Education + Equity</td>
-            <td><span class="records-status">Finalized</span></td>
-          </tr>
-          <tr>
-            <td>Summer 2025</td>
-            <td>Strategic planning notes, recruitment prep</td>
-            <td>President + Ops</td>
-            <td><span class="records-status">Archived</span></td>
-          </tr>
-          <tr>
-            <td>Fall 2025</td>
-            <td>Travel approvals, training logs, funding ledger</td>
-            <td>Executive Board</td>
-            <td><span class="records-status">In Review</span></td>
+            <td>Committee Leads</td>
+            <td>Officer handoff documentation and continuity steps.</td>
           </tr>
         </tbody>
       </table>
-    </section>
-
-    <section class="glass-card">
-      <h3 class="about-header">Record Categories</h3>
-      <p class="about-preview">Each semester archive maintains a consistent structure for quick handoffs.</p>
-      <div class="records-grid">
-        <div class="records-panel">
-          <h4>Governance</h4>
-          <p>Constitution updates, election results, officer transition checklists, and policy amendments.</p>
-        </div>
-        <div class="records-panel">
-          <h4>Competitive Results</h4>
-          <p>Tournament attendance, performance summaries, judge sign-ups, and case bank highlights.</p>
-        </div>
-        <div class="records-panel">
-          <h4>Finance</h4>
-          <p>Budget allocations, funding requests, receipts, reimbursement logs, and end-of-term close.</p>
-        </div>
-        <div class="records-panel">
-          <h4>Membership</h4>
-          <p>Attendance trends, roster updates, leadership pipeline notes, and engagement metrics.</p>
-        </div>
+      <div class="records-meta">
+        <div><strong>Archive owner:</strong> Operations Director</div>
+        <div><strong>Review cycle:</strong> End of each semester</div>
+        <div><strong>Storage:</strong> PDU leadership drive</div>
       </div>
-    </section>
-
-    <section class="glass-card">
-      <h3 class="about-header">Access & Requests</h3>
-      <div class="two-col">
-        <div>
-          <p class="subhead">Who can access</p>
-          <ul class="section-list">
-            <li>Executive Board members and committee chairs.</li>
-            <li>Faculty advisors or approved administrators.</li>
-            <li>Captains with active tournament logistics responsibilities.</li>
-          </ul>
-        </div>
-        <div>
-          <p class="subhead">Request workflow</p>
-          <ul class="section-list">
-            <li>Submit request to Operations Director with semester + category.</li>
-            <li>Confirm need-to-know and intended use.</li>
-            <li>Receive access within 48 hours during the academic term.</li>
-          </ul>
-          <div class="cta-row">
-            <a class="link-chip" href="contact.html">Contact Operations →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="glass-card">
-      <h3 class="about-header">Retention Standards</h3>
-      <p class="about-preview">Records are stored to maintain continuity while respecting privacy and compliance requirements.</p>
-      <ul class="section-list">
-        <li><strong>Retention:</strong> Minimum of 4 academic years for official financial and governance records.</li>
-        <li><strong>Privacy:</strong> Redact personal data before sharing outside the board.</li>
-        <li><strong>Updates:</strong> Archive is finalized within 30 days of each semester close.</li>
-      </ul>
     </section>
   </main>
 
