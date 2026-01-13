@@ -320,25 +320,38 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 /* ====== Why PDU bullets ====== */
 .points{ margin:.25rem 0 1rem 1.2rem; }
 .points li{ margin:.25rem 0; }
-.rail-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:12px;
-}
-.rail-item{
+.why-pdu-slideshow{
   position:relative;
   overflow:hidden;
-  border-radius:14px;
+  border-radius:16px;
   border:1px solid rgba(255,255,255,.18);
   background:rgba(255,255,255,.06);
-  min-height:170px;
+  min-height:220px;
+  aspect-ratio:16/9;
   box-shadow:0 12px 32px rgba(0,0,0,.25);
 }
-.rail-item img{
+.slideshow-track{
+  display:flex;
+  width:400%;
+  height:100%;
+  animation:why-pdu-slide 20s infinite;
+}
+.slideshow-photo{
+  flex:0 0 100%;
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
+}
+@keyframes why-pdu-slide{
+  0%, 20%{ transform:translateX(0); }
+  25%, 45%{ transform:translateX(-100%); }
+  50%, 70%{ transform:translateX(-200%); }
+  75%, 95%{ transform:translateX(-300%); }
+  100%{ transform:translateX(-300%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .slideshow-track{ animation:none; }
 }
 
 /* ====== Highlight card ====== */
