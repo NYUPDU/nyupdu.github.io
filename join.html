@@ -315,7 +315,7 @@
   <section class="hero-section hero-compact" id="joinHero">
     <div>
       <h1 class="page-title">Join the Parliamentary Debate Union</h1>
-      <p class="page-subtitle">Open to all NYU students  -  drop in Mondays or Wednesdays, 7–9 PM. Move at your own pace.</p>
+      <p class="page-subtitle">Open to all NYU students  -  first meeting is Wednesday, January 28, 2026 (7–9 PM). Stay tuned for weekly times.</p>
       <div class="cta-row">
         <a class="link-chip purple-glow join-chip" href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener">Join →</a>
       </div>
@@ -370,6 +370,7 @@
         <span class="chip">Drop-in welcome</span>
         <span class="chip">Move at your own pace</span>
       </div>
+      <p class="about-preview" style="margin-top:.6rem;">First meeting: <strong>Wednesday, January 28, 2026</strong>. We’ll confirm room details on the calendar.</p>
 
       <div class="two-col" style="margin-top:.75rem;">
         <div>
@@ -408,43 +409,43 @@
       </div>
     </section>
 
-    <!-- Month Cards (Sep–Dec) -->
+    <!-- Month Cards (Feb–May) -->
     <section class="glass-card reveal" id="months">
       <h3 class="about-header">Month at a Glance</h3>
       <div class="join-month-grid" aria-label="Upcoming months">
         <div class="join-month-card">
-          <h4>September</h4>
+          <h4>February</h4>
           <ul>
-            <li>Kickoff lessons begin</li>
-            <li>First scrim night</li>
-            <li>Travel: Brown (Oct 24–25) is wrapped — check the TID for reflections and updates; Brandeis (Oct 31–Nov 1) sign-ups are closed — monitor Google Chat for roster notes; Fordham Fall Finale (Nov 21–22) is the semester closer — sign up and start case prep now.</li>
+            <li>Weekly meetings continue</li>
+            <li>Workshop dates posted soon</li>
+            <li>Travel updates coming soon</li>
           </ul>
           <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
         </div>
         <div class="join-month-card">
-          <h4>October</h4>
+          <h4>March</h4>
           <ul>
-            <li>Casebuilding workshop</li>
-            <li>Travel: Brown (Oct 24–25) is wrapped — confirm any outstanding follow-ups in the TID; Harvard (APDA Meeting) — Oct 10–11 — is wrapped with follow-ups in the TID; Brandeis (Oct 31–Nov 1) sign-ups are closed — monitor roster threads for updates; Fordham Fall Finale (Nov 21–22) — final tournament push underway; Johns Hopkins recap shared in Highlights</li>
-            <li>Novice spotlight night</li>
+            <li>Skill-building sessions</li>
+            <li>Travel schedule to be announced</li>
+            <li>Stay tuned for updates</li>
           </ul>
           <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
         </div>
         <div class="join-month-card">
-          <h4>November</h4>
+          <h4>April</h4>
           <ul>
-            <li>Mid-semester scrim series</li>
-            <li>Travel: Fordham Fall Finale (Nov 21–22) — <strong>final tournament</strong> of the semester. <a href="https://forms.gle/YuB8CCqgnsAH4mfY9" target="_blank" rel="noopener">Submit availability</a> and build cases with your partner.</li>
-            <li>Judge training basics</li>
+            <li>Practice rounds & feedback</li>
+            <li>Additional tournaments TBD</li>
+            <li>Stay tuned for announcements</li>
           </ul>
           <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
         </div>
         <div class="join-month-card">
-          <h4>December</h4>
+          <h4>May</h4>
           <ul>
-            <li>Final workshop & debrief</li>
-            <li>Travel: Finals weekend (placeholder)</li>
-            <li>Winter social</li>
+            <li>End-of-semester wrap-up</li>
+            <li>Final meeting updates posted soon</li>
+            <li>Stay tuned for next steps</li>
           </ul>
           <div class="cta-row"><a class="link-chip" href="calendar.html">Open calendar →</a></div>
         </div>
@@ -604,23 +605,15 @@
       const diff=inv.getTime()-wall.getTime();
       return new Date(wall.getTime()-diff);
     }
-    function nextNYMeeting(){
-      const tz='America/New_York';
-      const p=getNowPartsInTZ(tz);
-      function nextDow(target){
-        let delta=(target - p.weekday + 7) % 7;
-        if (delta===0 && (p.hour>19 || (p.hour===19 && (p.minute>0 || p.second>0)))) delta=7;
-        const base=new Date(Date.UTC(p.year, p.month-1, p.day));
-        base.setUTCDate(base.getUTCDate()+delta);
-        return zonedNYToDate(base.getUTCFullYear(), base.getUTCMonth()+1, base.getUTCDate(), 19, 0, 0);
-      }
-      const mon=nextDow(1), wed=nextDow(3);
-      return (mon < wed) ? mon : wed;
-    }
+    const firstMeeting = zonedNYToDate(2026, 1, 28, 19, 0, 0);
     const cdEl=document.getElementById('nextCountdown');
     function tick(){
-      const target=nextNYMeeting();
       const now=new Date();
+      if(now >= firstMeeting){
+        cdEl.textContent='Meetings are underway — check the calendar for weekly times.';
+        return;
+      }
+      const target=firstMeeting;
       const ms=target - now;
       if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
       const s=Math.floor(ms/1000);
@@ -629,7 +622,7 @@
       const m=Math.floor((s%3600)/60);
       const ss=s%60;
       const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
-      cdEl.textContent=`Next meeting: ${weekday} 7:00 PM ET in ${d}d ${h}h ${m}m ${ss}s`;
+      cdEl.textContent=`First meeting: ${weekday} 7:00 PM ET in ${d}d ${h}h ${m}m ${ss}s`;
     }
     tick(); setInterval(tick,1000);
 
