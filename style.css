@@ -326,21 +326,24 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border-radius:16px;
   border:1px solid rgba(255,255,255,.18);
   background:rgba(255,255,255,.06);
-  min-height:220px;
-  aspect-ratio:16/9;
+  width:100%;
+  height:clamp(200px, 30vw, 320px);
   box-shadow:0 12px 32px rgba(0,0,0,.25);
 }
 .slideshow-track{
   display:flex;
   width:400%;
   height:100%;
+  align-items:center;
   animation:why-pdu-slide 20s infinite;
 }
 .slideshow-photo{
   flex:0 0 100%;
-  width:100%;
+  width:auto;
+  max-width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
   display:block;
 }
 @keyframes why-pdu-slide{
