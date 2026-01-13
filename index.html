@@ -562,19 +562,13 @@
         <li>Beginner-friendly training & mentorship</li>
         <li>A supportive, competitive community</li>
       </ul>
-      <div class="rail-wrap" style="margin-top:1rem;">
-        <figure class="rail-item">
-          <img src="20250416_204645.jpg" alt="Team gathering" loading="lazy">
-        </figure>
-        <figure class="rail-item">
-          <img src="IMG_5720.JPEG" alt="Debaters in action" loading="lazy">
-        </figure>
-        <figure class="rail-item">
-          <img src="image000000.jpg" alt="Travel snapshot" loading="lazy">
-        </figure>
-        <figure class="rail-item">
-          <img src="ClubfestFall2025-highlight.jpg" alt="Club Fest Fall 2025 crowd" loading="lazy">
-        </figure>
+      <div class="why-pdu-slideshow" style="margin-top:1rem;" aria-label="Why PDU photo slideshow">
+        <div class="slideshow-track">
+          <img class="slideshow-photo" src="20250416_204645.jpg" alt="Team gathering" loading="lazy">
+          <img class="slideshow-photo" src="IMG_5720.JPEG" alt="Debaters in action" loading="lazy">
+          <img class="slideshow-photo" src="image000000.jpg" alt="Travel snapshot" loading="lazy">
+          <img class="slideshow-photo" src="ClubfestFall2025-highlight.jpg" alt="Club Fest Fall 2025 crowd" loading="lazy">
+        </div>
       </div>
       <div class="cta-row">
         <a class="link-chip" href="why-pdu.html">Read the full Why PDU →</a>
@@ -759,7 +753,7 @@
 
   <!-- Photo lightbox JS -->
   <script>
-    const lbTriggers = document.querySelectorAll('.rail-item img, .highlight-photo img');
+    const lbTriggers = document.querySelectorAll('.slideshow-photo, .highlight-photo img');
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbClose = document.getElementById('lightboxClose');
