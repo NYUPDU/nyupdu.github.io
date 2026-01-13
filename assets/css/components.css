@@ -11,21 +11,21 @@
   --glow: 0 0 24px rgba(117, 0, 200, .3);
 }
 
-html,body{background: radial-gradient(1200px 800px at 20% -10%, rgba(112,0,210,.25), transparent) , linear-gradient(180deg, #0a0218 0%, #14052a 100%); color:var(--text);}
+html,body{background: radial-gradient(1200px 800px at 20% -10%, rgba(112,0,210,.25), transparent) , linear-gradient(180deg, #0a0218 0%, #14052a 100%); color:var(--text); font-family:"Alan Sans", sans-serif; font-weight:300;}
 
 .container{max-width: 1100px; margin: 0 auto; padding: 24px;}
 
-.display{font-family:"DM Serif Display",serif; font-size: clamp(2rem, 2.4rem + 1vw, 3.2rem); line-height:1.1; letter-spacing:.2px}
+.display{font-family:"Newsreader",serif; font-weight:600; font-size: clamp(2rem, 2.4rem + 1vw, 3.2rem); line-height:1.1; letter-spacing:.2px}
 .subhead{color:var(--muted); margin:.5rem 0 1.25rem;}
-.h2, h2{font-family:"DM Serif Display",serif; font-size:clamp(1.25rem,1.1rem + 1vw,1.75rem); line-height:1.2}
-.h3, h3{font-family:"DM Serif Display",serif; font-size:1.15rem}
+.h2, h2{font-family:"Newsreader",serif; font-weight:600; font-size:clamp(1.25rem,1.1rem + 1vw,1.75rem); line-height:1.2}
+.h3, h3{font-family:"Newsreader",serif; font-weight:600; font-size:1.15rem}
 
 .glass{backdrop-filter: blur(10px); background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow: var(--glow);}
 .panel{padding: 22px 20px;}
 .panel-lg{padding: 28px 24px; margin-top: 24px;}
 
 .hero .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
-.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:999px; border:1px solid var(--border); text-decoration:none; color:var(--text); font-weight:600}
+.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:999px; border:1px solid var(--border); text-decoration:none; color:var(--text); font-weight:300}
 .btn.primary{background:linear-gradient(135deg, var(--nyu-purple), var(--nyu-plum));}
 .btn.outline{background:transparent;}
 .btn.small{padding:.5rem .8rem; font-size:.95rem}
@@ -49,7 +49,7 @@ html,body{background: radial-gradient(1200px 800px at 20% -10%, rgba(112,0,210,.
 .pdu-form{display:grid; gap:12px; margin-top:10px}
 .pdu-form .row{display:grid; gap:6px}
 .pdu-form .split{display:grid; gap:10px; grid-template-columns: 1fr 1fr}
-.pdu-form label{font-weight:600}
+.pdu-form label{font-weight:300}
 .pdu-form input[type="text"],
 .pdu-form input[type="email"],
 .pdu-form select,
@@ -99,4 +99,32 @@ html,body{background: radial-gradient(1200px 800px at 20% -10%, rgba(112,0,210,.
 
 @media (max-width: 640px){
   .pdu-form .split{grid-template-columns: 1fr}
+}
+
+/* ================= Typography policy ================= */
+body,
+button,
+input,
+select,
+textarea,
+a,
+p,
+li,
+span,
+div,
+label{
+  font-family:"Alan Sans",sans-serif !important;
+  font-weight:300 !important;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display,
+.h2,
+.h3{
+  font-family:"Newsreader",serif !important;
+  font-weight:600 !important;
 }

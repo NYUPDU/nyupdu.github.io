@@ -43,7 +43,7 @@
         color: #fff;
         padding: 0.75rem 1rem;
         border-radius: 0.75rem;
-        font: 600 0.95rem/1.35 "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font: 300 0.95rem/1.35 "Alan Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         z-index: 9999;
         max-width: min(28rem, 90vw);
         box-shadow: 0 12px 32px rgba(25,25,25,0.28);
