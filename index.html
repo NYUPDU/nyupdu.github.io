@@ -292,6 +292,18 @@
       .highlight-message{ padding:1.4rem; }
       .highlight-tagline{ letter-spacing:.1rem; }
     }
+
+    /* ===== Socials embed ===== */
+    .socials-embed{
+      display:flex;
+      justify-content:center;
+      margin-top:1rem;
+    }
+    .socials-embed blockquote.instagram-media{
+      margin:0 auto !important;
+      max-width:540px;
+      width:100%;
+    }
   </style>
 </head>
 
@@ -598,6 +610,17 @@
       </div>
     </section>
 
+    <!-- Socials -->
+    <section class="glass-card reveal" id="socials">
+      <h3 class="about-header">Socials</h3>
+      <p class="about-preview" style="margin:.5rem 0 1rem;">Follow NYU PDU on Instagram for tournament highlights and team updates.</p>
+      <div class="socials-embed">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
+          <a href="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener">NYU Parliamentary Debate Union</a>
+        </blockquote>
+      </div>
+    </section>
+
     <!-- Equity preview -->
     <section class="glass-card reveal">
       <h3 class="about-header">Equity</h3>
@@ -765,5 +788,7 @@
     lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLB(); });
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLB(); });
   </script>
+
+  <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
