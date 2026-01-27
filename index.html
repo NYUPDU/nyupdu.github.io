@@ -294,15 +294,73 @@
     }
 
     /* ===== Socials embed ===== */
+    .socials-card{
+      display:grid;
+      grid-template-columns:minmax(0, 1.1fr) minmax(0, .9fr);
+      gap:2rem;
+      align-items:center;
+    }
+    .socials-copy .about-header{
+      margin-bottom:.35rem;
+    }
+    .socials-copy .about-preview{
+      font-size:1.05rem;
+      line-height:1.7;
+      max-width:520px;
+    }
+    .socials-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      margin:1.1rem 0 .6rem;
+      align-items:center;
+    }
+    .socials-handle{
+      font-weight:600;
+      color:rgba(255,255,255,.88);
+      letter-spacing:.02em;
+      padding:.35rem .75rem;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.22);
+    }
+    .socials-meta{
+      margin:0;
+      color:rgba(255,255,255,.72);
+      font-size:.95rem;
+    }
     .socials-embed{
       display:flex;
       justify-content:center;
-      margin-top:1rem;
+    }
+    .socials-frame{
+      width:100%;
+      max-width:420px;
+      padding:.85rem;
+      border-radius:22px;
+      background:linear-gradient(150deg, rgba(93,63,211,.35), rgba(236,72,153,.2));
+      border:1px solid rgba(199,191,255,.35);
+      box-shadow:0 20px 45px rgba(0,0,0,.35);
     }
     .socials-embed blockquote.instagram-media{
       margin:0 auto !important;
-      max-width:540px;
       width:100%;
+      max-width:100%;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,.35);
+    }
+    @media (max-width: 900px){
+      .socials-card{
+        grid-template-columns:1fr;
+      }
+      .socials-frame{
+        max-width:520px;
+        margin:0 auto;
+      }
+      .socials-embed{
+        order:2;
+      }
     }
   </style>
 </head>
@@ -569,6 +627,29 @@
         <a class="link-chip" href="tournaments.html">See tournament details →</a>
       </div>
     </section>
+
+    <!-- Socials -->
+    <section class="glass-card reveal" id="socials">
+      <div class="socials-card">
+        <div class="socials-copy">
+          <h3 class="about-header">Socials</h3>
+          <p class="about-preview">Follow NYU PDU on Instagram for tournament highlights, team updates, and behind-the-scenes shots from the circuit.</p>
+          <div class="socials-actions">
+            <a class="btn-primary" href="https://www.instagram.com/nyudebate/" target="_blank" rel="noopener">Follow on Instagram</a>
+            <span class="socials-handle">@nyudebate</span>
+          </div>
+          <p class="socials-meta">New posts go up after tournaments and team events.</p>
+        </div>
+        <div class="socials-embed">
+          <div class="socials-frame">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
+              <a href="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener">NYU Parliamentary Debate Union</a>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Why PDU -->
     <section class="glass-card reveal">
       <h3 class="about-header">Why PDU</h3>
@@ -589,7 +670,6 @@
         <a class="link-chip" href="why-pdu.html">Read the full Why PDU →</a>
       </div>
     </section>
-
     <!-- Notable Achievements -->
     <section class="glass-card reveal" id="home-achievements">
       <h3 class="about-header">Notable Achievements</h3>
@@ -607,17 +687,6 @@
       </div>
       <div class="cta-row">
         <a class="link-chip" href="tournaments.html#achievements">More details →</a>
-      </div>
-    </section>
-
-    <!-- Socials -->
-    <section class="glass-card reveal" id="socials">
-      <h3 class="about-header">Socials</h3>
-      <p class="about-preview" style="margin:.5rem 0 1rem;">Follow NYU PDU on Instagram for tournament highlights and team updates.</p>
-      <div class="socials-embed">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14">
-          <a href="https://www.instagram.com/nyudebate/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener">NYU Parliamentary Debate Union</a>
-        </blockquote>
       </div>
     </section>
 
