@@ -253,7 +253,7 @@
     <div class="dash-container dash-grid">
       <div class="dash-card accent-info span-12">
         <div class="stat-row">
-          <span class="stat-chip"><i class="dot purple blink"></i> <span id="memberCountdown">Calculating next meeting…</span></span>
+          <span class="stat-chip"><i class="dot purple blink"></i> <span id="memberCountdown" data-meeting-countdown>Calculating next meeting…</span></span>
           <span class="stat-chip"><i class="dot purple"></i> Next tournament: <strong>Feb 6–7</strong></span>
           <a class="stat-chip attendance-link" href="https://forms.gle/HEqqch1fvxPHEvKt6" target="_blank" rel="noopener">
             <i class="dot green"></i>
@@ -329,7 +329,7 @@
           <div class="dash-card accent-info span-3">
             <h4>February</h4>
             <ul>
-              <li>Mon/Wed meetings · 7:00 PM</li>
+              <li>Mon/Wed meetings · 7:00 PM (Mon: Paulson 243, Wed: GCASL 284)</li>
               <li>Rutgers · Feb 6–7</li>
               <li>Columbia BIPOC · Feb 13–14</li>
               <li>Amherst ProAms · Feb 20–21</li>
@@ -491,53 +491,6 @@
   <script src="assets/js/no-reimbursements.js" defer></script>
 
   <script>
-    function getNowPartsInTZ(timeZone){
-      const dtf = new Intl.DateTimeFormat('en-US', {
-        timeZone, year:'numeric', month:'2-digit', day:'2-digit',
-        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false,
-        weekday:'short'
-      });
-      const parts = dtf.formatToParts(new Date());
-      const map = {};
-      for (const p of parts) map[p.type] = p.value;
-      const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
-      return {
-        year:+map.year, month:+map.month, day:+map.day,
-        hour:+map.hour, minute:+map.minute, second:+map.second,
-        weekday
-      };
-    }
-    function zonedNYToDate(y,m,d,h,mi,s){
-      const tz='America/New_York';
-      if(Intl.DateTimeFormat().resolvedOptions().timeZone===tz){
-        return new Date(y, m-1, d, h, mi, s||0);
-      }
-      const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
-      const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
-      const diff=inv.getTime()-wall.getTime();
-      return new Date(wall.getTime()-diff);
-    }
-    const firstMeeting = zonedNYToDate(2026, 1, 28, 19, 0, 0);
-    const cdEl=document.getElementById('memberCountdown');
-    function tick(){
-      const now=new Date();
-      if(now >= firstMeeting){
-        cdEl.textContent='Meetings are underway — check the calendar for weekly times.';
-        return;
-      }
-      const target=firstMeeting;
-      const ms=target - now;
-      if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
-      const s=Math.floor(ms/1000);
-      const d=Math.floor(s/86400);
-      const h=Math.floor((s%86400)/3600);
-      const m=Math.floor((s%3600)/60);
-      const ss=s%60;
-      const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
-      const dateStr=target.toLocaleString('en-US',{timeZone:'America/New_York', month:'short', day:'numeric'});
-      cdEl.textContent=`First meeting: ${weekday} ${dateStr} · 7:00 PM ET  -  in ${d}d ${h}h ${m}m ${ss}s`;
-    }
-    tick(); setInterval(tick,1000);
   </script>
   <script>
     /* Subtle reveal on scroll (matches rest of site) */
@@ -599,5 +552,6 @@
       }
     }
   </script>
+  <script src="assets/js/meeting-countdown.js" defer></script>
 </body>
 </html>
