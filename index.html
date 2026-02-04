@@ -29,26 +29,6 @@
       font-family:'Newsreader', serif;
       font-weight:600;
     }
-    /* ===== Countdown pill (desktop top-right; mobile bottom-left) ===== */
-    .home-countdown{
-      position:fixed;
-      top:calc(var(--nav-height,80px) + 8px);
-      right:12px;
-      z-index:1101;
-      display:inline-block;
-      padding:.35rem .7rem;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.10);
-      font-weight:700; letter-spacing:.2px;
-      box-shadow:0 0 12px rgba(199,191,255,.18) inset, 0 8px 24px rgba(0,0,0,.25);
-      backdrop-filter:blur(10px);
-    }
-    @media (max-width: 960px){
-      .home-countdown{ top:auto; right:auto; left:12px; bottom:18px; }
-      #float-button{ bottom:76px; } /* avoid overlap */
-    }
-
     /* ===== Animated glow divider under hero ===== */
     .hero-divider{
       position:relative; height:8px; width:100%;
@@ -506,9 +486,6 @@
   <!-- Glow divider -->
   <div class="hero-divider" aria-hidden="true"></div>
 
-  <!-- Countdown (NY time) -->
-  <div class="home-countdown" id="homeCountdown" aria-live="polite">Calculating next meeting…</div>
-
   <!-- Identity chip -->
   <section class="week-strip">
     <ul class="week-pills">
@@ -520,7 +497,7 @@
   <section class="band-newcomer" id="newcomers">
     <div class="n-body">
       <h3>Start here: join at your own pace</h3>
-      <p>First meeting: <strong>Wednesday, January 28, 2026</strong> · 7–9 PM. Mon/Wed sessions resume after — stay tuned.</p>
+      <p>Weekly meetings: <strong>Mondays & Wednesdays, 7–9 PM ET</strong>. Mondays in <strong>John Paulson Center Room 243</strong>; Wednesdays in <strong>Global Center for Academic and Spiritual Life 284</strong>.</p>
       <div class="n-actions">
         <a class="link-chip" href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener">Click here to Join!</a>
         <a class="link-chip" href="beginner.html">Beginner Guide →</a>
@@ -530,6 +507,8 @@
     <div class="n-side">
       <div class="mini">
         <span class="chip">Mon & Wed · 7–9 PM</span>
+        <span class="chip">Mon: Paulson 243</span>
+        <span class="chip">Wed: GCASL 284</span>
         <span class="chip">Travel covered</span>
         <span class="chip">No experience needed</span>
       </div>
@@ -881,6 +860,7 @@
   </script>
 
   <script src="assets/js/no-reimbursements.js" defer></script>
+  <script src="assets/js/meeting-countdown.js" defer></script>
 
   <!-- Nav + drawer JS + navbar measure -->
   <script>
@@ -924,53 +904,6 @@
         sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
       }
     }
-  </script>
-
-  <!-- New York Time countdown -->
-  <script>
-    function getNowPartsInTZ(timeZone){
-      const dtf = new Intl.DateTimeFormat('en-US', {
-        timeZone, year:'numeric', month:'2-digit', day:'2-digit',
-        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false,
-        weekday:'short'
-      });
-      const parts = dtf.formatToParts(new Date());
-      const map = {};
-      for (const p of parts) map[p.type] = p.value;
-      const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(map.weekday);
-      return { year:+map.year, month:+map.month, day:+map.day, hour:+map.hour, minute:+map.minute, second:+map.second, weekday };
-    }
-    function zonedNYToDate(y,m,d,h,mi,s){
-      const tz='America/New_York';
-      if(Intl.DateTimeFormat().resolvedOptions().timeZone===tz){
-        return new Date(y, m-1, d, h, mi, s||0);
-      }
-      const wall=new Date(Date.UTC(y,m-1,d,h,mi,s||0));
-      const inv=new Date(wall.toLocaleString('en-US',{timeZone:tz}));
-      const diff=inv.getTime()-wall.getTime();
-      return new Date(wall.getTime()-diff);
-    }
-    const firstMeeting = zonedNYToDate(2026, 1, 28, 19, 0, 0);
-    const cdEl=document.getElementById('homeCountdown');
-    function tick(){
-      const now=new Date();
-      if(now >= firstMeeting){
-        cdEl.textContent='Meetings are underway — check the calendar for weekly times.';
-        return;
-      }
-      const target=firstMeeting;
-      const ms=target - now;
-      if(ms<=0){ cdEl.textContent='Meeting happening now'; return; }
-      const s=Math.floor(ms/1000);
-      const d=Math.floor(s/86400);
-      const h=Math.floor((s%86400)/3600);
-      const m=Math.floor((s%3600)/60);
-      const ss=s%60;
-      const weekday=target.toLocaleDateString('en-US',{timeZone:'America/New_York', weekday:'long'});
-      const dateStr=target.toLocaleString('en-US',{timeZone:'America/New_York', month:'short', day:'numeric'});
-      cdEl.textContent=`First meeting: ${weekday} ${dateStr} · 7:00 PM ET  -  in ${d}d ${h}h ${m}m ${ss}s`;
-    }
-    tick(); setInterval(tick,1000);
   </script>
 
   <!-- Hero slideshow -->
