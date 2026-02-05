@@ -23,17 +23,10 @@
 
     .cases-hero .page-title{ font-size:3rem; }
     .cases-hero .page-subtitle{ max-width:70ch; margin-inline:auto; }
+    .hero-cta-row{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-top:.9rem; }
+    .chip-row{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-top:.7rem; }
 
-    .chip-row{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-top:1rem; }
-    .chip-link{
-      display:inline-flex; align-items:center; gap:.4rem; padding:.55rem .85rem; border-radius:999px;
-      border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.10); color:#fff; text-decoration:none; font-weight:800;
-      transition:transform .14s ease, box-shadow .2s ease, background .14s ease;
-    }
-    .chip-link:hover{ background:rgba(255,255,255,.16); box-shadow:0 0 12px rgba(199,191,255,.28); transform:translateY(-1px); }
-
-    .glass-card{ animation:fadeUp .3s ease both; }
-    @keyframes fadeUp{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+    .section-intro{ margin:.2rem 0 .8rem; opacity:.95; }
 
     .two-col{ display:grid; grid-template-columns:1fr; gap:1rem; }
     @media (min-width: 980px){ .two-col{ grid-template-columns:1fr 1fr; } }
@@ -102,8 +95,6 @@
     }
     .cta-band a{ font-weight:900; text-decoration:none; color:#fff; border-bottom:1px dashed rgba(255,255,255,.6); }
 
-    .toc-list a.active{ font-weight:800; }
-
     @media (max-width: 960px){
       .cases-hero .page-title{ font-size:2.4rem; }
     }
@@ -165,39 +156,108 @@
         </a>
       </div>
 
-      <div class="menu-icon" id="menuToggle" aria-label="Toggle Menu">☰</div>
+      <button id="burger" class="nav-burger" aria-controls="mobileDrawer" aria-expanded="false" aria-label="Open menu">☰</button>
     </div>
   </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawerScrim" class="drawer-scrim" hidden></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span>Menu</span>
+      <button id="drawerClose" class="drawer-close" aria-label="Close menu">×</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Mobile">
+      <ul class="drawer-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">Tournaments</button>
+          <ul class="drawer-submenu">
+            <li><a href="tournaments.html#featured">Next Tournament</a></li>
+            <li><a href="tournaments.html">Upcoming</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle join-link" aria-expanded="false">Join Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSftE0vf0Nd4kSeQlCfj6eTI9HnBrKXgAMVMU_faWM5XICtptw/viewform?usp=dialog" target="_blank" rel="noopener">Mailing List</a></li>
+            <li><a href="join.html#meetings">Meetings</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="practicetools.html">Practice Tools</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="resources.html">Resources Library</a></li>
+          </ul>
+        </li>
+
+        <li class="drawer-group">
+          <button class="drawer-toggle" aria-expanded="false">About Us</button>
+          <ul class="drawer-submenu">
+            <li><a href="about.html#who-we-are">Who We Are</a></li>
+            <li><a href="beginner.html">Beginners Guide</a></li>
+            <li><a href="about.html#meetings">Meetings & Attendance</a></li>
+            <li><a href="equity.html">Equity Policy</a></li>
+            <li><a href="records.html">Internal Records</a></li>
+            <li><a href="why-pdu.html">Why PDU</a></li>
+          </ul>
+        </li>
+
+        <li><a href="leadership.html">Leadership</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <button id="float-button" onclick="scrollToTop()">
     <img src="PDULOGO_Trans.png" alt="Back to top" />
   </button>
 
-  <main>
-    <section class="hero-section cases-hero">
-      <div class="container glass-card">
-        <h1 class="page-title">Case Building Guide</h1>
-        <p class="page-subtitle">A walk-before-you-run approach to writing winning parliamentary debate cases. This guide converts the core rules into a clear, interactive workflow you can use to build contentions, pick warrants, and structure impact calculus.</p>
-        <div class="chip-row">
-          <span class="pill">Routine wins with prep</span>
-          <span class="pill">1 subpoint can win</span>
-          <span class="pill">Principle → Clash → Cheats</span>
-        </div>
-        <div class="chip-row">
-          <a class="chip-link" href="#core-rule">Start with the core rule</a>
-          <a class="chip-link" href="#structure">Build the structure</a>
-          <a class="chip-link" href="#checklist">Run the checklist</a>
-          <a class="chip-link" href="https://docs.google.com/document/d/1AVDVcPaCes9DlGVgu8Zf4xbVn2LmKTmNGhMOTUBVEco/edit?usp=sharing" target="_blank" rel="noopener">Detailed Guide</a>
-        </div>
+  <section class="hero-section hero-compact cases-hero">
+    <div>
+      <h1 class="page-title">Case Building Guide</h1>
+      <p class="page-subtitle">A walk-before-you-run approach to writing winning parliamentary debate cases. Use this workflow to build contentions, pick warrants, and structure impact calculus with confidence.</p>
+      <div class="hero-cta-row">
+        <a class="link-chip" href="#core-rule">Start with the core rule</a>
+        <a class="link-chip" href="#structure">Build the structure</a>
+        <a class="link-chip" href="#checklist">Run the checklist</a>
+        <a class="link-chip" href="https://docs.google.com/document/d/1AVDVcPaCes9DlGVgu8Zf4xbVn2LmKTmNGhMOTUBVEco/edit?usp=sharing" target="_blank" rel="noopener">Detailed Guide</a>
       </div>
-    </section>
+      <div class="chip-row">
+        <span class="pill">Routine wins with prep</span>
+        <span class="pill">1 subpoint can win</span>
+        <span class="pill">Principle → Clash → Cheats</span>
+      </div>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="callout">
-          <h2 id="core-rule">Core Rule: Every argument proves the case statement</h2>
-          <p>Every contention should prove the case statement true. Every subpoint should prove its contention true. If you do this, <strong>winning any one subpoint can win the round</strong>. That makes the MG’s job simple: defend what the PMC built and avoid drops.</p>
-          <div class="outline">Contention 1
+  <div class="hero-divider" aria-hidden="true"></div>
+
+  <aside class="toc-drawer" id="tocDrawer" aria-label="On-page contents">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" id="tocClose" aria-label="Close contents">×</button>
+    </div>
+    <nav class="toc-list">
+      <a href="#core-rule" class="active">Core rule</a>
+      <a href="#structure">Default structure</a>
+      <a href="#principles">Principle contention</a>
+      <a href="#templates">Templates</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#next">Next step</a>
+    </nav>
+  </aside>
+  <button class="toc-pill" id="tocOpen" aria-controls="tocDrawer" aria-expanded="false">Contents</button>
+
+  <main class="main-content">
+    <section class="glass-card" id="core-rule">
+      <h3 class="about-header">Core rule: every argument proves the case statement</h3>
+      <p class="section-intro">If each contention proves the case statement, and each subpoint proves its contention, <strong>one clean subpoint can win the round</strong>.</p>
+      <div class="callout">
+        <p>That makes the MG’s job simple: defend what the PMC built, extend cleanly, and avoid drops.</p>
+        <div class="outline">Contention 1
   Subpoint A
   Subpoint B
   Subpoint C
@@ -209,48 +269,42 @@ Contention 3
   Subpoint A
   Subpoint B
   Subpoint C</div>
-          <p>That 3x3 structure means you only need to win 1 of 9 arguments to close the round.</p>
-        </div>
+        <p>That 3x3 structure means you only need to win 1 of 9 arguments to close the round.</p>
       </div>
     </section>
 
-    <section class="section" id="structure">
-      <div class="container">
-        <h2 class="section-title">The default structure (in order of priority)</h2>
-        <p class="section-intro">Use this sequence unless you have a strong reason not to. It is clear, strategic, and naturally guides collapse decisions.</p>
-        <div class="structure-grid">
-          <div class="rule-card">
-            <h4>1) Principled Philosophy Contention</h4>
-            <p>Start with a principled claim that, if true, ends the debate. This forces opponent time investment and gives you a clean, judge-friendly path to victory.</p>
-            <ul>
-              <li>Warrant the principle (why it is ethically true).</li>
-              <li>Impact it (why the other team violates it).</li>
-            </ul>
-          </div>
-          <div class="rule-card">
-            <h4>2) “The Clash” (Pragmatic Core)</h4>
-            <p>These are the main practical reasons you wrote the case. If the judge is pragmatic, this contention is where you win.</p>
-            <ul>
-              <li>Each subpoint is independently winning.</li>
-              <li>Make causal chains explicit.</li>
-            </ul>
-          </div>
-          <div class="rule-card">
-            <h4>3) “Cheats” (Sneaky Wins)</h4>
-            <p>These are high-upside arguments (rollback, nuclear war, path dependency) that can auto-win with drops or weak answers.</p>
-            <ul>
-              <li>Place them last so they’re answered last.</li>
-              <li>Clean extension matters here.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container two-col">
+    <section class="glass-card" id="structure">
+      <h3 class="about-header">The default structure (in order of priority)</h3>
+      <p class="section-intro">Use this sequence unless you have a strong reason not to. It is clear, strategic, and naturally guides collapse decisions.</p>
+      <div class="structure-grid">
         <div class="rule-card">
-          <h3>Why the order works</h3>
+          <h4>1) Principled philosophy contention</h4>
+          <p>Start with a principled claim that, if true, ends the debate. This forces opponent time investment and gives you a clean, judge-friendly path to victory.</p>
+          <ul>
+            <li>Warrant the principle (why it is ethically true).</li>
+            <li>Impact it (why the other team violates it).</li>
+          </ul>
+        </div>
+        <div class="rule-card">
+          <h4>2) “The clash” (pragmatic core)</h4>
+          <p>These are the main practical reasons you wrote the case. If the judge is pragmatic, this contention is where you win.</p>
+          <ul>
+            <li>Each subpoint is independently winning.</li>
+            <li>Make causal chains explicit.</li>
+          </ul>
+        </div>
+        <div class="rule-card">
+          <h4>3) “Cheats” (sneaky wins)</h4>
+          <p>These are high-upside arguments (rollback, nuclear war, path dependency) that can auto-win with drops or weak answers.</p>
+          <ul>
+            <li>Place them last so they’re answered last.</li>
+            <li>Clean extension matters here.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:1rem;">
+        <div class="rule-card">
+          <h4>Why the order works</h4>
           <ol>
             <li><strong>Priority:</strong> Winning the principle is game over, so it goes first.</li>
             <li><strong>Clarity:</strong> Judges see which warrants go with which impacts.</li>
@@ -258,51 +312,48 @@ Contention 3
           </ol>
         </div>
         <div class="rule-card">
-          <h3>When to break the rules</h3>
+          <h4>When to break the rules</h4>
           <p>There are edge cases where you should adjust (e.g., heavy phil rounds or narrow actor cases), but default to this structure while you build consistency.</p>
           <div class="pill">Default unless you have a strong reason not to.</div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="principles">
-      <div class="container">
-        <h2 class="section-title">Principle contention: what actually works</h2>
-        <div class="two-col">
-          <div class="rule-card">
-            <h4>Most reliable principles</h4>
-            <ul>
-              <li>Libertarianism</li>
-              <li>Pacifism</li>
-              <li>Constitutional/legal violations bad</li>
-              <li>Radical egalitarian principles (especially with SJ caveats)</li>
-              <li>Duty-based claims (religious or job-related)</li>
-              <li>Democracy</li>
-              <li>Occasionally categorical imperatives</li>
-            </ul>
-          </div>
-          <div class="rule-card">
-            <h4>Common pitfalls</h4>
-            <ul>
-              <li>A “principle” that’s really just a pragmatic heuristic.</li>
-              <li>A personal intuition without ethical grounding.</li>
-              <li>Unwarranted claims that don’t logically prove the principle.</li>
-            </ul>
-            <p><strong>Tip:</strong> Metaethics matters—know what counts as a valid warrant.</p>
-          </div>
+    <section class="glass-card" id="principles">
+      <h3 class="about-header">Principle contention: what actually works</h3>
+      <div class="two-col">
+        <div class="rule-card">
+          <h4>Most reliable principles</h4>
+          <ul>
+            <li>Libertarianism</li>
+            <li>Pacifism</li>
+            <li>Constitutional/legal violations bad</li>
+            <li>Radical egalitarian principles (especially with SJ caveats)</li>
+            <li>Duty-based claims (religious or job-related)</li>
+            <li>Democracy</li>
+            <li>Occasionally categorical imperatives</li>
+          </ul>
+        </div>
+        <div class="rule-card">
+          <h4>Common pitfalls</h4>
+          <ul>
+            <li>A “principle” that’s really just a pragmatic heuristic.</li>
+            <li>A personal intuition without ethical grounding.</li>
+            <li>Unwarranted claims that don’t logically prove the principle.</li>
+          </ul>
+          <p><strong>Tip:</strong> Metaethics matters — know what counts as a valid warrant.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" id="templates">
-      <div class="container">
-        <h2 class="section-title">Templates you can reuse</h2>
-        <div class="structure-grid">
-          <details class="case-acc">
-            <summary>Simple 3x3 contention tree</summary>
-            <div class="case-body">
-              <p>Use this when you want maximum clarity and easy collapse decisions.</p>
-              <div class="outline">C1: Principle
+    <section class="glass-card" id="templates">
+      <h3 class="about-header">Templates you can reuse</h3>
+      <div class="structure-grid">
+        <details class="case-acc">
+          <summary>Simple 3x3 contention tree</summary>
+          <div class="case-body">
+            <p>Use this when you want maximum clarity and easy collapse decisions.</p>
+            <div class="outline">C1: Principle
   A) Warrant 1
   B) Warrant 2
   C) Impact
@@ -314,39 +365,38 @@ C3: Cheats
   A) Rollback/path dependency
   B) Catastrophic risk
   C) Strategic squeeze</div>
-            </div>
-          </details>
-          <details class="case-acc">
-            <summary>“Don’t go to war” HIR case</summary>
-            <div class="case-body">
-              <p>This classic template is easy to adapt to most military conflicts.</p>
-              <div class="outline">C1: War violates an ethical principle
+          </div>
+        </details>
+        <details class="case-acc">
+          <summary>“Don’t go to war” HIR case</summary>
+          <div class="case-body">
+            <p>This classic template is easy to adapt to most military conflicts.</p>
+            <div class="outline">C1: War violates an ethical principle
 C2: You will lose the war
   A) Subpoint 1
   B) Subpoint 2
   C) Subpoint 3
 C3: Even if you win, the benefits aren’t worth the costs</div>
-            </div>
-          </details>
-          <details class="case-acc">
-            <summary>“Cheats last” micro-template</summary>
-            <div class="case-body">
-              <p>Place this after pragmatic clash for maximum late-round leverage.</p>
-              <div class="outline">C3: Cheats
+          </div>
+        </details>
+        <details class="case-acc">
+          <summary>“Cheats last” micro-template</summary>
+          <div class="case-body">
+            <p>Place this after pragmatic clash for maximum late-round leverage.</p>
+            <div class="outline">C3: Cheats
   A) Unique path dependency
   B) Rollback outweighs
   C) Catastrophic escalation if they win</div>
-            </div>
-          </details>
-        </div>
+          </div>
+        </details>
       </div>
     </section>
 
-    <section class="section" id="checklist">
-      <div class="container two-col">
+    <section class="glass-card" id="checklist">
+      <h3 class="about-header">Case Builder Checklist</h3>
+      <p class="section-intro">Click each item as you complete it.</p>
+      <div class="two-col">
         <div class="rule-card">
-          <h2>Case Builder Checklist</h2>
-          <p>Click each item as you complete it.</p>
           <div class="checklist">
             <label><input type="checkbox" /> Every contention proves the case statement.</label>
             <label><input type="checkbox" /> Every subpoint proves its contention.</label>
@@ -357,7 +407,7 @@ C3: Even if you win, the benefits aren’t worth the costs</div>
           </div>
         </div>
         <div class="rule-card">
-          <h2>Quick self-check</h2>
+          <h4>Quick self-check</h4>
           <p>Pick the best answer and confirm you’ve got the concept.</p>
           <div class="quiz-row" role="group" aria-label="Case structure quiz">
             <button class="quiz-btn" data-answer="wrong" aria-pressed="false">Win 6 of 9 subpoints</button>
@@ -366,7 +416,7 @@ C3: Even if you win, the benefits aren’t worth the costs</div>
           </div>
           <p class="feedback" id="quizFeedback" aria-live="polite"></p>
           <div class="callout" style="margin-top:1rem;">
-            <h3>Detailed Guide</h3>
+            <h4>Detailed Guide</h4>
             <p>Want the full text? Read the original guide for more examples and context.</p>
             <a href="https://docs.google.com/document/d/1AVDVcPaCes9DlGVgu8Zf4xbVn2LmKTmNGhMOTUBVEco/edit?usp=sharing" target="_blank" rel="noopener">Open the Detailed Guide →</a>
           </div>
@@ -374,13 +424,11 @@ C3: Even if you win, the benefits aren’t worth the costs</div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <h2>Next step: run cases with clean defense</h2>
-          <p>Once your PMC sets up a strong 3x3, the MG should focus on defense and smart extensions. Keep the flow clean, don’t drop, and you’ll win a lot of rounds.</p>
-          <a href="practicetools.html">Practice tools for extensions →</a>
-        </div>
+    <section class="glass-card" id="next">
+      <div class="cta-band">
+        <h3>Next step: run cases with clean defense</h3>
+        <p>Once your PMC sets up a strong 3x3, the MG should focus on defense and smart extensions. Keep the flow clean, don’t drop, and you’ll win a lot of rounds.</p>
+        <a href="practicetools.html">Practice tools for extensions →</a>
       </div>
     </section>
   </main>
@@ -424,6 +472,94 @@ C3: Even if you win, the benefits aren’t worth the costs</div>
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('reveal'));
+    }, { threshold: 0.06 });
+    for (const el of document.querySelectorAll('.glass-card')) {
+      observer.observe(el);
+    }
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeBtn = document.getElementById('drawerClose');
+    const scrim = document.getElementById('drawerScrim');
+    const navbar = document.getElementById('siteNavbar');
+
+    function setNavHeightVar(){
+      const h = navbar.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    }
+    setNavHeightVar(); window.addEventListener('resize', setNavHeightVar);
+    if ('ResizeObserver' in window) { new ResizeObserver(setNavHeightVar).observe(navbar); }
+
+    function openDrawer(){
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden','false');
+      burger.setAttribute('aria-expanded','true');
+      scrim.hidden=false;
+      document.body.style.overflow='hidden';
+      const first = drawer.querySelector('button,a'); if (first) first.focus();
+    }
+    function closeDrawer(){
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden','true');
+      burger.setAttribute('aria-expanded','false');
+      scrim.hidden=true;
+      document.body.style.overflow='';
+      burger.focus();
+    }
+    function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
+
+    burger.addEventListener('click', toggleDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    scrim.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', e => { if(e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+    for (const btn of document.querySelectorAll('.drawer-toggle')) {
+      btn.addEventListener('click',()=>{
+        const ex = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!ex));
+        btn.nextElementSibling.classList.toggle('open');
+      });
+    }
+
+    for (const item of document.querySelectorAll('.has-submenu')) {
+      const link = item.querySelector('.top-link');
+      item.addEventListener('mouseenter',()=>link.setAttribute('aria-expanded','true'));
+      item.addEventListener('mouseleave',()=>link.setAttribute('aria-expanded','false'));
+      link.addEventListener('focus',()=>link.setAttribute('aria-expanded','true'));
+      const sm = item.querySelector('.submenu');
+      if(sm){
+        sm.addEventListener('keydown',e=>{ if(e.key==='Escape'){ link.focus(); link.setAttribute('aria-expanded','false'); } });
+      }
+    }
+
+    const tocDrawer = document.getElementById('tocDrawer');
+    const tocOpen = document.getElementById('tocOpen');
+    const tocClose = document.getElementById('tocClose');
+    function openTOC(){ tocDrawer.classList.add('open'); tocOpen.setAttribute('aria-expanded','true'); }
+    function closeTOC(){ tocDrawer.classList.remove('open'); tocOpen.setAttribute('aria-expanded','false'); }
+    tocOpen.addEventListener('click', openTOC);
+    tocClose.addEventListener('click', closeTOC);
+
+    if(!localStorage.getItem('pdu_toc_cases_v1')) {
+      openTOC();
+      localStorage.setItem('pdu_toc_cases_v1','1');
+      let justOpened = true; setTimeout(()=> justOpened=false, 600);
+      addEventListener('scroll', () => {
+        if (!justOpened && tocDrawer.classList.contains('open') && scrollY > 40) closeTOC();
+      }, { passive: true });
+    }
+
+    const sections = [...document.querySelectorAll('section[id]')];
+    const tocLinks = [...document.querySelectorAll('.toc-list a')];
+    addEventListener('scroll', () => {
+      const y = scrollY + 120;
+      let current = sections.length > 0 ? sections[0].id : undefined;
+      for (const s of sections) { if (s.offsetTop <= y) current = s.id; }
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }, { passive: true });
+
     const quizButtons = document.querySelectorAll('.quiz-btn');
     const quizFeedback = document.getElementById('quizFeedback');
 
@@ -439,6 +575,5 @@ C3: Even if you win, the benefits aren’t worth the costs</div>
       });
     });
   </script>
-  <script src="script.js"></script>
 </body>
 </html>
