@@ -65,11 +65,11 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 
 /* ================= Global meeting countdown ================= */
 .global-countdown{
-  position:fixed;
-  top:calc(var(--nav-height,80px) + 8px);
-  right:12px;
-  z-index:1101;
-  display:inline-block;
+  position:relative;
+  z-index:5;
+  display:block;
+  width:fit-content;
+  margin:12px 12px 0 auto;
   padding:.35rem .7rem;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.25);
@@ -82,10 +82,7 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 
 @media (max-width: 960px){
   .global-countdown{
-    top:auto;
-    right:auto;
-    left:12px;
-    bottom:calc(var(--sticky-h, 0px) + 12px);
+    margin:12px auto 0 12px;
   }
   #float-button{ bottom:76px; }
 }

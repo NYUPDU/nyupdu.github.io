@@ -79,7 +79,15 @@
       el.className = 'global-countdown';
       el.setAttribute('aria-live', 'polite');
       el.textContent = 'Calculating next meeting…';
-      document.body.appendChild(el);
+      const heroDivider = document.querySelector('.hero-divider');
+      const heroSection = document.querySelector('.hero-section');
+      if (heroDivider && heroDivider.parentNode) {
+        heroDivider.insertAdjacentElement('afterend', el);
+      } else if (heroSection && heroSection.parentNode) {
+        heroSection.insertAdjacentElement('afterend', el);
+      } else {
+        document.body.prepend(el);
+      }
     }
     return el;
   }
