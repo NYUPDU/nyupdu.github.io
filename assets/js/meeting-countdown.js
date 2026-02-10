@@ -79,9 +79,14 @@
       el.className = 'global-countdown';
       el.setAttribute('aria-live', 'polite');
       el.textContent = 'Calculating next meeting…';
+
+      const homeHeroCard = document.querySelector('.hero-home .hero-content');
       const heroDivider = document.querySelector('.hero-divider');
       const heroSection = document.querySelector('.hero-section');
-      if (heroDivider && heroDivider.parentNode) {
+
+      if (homeHeroCard && homeHeroCard.parentNode) {
+        homeHeroCard.insertAdjacentElement('afterend', el);
+      } else if (heroDivider && heroDivider.parentNode) {
         heroDivider.insertAdjacentElement('afterend', el);
       } else if (heroSection && heroSection.parentNode) {
         heroSection.insertAdjacentElement('afterend', el);
