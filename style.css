@@ -262,7 +262,14 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
 }
 
 /* ====== Home hero overlay ====== */
-.hero-home{ position:relative; }
+.hero-home{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
 .hero-home .hero-slideshow{
   position:absolute;
   inset:0;
@@ -287,6 +294,12 @@ nav a:hover{ color:#fff; text-shadow:0 0 8px rgba(199,191,255,.9); }
   border:1px solid rgba(255,255,255,.2);
   border-radius:18px; padding:2rem 2.2rem; text-align:center;
   backdrop-filter:blur(8px);
+}
+
+.hero-home > .global-countdown{
+  margin:0 auto;
+  max-width:min(92vw, 900px);
+  text-align:center;
 }
 .hero-title{ font-family:'Newsreader',serif; font-size:3.2rem; letter-spacing:.3px; font-weight:600; text-shadow:0 0 10px rgba(199,191,255,.35); }
 .hero-kicker{
