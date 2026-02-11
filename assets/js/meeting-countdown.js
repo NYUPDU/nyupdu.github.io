@@ -80,11 +80,14 @@
       el.setAttribute('aria-live', 'polite');
       el.textContent = 'Calculating next meeting…';
 
+      const newcomerBand = document.querySelector('.band-newcomer');
       const homeHeroCard = document.querySelector('.hero-home .hero-content');
       const heroDivider = document.querySelector('.hero-divider');
       const heroSection = document.querySelector('.hero-section');
 
-      if (homeHeroCard && homeHeroCard.parentNode) {
+      if (newcomerBand && newcomerBand.parentNode) {
+        newcomerBand.insertAdjacentElement('afterend', el);
+      } else if (homeHeroCard && homeHeroCard.parentNode) {
         homeHeroCard.insertAdjacentElement('afterend', el);
       } else if (heroDivider && heroDivider.parentNode) {
         heroDivider.insertAdjacentElement('afterend', el);
