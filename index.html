@@ -600,81 +600,62 @@
     <section class="featured-wrap reveal" id="featured">
       <div class="featured-card">
         <div>
-          <h3 class="about-header" style="margin-bottom:.4rem;">Brandeis update</h3>
+          <h3 class="about-header" style="margin-bottom:.4rem;">Next global tournament: CUNY</h3>
           <div class="featured-meta">
-            <span class="chip">Feb 27–28</span>
-            <span class="chip">Brandeis University</span>
-            <span class="chip">Tournament canceled</span>
+            <span class="chip">Deadline: Feb 23, 2026 · 11:59 PM ET</span>
+            <span class="chip">City University of New York · New York City, NY</span>
+            <span class="chip" data-signup-status="cuny">Sign-ups open</span>
           </div>
-          <p class="about-preview" style="margin:.25rem 0 0;"><strong>Update:</strong> Brandeis (Feb 27–28) has been canceled. Sign-ups are now closed.</p>
+          <p class="about-preview" style="margin:.25rem 0 0;"><strong>CUNY is up next globally and in-town.</strong> Sign up now to fill the hometown roster before the deadline.</p>
+          <div class="cta-row" style="margin-top:.6rem;">
+            <a class="btn-primary" data-signup-link="cuny" href="https://forms.gle/BorvL6hE34kW6VKa7" target="_blank" rel="noopener">Open CUNY Sign-Ups ↗</a>
+          </div>
           <div class="cta-row" style="margin-top:.6rem;">
             <a class="link-chip" href="tournaments.html">Tournaments →</a>
             <a class="link-chip" href="calendar.html">Calendar →</a>
           </div>
         </div>
         <div class="featured-side">
-          <span class="pill open">New links live</span>
+          <span class="pill open">CUNY priority</span>
         </div>
       </div>
     </section>
     <!-- Remaining tournament strip -->
     <section class="section-wrap reveal" aria-label="Recent tournaments">
       <h3 class="about-header">Upcoming tournaments</h3>
-      <p class="muted" style="max-width:720px; margin:.5rem auto 1.1rem;">Spring 2026 tournament targets are listed below. Dates and attendance are subject to change.</p>
+      <p class="muted" style="max-width:720px; margin:.5rem auto 1.1rem;">Spring 2026 tournament sign-ups are live below, with automatic close times in Eastern Time.</p>
       <div class="h-scroll">
         <article class="event-card">
           <div class="event-head">
-            <h4>Brandeis</h4>
-            <span class="pill pending">Canceled</span>
-          </div>
-          <p class="event-meta">Feb 27–28 · Brandeis University</p>
-          <p class="event-note"><strong>Canceled:</strong> Brandeis sign-ups are closed.</p>
-          <div class="cta-row" style="gap:.4rem;">
-            <a class="link-chip" href="tournaments.html">Tournament page →</a>
-          </div>
-        </article>
-        <article class="event-card">
-          <div class="event-head">
-            <h4>Brown</h4>
-            <span class="pill pending">Target</span>
-          </div>
-          <p class="event-meta">Mar 6–7 · Brown University</p>
-          <p class="event-note"><strong>Canceled:</strong> Brown sign-ups are closed.</p>
-          <div class="cta-row" style="gap:.4rem;">
-            <a class="link-chip" href="tournaments.html">Tournament page →</a>
-          </div>
-        </article>
-        <article class="event-card">
-          <div class="event-head">
             <h4>CUNY</h4>
-            <span class="pill pending">Target</span>
+            <span class="pill open" data-signup-status="cuny">Open now</span>
           </div>
-          <p class="event-meta">Mar 13–14 · Details TBA</p>
-          <p class="event-note">Subject to change.</p>
+          <p class="event-meta">Mar 13–14 · City University of New York (CUNY), New York City, NY</p>
+          <p class="event-note"><strong>Next global + in town:</strong> sign up now. Deadline: Feb 23, 2026 at 11:59 PM ET.</p>
           <div class="cta-row" style="gap:.4rem;">
-            <a class="link-chip" href="tournaments.html">Tournament page →</a>
+            <a class="btn-primary" data-signup-link="cuny" href="https://forms.gle/BorvL6hE34kW6VKa7" target="_blank" rel="noopener">Open sign-ups ↗</a>
           </div>
         </article>
         <article class="event-card">
           <div class="event-head">
             <h4>Georgetown</h4>
-            <span class="pill pending">Target</span>
+            <span class="pill open" data-signup-status="georgetown">Open now</span>
           </div>
-          <p class="event-meta">Mar 20–21 · Details TBA</p>
-          <p class="event-note">Subject to change.</p>
+          <p class="event-meta">Mar 20–21 · Georgetown University, Washington, DC</p>
+          <p class="event-note">Sign-ups close March 3, 2026 at 11:59 PM ET.</p>
           <div class="cta-row" style="gap:.4rem;">
-            <a class="link-chip" href="tournaments.html">Tournament page →</a>
+            <a class="btn-primary" data-signup-link="georgetown" href="https://forms.gle/nuzWzmKo93qWmAEb9" target="_blank" rel="noopener">Open sign-ups ↗</a>
           </div>
         </article>
         <article class="event-card">
           <div class="event-head">
             <h4>Northeastern</h4>
-            <span class="pill pending">Target</span>
+            <span class="pill open" data-signup-status="northeastern">Open now</span>
           </div>
-          <p class="event-meta">Mar 27–28 · Details TBA</p>
-          <p class="event-note">Subject to change.</p>
+          <p class="event-meta">Mar 27–28 · Northeastern University, Boston, MA</p>
+          <p class="event-note">Sign-ups close March 9, 2026 at 11:59 PM ET.</p>
           <div class="cta-row" style="gap:.4rem;">
-            <a class="link-chip" href="tournaments.html">Tournament page →</a>
+            <a class="btn-primary" data-signup-link="northeastern" href="https://forms.gle/o4gwRZBSGZ55yY9F8" target="_blank" rel="noopener">Open sign-ups ↗</a>
           </div>
         </article>
         <article class="event-card">
@@ -931,6 +912,7 @@
     window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLB(); });
   </script>
 
+  <script src="assets/js/tournament-signups.js" defer></script>
   <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
