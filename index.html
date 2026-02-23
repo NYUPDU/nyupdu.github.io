@@ -342,6 +342,33 @@
         order:2;
       }
     }
+
+    /* ===== Homepage calendar embed ===== */
+    .home-calendar{
+      display:grid;
+      gap:1rem;
+    }
+    .home-calendar .about-preview{
+      margin-bottom:.25rem;
+    }
+    .home-calendar-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.55rem;
+      margin-bottom:.15rem;
+    }
+    .home-calendar iframe{
+      width:100%;
+      min-height:560px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+    }
+    @media (max-width: 700px){
+      .home-calendar iframe{
+        min-height:500px;
+      }
+    }
   </style>
 </head>
 
@@ -695,6 +722,20 @@
       <div class="cta-row">
         <a class="link-chip" href="tournaments.html">See tournament details →</a>
       </div>
+    </section>
+
+    <section class="glass-card reveal home-calendar" id="home-calendar">
+      <h3 class="about-header">Calendar at a glance</h3>
+      <p class="about-preview">See upcoming meetings, practices, and tournament travel dates right from the homepage. Open the full page for subscriptions and a larger view.</p>
+      <div class="home-calendar-actions">
+        <a class="link-chip calendar-spotlight" href="calendar.html">📅 Open full calendar page →</a>
+        <a class="link-chip" href="calendar.html#top">Calendar details & subscriptions →</a>
+      </div>
+      <iframe
+        title="NYU PDU calendar preview"
+        src="https://calendar.google.com/calendar/embed?src=6ffe4bb7c1b77e03980baccedd9548332db017bd5fcc89e99f3344400dc0d002%40group.calendar.google.com&ctz=America%2FNew_York"
+        frameborder="0"
+        scrolling="no"></iframe>
     </section>
 
     <!-- Socials -->
