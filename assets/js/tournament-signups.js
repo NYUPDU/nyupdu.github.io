@@ -1,8 +1,5 @@
 (function () {
   const tournaments = {
-    cuny: {
-      deadline: '2026-02-24T04:59:00Z'
-    },
     georgetown: {
       deadline: '2026-03-04T04:59:00Z'
     },
