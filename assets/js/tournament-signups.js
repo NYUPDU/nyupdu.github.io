@@ -1,7 +1,7 @@
 (function () {
   const tournaments = {
-    georgetown: {
-      deadline: '2026-03-04T04:59:00Z'
+    yale: {
+      deadline: '2026-03-14T03:59:00Z'
     },
     northeastern: {
       deadline: '2026-03-10T03:59:00Z'
