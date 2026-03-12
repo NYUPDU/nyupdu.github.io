@@ -2,9 +2,6 @@
   const tournaments = {
     yale: {
       deadline: '2026-03-14T03:59:00Z'
-    },
-    northeastern: {
-      deadline: '2026-03-10T03:59:00Z'
     }
   };
 
