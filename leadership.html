@@ -533,6 +533,7 @@
 
         <div class="modal-actions">
           <a id="modalEmail" class="chip" href="#" target="_blank" rel="noopener">Email →</a>
+          <a id="modalInstagram" class="chip" href="#" target="_blank" rel="noopener">Instagram →</a>
           <!-- Add more chips here (e.g., LinkedIn, Calendly) when available -->
         </div>
       </div>
@@ -593,6 +594,7 @@
     const modalRole = document.getElementById('modalRole');
     const modalBio  = document.getElementById('modalBio');
     const modalEmail = document.getElementById('modalEmail');
+    const modalInstagram = document.getElementById('modalInstagram');
 
     let lastFocus = null;
 
@@ -610,7 +612,12 @@
       } else {
         modalEmail.style.display = 'none';
       }
-
+      if (data.instagram) {
+         modalInstagram.href = data.instagram;
+         modalInstagram.style.display = "";
+      } else {
+         modalInstagram.style.display = "none";
+      }
       modal.classList.add('open');
       modal.setAttribute('aria-hidden','false');
       document.body.style.overflow = 'hidden';
@@ -638,7 +645,8 @@
           role: card.dataset.role,
           img:  card.dataset.img,
           bio:  card.dataset.bio,
-          email:card.dataset.email
+          email:card.dataset.email,
+          instagram: card.dataset.instagram
         };
         openModal(data);
       });
