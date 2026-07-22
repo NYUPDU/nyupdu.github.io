@@ -103,14 +103,20 @@
 <nav class="nav-links" aria-label="Primary">
   <ul class="menu-root">
     <li><a href="index.html">Home</a></li>
-    <li><a href="members.html">Members</a></li>
+     <li class="has-submenu">
+      <a href="members.htmll" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Members</a>
+      <ul class="submenu" role="menu" aria-label="Memeber submenu">
+        <li role="none"><a role="menuitem" href="member.html#featured">Memebers</a></li>
+        <li role="none"><a role="menuitem" href="beginner.html">Beginner's Guide</a></li>
+        <li role="none"><a role="menuitem" href="about.html#meetings">Meetings &amp; Attendance</a></li>
+  </ul>
+</li>
     <li class="has-submenu">
-      <a href="tournaments.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Tournaments</a>
-      <ul class="submenu" role="menu" aria-label="Tournaments submenu">
+      <a href="tournaments.html" class="top-link" aria-current="page" aria-haspopup="true" aria-expanded="false">Tournaments &amp; Events</a>
+      <ul class="submenu" role="menu" aria-label="Tournaments and Events submenu">
         <li role="none"><a role="menuitem" href="tournaments.html#featured">Next Tournament</a></li>
-
-          
         <li role="none"><a role="menuitem" href="calendar.html">Calendar</a></li>
+        <li role="none"><a role="menuitem" href="calendar.html">Social Events</a></li>
       </ul>
     </li>
 
