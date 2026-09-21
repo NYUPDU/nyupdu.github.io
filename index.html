@@ -217,14 +217,22 @@
     .featured-card a:not(.link-chip){ color:inherit; text-decoration:underline; text-decoration-color:rgba(255,255,255,.45); text-underline-offset:3px; }
     .featured-card a:not(.link-chip):hover,
     .featured-card a:not(.link-chip):focus-visible{ text-decoration-color:currentColor; }
-    .featured-side{ text-align:right; }
+    .eboard-list{ display:grid; gap:.45rem; margin:.65rem 0 .9rem; }
+    .eboard-member{ margin:0; line-height:1.45; }
+    .featured-side{ display:flex; flex-direction:column; align-items:flex-end; gap:.65rem; text-align:right; }
+    .featured-photo{
+      width:100%; max-width:360px; aspect-ratio:4 / 3; object-fit:cover;
+      border-radius:14px; border:1px solid rgba(255,255,255,.28);
+      box-shadow:0 10px 28px rgba(0,0,0,.28);
+    }
     .featured-side .pill{ display:inline-block; }
     .pill.open{ background:rgba(80,200,120,.12); border-color:rgba(80,200,120,.45); }
     .pill.tentative{ background:rgba(255,200,80,.12); border-color:rgba(255,200,80,.45); }
     .pill.pending{ background:rgba(224,185,255,.16); border-color:rgba(224,185,255,.52); }
     @media (max-width: 960px){
       .featured-card{ grid-template-columns:1fr; text-align:left; }
-      .featured-side{ text-align:left; }
+      .featured-side{ align-items:flex-start; text-align:left; }
+      .featured-photo{ max-width:100%; }
     }
 
     /* ===== Recent highlight glow card ===== */
@@ -645,17 +653,22 @@
       <div class="featured-card">
         <div>
           <h3 class="about-header" style="margin-bottom:.4rem;">Meet the E-board</h3>
-          <div class="featured-meta">
-            <span class="chip">President: <a href="leadership.html">Cornelia Hsieh</a></span>
-            <span class="chip">Treasurer: <a href="leadership.html">Aemen Iqbal</a></span>
+          <div class="eboard-list">
+            <p class="eboard-member"><strong>President:</strong> <a href="leadership.html">Cornelia Hsieh</a></p>
+            <p class="eboard-member"><strong>Operations:</strong> <a href="leadership.html">Veronica Leahy</a></p>
+            <p class="eboard-member"><strong>Treasurer:</strong> <a href="leadership.html">Aemen Iqbal</a></p>
+            <p class="eboard-member"><strong>Equity:</strong> <a href="leadership.html">Sofia Bocchino</a></p>
+            <p class="eboard-member"><strong>Education:</strong> <a href="leadership.html">Nicole Chen</a></p>
+            <p class="eboard-member"><strong>Marketing:</strong> <a href="leadership.html">Varsha Sripadham</a></p>
+            <p class="eboard-member"><strong>Communications:</strong> <a href="leadership.html">Alexandra Giannousi</a></p>
           </div>
-          <p class="about-preview" style="margin:.25rem 0 0;"><strong>Operations:</strong> <a href="leadership.html">Veronica Leahy</a> · <strong>Equity:</strong> <a href="leadership.html">Sofia Bocchino</a> · <strong>Education:</strong> <a href="leadership.html">Nicole Chen</a> · <strong>Marketing:</strong> <a href="leadership.html">Varsha Sripadham</a> · <strong>Communications:</strong> <a href="leadership.html">Alexandra Giannousi</a>.</p>
           <div class="cta-row" style="margin-top:.6rem;">
             <a class="link-chip" href="leadership.html">Meet the full team →</a>
             <a class="link-chip" href="contact.html">Get in touch →</a>
           </div>
         </div>
         <div class="featured-side">
+          <img class="featured-photo" src="EboardPhoto.jpeg" alt="NYU PDU Fall 2026 E-board members together.">
           <span class="pill open">Fall 2026</span>
         </div>
       </div>
